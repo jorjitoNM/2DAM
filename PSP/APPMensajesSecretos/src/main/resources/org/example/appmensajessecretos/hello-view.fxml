@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="1920.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.appmensajessecretos.ui.HelloController">
+    <TextField fx:id="userName" layoutX="26.0" layoutY="82.0" prefHeight="26.0" prefWidth="200.0" />
+    <Label fx:id="enterPassword" layoutX="58.0" layoutY="134.0" prefHeight="18.0" prefWidth="132.0" text="Introduzca la contraseña" />
+    <TextField fx:id="userPassword" layoutX="26.0" layoutY="172.0" prefHeight="11.0" prefWidth="200.0" />
+    <Button fx:id="submitCredentials" layoutX="138.0" layoutY="228.0" mnemonicParsing="false" onAction="#iniciarSesion" text="Submit" />
+    <Label fx:id="logInError" layoutX="28.0" layoutY="264.0" prefHeight="18.0" prefWidth="200.0" />
+
+
+    <Label fx:id="enterGroupName" layoutX="377.0" layoutY="42.0" text="Introduzca el nombre del grupo" />
+    <TextField fx:id="groupName" layoutX="356.0" layoutY="82.0" prefHeight="26.0" prefWidth="200.0" />
+    <Label fx:id="enterGroupPassword" layoutX="343.0" layoutY="134.0" prefHeight="18.0" prefWidth="285.0" text="Introduzca la contraseña para acceder algrupo" />
+    <TextField fx:id="groupPassword" layoutX="356.0" layoutY="171.0" prefHeight="26.0" prefWidth="200.0" />
+    <Button fx:id="joinGroup" layoutX="486.0" layoutY="228.0" mnemonicParsing="false" onAction="#joinGroup" text="Join" />
+    <Label fx:id="joinGroupError" layoutX="356.0" layoutY="273.0" prefHeight="18.0" prefWidth="200.0" />
+
+
+    <Label fx:id="enterGroupNameDelete" layoutX="746.0" layoutY="42.0" text="Introduzca el nombre del grupo" />
+    <TextField fx:id="groupNameDelete" layoutX="730.0" layoutY="82.0" prefHeight="26.0" prefWidth="200.0" />
+    <Label fx:id="enterUserNameDelete" layoutX="689.0" layoutY="134.0" text="Introduzca el nombre del usuario que quiere eliminar" />
+    <TextField fx:id="userNameDelete" layoutX="730.0" layoutY="171.0" prefHeight="26.0" prefWidth="200.0" />
+    <Label fx:id="deleteError" layoutX="692.0" layoutY="273.0" prefHeight="18.0" prefWidth="260.0" />
+    <Button fx:id="deleteUser" layoutX="863.0" layoutY="228.0" mnemonicParsing="false" onAction="#comfirmDelete" text="Delete" />
+
+
+    <Label fx:id="createGroupNameLabel" layoutX="1038.0" layoutY="51.0" prefHeight="18.0" prefWidth="176.0" text="Introduzca el nombre del grupo" />
+    <TextField fx:id="createGroupName" layoutX="1026.0" layoutY="81.0" prefHeight="26.0" prefWidth="200.0" />
+    <Label fx:id="createGroupPasswordLabel" layoutX="1004.0" layoutY="128.0" prefHeight="18.0" prefWidth="271.0" text="Introduzca la contraseña de acceso el nuevo grupo" />
+    <TextField fx:id="createGroupPassword" layoutX="1026.0" layoutY="173.0" prefHeight="26.0" prefWidth="200.0" />
+    <Button fx:id="createGroup" layoutX="1180.0" layoutY="238.0" mnemonicParsing="false" onAction="#createGroup" text="Create" />
+    <Label fx:id="createGroupError" layoutX="1026.0" layoutY="282.0" prefHeight="18.0" prefWidth="200.0" />
+
+
+    <Label fx:id="misChats" layoutX="100.0" layoutY="337.0" text="Mis Chats" />
+    <ListView fx:id="myChats" layoutX="19.0" layoutY="372.0" prefHeight="200.0" prefWidth="237.0" />
+
+
+    <Label fx:id="mensajeLabel" layoutX="398.0" layoutY="337.0" text="Introduzca el mensaje" />
+    <TextArea fx:id="mensaje" layoutX="356.0" layoutY="374.0" prefHeight="106.0" prefWidth="200.0" />
+    <Button fx:id="envioGrupo" layoutX="352.0" layoutY="501.0" mnemonicParsing="false" onAction="#enviarMensaje" text="Enviar a todos" />
+    <Button fx:id="envioPrivado" layoutX="460.0" layoutY="501.0" mnemonicParsing="false" onAction="#selectUser" text="Enviar en privado" />
+
+
+    <Label fx:id="chatActivoLabel" layoutX="815.0" layoutY="337.0" text="Chat" />
+    <AnchorPane fx:id="chatActivo" layoutX="664.0" layoutY="372.0" prefHeight="282.0" prefWidth="330.0" />
+    <Label fx:id="enterUser" layoutX="36.0" layoutY="42.0" prefHeight="18.0" prefWidth="176.0" text="Introduzca su nombre se usuario" />
+</AnchorPane>
