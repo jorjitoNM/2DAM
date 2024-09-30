@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="1920.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.appmensajessecretos.ui.HelloController">
+<AnchorPane prefHeight="1920.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.appmensajessecretos.ui.GruopController">
     <TextField fx:id="userName" layoutX="26.0" layoutY="82.0" prefHeight="26.0" prefWidth="200.0" />
     <Label fx:id="enterPassword" layoutX="58.0" layoutY="134.0" prefHeight="18.0" prefWidth="132.0" text="Introduzca la contraseña" />
     <TextField fx:id="userPassword" layoutX="26.0" layoutY="172.0" prefHeight="11.0" prefWidth="200.0" />
@@ -41,11 +41,12 @@
 
     <Label fx:id="mensajeLabel" layoutX="398.0" layoutY="337.0" text="Introduzca el mensaje" />
     <TextArea fx:id="mensaje" layoutX="356.0" layoutY="374.0" prefHeight="106.0" prefWidth="200.0" />
-    <Button fx:id="envioGrupo" layoutX="352.0" layoutY="501.0" mnemonicParsing="false" onAction="#enviarMensaje" text="Enviar a todos" />
+    <Button fx:id="envioGrupo" layoutX="352.0" layoutY="501.0" mnemonicParsing="false" onAction="#sendMessage" text="Enviar a todos" />
     <Button fx:id="envioPrivado" layoutX="460.0" layoutY="501.0" mnemonicParsing="false" onAction="#selectUser" text="Enviar en privado" />
 
 
     <Label fx:id="chatActivoLabel" layoutX="815.0" layoutY="337.0" text="Chat" />
     <AnchorPane fx:id="chatActivo" layoutX="664.0" layoutY="372.0" prefHeight="282.0" prefWidth="330.0" />
-    <Label fx:id="enterUser" layoutX="36.0" layoutY="42.0" prefHeight="18.0" prefWidth="176.0" text="Introduzca su nombre se usuario" />
+    <Label fx:id="enterUser" layoutX="36.0" layoutY="42.0" prefHeight="18.0" prefWidth="176.0" text="Introduzca su nombre se usuario" />ç
+    <Label fx:id="sendMessageError" layoutX="1026.0" layoutY="350.0" prefHeight="18.0" prefWidth="200.0" />
 </AnchorPane>
