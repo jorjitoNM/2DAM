@@ -41,4 +41,8 @@ public class PatientService {
         Patient patient = new Patient(patientUI.getId(),patientUI.getName(),patientUI.getBirthDate(),patientUI.getPhone());
         patientRepostory.updatePatient(patient);
     }
+
+    public void deletePatient(int patientId, boolean confirmation) {
+        patientRepostory.deletePatient(patientId,confirmation);
+    }
 }

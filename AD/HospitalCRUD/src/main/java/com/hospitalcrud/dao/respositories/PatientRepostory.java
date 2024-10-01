@@ -31,4 +31,9 @@ public class PatientRepostory {
             p.setPhone(patient.getPhone());
         });
     }
+
+    public void deletePatient(int patientId, boolean confirmation) {
+        if (!confirmation)
+            getAll().removeIf(p -> p.getId()==patientId);
+    }
 }

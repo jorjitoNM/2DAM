@@ -11,4 +11,9 @@ public class CredentialRepository {
     public void add(Credential credential) {
 
     }
+
+    public boolean login(Credential userCredentials) {
+        return true;
+                //userCredentials.getUserName().equals() && userCredentials.getPassword().equals();
+    }
 }

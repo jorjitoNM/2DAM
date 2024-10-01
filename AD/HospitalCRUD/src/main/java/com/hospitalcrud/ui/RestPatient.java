@@ -1,8 +1,8 @@
 package com.hospitalcrud.ui;
 
-import com.hospitalcrud.dao.model.Patient;
 import com.hospitalcrud.domain.model.PatientUI;
 import com.hospitalcrud.domain.service.PatientService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,5 +30,11 @@ public class RestPatient {
     @PutMapping("/patients")
     public void updatePatient (@RequestBody PatientUI patientUI) {
         patientService.updatePatient(patientUI);
+    }
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
+    @DeleteMapping("/patients/{patientId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePatient(@PathVariable int patientId, @RequestBody(required = false) boolean confirmation) {
+        patientService.deletePatient(patientId,confirmation);
     }
 }
