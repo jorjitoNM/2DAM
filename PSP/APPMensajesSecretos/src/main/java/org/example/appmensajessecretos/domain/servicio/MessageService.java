@@ -16,7 +16,7 @@ public class MessageService {
         dao = new DaoMessages();
     }
 
-    public boolean send(String text, Usuario usuario, List<String> grupos, int grupo) {
-        return dao.send(text,usuario,grupos,grupo);
+    public boolean send(String text, Usuario usuario, String groupName) {
+        return dao.send(text,usuario,groupName);
     }
 }

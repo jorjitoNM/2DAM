@@ -193,10 +193,9 @@ public class GruopController {
         if (checkLogged()) {
             if (this.mensaje.getText().isEmpty() || !myChats.isFocused())
                 sendMessageError.setText(Constantes.RELLENE_CAMPOS);
-            else if (!messageService.send(this.mensaje.getText(),usuario,myChats.getItems().stream().toList(),groupService.getGrupoByIndex(myChats.getEditingIndex(),usuario)))
+            else if (!messageService.send(this.mensaje.getText(),usuario,myChats.getSelectionModel().getSelectedItem()))
 
         }
-        Mensaje mensaje = new Mensaje(this.mensaje.getContent(), LocalDateTime.now(),usuario)
     }
 
     public void selectUser() {
