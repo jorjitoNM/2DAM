@@ -11,6 +11,7 @@
         android:id="@+id/nameInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autofillHints=""
         android:minEms="12"
         android:hint="@string/name"
         android:inputType="text"
@@ -27,12 +28,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/password"
+        android:autofillHints=""
         android:inputType="textPassword"
         android:minEms="12"
-        app:layout_constraintVertical_chainStyle="spread"
         app:layout_constraintTop_toBottomOf="@id/nameInput"
-        app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/nameInput"
+        app:layout_constraintEnd_toEndOf="@id/nameInput"
+        app:layout_constraintBottom_toTopOf="@id/receiveNews"
          />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -70,16 +72,23 @@
         android:text="@string/submit"
         app:layout_constraintEnd_toStartOf="@id/next"
         app:layout_constraintStart_toEndOf="@+id/previous"
-        app:layout_constraintVertical_chainStyle="spread"
+        app:layout_constraintTop_toBottomOf="@id/receiveNews"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintHorizontal_chainStyle="spread"
         />
 
     <com.google.android.material.chip.Chip
-        android:id="@+id/chip"
+        android:id="@+id/receiveNews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/password"
+        app:layout_constraintBottom_toBottomOf="@id/submit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.75"
         app:layout_constraintVertical_chainStyle="spread"
-        app:layout_constraintHorizontal_chainStyle="spread"
+        android:text="@string/receive_news"
          />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
