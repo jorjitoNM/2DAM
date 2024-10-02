@@ -7,13 +7,13 @@ import org.springframework.stereotype.Repository;
 @Data
 @Repository
 public class CredentialRepository {
+    private final Credential root = new Credential("root", "quevedo2dam",-1);
 
     public void add(Credential credential) {
 
     }
 
     public boolean login(Credential userCredentials) {
-        return true;
-                //userCredentials.getUserName().equals() && userCredentials.getPassword().equals();
+        return userCredentials.getUserName().equals(root.getUserName()) && userCredentials.getPassword().equals(root.getPassword());
     }
 }

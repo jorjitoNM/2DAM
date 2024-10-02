@@ -17,4 +17,5 @@ public class Constantes {
     public static final String USER_NOT_FOUND = "Usuario no encontrado";
     public static final String MEMBER_DELETED = "El usuario ha sido eliminado del grupo";
     public static final String ERROR_DELETING_USER = "No se ha podido eliminar al usuario";
+    public static final String ERROR_SENDING_MESSAGE = "No se puede mandar el mensaje";
 }

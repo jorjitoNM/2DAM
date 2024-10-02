@@ -4,6 +4,7 @@ module org.example.appmensajessecretos {
     requires static lombok;
     requires org.apache.logging.log4j.core;
     requires org.apache.logging.log4j;
+    requires com.google.gson;
 
 
     opens org.example.appmensajessecretos to javafx.fxml;

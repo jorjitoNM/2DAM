@@ -194,7 +194,7 @@ public class GruopController {
             if (this.mensaje.getText().isEmpty() || !myChats.isFocused())
                 sendMessageError.setText(Constantes.RELLENE_CAMPOS);
             else if (!messageService.send(this.mensaje.getText(),usuario,myChats.getSelectionModel().getSelectedItem()))
-
+                sendMessageError.setText(Constantes.ERROR_SENDING_MESSAGE);
         }
     }
 
