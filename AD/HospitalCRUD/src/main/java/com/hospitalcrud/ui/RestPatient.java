@@ -34,7 +34,7 @@ public class RestPatient {
     @CrossOrigin(origins = "http://127.0.0.1:5500")
     @DeleteMapping("/patients/{patientId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePatient(@PathVariable int patientId, @RequestBody(required = false) boolean confirmation) {
+    public void deletePatient(@PathVariable int patientId, @RequestParam(required = false) boolean confirmation) {
         patientService.deletePatient(patientId,confirmation);
     }
 }

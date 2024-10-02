@@ -3,7 +3,8 @@ package com.hospitalcrud.domain.service;
 
 import com.hospitalcrud.dao.model.MedicalRecord;
 import com.hospitalcrud.dao.model.Medication;
-import com.hospitalcrud.dao.respositories.MedicalRecordRepository;
+import com.hospitalcrud.dao.respositories.statiC.MedicalRecordRepository;
+import com.hospitalcrud.dao.respositories.statiC.MedicationsRepository;
 import com.hospitalcrud.domain.model.MedicalRecordUI;
 import org.springframework.stereotype.Service;
 
@@ -14,27 +15,33 @@ import java.util.List;
 @Service
 public class MedicalRecordService {
     private final MedicalRecordRepository medicalRecordRepository;
+    private final MedicationsRepository medicationsRepository;
 
     public MedicalRecordService(MedicalRecordRepository medicalRecordRepository) {
         this.medicalRecordRepository = medicalRecordRepository;
+        this.medicationsRepository = new MedicationsRepository();
     }
 
     public int addMedicalRecord(MedicalRecordUI medicalRecordUI) {
-        return medicalRecordRepository.addMedicalRecord(new MedicalRecord(medicalRecordUI.getId(),
+        return medicalRecordRepository.save(new MedicalRecord(medicalRecordUI.getId(),
                 medicalRecordUI.getIdPatient(), medicalRecordUI.getIdDoctor(),
-                medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),null));
-                //parseMedications(medicalRecordUI.getMedications())));
+                medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),
+                parseMedications(medicalRecordUI.getMedications(),medicalRecordUI.getId())));
+
     }
 
-    /*private List<Medication> parseMedications(List<String> medications) {
+    private List<Medication> parseMedications(List<String> medications, int medicalRecordId) {
         List<Medication> medicationList = new ArrayList<>();
-        medications.forEach(m -> medicationList.add(new Medication()))
+        List<Medication> aviableMedications = medicationsRepository.getAll();
+        medications.forEach(m -> medicationList.add(
+                new Medication(aviableMedications.stream().filter(med ->
+                        med.getMedicationName().equals(m)).findFirst().get().getId(),m,medicalRecordId)));
         return medicationList;
-    }*/
+    }
 
     public List<MedicalRecordUI> getMedicalRecords(int idPatient) {
         List<MedicalRecordUI> medicalRecordsUI = new ArrayList<MedicalRecordUI>();
-        medicalRecordRepository.getMedicalRecords(idPatient).forEach(mr ->
+        medicalRecordRepository.getAll(idPatient).forEach(mr ->
                 medicalRecordsUI.add(new MedicalRecordUI(mr.getId(), mr.getDiagnosis(), mr.getDate().toString(),
                         mr.getIdPatient(), mr.getIdDoctor(), parseStringMedications(mr.getMedications()))));
         return medicalRecordsUI;
@@ -47,12 +54,11 @@ public class MedicalRecordService {
     }
 
     public void deleteMedicalRecord(int id) {
-        medicalRecordRepository.deleteMedicalRecord(id);
+        medicalRecordRepository.delete(id);
     }
 
     public void updateMedicalRecord(MedicalRecordUI medicalRecordUI) {
-        medicalRecordRepository.updateMedicalRecord(new MedicalRecord(medicalRecordUI.getId(), medicalRecordUI.getIdPatient()
-                , medicalRecordUI.getIdDoctor(), medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),null));
-                //parseMedications(medicalRecordUI.getMedications())));
+        medicalRecordRepository.update(new MedicalRecord(medicalRecordUI.getId(), medicalRecordUI.getIdPatient()
+                , medicalRecordUI.getIdDoctor(), medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),parseMedications(medicalRecordUI.getMedications(),medicalRecordUI.getId())));
     }
 }

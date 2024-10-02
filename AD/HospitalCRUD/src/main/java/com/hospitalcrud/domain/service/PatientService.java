@@ -4,7 +4,7 @@ package com.hospitalcrud.domain.service;
 import com.hospitalcrud.dao.model.Credential;
 import com.hospitalcrud.dao.model.Patient;
 import com.hospitalcrud.dao.respositories.CredentialRepository;
-import com.hospitalcrud.dao.respositories.PatientRepostory;
+import com.hospitalcrud.dao.respositories.statiC.PatientRepostory;
 import com.hospitalcrud.domain.model.PatientUI;
 import org.springframework.stereotype.Service;
 
@@ -39,10 +39,10 @@ public class PatientService {
 
     public void updatePatient(PatientUI patientUI) {
         Patient patient = new Patient(patientUI.getId(),patientUI.getName(),patientUI.getBirthDate(),patientUI.getPhone());
-        patientRepostory.updatePatient(patient);
+        patientRepostory.update(patient);
     }
 
     public void deletePatient(int patientId, boolean confirmation) {
-        patientRepostory.deletePatient(patientId,confirmation);
+        patientRepostory.delete(patientId,confirmation);
     }
 }

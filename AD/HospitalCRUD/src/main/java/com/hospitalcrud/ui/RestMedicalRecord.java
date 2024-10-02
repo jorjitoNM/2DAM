@@ -1,6 +1,5 @@
 package com.hospitalcrud.ui;
 
-import com.hospitalcrud.dao.model.MedicalRecord;
 import com.hospitalcrud.domain.model.MedicalRecordUI;
 import com.hospitalcrud.domain.service.MedicalRecordService;
 import org.springframework.http.HttpStatus;
@@ -18,9 +17,9 @@ public class RestMedicalRecord {
     }
 
 
-    @GetMapping("/patients/{idPatient}/medRecords")
-    public List<MedicalRecordUI> getMedicalRecords(@PathVariable int idPatient) {
-        return medicalRecordService.getMedicalRecords(idPatient);
+    @GetMapping("/patients/{patientId}/medRecords")
+    public List<MedicalRecordUI> getMedicalRecords(@PathVariable int patientId) {
+        return medicalRecordService.getMedicalRecords(patientId);
     }
 
     @PostMapping("/patients/medRecords")
