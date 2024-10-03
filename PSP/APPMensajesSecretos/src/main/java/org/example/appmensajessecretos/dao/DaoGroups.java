@@ -2,7 +2,6 @@ package org.example.appmensajessecretos.dao;
 
 import org.example.appmensajessecretos.domain.modelo.Grupo;
 import org.example.appmensajessecretos.domain.modelo.Usuario;
-import lombok.Data;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
@@ -11,18 +10,15 @@ import java.util.Set;
 
 @Repository
 public class DaoGroups {
-    private final Set<Grupo> grupos = new HashSet<>();
+
     private final DataBase dataBase;
 
     public DaoGroups(DataBase dataBase) {
         this.dataBase = dataBase;
-        grupos.add(new Grupo("Grupo 1", "1234"));
-        grupos.add(new Grupo("Grupo 2", "1234"));
-        grupos.add(new Grupo("Grupo 3", "1234"));
     }
 
     public boolean joinGroup(Usuario user, Grupo grupo) {
-        Grupo foundGroup = grupos.stream()
+        Grupo foundGroup = dataBase.loadGroups().stream()
                 .filter(g -> g.getName().equals(grupo.getName()) && g.getPassword().equals(grupo.getPassword()))
                 .findFirst()
                 .orElse(null);
@@ -36,11 +32,39 @@ public class DaoGroups {
     }
 
     public boolean createGroup(Grupo group) {
-        return grupos.add(group);
+        List<Grupo> grupos = dataBase.loadGroups();
+        grupos.add(group);
+        return dataBase.saveGroups(grupos);
     }
 
 
     public boolean findGroup(Grupo grupo) {
-        return grupos.stream().filter(g -> g.getName().equals(grupo.getName())).findFirst().orElse(null) != null;
+        return dataBase.loadGroups().stream().filter(g -> g.getName().equals(grupo.getName())).findFirst().orElse(null) != null;
+    }
+
+    public List<Grupo> getGroups(Usuario user) {
+        return dataBase.loadGroups().stream()
+                .filter(g -> g.getMembers().contains(user)).toList();
+    }
+
+    public boolean deleteMember(String userName, String groupName) {
+        Grupo grupo = dataBase.loadGroups().stream()
+                .filter(g -> g.getName().equals(groupName))
+                .findFirst().orElse(null);
+        if (grupo == null)
+            return false;
+        else
+            return grupo.getMembers().removeIf(u -> u.getName().equals(userName));
+    }
+
+    public boolean findUser(String userName, String groupName) {
+        Grupo grupo = dataBase.loadGroups().stream()
+                .filter(g -> g.getName().equals(groupName))
+                .findFirst().orElse(null);
+        if (grupo != null)
+            return grupo.getMembers().stream()
+                    .anyMatch(u -> u.getName().equals(userName));
+        else
+            return false;
     }
 }

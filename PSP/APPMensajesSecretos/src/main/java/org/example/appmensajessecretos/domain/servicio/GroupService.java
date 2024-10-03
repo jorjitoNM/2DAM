@@ -19,38 +19,23 @@ public class GroupService {
     public boolean joinGroup (Usuario user, Grupo group) {
         return dao.joinGroup(user, group);
     }
+
     public boolean createGroup (Grupo group) {
         return dao.createGroup(group);
     }
+
     public boolean findGroup(Grupo grupo) {
         return dao.findGroup(grupo);
     }
+
     public List<Grupo> getGroups (Usuario user) {
-        return dao.getGrupos().stream()
-                .filter(g -> g.getMembers().contains(user)).toList();
+        return dao.getGroups(user);
     }
     public boolean deleteMember (String userName, String groupName) {
-        Grupo grupo = dao.getGrupos().stream()
-                .filter(g -> g.getName().equals(groupName))
-                .findFirst().orElse(null);
-        if (grupo == null)
-            return false;
-        else
-            return grupo.getMembers().removeIf(u -> u.getName().equals(userName));
+        return dao.deleteMember(userName,groupName);
     }
 
     public boolean findUser(String userName, String groupName) {
-        Grupo grupo = dao.getGrupos().stream()
-                .filter(g -> g.getName().equals(groupName))
-                .findFirst().orElse(null);
-        if (grupo != null)
-            return grupo.getMembers().stream()
-                    .anyMatch(u -> u.getName().equals(userName));
-        else
-            return false;
-    }
-
-    public Grupo getGrupoByIndex(int groupIndex, Usuario user) {
-
+        return dao.findUser(userName,groupName);
     }
 }

@@ -41,11 +41,11 @@
 
     <Label fx:id="mensajeLabel" layoutX="398.0" layoutY="337.0" text="Introduzca el mensaje" />
     <TextArea fx:id="mensaje" layoutX="356.0" layoutY="374.0" prefHeight="106.0" prefWidth="200.0" />
-    <Button fx:id="envioGrupo" layoutX="400.0" layoutY="501.0" mnemonicParsing="false" onAction="#sendMessage" text="Enviar a todos" />
+    <Button fx:id="envioGrupo" layoutX="400.0" layoutY="501.0" mnemonicParsing="false" onAction="#sendMessage" text="Enviar mensaje" />
     <Label fx:id="sendMessageError" layoutX="1026.0" layoutY="350.0" prefHeight="18.0" prefWidth="200.0" />
 
 
     <Label fx:id="chatActivoLabel" layoutX="815.0" layoutY="337.0" text="Chat" />
     <AnchorPane fx:id="chatActivo" layoutX="664.0" layoutY="372.0" prefHeight="282.0" prefWidth="330.0" />
-    <Label fx:id="enterUser" layoutX="36.0" layoutY="42.0" prefHeight="18.0" prefWidth="176.0" text="Introduzca su nombre se usuario" />
+    <Label fx:id="enterUser" layoutX="370.0" layoutY="550.0" prefHeight="18.0" prefWidth="200.0" />
 </AnchorPane>

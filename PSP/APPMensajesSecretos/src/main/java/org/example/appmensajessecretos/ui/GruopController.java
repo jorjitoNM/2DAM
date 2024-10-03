@@ -1,9 +1,6 @@
 package org.example.appmensajessecretos.ui;
 
-import lombok.Data;
 import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.message.Message;
-import org.example.appmensajessecretos.domain.modelo.Mensaje;
 import org.example.appmensajessecretos.domain.servicio.GroupService;
 import org.example.appmensajessecretos.domain.servicio.MessageService;
 import org.example.appmensajessecretos.utilities.Constantes;
@@ -17,11 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import org.example.appmensajessecretos.utilities.LogConstantes;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Component
 @Log4j2
@@ -57,8 +49,7 @@ public class GruopController {
     @FXML
     private Label deleteError;
 
-    @FXML
-    private Label misChats;
+
     @FXML
     private ListView<Grupo> myChats;
 
@@ -94,11 +85,7 @@ public class GruopController {
         if (userName.getText().isEmpty() || userPassword.getText().isEmpty())
             logInError.setText(Constantes.RELLENE_CAMPOS);
         else if (!userService.findUser(new Usuario(userName.getText(), userPassword.getText()))) {
-            Alert create = new Alert(Alert.AlertType.CONFIRMATION);
-            create.setTitle(Constantes.CREACION_USUARIO);
-            create.setHeaderText(Constantes.USUARIO_MISSING);
-            create.showAndWait();
-            if (create.getResult() == ButtonType.OK) {
+            if (alertComfirmation(Constantes.USUARIO_MISSING)) {
                 usuario = new Usuario(userName.getText(), userPassword.getText());
                 userService.addUser(usuario);
                 succes = true;
@@ -173,12 +160,7 @@ public class GruopController {
                 deleteError.setText(Constantes.USER_NOT_FOUND);
                 log.info(LogConstantes.USER_NOT_FOUND);
             } else {
-                Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
-                confirmation.setTitle(Constantes.COMFIRMACION);
-                confirmation.setHeaderText(Constantes.MENSAJE_ELIMINAR_USUARIO);
-                confirmation.showAndWait();
-                if (confirmation.getResult() == ButtonType.OK) {
-                    confirmation.close();
+                if (alertComfirmation(Constantes.MENSAJE_ELIMINAR_USUARIO)) {
                     if (!groupService.deleteMember(userNameDelete.getText(), groupNameDelete.getText())) {
                         log.info(LogConstantes.ERROR_DELETING_USER);
                         deleteError.setText(Constantes.ERROR_DELETING_USER);
@@ -203,5 +185,14 @@ public class GruopController {
     private void actualizarUserInfo() {
         ObservableList<Grupo> chats = FXCollections.observableList(groupService.getGroups(usuario));
         myChats.setItems(chats);
+    }
+
+    private boolean alertComfirmation (String message) {
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmation.setTitle(Constantes.COMFIRMACION);
+        confirmation.setHeaderText(message);
+        confirmation.showAndWait();
+        confirmation.close();
+        return confirmation.getResult().equals(ButtonType.OK);
     }
 }

@@ -22,3 +22,4 @@ public class GruposSecretosApplication extends Application {
         launch();
     }
 }
+
