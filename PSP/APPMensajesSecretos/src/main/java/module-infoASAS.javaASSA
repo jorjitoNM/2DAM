@@ -1,3 +1,4 @@
+/*
 module org.example.appmensajessecretos {
     requires javafx.controls;
     requires javafx.fxml;
@@ -11,4 +12,4 @@ module org.example.appmensajessecretos {
     exports org.example.appmensajessecretos;
     exports org.example.appmensajessecretos.ui;
     opens org.example.appmensajessecretos.ui to javafx.fxml;
-}
+}*/

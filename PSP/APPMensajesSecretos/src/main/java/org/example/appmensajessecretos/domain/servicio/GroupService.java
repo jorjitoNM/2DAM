@@ -3,15 +3,18 @@ package org.example.appmensajessecretos.domain.servicio;
 import org.example.appmensajessecretos.dao.DaoGroups;
 import org.example.appmensajessecretos.domain.modelo.Grupo;
 import org.example.appmensajessecretos.domain.modelo.Usuario;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class GroupService {
     private final DaoGroups dao;
 
-    public GroupService() {
-        dao = new DaoGroups();
+    public GroupService(DaoGroups dao) {
+        this.dao = dao;
     }
+
 
     public boolean joinGroup (Usuario user, Grupo group) {
         return dao.joinGroup(user, group);

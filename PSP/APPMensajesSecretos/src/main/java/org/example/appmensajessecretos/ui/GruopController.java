@@ -16,16 +16,18 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import org.example.appmensajessecretos.utilities.LogConstantes;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 @Log4j2
 public class GruopController {
 
-        private UserService userService;
+    private UserService userService;
     private MessageService messageService;
     private GroupService groupService;
     private Usuario usuario;
@@ -58,7 +60,7 @@ public class GruopController {
     @FXML
     private Label misChats;
     @FXML
-    private ListView<String> myChats;
+    private ListView<Grupo> myChats;
 
 
     @FXML
@@ -80,10 +82,10 @@ public class GruopController {
     private Label createGroupError;
 
 
-    public GruopController() {
-        userService = new UserService();
-        groupService = new GroupService();
-        messageService = new MessageService();
+    public GruopController(UserService userService, MessageService messageService, GroupService groupService) {
+        this.userService = userService;
+        this.messageService = messageService;
+        this.groupService = groupService;
         usuario = null;
     }
 
@@ -198,31 +200,8 @@ public class GruopController {
         }
     }
 
-    public void selectUser() {
-        TextInputDialog selectUser = new TextInputDialog();
-        selectUser.setTitle("Enviar mensaje a:");
-        selectUser.setContentText("Introduzca el nombre del destinatario");
-        Optional<String> respuesta = selectUser.showAndWait();
-    }
-
-
     private void actualizarUserInfo() {
         ObservableList<Grupo> chats = FXCollections.observableList(groupService.getGroups(usuario));
-        List<String> chatsString = new ArrayList<>();
-        chats.forEach(c -> chatsString.add(c.toString()));
-        ObservableList<String> chatsFormatted = FXCollections.observableArrayList(chatsString);
-        myChats.setItems(chatsFormatted);
-    }
-
-    public void enviarMensaje() {
-        /*if (!messageChecks())
-            log.error(Constantes.LOG_MISSING_FIELDS);
-        else{
-            Mensaje mensaje = new Mensaje(this.mensaje.getText(), LocalDateTime.now(), usuario, new Grupo(myChats.getEditingIndex()));
-        }*/
-    }
-
-    private boolean messageChecks() {
-        return (myChats.getEditingIndex() != -1) && (!mensaje.getText().isEmpty());
+        myChats.setItems(chats);
     }
 }

@@ -1,6 +1,7 @@
 package com.hospitalcrud.dao.respositories.statiC;
 
 import com.hospitalcrud.dao.model.MedicalRecord;
+import com.hospitalcrud.dao.model.Medication;
 import com.hospitalcrud.dao.respositories.MedicalRecordsDao;
 import org.springframework.stereotype.Repository;
 
@@ -28,6 +29,7 @@ public class MedicalRecordRepository implements MedicalRecordsDao {
         medicalRecords.add(new MedicalRecord(5, 3, 2, "Chlamydia"
                 , LocalDate.of(2022, 3, 19)
                 , new ArrayList<>()));
+        medicalRecords.forEach(mr -> mr.getMedications().add(new Medication(1,"Ibuprofen",0)));
         return medicalRecords.stream().filter(mr -> mr.getIdPatient()==idPatient).toList();
     }
     @Override

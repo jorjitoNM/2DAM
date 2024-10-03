@@ -11,4 +11,5 @@
     <dimen name="_68dp">68dp</dimen>
     <dimen name="_0.5">0.5</dimen>
     <dimen name="_1.0">1.0</dimen>
+    <dimen name="_25sp">25sp</dimen>
 </resources>
