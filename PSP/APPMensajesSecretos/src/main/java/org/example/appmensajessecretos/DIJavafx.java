@@ -26,7 +26,7 @@ public class DIJavafx extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         primaryStage.setMinWidth(1280);
         primaryStage.setMinHeight(720);
         primaryStage.setResizable(true);

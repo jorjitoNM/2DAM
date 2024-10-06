@@ -3,8 +3,4 @@
     <attr name="colorOnCustomColor" format="color" />
     <attr name="colorCustomColorContainer" format="color" />
     <attr name="colorOnCustomColorContainer" format="color" />
-    <attr name="colorCustomColor1" format="color" />
-    <attr name="colorOnCustomColor1" format="color" />
-    <attr name="colorCustomColor1Container" format="color" />
-    <attr name="colorOnCustomColor1Container" format="color" />
 </resources>

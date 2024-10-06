@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Log4j2
-public class GruopController {
+public class GroupController {
 
     private UserService userService;
     private MessageService messageService;
@@ -73,7 +73,7 @@ public class GruopController {
     private Label createGroupError;
 
 
-    public GruopController(UserService userService, MessageService messageService, GroupService groupService) {
+    public GroupController(UserService userService, MessageService messageService, GroupService groupService) {
         this.userService = userService;
         this.messageService = messageService;
         this.groupService = groupService;
@@ -183,8 +183,9 @@ public class GruopController {
     }
 
     private void actualizarUserInfo() {
+        myChats.getItems().clear();
         ObservableList<Grupo> chats = FXCollections.observableList(groupService.getGroups(usuario));
-        myChats.setItems(chats);
+        myChats.getItems().addAll(chats);
     }
 
     private boolean alertComfirmation (String message) {

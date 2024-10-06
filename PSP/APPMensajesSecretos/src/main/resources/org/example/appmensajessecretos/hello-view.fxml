@@ -3,7 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="1280.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.appmensajessecretos.ui.GruopController">
+<AnchorPane prefHeight="1280.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.appmensajessecretos.ui.GroupController">
+    <Label fx:id="enterUser" layoutX="35.0" layoutY="40.0" prefHeight="18.0" prefWidth="200.0" text="Introduzca el nombre de usuario" />
     <TextField fx:id="userName" layoutX="26.0" layoutY="82.0" prefHeight="26.0" prefWidth="200.0" />
     <Label fx:id="enterPassword" layoutX="58.0" layoutY="134.0" prefHeight="18.0" prefWidth="132.0" text="Introduzca la contraseña" />
     <TextField fx:id="userPassword" layoutX="26.0" layoutY="172.0" prefHeight="11.0" prefWidth="200.0" />
@@ -47,5 +48,5 @@
 
     <Label fx:id="chatActivoLabel" layoutX="815.0" layoutY="337.0" text="Chat" />
     <AnchorPane fx:id="chatActivo" layoutX="664.0" layoutY="372.0" prefHeight="282.0" prefWidth="330.0" />
-    <Label fx:id="enterUser" layoutX="370.0" layoutY="550.0" prefHeight="18.0" prefWidth="200.0" />
+    <Label fx:id="chatError" layoutX="370.0" layoutY="550.0" prefHeight="18.0" prefWidth="200.0" />
 </AnchorPane>

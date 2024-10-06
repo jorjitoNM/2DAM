@@ -4,9 +4,7 @@ import org.example.appmensajessecretos.domain.modelo.Grupo;
 import org.example.appmensajessecretos.domain.modelo.Usuario;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public class DaoGroups {
@@ -18,7 +16,8 @@ public class DaoGroups {
     }
 
     public boolean joinGroup(Usuario user, Grupo grupo) {
-        Grupo foundGroup = dataBase.loadGroups().stream()
+        List<Grupo> grupos = dataBase.loadGroups();
+        Grupo foundGroup = grupos.stream()
                 .filter(g -> g.getName().equals(grupo.getName()) && g.getPassword().equals(grupo.getPassword()))
                 .findFirst()
                 .orElse(null);
@@ -26,7 +25,7 @@ public class DaoGroups {
             return false;
         else if (!foundGroup.getMembers().contains(user)) {
             foundGroup.getMembers().add(user);
-            return true;
+            return dataBase.saveGroups(grupos);
         } else
             return false;
     }

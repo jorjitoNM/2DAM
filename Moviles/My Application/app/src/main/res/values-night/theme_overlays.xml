@@ -50,10 +50,6 @@
         <item name="colorOnCustomColor">@color/colorOnCustomColor_mediumContrast</item>
         <item name="colorCustomColorContainer">@color/colorCustomColorContainer_mediumContrast</item>
         <item name="colorOnCustomColorContainer">@color/colorOnCustomColorContainer_mediumContrast</item>
-        <item name="colorCustomColor1">@color/colorCustomColor1_mediumContrast</item>
-        <item name="colorOnCustomColor1">@color/colorOnCustomColor1_mediumContrast</item>
-        <item name="colorCustomColor1Container">@color/colorCustomColor1Container_mediumContrast</item>
-        <item name="colorOnCustomColor1Container">@color/colorOnCustomColor1Container_mediumContrast</item>
     </style>
     <style name="ThemeOverlay.AppTheme.HighContrast" parent="Theme.Material3.Dark.NoActionBar">
         <item name="colorPrimary">@color/md_theme_primary_highContrast</item>
@@ -106,9 +102,5 @@
         <item name="colorOnCustomColor">@color/colorOnCustomColor_highContrast</item>
         <item name="colorCustomColorContainer">@color/colorCustomColorContainer_highContrast</item>
         <item name="colorOnCustomColorContainer">@color/colorOnCustomColorContainer_highContrast</item>
-        <item name="colorCustomColor1">@color/colorCustomColor1_highContrast</item>
-        <item name="colorOnCustomColor1">@color/colorOnCustomColor1_highContrast</item>
-        <item name="colorCustomColor1Container">@color/colorCustomColor1Container_highContrast</item>
-        <item name="colorOnCustomColor1Container">@color/colorOnCustomColor1Container_highContrast</item>
     </style>
 </resources>

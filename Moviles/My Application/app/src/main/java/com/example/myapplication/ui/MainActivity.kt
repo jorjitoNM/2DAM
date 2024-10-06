@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.myapplication.R
+import com.example.myapplication.data.Repository
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.domain.usecases.AddBook
 import com.example.myapplication.domain.usecases.DeleteBook
@@ -18,13 +19,15 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private val  repository : Repository = Repository.getInstance()
+
 
     private val viewModel: MainViewModel by viewModels {
         MainViewModelFactory(
-            AddBook(),
-            DeleteBook(),
-            GetBooks(),
-            UpdateBook(),
+            AddBook(repository),
+            DeleteBook(repository),
+            GetBooks(repository),
+            UpdateBook(repository),
         )
     }
 
