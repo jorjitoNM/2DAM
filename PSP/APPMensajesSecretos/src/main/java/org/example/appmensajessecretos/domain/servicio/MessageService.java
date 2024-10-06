@@ -1,7 +1,5 @@
 package org.example.appmensajessecretos.domain.servicio;
 
-import javafx.scene.Group;
-import org.apache.logging.log4j.message.Message;
 import org.example.appmensajessecretos.dao.DaoMessages;
 import org.example.appmensajessecretos.domain.modelo.Grupo;
 import org.example.appmensajessecretos.domain.modelo.Mensaje;

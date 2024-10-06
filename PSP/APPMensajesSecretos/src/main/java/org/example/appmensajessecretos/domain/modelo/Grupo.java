@@ -1,7 +1,5 @@
 package org.example.appmensajessecretos.domain.modelo;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import lombok.Data;
 
 import java.util.ArrayList;
