@@ -10,10 +10,12 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.myapplication.R
 import com.example.myapplication.data.Repository
 import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.domain.model.Book
 import com.example.myapplication.domain.usecases.AddBook
 import com.example.myapplication.domain.usecases.DeleteBook
 import com.example.myapplication.domain.usecases.GetBooks
 import com.example.myapplication.domain.usecases.UpdateBook
+import com.example.myapplication.utils.StringProvider
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels {
         MainViewModelFactory(
+            StringProvider.instance(this),
             AddBook(repository),
             DeleteBook(repository),
             GetBooks(repository),
@@ -43,22 +46,28 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater).apply {
             setContentView(root)
         }
-        binding.submit.setOnClickListener {
-            Toast.makeText(this,binding.nameInput.text,Toast.LENGTH_LONG).show()
-        }
     }
 
     private fun observarViewModel() {
         viewModel.uiState.observe(this@MainActivity) { state ->
 
-            state.error?.let { error ->
+            state.mensaje?.let { error ->
                 Toast.makeText(this@MainActivity, error, Toast.LENGTH_SHORT).show()
                 viewModel.errorMostrado()
             }
 
-
-            if (state.error == null)
+            if (state.mensaje == null)
                 binding.editTextTextPersonName.setText(state.persona?.nombre)
+        }
+    }
+
+    private fun eventos() {
+
+        with(binding) {
+            update?.setOnClickListener {
+                viewModel.updateBook(Book(bookName?.text.toString(),
+                    bookAuthor?.text.toString(),ratingBar.rating,))
+            }
         }
     }
 }

@@ -5,6 +5,6 @@ import com.example.myapplication.domain.model.Book;
 
 class DeleteBook (private val repository : Repository) {
     operator fun invoke(book : Book) : Boolean {
-        return repository.deleteBook()
+        return repository.deleteBook(book)
     }
 }

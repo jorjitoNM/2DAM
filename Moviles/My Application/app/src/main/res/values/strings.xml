@@ -8,4 +8,9 @@
     <string name="previous"><![CDATA[<]]></string>
     <string name="next"><![CDATA[>]]></string>
     <string name="author">Author</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="add">Add</string>
+    <string name="addError">No se ha podido añadir un nuevo libro</string>
+    <string name="releasedate">Release date</string>
 </resources>

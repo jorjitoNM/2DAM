@@ -4,5 +4,5 @@ import com.example.myapplication.domain.model.Book
 
 data class MainState(
     val book : Book = Book(),
-    val error : String? = null,
+    val mensaje : String? = null,
 )
