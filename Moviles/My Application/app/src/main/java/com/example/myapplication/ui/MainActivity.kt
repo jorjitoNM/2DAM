@@ -1,6 +1,7 @@
 package com.example.myapplication.ui
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -13,7 +14,8 @@ import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.domain.model.Book
 import com.example.myapplication.domain.usecases.AddBook
 import com.example.myapplication.domain.usecases.DeleteBook
-import com.example.myapplication.domain.usecases.GetBooks
+import com.example.myapplication.domain.usecases.GetBook
+import com.example.myapplication.domain.usecases.GetBooksSize
 import com.example.myapplication.domain.usecases.UpdateBook
 import com.example.myapplication.utils.StringProvider
 
@@ -29,8 +31,9 @@ class MainActivity : AppCompatActivity() {
             StringProvider.instance(this),
             AddBook(repository),
             DeleteBook(repository),
-            GetBooks(repository),
+            GetBook(repository),
             UpdateBook(repository),
+            GetBooksSize(repository),
         )
     }
 
@@ -62,9 +65,10 @@ class MainActivity : AppCompatActivity() {
                 binding.bookName.setText(state.book.name)
                 binding.bookAuthor.setText(state.book.author)
                 binding.releaseDate.setText(state.book.releaseDate)
-                binding.ratingBar.rating(state.book.score)
+                binding.ratingBar.numStars(state.book.score)
             }
-            binding.previous.isEnabled == state.previous
+            binding.previous.isEnabled = state.previous
+            binding.next.isEnabled = state.next
         }
     }
 
@@ -75,8 +79,22 @@ class MainActivity : AppCompatActivity() {
                 viewModel.updateBook(Book(bookName.text.toString(),
                     bookAuthor.text.toString(),ratingBar.rating,))
             }
+            add.setOnClickListener {
+                viewModel.addBook(Book(bookName.text.toString(),
+                    bookAuthor.text.toString(),ratingBar.rating,))
+            }
+            delete.setOnClickListener {
+                viewModel.deleteBook(Book(bookName.text.toString(),
+                    bookAuthor.text.toString(),ratingBar.rating,))
+            }
             previous.setOnClickListener {
                 viewModel.previous()
+            }
+            next.setOnClickListener {
+                viewModel.next()
+            }
+            releaseDate.setOnClickListener {
+                viewModel.showCalendar()
             }
         }
     }

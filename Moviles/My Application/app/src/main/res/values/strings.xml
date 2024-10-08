@@ -12,5 +12,11 @@
     <string name="delete">Delete</string>
     <string name="add">Add</string>
     <string name="addError">No se ha podido añadir un nuevo libro</string>
+    <string name="updateError">No se ha podido actualizar el estado del libro</string>
+    <string name="bookNotFound">No se ha podido encontrar el libro</string>
+    <string name="deleteError">No se ha podido eliminar el libro</string>
+    <string name="errorAnterior">"No se ha podido mostrar el anterior libro"</string>
+    <string name="errorSiguiente">"No se ha podido mostrar el siguiente libro"</string>
     <string name="releasedate">Release date</string>
+    <string name="selectDate">Seleccione la feha de publicacion</string>
 </resources>

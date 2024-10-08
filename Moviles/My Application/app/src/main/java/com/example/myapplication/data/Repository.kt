@@ -15,9 +15,11 @@ class Repository {
         books.add(Book("La biblia 3","Anonimo",3f,2000))
     }
 
-    fun addBook (book : Book) {
+    fun addBook (book : Book) : Boolean {
         if (books.any{b -> b.name != book.name && b.author != book.author})
-            books.add(book)
+            return books.add(book)
+        else
+            return false;
     }
 
     fun getBook(id : Int) : Book {
@@ -36,5 +38,9 @@ class Repository {
 
     fun deleteBook(book : Book): Boolean {
         return books.removeIf { b -> b.name == book.name && b.author == book.author}
+    }
+
+    fun getBooksSize(): Int {
+        return books.size
     }
 }
