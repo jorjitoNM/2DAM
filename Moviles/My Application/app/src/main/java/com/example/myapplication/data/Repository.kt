@@ -20,8 +20,8 @@ class Repository {
             books.add(book)
     }
 
-    fun getBooks() : List<Book> {
-        return books
+    fun getBook(id : Int) : Book {
+        return books[id]
     }
     fun updateBook (book : Book) : Book {
         val foundBook = books.first { b ->

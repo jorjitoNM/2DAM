@@ -46,6 +46,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater).apply {
             setContentView(root)
         }
+        eventos()
+        observarViewModel()
     }
 
     private fun observarViewModel() {
@@ -56,17 +58,25 @@ class MainActivity : AppCompatActivity() {
                 viewModel.errorMostrado()
             }
 
-            if (state.mensaje == null)
-                binding.editTextTextPersonName.setText(state.persona?.nombre)
+            if (state.mensaje == null) {
+                binding.bookName.setText(state.book.name)
+                binding.bookAuthor.setText(state.book.author)
+                binding.releaseDate.setText(state.book.releaseDate)
+                binding.ratingBar.rating(state.book.score)
+            }
+            binding.previous.isEnabled == state.previous
         }
     }
 
     private fun eventos() {
 
         with(binding) {
-            update?.setOnClickListener {
-                viewModel.updateBook(Book(bookName?.text.toString(),
-                    bookAuthor?.text.toString(),ratingBar.rating,))
+            update.setOnClickListener {
+                viewModel.updateBook(Book(bookName.text.toString(),
+                    bookAuthor.text.toString(),ratingBar.rating,))
+            }
+            previous.setOnClickListener {
+                viewModel.previous()
             }
         }
     }

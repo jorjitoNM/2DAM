@@ -58,6 +58,10 @@ class MainViewModel (
     fun errorMostrado() {
         _uiState.value = _uiState.value?.copy(mensaje = null)
     }
+
+    fun previous() {
+        _uiState.value = _uiState.value?.copy(book = getBook())
+    }
 }
 
 

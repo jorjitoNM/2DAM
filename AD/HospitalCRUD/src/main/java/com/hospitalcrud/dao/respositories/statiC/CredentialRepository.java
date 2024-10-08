@@ -1,4 +1,4 @@
-package com.hospitalcrud.dao.respositories;
+package com.hospitalcrud.dao.respositories.statiC;
 
 import com.hospitalcrud.dao.model.Credential;
 import lombok.Data;

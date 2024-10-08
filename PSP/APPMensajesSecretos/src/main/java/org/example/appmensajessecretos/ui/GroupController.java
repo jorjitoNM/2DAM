@@ -1,5 +1,6 @@
 package org.example.appmensajessecretos.ui;
 
+import javafx.scene.input.MouseEvent;
 import lombok.extern.log4j.Log4j2;
 import org.example.appmensajessecretos.domain.servicio.GroupService;
 import org.example.appmensajessecretos.domain.servicio.MessageService;
@@ -173,11 +174,11 @@ public class GroupController {
             }
         }
     }
-    public void sendMessage () {
+    public void sendGroupMessage() {
         if (checkLogged()) {
             if (this.mensaje.getText().isEmpty() || !myChats.isFocused())
                 sendMessageError.setText(Constantes.RELLENE_CAMPOS);
-            else if (!messageService.send(this.mensaje.getText(),usuario,myChats.getSelectionModel().getSelectedItem()))
+            else if (!messageService.sendGroupMessages(this.mensaje.getText(),usuario,myChats.getSelectionModel().getSelectedItem()))
                 sendMessageError.setText(Constantes.ERROR_SENDING_MESSAGE);
         }
     }
@@ -195,5 +196,12 @@ public class GroupController {
         confirmation.showAndWait();
         confirmation.close();
         return confirmation.getResult().equals(ButtonType.OK);
+    }
+
+    public void loadUserChats(MouseEvent mouseEvent) {
+        if (checkLogged()) {
+            messageService.getGroupMessages(myChats.getSelectionModel().getSelectedItem());
+            messageService.getMessages(usuario);
+        }
     }
 }

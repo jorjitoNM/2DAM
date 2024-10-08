@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.example.appmensajessecretos.config.ConfigurationFicheros;
 import org.example.appmensajessecretos.domain.modelo.Grupo;
 import org.example.appmensajessecretos.domain.modelo.Mensaje;
+import org.example.appmensajessecretos.domain.modelo.MensajeGrupo;
 import org.example.appmensajessecretos.domain.modelo.Usuario;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +37,7 @@ public class DataBase {
         List<Usuario> users = null;
         try {
             users = gson.fromJson(
-                    new FileReader(configuration.getPathJsonUsuarios()),userListType
+                    new FileReader(configuration.getPathUsuarios()),userListType
             );
             if (users == null)
                 users = new ArrayList<>();
@@ -46,7 +47,7 @@ public class DataBase {
        return users;
    }
    public boolean saveUsers (List<Usuario> users) {
-       try (FileWriter fw = new FileWriter(configuration.getPathJsonUsuarios())) {
+       try (FileWriter fw = new FileWriter(configuration.getPathUsuarios())) {
            gson.toJson(users, fw);
        } catch (IOException e) {
            log.error(e.getMessage(),e);
@@ -60,7 +61,7 @@ public class DataBase {
         List<Mensaje> messages = null;
         try {
             messages = gson.fromJson(
-                    new FileReader(configuration.getPathJsonMensajes()), messageListType
+                    new FileReader(configuration.getPathMensajes()), messageListType
             );
             if (messages == null)
                 messages = new ArrayList<>();
@@ -70,7 +71,7 @@ public class DataBase {
         return messages;
     }
     public boolean saveMessages(List<Mensaje> mensajes) {
-       try (FileWriter fw = new FileWriter(configuration.getPathJsonMensajes())) {
+       try (FileWriter fw = new FileWriter(configuration.getPathMensajes())) {
            gson.toJson(mensajes,fw);
        } catch (IOException e) {
            log.error(e.getMessage(),e);
@@ -79,12 +80,36 @@ public class DataBase {
        return true;
     }
 
+    public List<MensajeGrupo> loadGroupMessages() {
+        Type messageGrupoListType = new TypeToken<ArrayList<MensajeGrupo>> () {}.getType();
+        List<MensajeGrupo> messages = null;
+        try {
+            messages = gson.fromJson(
+                    new FileReader(configuration.getPathMensajesGrupo()), messageGrupoListType
+            );
+            if (messages == null)
+                messages = new ArrayList<>();
+        } catch (FileNotFoundException e) {
+            log.error(e.getMessage(),e);
+        }
+        return messages;
+    }
+    public boolean saveGroupMessages(List<MensajeGrupo> mensajes) {
+        try (FileWriter fw = new FileWriter(configuration.getPathMensajesGrupo())) {
+            gson.toJson(mensajes,fw);
+        } catch (IOException e) {
+            log.error(e.getMessage(),e);
+            return true;
+        }
+        return true;
+    }
+
     public List<Grupo> loadGroups() {
         Type groupListType = new TypeToken<ArrayList<Grupo>> () {}.getType();
         List<Grupo> groups = null;
         try {
             groups = gson.fromJson(
-                    new FileReader(configuration.getPathJsonGrupos()), groupListType
+                    new FileReader(configuration.getPathGrupos()), groupListType
             );
             if (groups == null)
                 groups = new ArrayList<>();
@@ -94,7 +119,7 @@ public class DataBase {
         return groups;
     }
     public boolean saveGroups(List<Grupo> groups) {
-        try (FileWriter fw = new FileWriter(configuration.getPathJsonGrupos())) {
+        try (FileWriter fw = new FileWriter(configuration.getPathGrupos())) {
             gson.toJson(groups,fw);
         } catch (IOException e) {
             log.error(e.getMessage(),e);

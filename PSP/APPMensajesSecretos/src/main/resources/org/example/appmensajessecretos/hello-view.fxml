@@ -37,12 +37,12 @@
 
 
     <Label fx:id="misChats" layoutX="100.0" layoutY="337.0" text="Mis Chats" />
-    <ListView fx:id="myChats" layoutX="19.0" layoutY="372.0" prefHeight="200.0" prefWidth="237.0" />
+    <ListView fx:id="myChats" layoutX="19.0" layoutY="372.0" prefHeight="200.0" prefWidth="237.0" onMouseClicked="#loadUserChats" />
 
 
     <Label fx:id="mensajeLabel" layoutX="398.0" layoutY="337.0" text="Introduzca el mensaje" />
     <TextArea fx:id="mensaje" layoutX="356.0" layoutY="374.0" prefHeight="106.0" prefWidth="200.0" />
-    <Button fx:id="envioGrupo" layoutX="400.0" layoutY="501.0" mnemonicParsing="false" onAction="#sendMessage" text="Enviar mensaje" />
+    <Button fx:id="envioGrupo" layoutX="400.0" layoutY="501.0" mnemonicParsing="false" onAction="#sendGroupMessage" text="Enviar mensaje" />
     <Label fx:id="sendMessageError" layoutX="1026.0" layoutY="350.0" prefHeight="18.0" prefWidth="200.0" />
 
 
