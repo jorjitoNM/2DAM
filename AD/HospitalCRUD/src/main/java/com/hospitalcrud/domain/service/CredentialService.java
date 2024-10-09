@@ -1,7 +1,7 @@
 package com.hospitalcrud.domain.service;
 
 import com.hospitalcrud.dao.model.Credential;
-import com.hospitalcrud.dao.respositories.statiC.CredentialRepository;
+import com.hospitalcrud.dao.respositories.CredentialRepository;
 import com.hospitalcrud.domain.model.CredentialUI;
 import org.springframework.stereotype.Service;
 

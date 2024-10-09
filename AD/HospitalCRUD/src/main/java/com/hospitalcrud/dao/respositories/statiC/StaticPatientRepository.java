@@ -1,7 +1,7 @@
 package com.hospitalcrud.dao.respositories.statiC;
 
 import com.hospitalcrud.dao.model.Patient;
-import com.hospitalcrud.dao.respositories.PatientDao;
+import com.hospitalcrud.dao.respositories.PatientRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class PatientRepostory implements PatientDao {
+public class StaticPatientRepository implements PatientRepository {
 
 
     public List<Patient> getAll() {

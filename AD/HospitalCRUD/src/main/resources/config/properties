@@ -1,0 +1,2 @@
+pathPatients = data/patients.csv
+pathDoctors = data/doctors.csv

@@ -3,8 +3,8 @@ package com.hospitalcrud.domain.service;
 
 import com.hospitalcrud.dao.model.MedicalRecord;
 import com.hospitalcrud.dao.model.Medication;
-import com.hospitalcrud.dao.respositories.statiC.MedicalRecordRepository;
-import com.hospitalcrud.dao.respositories.statiC.MedicationsRepository;
+import com.hospitalcrud.dao.respositories.MedicalRecordsRepository;
+import com.hospitalcrud.dao.respositories.statiC.StaticMedicationsRepository;
 import com.hospitalcrud.domain.model.MedicalRecordUI;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +14,16 @@ import java.util.List;
 
 @Service
 public class MedicalRecordService {
-    private final MedicalRecordRepository medicalRecordRepository;
-    private final MedicationsRepository medicationsRepository;
+    private final MedicalRecordsRepository medicalRecordsRepository;
+    private final StaticMedicationsRepository medicationsRepository;
 
-    public MedicalRecordService(MedicalRecordRepository medicalRecordRepository) {
-        this.medicalRecordRepository = medicalRecordRepository;
-        this.medicationsRepository = new MedicationsRepository();
+    public MedicalRecordService(MedicalRecordsRepository medicalRecordsRepository) {
+        this.medicalRecordsRepository = medicalRecordsRepository;
+        this.medicationsRepository = new StaticMedicationsRepository();
     }
 
     public int addMedicalRecord(MedicalRecordUI medicalRecordUI) {
-        return medicalRecordRepository.save(new MedicalRecord(medicalRecordUI.getId(),
+        return medicalRecordsRepository.save(new MedicalRecord(medicalRecordUI.getId(),
                 medicalRecordUI.getIdPatient(), medicalRecordUI.getIdDoctor(),
                 medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),
                 parseMedications(medicalRecordUI.getMedications(),medicalRecordUI.getId())));
@@ -41,7 +41,7 @@ public class MedicalRecordService {
 
     public List<MedicalRecordUI> getMedicalRecords(int idPatient) {
         List<MedicalRecordUI> medicalRecordsUI = new ArrayList<MedicalRecordUI>();
-        medicalRecordRepository.getAll(idPatient).forEach(mr ->
+        medicalRecordsRepository.getAll(idPatient).forEach(mr ->
                 medicalRecordsUI.add(new MedicalRecordUI(mr.getId(), mr.getDiagnosis(), mr.getDate().toString(),
                         mr.getIdPatient(), mr.getIdDoctor(), parseStringMedications(mr.getMedications()))));
         return medicalRecordsUI;
@@ -54,11 +54,11 @@ public class MedicalRecordService {
     }
 
     public void deleteMedicalRecord(int id) {
-        medicalRecordRepository.delete(id);
+        medicalRecordsRepository.delete(id);
     }
 
     public void updateMedicalRecord(MedicalRecordUI medicalRecordUI) {
-        medicalRecordRepository.update(new MedicalRecord(medicalRecordUI.getId(), medicalRecordUI.getIdPatient()
+        medicalRecordsRepository.update(new MedicalRecord(medicalRecordUI.getId(), medicalRecordUI.getIdPatient()
                 , medicalRecordUI.getIdDoctor(), medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),parseMedications(medicalRecordUI.getMedications(),medicalRecordUI.getId())));
     }
 }

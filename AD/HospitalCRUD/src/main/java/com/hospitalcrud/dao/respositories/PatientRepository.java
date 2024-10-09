@@ -4,7 +4,7 @@ import com.hospitalcrud.dao.model.Patient;
 
 import java.util.List;
 
-public interface PatientDao {
+public interface PatientRepository {
     List<Patient> getAll();
     int save(Patient patient);
     void update(Patient patient);

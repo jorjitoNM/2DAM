@@ -9,15 +9,30 @@ import java.util.List;
 
 @Data
 @Repository
-public class CredentialRepository {
+public class StaticCredentialRepository implements com.hospitalcrud.dao.respositories.CredentialRepository {
     private final Credential root = new Credential("root", "quevedo2dam",-1);
     private final List<Credential> credentials = new ArrayList<>();
 
-    public void add(Credential credential) {
+    public void save(Credential credential) {
         credentials.add(credential);
     }
 
     public boolean login(Credential userCredentials) {
         return userCredentials.getUserName().equals(root.getUserName()) && userCredentials.getPassword().equals(root.getPassword());
+    }
+
+    @Override
+    public List<Credential> getAll() {
+        return List.of();
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
+
+    @Override
+    public void update(Credential credential) {
+
     }
 }

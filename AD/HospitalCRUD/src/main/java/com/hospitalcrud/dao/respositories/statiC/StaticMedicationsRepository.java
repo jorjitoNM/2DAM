@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class MedicationsRepository {
+public class StaticMedicationsRepository {
     public List<Medication> getAll () {
         List<Medication> medications = new ArrayList<>();
         medications.add(new Medication(1,"Ibuprofen",0));

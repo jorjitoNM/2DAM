@@ -4,7 +4,7 @@ import com.hospitalcrud.dao.model.MedicalRecord;
 
 import java.util.List;
 
-public interface MedicalRecordsDao {
+public interface MedicalRecordsRepository {
     List<MedicalRecord> getAll(int idPatient);
     void delete(int id);
     int save(MedicalRecord medicalRecord);
