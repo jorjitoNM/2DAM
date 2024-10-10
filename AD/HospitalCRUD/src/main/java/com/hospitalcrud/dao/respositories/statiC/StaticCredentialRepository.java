@@ -2,13 +2,14 @@ package com.hospitalcrud.dao.respositories.statiC;
 
 import com.hospitalcrud.dao.model.Credential;
 import lombok.Data;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @Repository
+@Profile("static")
 public class StaticCredentialRepository implements com.hospitalcrud.dao.respositories.CredentialRepository {
     private final Credential root = new Credential("root", "quevedo2dam",-1);
     private final List<Credential> credentials = new ArrayList<>();

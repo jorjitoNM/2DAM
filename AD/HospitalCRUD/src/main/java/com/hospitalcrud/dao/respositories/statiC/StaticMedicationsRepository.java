@@ -1,12 +1,14 @@
 package com.hospitalcrud.dao.respositories.statiC;
 
 import com.hospitalcrud.dao.model.Medication;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Profile("static")
 public class StaticMedicationsRepository {
     public List<Medication> getAll () {
         List<Medication> medications = new ArrayList<>();

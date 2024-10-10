@@ -21,7 +21,7 @@ public class MessageService {
     public boolean sendGroupMessages(String text, Usuario usuario, Grupo group) {
         return dao.sendGroupMessage(text,usuario,group);
     }
-    public boolean sendMessages(String text, Usuario usuario, ArrayList<Usuario> receivers) {
+    public boolean sendMessage(String text, Usuario usuario, ArrayList<Usuario> receivers) {
         return dao.sendMessage(text,usuario,receivers);
     }
     public List<MensajeGrupo> getGroupMessages(Grupo group) {

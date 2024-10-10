@@ -1,7 +1,5 @@
 package org.example.appmensajessecretos.ui;
 
-import javafx.scene.input.MouseEvent;
-import lombok.extern.log4j.Log4j2;
 import org.example.appmensajessecretos.domain.servicio.GroupService;
 import org.example.appmensajessecretos.domain.servicio.MessageService;
 import org.example.appmensajessecretos.utilities.Constantes;
@@ -12,12 +10,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import org.example.appmensajessecretos.utilities.LogConstantes;
 import org.springframework.stereotype.Component;
 
 @Component
-@Log4j2
 public class GroupController {
 
     private UserService userService;
@@ -60,10 +56,9 @@ public class GroupController {
     @FXML
     private Label sendMessageError;
 
+
     @FXML
-    private Label chatActivoLabel;
-    @FXML
-    private AnchorPane chatActivo;
+    private ListView<String> mensajesGrupo;
 
 
     @FXML
@@ -90,9 +85,7 @@ public class GroupController {
                 usuario = new Usuario(userName.getText(), userPassword.getText());
                 userService.addUser(usuario);
                 succes = true;
-                log.info(LogConstantes.NUEVO_USUARIO);
             } else {
-                log.info(LogConstantes.LOGIN_FAILED);
                 logInError.setText(LogConstantes.LOGIN_FAILED);
             }
         } else
@@ -100,14 +93,12 @@ public class GroupController {
         if (succes) {
             usuario = new Usuario(userName.getText(), userPassword.getText());
             actualizarUserInfo();
-            log.info(LogConstantes.LOGGED_IN);
             logInError.setText(LogConstantes.LOGGED_IN);
         }
     }
 
     private boolean checkLogged() {
         if (usuario == null) {
-            log.info(LogConstantes.NOT_LOGGED);
             joinGroupError.setText(Constantes.NOT_LOGGED);
             return false;
         } else
@@ -122,10 +113,8 @@ public class GroupController {
                 Grupo grupo = new Grupo(createGroupName.getText(), createGroupPassword.getText());
                 if (!groupService.createGroup(grupo)) {
                     createGroupError.setText(Constantes.ERROR_CREATING_GROUP);
-                    log.error(LogConstantes.ERROR_CREATING_GROUP);
                 } else {
                     createGroupError.setText(Constantes.GROUP_CREATED);
-                    log.info(Constantes.GROUP_CREATED);
                     actualizarUserInfo();
                 }
             }
@@ -140,13 +129,10 @@ public class GroupController {
                 Grupo grupo = new Grupo(groupName.getText(), groupPassword.getText());
                 if (!groupService.findGroup(grupo)) {
                     joinGroupError.setText(Constantes.GRUPO_NO_EXISTE);
-                    log.error(Constantes.GRUPO_NO_EXISTE);
                 } else if (!groupService.joinGroup(usuario, grupo)) {
                     joinGroupError.setText(Constantes.ERROR_JOINING_GROUP);
-                    log.error(Constantes.ERROR_JOINING_GROUP);
                 } else {
                     joinGroupError.setText(Constantes.JOINED_GROUP);
-                    log.info(Constantes.JOINED_GROUP);
                     actualizarUserInfo();
                 }
             }
@@ -159,15 +145,12 @@ public class GroupController {
                 deleteError.setText(Constantes.RELLENE_CAMPOS);
             else if (!groupService.findUser(userNameDelete.getText(), groupNameDelete.getText())) {
                 deleteError.setText(Constantes.USER_NOT_FOUND);
-                log.info(LogConstantes.USER_NOT_FOUND);
             } else {
                 if (alertComfirmation(Constantes.MENSAJE_ELIMINAR_USUARIO)) {
                     if (!groupService.deleteMember(userNameDelete.getText(), groupNameDelete.getText())) {
-                        log.info(LogConstantes.ERROR_DELETING_USER);
                         deleteError.setText(Constantes.ERROR_DELETING_USER);
                     } else {
                         deleteError.setText(Constantes.MEMBER_DELETED);
-                        log.info(LogConstantes.MEMBER_DELETED);
                         actualizarUserInfo();
                     }
                 }
@@ -176,10 +159,18 @@ public class GroupController {
     }
     public void sendGroupMessage() {
         if (checkLogged()) {
-            if (this.mensaje.getText().isEmpty() || !myChats.isFocused())
+            if (mensaje.getText().isEmpty() || myChats.getEditingIndex() < 0)
                 sendMessageError.setText(Constantes.RELLENE_CAMPOS);
-            else if (!messageService.sendGroupMessages(this.mensaje.getText(),usuario,myChats.getSelectionModel().getSelectedItem()))
+            else if (!messageService.sendGroupMessages(mensaje.getText(),usuario,myChats.getSelectionModel().getSelectedItem()))
                 sendMessageError.setText(Constantes.ERROR_SENDING_MESSAGE);
+            else
+                loadUserChats();
+        }
+    }
+    public void sendMessage () {
+        if (checkLogged()) {
+            if (mensaje.getText().isEmpty())
+                sendMessageError.setText(Constantes.RELLENE_CAMPOS);
         }
     }
 
@@ -198,10 +189,11 @@ public class GroupController {
         return confirmation.getResult().equals(ButtonType.OK);
     }
 
-    public void loadUserChats(MouseEvent mouseEvent) {
+    public void loadUserChats() {
         if (checkLogged()) {
-            messageService.getGroupMessages(myChats.getSelectionModel().getSelectedItem());
-            messageService.getMessages(usuario);
+            messageService.getGroupMessages(myChats.getSelectionModel().getSelectedItem()).forEach(m ->
+                    mensajesGrupo.getItems().add(m.toString())
+            );
         }
     }
 }

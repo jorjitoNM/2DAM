@@ -3,6 +3,7 @@ package com.hospitalcrud.dao.respositories.textFiles;
 import com.hospitalcrud.dao.configuration.FilesConfiguration;
 import com.hospitalcrud.dao.mappers.PatientRowMapper;
 import com.hospitalcrud.dao.model.Patient;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
 
 import java.io.BufferedReader;
@@ -17,6 +18,7 @@ import java.util.List;
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
+@Log4j2
 @Repository
 public class TxtPatientRepository implements com.hospitalcrud.dao.respositories.PatientRepository {
     private final FilesConfiguration configuration;
@@ -25,6 +27,12 @@ public class TxtPatientRepository implements com.hospitalcrud.dao.respositories.
     public TxtPatientRepository(PatientRowMapper patientMapper) {
         this.patientMapper = patientMapper;
         this.configuration = FilesConfiguration.getInstance();
+        calculateID();
+    }
+    private void calculateID() {
+        List<Patient> patients = loadPatients();
+        int lastID = patients.get(patients.size() - 1).getId();
+        configuration.setID(lastID);
     }
 
     @Override
@@ -40,6 +48,7 @@ public class TxtPatientRepository implements com.hospitalcrud.dao.respositories.
             bw.append(patient.toStringFichero());
         }
         catch (IOException e) {
+            log.error(e.getMessage(),e);
             throw new RuntimeException(e);
         }
         return 0;
@@ -77,6 +86,7 @@ public class TxtPatientRepository implements com.hospitalcrud.dao.respositories.
             patients.forEach(p -> finalBw.write(p.toStringFichero()));
         }
         catch (IOException e) {
+            log.error(e.getMessage(),e);
             throw new RuntimeException(e);
         } finally {
             if (bw != null)
@@ -91,6 +101,7 @@ public class TxtPatientRepository implements com.hospitalcrud.dao.respositories.
             br = Files.newBufferedReader(Paths.get(configuration.getPathPatients()));
             br.lines().forEach(l -> patients.add(patientMapper.mapRow(l)));
         } catch (IOException e) {
+            log.error(e.getMessage(),e);
             throw new RuntimeException(e);
         }
         return patients;

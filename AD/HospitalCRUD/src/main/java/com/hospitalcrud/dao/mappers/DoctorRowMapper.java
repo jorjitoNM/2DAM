@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
 public class DoctorRowMapper {
     public Doctor mapRow (String doctor) {
         String[] parsed = doctor.split(Constantes.SEPARADOR_CSV);
-        return new Doctor(Integer.parseInt(parsed[0]),parsed[1],parsed[2]);
+        return new Doctor(Integer.parseInt(parsed[0].trim()),parsed[1].trim(),parsed[2].trim());
     }
 }

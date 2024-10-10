@@ -10,6 +10,6 @@ import java.time.LocalDate;
 public class PatientRowMapper {
     public Patient mapRow(String patient) {
         String[] parsed = patient.split(Constantes.SEPARADOR_CSV);
-        return new Patient(Integer.parseInt(parsed[0]),parsed[1],LocalDate.parse(parsed[2]),parsed[3]);
+        return new Patient(Integer.parseInt(parsed[0].trim()),parsed[1].trim(),LocalDate.parse(parsed[2].trim()),parsed[3].trim());
     }
 }

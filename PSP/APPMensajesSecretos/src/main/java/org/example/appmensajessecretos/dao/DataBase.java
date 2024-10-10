@@ -97,11 +97,11 @@ public class DataBase {
     public boolean saveGroupMessages(List<MensajeGrupo> mensajes) {
         try (FileWriter fw = new FileWriter(configuration.getPathMensajesGrupo())) {
             gson.toJson(mensajes,fw);
+            return true;
         } catch (IOException e) {
             log.error(e.getMessage(),e);
-            return true;
+            return false;
         }
-        return true;
     }
 
     public List<Grupo> loadGroups() {

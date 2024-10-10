@@ -10,4 +10,9 @@ public class MensajeGrupo {
     private final LocalDateTime date;
     private final Usuario author;
     private final Grupo grupo;
+
+    @Override
+    public String toString() {
+        return "De " + author + ":" + content + "(" + date + ")";
+    }
 }

@@ -20,11 +20,14 @@ public class DaoMessages {
     }
 
     public boolean sendGroupMessage(String text, Usuario usuario, Grupo group) {
-        List<Mensaje> mensajes = dataBase.loadMessages();
-        mensajes.add(new Mensaje(text, LocalDateTime.now(),usuario,group));
-        return dataBase.saveMessages(mensajes);
+        List<MensajeGrupo> mensajes = dataBase.loadGroupMessages();
+        mensajes.add(new MensajeGrupo(text, LocalDateTime.now(),usuario,group));
+        return dataBase.saveGroupMessages(mensajes);
     }
     public boolean sendMessage(String text, Usuario usuario, ArrayList<Usuario> receivers) {
+        List<Mensaje> mensajes = dataBase.loadMessages();
+        mensajes.add(new Mensaje(text, LocalDateTime.now(),usuario,receivers));
+        return dataBase.saveMessages(mensajes);
     }
 
     public List<Mensaje> loadMessages(Usuario user) {

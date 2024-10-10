@@ -1,5 +1,6 @@
 package com.hospitalcrud.dao.model;
 
+import com.hospitalcrud.dao.utilities.Constantes;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,6 +15,10 @@ public class MedicalRecord {
     private int idDoctor;
     private String diagnosis;
     private LocalDate date;
-    private List<Medication> medications;
+    private List<Medication> medications; //hace falta mapear las medicaciones
 
+    public String toStringFichero() {
+        return id + Constantes.SEPARADOR_CSV + idPatient + Constantes.SEPARADOR_CSV
+                + idDoctor + Constantes.SEPARADOR_CSV + diagnosis + Constantes.SEPARADOR_CSV + date + Constantes.SEPARADOR_CSV + medications + Constantes.SEPARADOR_CSV;
+    }
 }
