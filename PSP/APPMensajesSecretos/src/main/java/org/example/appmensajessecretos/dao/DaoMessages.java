@@ -24,9 +24,9 @@ public class DaoMessages {
         mensajes.add(new MensajeGrupo(text, LocalDateTime.now(),usuario,group));
         return dataBase.saveGroupMessages(mensajes);
     }
-    public boolean sendMessage(String text, Usuario usuario, ArrayList<Usuario> receivers) {
+    public boolean sendMessage(Mensaje mensaje) {
         List<Mensaje> mensajes = dataBase.loadMessages();
-        mensajes.add(new Mensaje(text, LocalDateTime.now(),usuario,receivers));
+        mensajes.add(mensaje);
         return dataBase.saveMessages(mensajes);
     }
 

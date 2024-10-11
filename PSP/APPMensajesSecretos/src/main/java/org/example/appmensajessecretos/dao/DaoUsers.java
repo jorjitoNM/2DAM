@@ -23,4 +23,7 @@ public class DaoUsers {
         dataBase.saveUsers(usuarios);
     }
 
+    public List<Usuario> loadUsers() {
+        return loadUsers();
+    }
 }

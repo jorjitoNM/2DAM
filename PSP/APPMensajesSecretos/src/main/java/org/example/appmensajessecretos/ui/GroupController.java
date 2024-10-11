@@ -1,5 +1,6 @@
 package org.example.appmensajessecretos.ui;
 
+import org.example.appmensajessecretos.domain.modelo.Mensaje;
 import org.example.appmensajessecretos.domain.servicio.GroupService;
 import org.example.appmensajessecretos.domain.servicio.MessageService;
 import org.example.appmensajessecretos.utilities.Constantes;
@@ -12,6 +13,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.example.appmensajessecretos.utilities.LogConstantes;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 public class GroupController {
@@ -58,7 +62,7 @@ public class GroupController {
 
 
     @FXML
-    private ListView<String> mensajesGrupo;
+    private ListView<String> mensajes;
 
 
     @FXML
@@ -67,6 +71,9 @@ public class GroupController {
     private TextField createGroupPassword;
     @FXML
     private Label createGroupError;
+
+    @FXML
+    private ListView usuarios;
 
 
     public GroupController(UserService userService, MessageService messageService, GroupService groupService) {
@@ -93,6 +100,7 @@ public class GroupController {
         if (succes) {
             usuario = new Usuario(userName.getText(), userPassword.getText());
             actualizarUserInfo();
+            loadUsers();
             logInError.setText(LogConstantes.LOGGED_IN);
         }
     }
@@ -164,14 +172,24 @@ public class GroupController {
             else if (!messageService.sendGroupMessages(mensaje.getText(),usuario,myChats.getSelectionModel().getSelectedItem()))
                 sendMessageError.setText(Constantes.ERROR_SENDING_MESSAGE);
             else
-                loadUserChats();
+                loadUserGroupChats();
         }
     }
     public void sendMessage () {
         if (checkLogged()) {
-            if (mensaje.getText().isEmpty())
+            if (mensaje.getText().isBlank() || usuarios.getSelectionModel().getSelectedIndex() < 0)
                 sendMessageError.setText(Constantes.RELLENE_CAMPOS);
+            else {
+                List<Usuario> selectedUsers = usuarios.getSelectionModel().getSelectedItems().stream().toList();
+                if (!messageService.sendMessage(new Mensaje(mensaje.getText(), LocalDateTime.now(), usuario, selectedUsers)))
+                    sendMessageError.setText(Constantes.ERROR_SENDING_MESSAGE);
+                else
+                    loadUserChats();
+            }
         }
+    }
+
+    private void loadUserChats() {
     }
 
     private void actualizarUserInfo() {
@@ -189,11 +207,17 @@ public class GroupController {
         return confirmation.getResult().equals(ButtonType.OK);
     }
 
-    public void loadUserChats() {
+    public void loadUserGroupChats() {
         if (checkLogged()) {
             messageService.getGroupMessages(myChats.getSelectionModel().getSelectedItem()).forEach(m ->
-                    mensajesGrupo.getItems().add(m.toString())
+                    mensajes.getItems().add(m.toString())
             );
         }
+    }
+    public void loadUsers () {
+        usuarios.getItems().clear();
+        List<Usuario> loadedUsers = userService.loadUsers().stream().filter(u -> !(u.getName().equals(usuario.getName()))).toList();
+        ObservableList<Usuario> formattedUsers = FXCollections.observableList(loadedUsers);
+        usuarios.getItems().addAll(formattedUsers);
     }
 }

@@ -23,7 +23,7 @@ public class GroupApplication implements ApplicationListener<DIJavafx.StageReady
     public void onApplicationEvent(DIJavafx.StageReadyEvent event) {
         try {
             Stage stage = event.getStage();
-            Parent fxmlParent = fxmlLoader.load(getClass().getResourceAsStream("hello-view.fxml"));
+            Parent fxmlParent = fxmlLoader.load(getClass().getResourceAsStream("grupos.fxml"));
             stage.setScene(new Scene(fxmlParent,1280,720));
             stage.show();
         } catch (IOException e) {
@@ -31,5 +31,6 @@ public class GroupApplication implements ApplicationListener<DIJavafx.StageReady
             e.printStackTrace();
             System.exit(0);
         }
+
     }
 }

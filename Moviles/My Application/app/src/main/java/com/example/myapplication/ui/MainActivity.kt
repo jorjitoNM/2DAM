@@ -1,7 +1,6 @@
 package com.example.myapplication.ui
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -64,8 +63,7 @@ class MainActivity : AppCompatActivity() {
             if (state.mensaje == null) {
                 binding.bookName.setText(state.book.name)
                 binding.bookAuthor.setText(state.book.author)
-                binding.releaseDate.setText(state.book.releaseDate)
-                binding.ratingBar.numStars(state.book.score)
+                binding.releaseDate.setText(state.book.releaseDate.toString())
             }
             binding.previous.isEnabled = state.previous
             binding.next.isEnabled = state.next
