@@ -21,11 +21,12 @@ public class MedicalRecordRowMapper {
         List<Medication> medications = new ArrayList<>();
         String[] lines = s.split(Constantes.SEPARADOR_SECUNDARIO);
         for (int i = 0; i < lines.length; i++) {
-            medications.add(new Medication(parseMedication(lines[i])));
+            //medications.add(new Medication(parseMedication(lines[i])));
         }
         return medications;
     }
 
     private Medication parseMedication(String line) {
+        return null;
     }
 }

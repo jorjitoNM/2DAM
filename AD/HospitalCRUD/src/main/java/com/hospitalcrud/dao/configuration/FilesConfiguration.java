@@ -21,7 +21,7 @@ public class FilesConfiguration {
         try {
             Properties p = new Properties();
             p.load(getClass().getClassLoader()
-                    .getResourceAsStream("config/config.properties"));
+                    .getResourceAsStream("config/properties"));
             this.pathPatients = p.getProperty("pathPatients");
             this.pathDoctors = p.getProperty("pathDoctors");
             this.pathMedicalRecords = p.getProperty("pathMedicalRecords");
