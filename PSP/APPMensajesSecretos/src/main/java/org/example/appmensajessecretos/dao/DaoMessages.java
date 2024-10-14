@@ -30,12 +30,12 @@ public class DaoMessages {
         return dataBase.saveMessages(mensajes);
     }
 
-    public List<Mensaje> loadMessages(Usuario user) {
-        return dataBase.loadMessages().stream().filter(m -> m.getReceivers().contains(user)).toList();
+    public List<Mensaje> loadMessages(Usuario user, ArrayList<Usuario> receivers) {
+        return dataBase.loadMessages().stream().filter(m -> m.getAuthor().getName().equals(user.getName()) && m.getReceivers().containsAll(receivers)).toList();
     }
 
     public List<MensajeGrupo> loadGroupMessages(Grupo group) {
-        return dataBase.loadGroupMessages().stream().filter(m -> m.getGrupo().getName() == group.getName()).toList();
+        return dataBase.loadGroupMessages().stream().filter(m -> m.getGrupo().getName().equals(group.getName())).toList();
     }
 
 

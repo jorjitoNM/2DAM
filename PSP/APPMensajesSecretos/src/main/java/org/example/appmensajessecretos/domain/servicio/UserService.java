@@ -15,7 +15,7 @@ public class UserService {
         this.dao = dao;
     }
 
-    public boolean findUser (Usuario user) {
+    public String findUser (Usuario user) {
         return dao.findUser(user);
     }
 

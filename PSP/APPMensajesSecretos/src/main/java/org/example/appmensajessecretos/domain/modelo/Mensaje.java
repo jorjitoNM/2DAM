@@ -13,7 +13,14 @@ public class Mensaje {
     private final ArrayList<Usuario> receivers;
 
     @Override
-    public String toString () {
-        return content;
+    public String toString() {
+        return "De " + author.getName() + " para " + parseReceivers() + ": " + content
+                + " (" + date.getDayOfMonth() + "/" + date.getMonth() + "/" + date.getYear() + ")";
+    }
+
+    private String parseReceivers() {
+        StringBuilder sb = new StringBuilder();
+        receivers.forEach(r -> sb.append(r.getName()).append(", "));
+        return sb.toString();
     }
 }

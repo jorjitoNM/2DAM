@@ -1,6 +1,7 @@
 package org.example.appmensajessecretos.dao;
 
 import org.example.appmensajessecretos.domain.modelo.Usuario;
+import org.example.appmensajessecretos.utilities.Constantes;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,9 +14,14 @@ public class DaoUsers {
         this.dataBase = dataBase;
     }
 
-    public boolean findUser(Usuario user) {
+    public String findUser(Usuario user) {
         List<Usuario> usuarios = dataBase.loadUsers();
-        return usuarios.contains(user);
+        Usuario us = usuarios.stream().filter(u -> u.getName().equals(user.getName())).findFirst().orElse(null);
+        if (us == null)
+            return null;
+        else if (!(us.getPassword().equals(user.getPassword())))
+            return Constantes.CONTRASEÑA_INCORRECTA;
+        else return Constantes.TODO_BIEN;
     }
     public void addUser(Usuario usuario) {
         List<Usuario> usuarios = dataBase.loadUsers();
@@ -24,6 +30,6 @@ public class DaoUsers {
     }
 
     public List<Usuario> loadUsers() {
-        return loadUsers();
+        return dataBase.loadUsers();
     }
 }

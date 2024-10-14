@@ -1,5 +1,6 @@
 package org.example.appmensajessecretos.ui;
 
+import javafx.scene.input.MouseEvent;
 import org.example.appmensajessecretos.domain.modelo.Mensaje;
 import org.example.appmensajessecretos.domain.servicio.GroupService;
 import org.example.appmensajessecretos.domain.servicio.MessageService;
@@ -15,6 +16,7 @@ import org.example.appmensajessecretos.utilities.LogConstantes;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -24,7 +26,6 @@ public class GroupController {
     private MessageService messageService;
     private GroupService groupService;
     private Usuario usuario;
-
 
 
     @FXML
@@ -52,6 +53,14 @@ public class GroupController {
 
 
     @FXML
+    private TextField createGroupName;
+    @FXML
+    private TextField createGroupPassword;
+    @FXML
+    private Label createGroupError;
+
+
+    @FXML
     private ListView<Grupo> myChats;
 
 
@@ -62,18 +71,14 @@ public class GroupController {
 
 
     @FXML
-    private ListView<String> mensajes;
+    private ListView<String> groupChats;
+
+    @FXML
+    private ListView<String> privateChats;
 
 
     @FXML
-    private TextField createGroupName;
-    @FXML
-    private TextField createGroupPassword;
-    @FXML
-    private Label createGroupError;
-
-    @FXML
-    private ListView usuarios;
+    private ListView<Usuario> usuarios;
 
 
     public GroupController(UserService userService, MessageService messageService, GroupService groupService) {
@@ -83,31 +88,38 @@ public class GroupController {
         usuario = null;
     }
 
+
     public void iniciarSesion() {
         boolean succes = false;
         if (userName.getText().isEmpty() || userPassword.getText().isEmpty())
             logInError.setText(Constantes.RELLENE_CAMPOS);
-        else if (!userService.findUser(new Usuario(userName.getText(), userPassword.getText()))) {
-            if (alertComfirmation(Constantes.USUARIO_MISSING)) {
-                usuario = new Usuario(userName.getText(), userPassword.getText());
-                userService.addUser(usuario);
+        else {
+            String answer = userService.findUser(new Usuario(userName.getText(), userPassword.getText()));
+            if (answer == null) {
+                if (alertComfirmation(Constantes.USUARIO_MISSING)) {
+                    usuario = new Usuario(userName.getText(), userPassword.getText());
+                    userService.addUser(usuario);
+                    succes = true;
+                } else {
+                    logInError.setText(LogConstantes.LOGIN_FAILED);
+
+                }
+            } else if (answer.equals(Constantes.CONTRASEÑA_INCORRECTA)) {
+                logInError.setText(answer);
+            } else
                 succes = true;
-            } else {
-                logInError.setText(LogConstantes.LOGIN_FAILED);
-            }
-        } else
-            succes = true;
+        }
         if (succes) {
             usuario = new Usuario(userName.getText(), userPassword.getText());
             actualizarUserInfo();
-            loadUsers();
             logInError.setText(LogConstantes.LOGGED_IN);
+            loadUsers();
         }
     }
 
     private boolean checkLogged() {
         if (usuario == null) {
-            joinGroupError.setText(Constantes.NOT_LOGGED);
+            logInError.setText(Constantes.NOT_LOGGED);
             return false;
         } else
             return true;
@@ -165,22 +177,24 @@ public class GroupController {
             }
         }
     }
+
     public void sendGroupMessage() {
         if (checkLogged()) {
-            if (mensaje.getText().isEmpty() || myChats.getEditingIndex() < 0)
+            if (myChats.getSelectionModel().isEmpty() || mensaje.getText().isBlank())
                 sendMessageError.setText(Constantes.RELLENE_CAMPOS);
-            else if (!messageService.sendGroupMessages(mensaje.getText(),usuario,myChats.getSelectionModel().getSelectedItem()))
+            else if (!messageService.sendGroupMessages(mensaje.getText(), usuario, myChats.getSelectionModel().getSelectedItem()))
                 sendMessageError.setText(Constantes.ERROR_SENDING_MESSAGE);
             else
                 loadUserGroupChats();
         }
     }
-    public void sendMessage () {
+
+    public void sendMessage() {
         if (checkLogged()) {
-            if (mensaje.getText().isBlank() || usuarios.getSelectionModel().getSelectedIndex() < 0)
+            if (mensaje.getText().isBlank() || usuarios.getSelectionModel().isEmpty())
                 sendMessageError.setText(Constantes.RELLENE_CAMPOS);
             else {
-                List<Usuario> selectedUsers = usuarios.getSelectionModel().getSelectedItems().stream().toList();
+                ArrayList<Usuario> selectedUsers = new ArrayList<>(usuarios.getSelectionModel().getSelectedItems());
                 if (!messageService.sendMessage(new Mensaje(mensaje.getText(), LocalDateTime.now(), usuario, selectedUsers)))
                     sendMessageError.setText(Constantes.ERROR_SENDING_MESSAGE);
                 else
@@ -189,16 +203,21 @@ public class GroupController {
         }
     }
 
-    private void loadUserChats() {
-    }
-
     private void actualizarUserInfo() {
         myChats.getItems().clear();
         ObservableList<Grupo> chats = FXCollections.observableList(groupService.getGroups(usuario));
         myChats.getItems().addAll(chats);
     }
 
-    private boolean alertComfirmation (String message) {
+    public void loadUsers() {
+        usuarios.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        usuarios.getItems().clear();
+        List<Usuario> loadedUsers = userService.loadUsers().stream().filter(u -> !(u.getName().equals(usuario.getName()))).toList();
+        ObservableList<Usuario> formattedUsers = FXCollections.observableList(loadedUsers);
+        usuarios.getItems().addAll(formattedUsers);
+    }
+
+    private boolean alertComfirmation(String message) {
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
         confirmation.setTitle(Constantes.COMFIRMACION);
         confirmation.setHeaderText(message);
@@ -208,16 +227,27 @@ public class GroupController {
     }
 
     public void loadUserGroupChats() {
-        if (checkLogged()) {
-            messageService.getGroupMessages(myChats.getSelectionModel().getSelectedItem()).forEach(m ->
-                    mensajes.getItems().add(m.toString())
-            );
-        }
+        groupChats.getItems().clear();
+        messageService.getGroupMessages(myChats.getSelectionModel().getSelectedItem()).forEach(m ->
+                groupChats.getItems().add(m.toString())
+        );
     }
-    public void loadUsers () {
-        usuarios.getItems().clear();
-        List<Usuario> loadedUsers = userService.loadUsers().stream().filter(u -> !(u.getName().equals(usuario.getName()))).toList();
-        ObservableList<Usuario> formattedUsers = FXCollections.observableList(loadedUsers);
-        usuarios.getItems().addAll(formattedUsers);
+
+    private void loadUserChats() {
+        privateChats.getItems().clear();
+        ArrayList<Usuario> selectedUsers = new ArrayList<>(usuarios.getSelectionModel().getSelectedItems());
+        messageService.getMessages(usuario,selectedUsers).forEach(m ->
+                privateChats.getItems().add(m.toString())
+        );
+    }
+
+    public void loadGroupChats() {
+        if (!myChats.getSelectionModel().isEmpty())
+            loadUserGroupChats();
+    }
+
+    public void loadPrivateChats() {
+        if (!usuarios.getSelectionModel().isEmpty())
+            loadUserChats();
     }
 }

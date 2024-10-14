@@ -13,6 +13,7 @@ public class MensajeGrupo {
 
     @Override
     public String toString() {
-        return "De " + author + ":" + content + "(" + date + ")";
+        return "De " + author.getName() + ": " + content
+                + " (" + date.getDayOfMonth() + "/" + date.getMonth() + "/" + date.getYear() + ")";
     }
 }

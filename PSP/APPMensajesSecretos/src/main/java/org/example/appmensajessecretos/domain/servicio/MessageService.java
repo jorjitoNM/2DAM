@@ -27,7 +27,7 @@ public class MessageService {
     public List<MensajeGrupo> getGroupMessages(Grupo group) {
         return dao.loadGroupMessages(group);
     }
-    public List<Mensaje> getMessages(Usuario user) {
-        return dao.loadMessages(user);
+    public List<Mensaje> getMessages(Usuario user, ArrayList<Usuario> receivers) {
+        return dao.loadMessages(user,receivers);
     }
 }
