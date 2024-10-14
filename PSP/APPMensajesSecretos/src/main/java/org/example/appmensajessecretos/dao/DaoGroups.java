@@ -47,13 +47,17 @@ public class DaoGroups {
     }
 
     public boolean deleteMember(String userName, String groupName) {
-        Grupo grupo = dataBase.loadGroups().stream()
+        List<Grupo> grupos = dataBase.loadGroups();
+        Grupo grupo =grupos.stream()
                 .filter(g -> g.getName().equals(groupName))
                 .findFirst().orElse(null);
         if (grupo == null)
             return false;
-        else
-            return grupo.getMembers().removeIf(u -> u.getName().equals(userName));
+        else {
+            grupo.getMembers().removeIf(u -> u.getName().equals(userName));
+            dataBase.saveGroups(grupos);
+            return true;
+        }
     }
 
     public boolean findUser(String userName, String groupName) {

@@ -1,6 +1,5 @@
 package org.example.appmensajessecretos.ui;
 
-import javafx.scene.input.MouseEvent;
 import org.example.appmensajessecretos.domain.modelo.Mensaje;
 import org.example.appmensajessecretos.domain.servicio.GroupService;
 import org.example.appmensajessecretos.domain.servicio.MessageService;
@@ -12,7 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.example.appmensajessecretos.utilities.LogConstantes;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -101,8 +99,7 @@ public class GroupController {
                     userService.addUser(usuario);
                     succes = true;
                 } else {
-                    logInError.setText(LogConstantes.LOGIN_FAILED);
-
+                    logInError.setText(Constantes.LOGIN_FAILED);
                 }
             } else if (answer.equals(Constantes.CONTRASEÑA_INCORRECTA)) {
                 logInError.setText(answer);
@@ -112,7 +109,7 @@ public class GroupController {
         if (succes) {
             usuario = new Usuario(userName.getText(), userPassword.getText());
             actualizarUserInfo();
-            logInError.setText(LogConstantes.LOGGED_IN);
+            logInError.setText(Constantes.LOGGED_IN);
             loadUsers();
         }
     }

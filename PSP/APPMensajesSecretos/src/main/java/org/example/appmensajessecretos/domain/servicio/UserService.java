@@ -1,6 +1,5 @@
 package org.example.appmensajessecretos.domain.servicio;
 
-import javafx.collections.ObservableList;
 import org.example.appmensajessecretos.dao.DaoUsers;
 import org.example.appmensajessecretos.domain.modelo.Usuario;
 import org.springframework.stereotype.Service;
