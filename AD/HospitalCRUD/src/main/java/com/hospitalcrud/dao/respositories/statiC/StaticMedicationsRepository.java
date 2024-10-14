@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-@Profile("static")
+@Profile("inDevelopment")
 public class StaticMedicationsRepository {
     public List<Medication> getAll () {
         List<Medication> medications = new ArrayList<>();

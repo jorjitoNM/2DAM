@@ -4,6 +4,7 @@ import com.hospitalcrud.dao.configuration.FilesConfiguration;
 import com.hospitalcrud.dao.mappers.DoctorRowMapper;
 import com.hospitalcrud.dao.model.Doctor;
 import com.hospitalcrud.dao.respositories.DoctorsRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.io.BufferedReader;
@@ -13,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+@Profile("inDevelopment")
 @Repository
 public class TxtDoctorRepository implements DoctorsRepository {
     private final FilesConfiguration configuration;

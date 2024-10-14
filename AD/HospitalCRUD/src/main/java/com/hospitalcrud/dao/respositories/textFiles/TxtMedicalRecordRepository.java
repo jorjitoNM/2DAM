@@ -5,6 +5,7 @@ import com.hospitalcrud.dao.mappers.MedicalRecordRowMapper;
 import com.hospitalcrud.dao.model.MedicalRecord;
 import com.hospitalcrud.dao.respositories.MedicalRecordsRepository;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.io.BufferedReader;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+
 
 @Log4j2
 @Repository
@@ -55,14 +57,25 @@ public class TxtMedicalRecordRepository implements MedicalRecordsRepository {
             OpenOption option = TRUNCATE_EXISTING;
             bw = Files.newBufferedWriter(Paths.get(configuration.getPathPatients()),option);
             BufferedWriter finalBw = bw;
-            medicalRecords.forEach(p -> finalBw.write(p.toStringFichero()));
+            medicalRecords.forEach(p -> {
+                try {
+                    finalBw.write(p.toStringFichero());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         }
         catch (IOException e) {
             log.error(e.getMessage(),e);
             throw new RuntimeException(e);
         } finally {
-            if (bw != null)
-                bw.close();
+            if (bw != null) {
+                try {
+                    bw.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
         return false;
     }

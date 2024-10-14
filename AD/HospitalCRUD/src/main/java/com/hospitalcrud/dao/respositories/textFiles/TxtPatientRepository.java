@@ -4,6 +4,7 @@ import com.hospitalcrud.dao.configuration.FilesConfiguration;
 import com.hospitalcrud.dao.mappers.PatientRowMapper;
 import com.hospitalcrud.dao.model.Patient;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.io.BufferedReader;
@@ -18,6 +19,7 @@ import java.util.List;
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
+@Profile("inDevelopment")
 @Log4j2
 @Repository
 public class TxtPatientRepository implements com.hospitalcrud.dao.respositories.PatientRepository {
@@ -42,16 +44,27 @@ public class TxtPatientRepository implements com.hospitalcrud.dao.respositories.
 
     @Override
     public int save(Patient patient) {
+        BufferedWriter bw = null;
+        patient.setId(configuration.getLastID()+1);
         try {
             OpenOption option = APPEND;
-            BufferedWriter bw = Files.newBufferedWriter(Paths.get(configuration.getPathPatients()),option);
+            bw = Files.newBufferedWriter(Paths.get(configuration.getPathPatients()),option);
             bw.append(patient.toStringFichero());
         }
         catch (IOException e) {
             log.error(e.getMessage(),e);
             throw new RuntimeException(e);
+        } finally {
+            if (bw != null) {
+                try {
+                    bw.close();
+                } catch (IOException e) {
+                    log.error(e.getMessage(),e);
+                    throw new RuntimeException(e);
+                }
+            }
         }
-        return 0;
+        return patient.getId();
     }
 
     @Override
@@ -83,14 +96,25 @@ public class TxtPatientRepository implements com.hospitalcrud.dao.respositories.
             OpenOption option = TRUNCATE_EXISTING;
             bw = Files.newBufferedWriter(Paths.get(configuration.getPathPatients()),option);
             BufferedWriter finalBw = bw;
-            patients.forEach(p -> finalBw.write(p.toStringFichero()));
+            patients.forEach(p -> {
+                try {
+                    finalBw.write(p.toStringFichero());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         }
         catch (IOException e) {
             log.error(e.getMessage(),e);
             throw new RuntimeException(e);
         } finally {
-            if (bw != null)
-                bw.close();
+            if (bw != null) {
+                try {
+                    bw.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
         return false;
     }
@@ -103,6 +127,12 @@ public class TxtPatientRepository implements com.hospitalcrud.dao.respositories.
         } catch (IOException e) {
             log.error(e.getMessage(),e);
             throw new RuntimeException(e);
+        } finally {
+            try {
+                br.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         return patients;
     }

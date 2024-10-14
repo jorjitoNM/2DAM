@@ -9,8 +9,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Profile("inDevelopment")
 @Repository
-@Profile("static")
 public class StaticMedicalRecordsRepository implements com.hospitalcrud.dao.respositories.MedicalRecordsRepository {
     @Override
     public List<MedicalRecord> getAll(int idPatient) {
