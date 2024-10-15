@@ -5,6 +5,7 @@ import com.hospitalcrud.dao.respositories.CredentialRepository;
 import com.hospitalcrud.domain.model.CredentialUI;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class CredentialService {
     private final CredentialRepository credentialRepository;

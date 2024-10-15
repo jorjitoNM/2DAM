@@ -3,6 +3,7 @@ package com.hospitalcrud.dao.respositories.textFiles;
 import com.hospitalcrud.dao.configuration.FilesConfiguration;
 import com.hospitalcrud.dao.mappers.PatientRowMapper;
 import com.hospitalcrud.dao.model.Patient;
+import com.hospitalcrud.dao.respositories.PatientRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
@@ -11,7 +12,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 @Profile("inDevelopment")
 @Log4j2
 @Repository
-public class TxtPatientRepository implements com.hospitalcrud.dao.respositories.PatientRepository {
+public class TxtPatientRepository implements PatientRepository {
     private final FilesConfiguration configuration;
     private final PatientRowMapper patientMapper;
 
@@ -44,25 +44,15 @@ public class TxtPatientRepository implements com.hospitalcrud.dao.respositories.
 
     @Override
     public int save(Patient patient) {
-        BufferedWriter bw = null;
         patient.setId(configuration.getLastID()+1);
-        try {
-            OpenOption option = APPEND;
-            bw = Files.newBufferedWriter(Paths.get(configuration.getPathPatients()),option);
+        try (BufferedWriter bw =  Files.newBufferedWriter(Paths.get(configuration.getPathPatients()),APPEND)) {
             bw.append(patient.toStringFichero());
         }
         catch (IOException e) {
             log.error(e.getMessage(),e);
             throw new RuntimeException(e);
         } finally {
-            if (bw != null) {
-                try {
-                    bw.close();
-                } catch (IOException e) {
-                    log.error(e.getMessage(),e);
-                    throw new RuntimeException(e);
-                }
-            }
+            configuration.setID(patient.getId());
         }
         return patient.getId();
     }
@@ -83,56 +73,36 @@ public class TxtPatientRepository implements com.hospitalcrud.dao.respositories.
 
     @Override
     public void delete(int patientId, boolean confirmation) {
-        if (confirmation) {
+        //if (confirmation) {
             List<Patient> patients = loadPatients();
-            patients.remove(patientId);
+            patients.removeIf(p -> p.getId() == patientId);
             savePatients(patients);
-        }
+        //}
     }
 
     private boolean savePatients (List<Patient> patients) {
-        BufferedWriter bw = null;
-        try {
-            OpenOption option = TRUNCATE_EXISTING;
-            bw = Files.newBufferedWriter(Paths.get(configuration.getPathPatients()),option);
-            BufferedWriter finalBw = bw;
+        try (BufferedWriter bw = Files.newBufferedWriter(Paths.get(configuration.getPathPatients()), TRUNCATE_EXISTING)) {
             patients.forEach(p -> {
                 try {
-                    finalBw.write(p.toStringFichero());
+                    bw.write(p.toStringFichero());
                 } catch (IOException e) {
+                    log.error(e.getMessage(),e);
                     throw new RuntimeException(e);
                 }
             });
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             log.error(e.getMessage(),e);
             throw new RuntimeException(e);
-        } finally {
-            if (bw != null) {
-                try {
-                    bw.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
         }
         return false;
     }
     private List<Patient> loadPatients () {
         List<Patient> patients = new ArrayList<>();
-        BufferedReader br = null;
-        try {
-            br = Files.newBufferedReader(Paths.get(configuration.getPathPatients()));
+        try (BufferedReader br = Files.newBufferedReader(Paths.get(configuration.getPathPatients()))) {
             br.lines().forEach(l -> patients.add(patientMapper.mapRow(l)));
         } catch (IOException e) {
             log.error(e.getMessage(),e);
             throw new RuntimeException(e);
-        } finally {
-            try {
-                br.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
         return patients;
     }

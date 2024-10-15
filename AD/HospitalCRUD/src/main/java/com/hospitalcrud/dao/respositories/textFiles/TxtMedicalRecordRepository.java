@@ -19,7 +19,7 @@ import java.util.List;
 
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
-
+@Profile("txt")
 @Log4j2
 @Repository
 public class TxtMedicalRecordRepository implements MedicalRecordsRepository {

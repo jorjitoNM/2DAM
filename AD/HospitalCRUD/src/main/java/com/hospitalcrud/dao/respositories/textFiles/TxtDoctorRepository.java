@@ -4,16 +4,17 @@ import com.hospitalcrud.dao.configuration.FilesConfiguration;
 import com.hospitalcrud.dao.mappers.DoctorRowMapper;
 import com.hospitalcrud.dao.model.Doctor;
 import com.hospitalcrud.dao.respositories.DoctorsRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+@Log4j2
 @Profile("inDevelopment")
 @Repository
 public class TxtDoctorRepository implements DoctorsRepository {
@@ -30,11 +31,11 @@ public class TxtDoctorRepository implements DoctorsRepository {
     }
     private List<Doctor> loadDoctors() {
         List<Doctor> doctors = new ArrayList<>();
-        BufferedReader br = null;
         try {
-            br = Files.newBufferedReader(Paths.get(configuration.getPathDoctors()));
-            br.lines().forEach(l -> doctors.add(doctorMapper.mapRow(l)));
+            Files.readAllLines(Paths.get(configuration.getPathDoctors()))
+                    .forEach(l -> doctors.add(doctorMapper.mapRow(l)));
         } catch (IOException e) {
+            log.error(e.getMessage(),e);
             throw new RuntimeException(e);
         }
         return doctors;

@@ -2,6 +2,7 @@ package com.hospitalcrud.dao.respositories.statiC;
 
 import com.hospitalcrud.dao.model.MedicalRecord;
 import com.hospitalcrud.dao.model.Medication;
+import com.hospitalcrud.dao.respositories.MedicalRecordsRepository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Profile("inDevelopment")
 @Repository
-public class StaticMedicalRecordsRepository implements com.hospitalcrud.dao.respositories.MedicalRecordsRepository {
+public class StaticMedicalRecordsRepository implements MedicalRecordsRepository {
     @Override
     public List<MedicalRecord> getAll(int idPatient) {
         List<MedicalRecord> medicalRecords = new ArrayList<>();
