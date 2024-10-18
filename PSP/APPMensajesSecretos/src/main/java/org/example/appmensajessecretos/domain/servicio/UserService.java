@@ -2,36 +2,33 @@ package org.example.appmensajessecretos.domain.servicio;
 
 import org.example.appmensajessecretos.dao.DaoUsers;
 import org.example.appmensajessecretos.domain.modelo.Usuario;
-import org.example.appmensajessecretos.utilities.Constantes;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class UserService {
-    private DaoUsers dao;
+    private final DaoUsers dao;
 
     public UserService(DaoUsers dao) {
         this.dao = dao;
     }
 
-    public Usuario findUser (Usuario user) {
-        Usuario us = dao.findUser(user);
-        if (dao.findUser(user) == null)
+    public Usuario addUser (Usuario user) {
+        List<Usuario> users = dao.loadUsers();
+        Usuario us = users.stream().filter(u -> u.getName().equals(user.getName())).findFirst().orElse(null);
+        if (us == null)
             return null;
         else if (!(us.getPassword().equals(user.getPassword())))
             return new Usuario();
         else {
-            dao.addUser(user);
+            users.add(user);
+            dao.saveUsers(users);
             return user;
         }
     }
 
-    public void addUser(Usuario usuario) {
-        dao.addUser(usuario);
-    }
-
-    public List<Usuario> loadUsers() {
-        return dao.loadUsers();
+    public List<Usuario> loadUsers(Usuario user) {
+        return dao.loadUsers().stream().filter(u -> !(u.getName().equals(user.getName()))).toList();
     }
 }

@@ -13,14 +13,13 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class GroupController {
 
-    private UserService userService;
-    private MessageService messageService;
-    private GroupService groupService;
+    private final UserService userService;
+    private final MessageService messageService;
+    private final GroupService groupService;
     private Usuario usuario;
 
 
@@ -69,6 +68,7 @@ public class GroupController {
     @FXML
     private ListView<String> groupChats;
 
+
     @FXML
     private ListView<String> privateChats;
 
@@ -90,7 +90,7 @@ public class GroupController {
         if (userName.getText().isEmpty() || userPassword.getText().isEmpty())
             logInError.setText(Constantes.RELLENE_CAMPOS);
         else {
-            usuario = userService.findUser(new Usuario(userName.getText(), userPassword.getText()));
+            usuario = userService.addUser(new Usuario(userName.getText(), userPassword.getText()));
             if (usuario == null) {
                 if (alertComfirmation(Constantes.USUARIO_MISSING)) {
                     succes = true;
@@ -140,7 +140,7 @@ public class GroupController {
                 joinGroupError.setText(Constantes.RELLENE_CAMPOS);
             else {
                 Grupo grupo = new Grupo(groupName.getText(), groupPassword.getText());
-                if (!groupService.findGroup(grupo)) {
+                if (!groupService.findGroup(grupo)) { //se puede quitar al usar Either
                     joinGroupError.setText(Constantes.GRUPO_NO_EXISTE);
                 } else if (!groupService.joinGroup(usuario, grupo)) {
                     joinGroupError.setText(Constantes.ERROR_JOINING_GROUP);
@@ -156,7 +156,7 @@ public class GroupController {
         if (checkLogged()) {
             if (userNameDelete.getText().isEmpty() || groupNameDelete.getText().isEmpty())
                 deleteError.setText(Constantes.RELLENE_CAMPOS);
-            else if (!groupService.findUser(userNameDelete.getText(), groupNameDelete.getText())) {
+            else if (!groupService.findUser(userNameDelete.getText(), groupNameDelete.getText())) { //se puede quitar con el Either
                 deleteError.setText(Constantes.USER_NOT_FOUND);
             } else {
                 if (alertComfirmation(Constantes.MENSAJE_ELIMINAR_USUARIO)) {
@@ -187,8 +187,7 @@ public class GroupController {
             if (mensaje.getText().isBlank() || usuarios.getSelectionModel().isEmpty())
                 sendMessageError.setText(Constantes.RELLENE_CAMPOS);
             else {
-                List<Usuario> selectedUsers = new ArrayList<>(usuarios.getSelectionModel().getSelectedItems());
-                if (!messageService.sendMessage(new Mensaje(mensaje.getText(), LocalDateTime.now(), usuario, selectedUsers)))
+                if (!messageService.sendMessage(new Mensaje(mensaje.getText(), LocalDateTime.now(), usuario, new ArrayList<>(usuarios.getSelectionModel().getSelectedItems()))))
                     sendMessageError.setText(Constantes.ERROR_SENDING_MESSAGE);
                 else
                     loadUserChats();
@@ -204,8 +203,7 @@ public class GroupController {
     public void loadUsers() {
         usuarios.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         usuarios.getItems().clear();
-        List<Usuario> loadedUsers = userService.loadUsers().stream().filter(u -> !(u.getName().equals(usuario.getName()))).toList();
-        usuarios.getItems().addAll(loadedUsers);
+        usuarios.getItems().addAll(userService.loadUsers(usuario));
     }
 
     private boolean alertComfirmation(String message) {

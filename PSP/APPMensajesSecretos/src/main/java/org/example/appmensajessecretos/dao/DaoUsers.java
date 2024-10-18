@@ -13,13 +13,8 @@ public class DaoUsers {
         this.dataBase = dataBase;
     }
 
-    public Usuario findUser(Usuario user) {
-        return dataBase.loadUsers().stream().filter(u -> u.getName().equals(user.getName())).findFirst().orElse(null);
-    }
-    public void addUser(Usuario usuario) {
-        List<Usuario> usuarios = dataBase.loadUsers();
-        usuarios.add(usuario);
-        dataBase.saveUsers(usuarios);
+    public boolean saveUsers(List<Usuario> users) {
+        return dataBase.saveUsers(users);
     }
 
     public List<Usuario> loadUsers() {

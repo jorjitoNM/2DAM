@@ -2,7 +2,6 @@ package org.example.appmensajessecretos;
 
 import com.google.gson.*;
 import javafx.fxml.FXMLLoader;
-import org.example.appmensajessecretos.config.ConfigurationFicheros;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
@@ -35,9 +34,5 @@ public class Configuration {
                                 new JsonPrimitive(localDateTime.toString()))
 
                 .create();
-    }
-
-    public ConfigurationFicheros configurationFicheros() {
-        return new ConfigurationFicheros();
     }
 }

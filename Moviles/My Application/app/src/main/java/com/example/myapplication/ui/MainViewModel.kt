@@ -32,17 +32,6 @@ class MainViewModel (
         _uiState.value = MainState(book=Book())
     }
 
-
-    /*fun addBook(book: Book) {
-        if (!addBookUseCase(book)) {
-            _uiState.value = MainState(
-                book = _uiState.value.let{book},
-                mensaje = stringProvider.getString(R.string.addError),
-            )
-            _uiState.value = _uiState
-                .value?.copy(mensaje = Constants.ERROR)
-        }
-    }*/
     fun addBook(book: Book) {
         if (!addBookUseCase(book)) {
             _uiState.value = _uiState.value?.copy(mensaje = stringProvider.getString(R.string.addError))
