@@ -21,4 +21,5 @@ public class Constantes {
     public static final String TODO_BIEN = "Todo correcto";
     public static final String LOGGED_IN = "Logged in";
     public static final String LOGIN_FAILED = "No se ha podido iniciado sesion";
+    private Constantes () {}
 }

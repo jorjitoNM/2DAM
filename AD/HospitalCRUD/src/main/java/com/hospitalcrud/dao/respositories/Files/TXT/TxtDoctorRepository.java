@@ -1,4 +1,4 @@
-package com.hospitalcrud.dao.respositories.textFiles;
+package com.hospitalcrud.dao.respositories.Files.TXT;
 
 import com.hospitalcrud.dao.configuration.FilesConfiguration;
 import com.hospitalcrud.dao.mappers.DoctorRowMapper;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,10 +31,10 @@ public class TxtDoctorRepository implements DoctorsRepository {
     private List<Doctor> loadDoctors() {
         List<Doctor> doctors = new ArrayList<>();
         try {
-            Files.readAllLines(Paths.get(configuration.getPathDoctors()))
+            Files.readAllLines(configuration.getPathDoctors())
                     .forEach(l -> doctors.add(doctorMapper.mapRow(l)));
         } catch (IOException e) {
-            log.error(e.getMessage(),e);
+            //log.error(e.getMessage(),e);
             throw new RuntimeException(e);
         }
         return doctors;

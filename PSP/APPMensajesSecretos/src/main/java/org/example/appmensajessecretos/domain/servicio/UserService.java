@@ -2,6 +2,7 @@ package org.example.appmensajessecretos.domain.servicio;
 
 import org.example.appmensajessecretos.dao.DaoUsers;
 import org.example.appmensajessecretos.domain.modelo.Usuario;
+import org.example.appmensajessecretos.utilities.Constantes;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +15,16 @@ public class UserService {
         this.dao = dao;
     }
 
-    public String findUser (Usuario user) {
-        return dao.findUser(user);
+    public Usuario findUser (Usuario user) {
+        Usuario us = dao.findUser(user);
+        if (dao.findUser(user) == null)
+            return null;
+        else if (!(us.getPassword().equals(user.getPassword())))
+            return new Usuario();
+        else {
+            dao.addUser(user);
+            return user;
+        }
     }
 
     public void addUser(Usuario usuario) {

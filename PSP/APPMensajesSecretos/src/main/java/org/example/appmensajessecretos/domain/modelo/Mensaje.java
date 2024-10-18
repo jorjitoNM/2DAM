@@ -3,14 +3,14 @@ package org.example.appmensajessecretos.domain.modelo;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class Mensaje {
     private final String content;
     private final LocalDateTime date;
     private final Usuario author;
-    private final ArrayList<Usuario> receivers;
+    private final List<Usuario> receivers;
 
     @Override
     public String toString() {

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Profile("inDevelopment")
+@Profile("statiC")
 @Repository
 public class StaticMedicalRecordsRepository implements MedicalRecordsRepository {
     @Override
@@ -41,13 +41,17 @@ public class StaticMedicalRecordsRepository implements MedicalRecordsRepository 
     }
 
     @Override
-    public void update(MedicalRecord medicalRecord) {
+    public List<MedicalRecord> update(MedicalRecord medicalRecord) {
+        return null;
+    }
+
+    @Override
+    public void saveMedicalRecords(List<MedicalRecord> medicalRecords) {
 
     }
 
     @Override
     public void delete(int id) {
-
     }
 
 }

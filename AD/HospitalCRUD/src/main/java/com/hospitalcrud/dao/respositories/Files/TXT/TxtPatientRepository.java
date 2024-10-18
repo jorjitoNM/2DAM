@@ -1,4 +1,4 @@
-package com.hospitalcrud.dao.respositories.textFiles;
+package com.hospitalcrud.dao.respositories.Files.TXT;
 
 import com.hospitalcrud.dao.configuration.FilesConfiguration;
 import com.hospitalcrud.dao.mappers.PatientRowMapper;
@@ -45,7 +45,7 @@ public class TxtPatientRepository implements PatientRepository {
     @Override
     public int save(Patient patient) {
         patient.setId(configuration.getLastID()+1);
-        try (BufferedWriter bw =  Files.newBufferedWriter(Paths.get(configuration.getPathPatients()),APPEND)) {
+        try (BufferedWriter bw =  Files.newBufferedWriter(configuration.getPathPatients(),APPEND)) {
             bw.append(patient.toStringFichero());
         }
         catch (IOException e) {
@@ -81,7 +81,7 @@ public class TxtPatientRepository implements PatientRepository {
     }
 
     private boolean savePatients (List<Patient> patients) {
-        try (BufferedWriter bw = Files.newBufferedWriter(Paths.get(configuration.getPathPatients()), TRUNCATE_EXISTING)) {
+        try (BufferedWriter bw = Files.newBufferedWriter(configuration.getPathPatients(), TRUNCATE_EXISTING)) {
             patients.forEach(p -> {
                 try {
                     bw.write(p.toStringFichero());
@@ -98,7 +98,7 @@ public class TxtPatientRepository implements PatientRepository {
     }
     private List<Patient> loadPatients () {
         List<Patient> patients = new ArrayList<>();
-        try (BufferedReader br = Files.newBufferedReader(Paths.get(configuration.getPathPatients()))) {
+        try (BufferedReader br = Files.newBufferedReader(configuration.getPathPatients())) {
             br.lines().forEach(l -> patients.add(patientMapper.mapRow(l)));
         } catch (IOException e) {
             log.error(e.getMessage(),e);

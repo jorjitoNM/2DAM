@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 @Log4j2
@@ -11,10 +13,10 @@ import java.util.Properties;
 public class FilesConfiguration {
 
     private static FilesConfiguration instance = null;
-    private String pathPatients;
-    private String pathDoctors;
-    private String pathMedicalRecords;
-    private String pathMedications;
+    private Path pathPatients;
+    private Path pathDoctors;
+    private Path pathMedicalRecords;
+    private Path pathMedications;
     private int lastID;
 
     private FilesConfiguration() {
@@ -22,10 +24,10 @@ public class FilesConfiguration {
             Properties p = new Properties();
             p.load(getClass().getClassLoader()
                     .getResourceAsStream("config/properties"));
-            this.pathPatients = p.getProperty("pathPatients");
-            this.pathDoctors = p.getProperty("pathDoctors");
-            this.pathMedicalRecords = p.getProperty("pathMedicalRecords");
-            this.pathMedications = p.getProperty("pathMedications");
+            this.pathPatients = Paths.get("pathPatients");
+            this.pathDoctors = Paths.get("pathDoctors");
+            this.pathMedicalRecords = Paths.get("pathMedicalRecords");
+            this.pathMedications = Paths.get("pathMedications");
             this.lastID = Integer.parseInt(p.getProperty("nextID"));
         } catch (IOException e) {
             log.error(e.getMessage());

@@ -28,7 +28,6 @@ public class GroupApplication implements ApplicationListener<DIJavafx.StageReady
             stage.show();
         } catch (IOException e) {
             log.error(e.getMessage());
-            e.printStackTrace();
             System.exit(0);
         }
 

@@ -18,6 +18,7 @@ public class Configuration {
         loader.setControllerFactory(context::getBean);
         return loader;
     }
+
     @Bean
     public Gson gson () {
         return new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
@@ -35,7 +36,7 @@ public class Configuration {
 
                 .create();
     }
-    @Bean
+
     public ConfigurationFicheros configurationFicheros() {
         return new ConfigurationFicheros();
     }

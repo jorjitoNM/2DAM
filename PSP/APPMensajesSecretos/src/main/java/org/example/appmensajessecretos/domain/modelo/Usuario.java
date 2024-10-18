@@ -1,6 +1,7 @@
 package org.example.appmensajessecretos.domain.modelo;
 
 import lombok.Data;
+import org.example.appmensajessecretos.utilities.Constantes;
 
 import java.util.Objects;
 
@@ -8,6 +9,16 @@ import java.util.Objects;
 public class Usuario {
     private final String name;
     private final String password;
+
+    public Usuario() {
+        name = Constantes.CONTRASEÑA_INCORRECTA;
+        password = "";
+    }
+
+    public Usuario(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
 
     @Override
     public boolean equals(Object o) {

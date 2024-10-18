@@ -7,7 +7,6 @@ import org.example.appmensajessecretos.domain.modelo.Usuario;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -30,7 +29,7 @@ public class DaoMessages {
         return dataBase.saveMessages(mensajes);
     }
 
-    public List<Mensaje> loadMessages(Usuario user, ArrayList<Usuario> receivers) {
+    public List<Mensaje> loadMessages(Usuario user, List<Usuario> receivers) {
         return dataBase.loadMessages().stream().filter(m -> m.getAuthor().getName().equals(user.getName()) && m.getReceivers().containsAll(receivers)).toList();
     }
 
