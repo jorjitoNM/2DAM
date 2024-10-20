@@ -10,9 +10,13 @@ class Repository {
     }
 
     init {
-        books.add(Book("La biblia","Anonimo",2f,0))
-        books.add(Book("La biblia 2","Anonimo",1f,1000))
-        books.add(Book("La biblia 3","Anonimo",3f,2000))
+        books.add(Book(1,"La biblia","Anonimo",2f,0))
+        books.add(Book(2,"La biblia 2","Anonimo",1f,1000))
+        books.add(Book(3,"La biblia 3","Anonimo",3f,2000))
+    }
+
+    fun getBooks () : List<Book> {
+        return books
     }
 
     fun addBook (book : Book) : Boolean {
@@ -26,13 +30,10 @@ class Repository {
         return books[id]
     }
     fun updateBook (book : Book) : Book {
-        val foundBook = books.first { b ->
+        var foundBook = books.first { b ->
             b.name == book.name && b.author == book.author
         }
-        foundBook.name = book.name
-        foundBook.author = book.author
-        foundBook.score = book.score
-        foundBook.releaseDate = book.releaseDate
+        foundBook = Book(foundBook.id,book.name,book.author,book.score,book.releaseDate)
         return foundBook
     }
 

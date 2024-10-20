@@ -1,4 +1,4 @@
-package com.example.myapplication.ui
+package com.example.myapplication.ui.detailsScreen
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,10 +11,9 @@ import com.example.myapplication.domain.usecases.DeleteBook
 import com.example.myapplication.domain.usecases.GetBook
 import com.example.myapplication.domain.usecases.GetBooksSize
 import com.example.myapplication.domain.usecases.UpdateBook
-import com.example.myapplication.utils.StringProvider
-import com.google.android.material.datepicker.MaterialDatePicker
+import com.example.myapplication.ui.common.StringProvider
 
-class MainViewModel (
+class DetailsViewModel (
     private val stringProvider: StringProvider,
     private val addBookUseCase: AddBook,
     private val deleteBookUseCase: DeleteBook,
@@ -24,12 +23,12 @@ class MainViewModel (
 ) : ViewModel() {
 
     private var indice = 0
-    private val _uiState = MutableLiveData(MainState())
-    val uiState: LiveData<MainState> get() = _uiState
+    private val _uiState = MutableLiveData(DetailsState())
+    val uiState: LiveData<DetailsState> get() = _uiState
 
 
     init {
-        _uiState.value = MainState(book=Book())
+        _uiState.value = DetailsState(book=Book())
     }
 
     fun addBook(book: Book) {
@@ -96,10 +95,6 @@ class MainViewModel (
     }
 
     fun showCalendar() {
-        val datePicker =
-            MaterialDatePicker.Builder.datePicker()
-                .setTitleText(stringProvider.getString(R.string.selectDate))
-                .build()
     }
 }
 
@@ -114,9 +109,9 @@ class MainViewModelFactory(
 
     ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(DetailsViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return MainViewModel(
+            return DetailsViewModel(
                 stringProvider,
                 addBook,
                 deleteBook,

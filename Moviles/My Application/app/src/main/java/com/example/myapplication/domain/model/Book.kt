@@ -2,9 +2,10 @@ package com.example.myapplication.domain.model
 
 
 data class Book(
-    var name : String = "",
-    var author : String = "Anonymous",
-    var score : Float = 0f,
-    var releaseDate : Int = 0,
+    val id : Int = 0,
+    val name : String = "",
+    val author : String = "Anonymous",
+    val score : Float = 0f,
+    val releaseDate : Int = 0,
 ) {
 }

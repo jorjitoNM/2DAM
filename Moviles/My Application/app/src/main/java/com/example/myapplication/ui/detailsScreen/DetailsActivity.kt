@@ -1,4 +1,4 @@
-package com.example.myapplication.ui
+package com.example.myapplication.ui.detailsScreen
 
 import android.os.Bundle
 import android.widget.Toast
@@ -9,18 +9,18 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.myapplication.R
 import com.example.myapplication.data.Repository
-import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.databinding.BookDetailsBinding
 import com.example.myapplication.domain.model.Book
 import com.example.myapplication.domain.usecases.AddBook
 import com.example.myapplication.domain.usecases.DeleteBook
 import com.example.myapplication.domain.usecases.GetBook
 import com.example.myapplication.domain.usecases.GetBooksSize
 import com.example.myapplication.domain.usecases.UpdateBook
-import com.example.myapplication.utils.StringProvider
+import com.example.myapplication.ui.common.StringProvider
 
-class MainActivity : AppCompatActivity() {
+class DetailsActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: BookDetailsBinding
 
     private val  repository : Repository = Repository.getInstance()
 
@@ -39,13 +39,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.book_details)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        binding = ActivityMainBinding.inflate(layoutInflater).apply {
+        binding = BookDetailsBinding.inflate(layoutInflater).apply {
             setContentView(root)
         }
         eventos()
@@ -53,10 +53,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observarViewModel() {
-        viewModel.uiState.observe(this@MainActivity) { state ->
+        viewModel.uiState.observe(this@DetailsActivity) { state ->
 
             state.mensaje?.let { error ->
-                Toast.makeText(this@MainActivity, error, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@DetailsActivity, error, Toast.LENGTH_SHORT).show()
                 viewModel.errorMostrado()
             }
 
