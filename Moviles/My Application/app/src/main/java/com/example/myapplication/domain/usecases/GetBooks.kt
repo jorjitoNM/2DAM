@@ -3,8 +3,8 @@ package com.example.myapplication.domain.usecases
 import com.example.myapplication.data.Repository
 import com.example.myapplication.domain.model.Book
 
-class GetBooks (private val repository : Repository) {
+class GetBooks {
     operator fun invoke () : List<Book> {
-        return repository.getBooks()
+        return Repository.getBooks()
     }
 }

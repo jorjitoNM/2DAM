@@ -88,10 +88,10 @@
         />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/update"
+        android:id="@+id/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/update"
+        android:text="@string/cancel"
         android:textAllCaps="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,13 +99,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.75"
+        style="?attr/materialButtonOutlinedStyle"
         />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/delete"
+        android:id="@+id/add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/delete"
+        android:text="@string/add"
         android:textAllCaps="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

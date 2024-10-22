@@ -36,7 +36,7 @@ public class StaticMedicalRecordsRepository implements MedicalRecordsRepository 
     }
     @Override
     public int save(MedicalRecord medicalRecord) {
-        //getAll(medicalRecord.getIdPatient()).add(medicalRecord);
+        getAll(medicalRecord.getIdPatient()).add(medicalRecord);
         return medicalRecord.getId();
     }
 
@@ -47,6 +47,11 @@ public class StaticMedicalRecordsRepository implements MedicalRecordsRepository 
 
     @Override
     public void saveMedicalRecords(List<MedicalRecord> medicalRecords) {
+
+    }
+
+    @Override
+    public void deletePatientMedicalRecords(int patientId) {
 
     }
 

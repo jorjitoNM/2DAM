@@ -2,12 +2,10 @@ package com.example.myapplication.data
 
 import com.example.myapplication.domain.model.Book
 
-class Repository {
+object Repository {
 
-    companion object {
-        private val books = mutableListOf<Book>()
-        fun getInstance(): Repository = Repository()
-    }
+
+    private val books = mutableListOf<Book>()
 
     init {
         books.add(Book(1,"La biblia","Anonimo",2f,0))
@@ -16,7 +14,7 @@ class Repository {
     }
 
     fun getBooks () : List<Book> {
-        return books
+        return books.toList()
     }
 
     fun addBook (book : Book) : Boolean {
@@ -43,5 +41,9 @@ class Repository {
 
     fun getBooksSize(): Int {
         return books.size
+    }
+
+    fun getId(name: String, author: String) : Int {
+        return books.first { b -> b.name == name && b.author == author }.id
     }
 }

@@ -12,7 +12,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,6 @@ public class TxtPatientRepository implements PatientRepository {
     public TxtPatientRepository(PatientRowMapper patientMapper) {
         this.patientMapper = patientMapper;
         this.configuration = FilesConfiguration.getInstance();
-        calculateID();
     }
     private void calculateID() {
         List<Patient> patients = loadPatients();
@@ -39,6 +37,7 @@ public class TxtPatientRepository implements PatientRepository {
 
     @Override
     public List<Patient> getAll() {
+        calculateID();
         return loadPatients();
     }
 
@@ -49,7 +48,7 @@ public class TxtPatientRepository implements PatientRepository {
             bw.append(patient.toStringFichero());
         }
         catch (IOException e) {
-            log.error(e.getMessage(),e);
+            //log.error(e.getMessage(),e);
             throw new RuntimeException(e);
         } finally {
             configuration.setID(patient.getId());
@@ -72,12 +71,15 @@ public class TxtPatientRepository implements PatientRepository {
     }
 
     @Override
-    public void delete(int patientId, boolean confirmation) {
-        //if (confirmation) {
+    public boolean delete(int patientId, boolean confirmation) {
+        if (!confirmation) {
             List<Patient> patients = loadPatients();
-            patients.removeIf(p -> p.getId() == patientId);
-            savePatients(patients);
-        //}
+            if (patients.removeIf(p -> p.getId() == patientId))
+                return savePatients(patients);
+            else
+                return false;
+        }
+        return false;
     }
 
     private boolean savePatients (List<Patient> patients) {
@@ -86,22 +88,22 @@ public class TxtPatientRepository implements PatientRepository {
                 try {
                     bw.write(p.toStringFichero());
                 } catch (IOException e) {
-                    log.error(e.getMessage(),e);
+                    //log.error(e.getMessage());
                     throw new RuntimeException(e);
                 }
             });
+            return true;
         } catch (IOException e) {
-            log.error(e.getMessage(),e);
+            //log.error(e.getMessage(),e);
             throw new RuntimeException(e);
         }
-        return false;
     }
     private List<Patient> loadPatients () {
         List<Patient> patients = new ArrayList<>();
         try (BufferedReader br = Files.newBufferedReader(configuration.getPathPatients())) {
             br.lines().forEach(l -> patients.add(patientMapper.mapRow(l)));
         } catch (IOException e) {
-            log.error(e.getMessage(),e);
+            //log.error(e.getMessage(),e);
             throw new RuntimeException(e);
         }
         return patients;

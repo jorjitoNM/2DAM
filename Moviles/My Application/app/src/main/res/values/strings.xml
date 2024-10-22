@@ -19,4 +19,7 @@
     <string name="errorSiguiente">"No se ha podido mostrar el siguiente libro"</string>
     <string name="releasedate">Release date</string>
     <string name="selectDate">Seleccione la feha de publicacion</string>
+    <string name="navigate">Navigate</string>
+    <string name="book">book\n</string>
+    <string name="cancel">Cancel</string>
 </resources>

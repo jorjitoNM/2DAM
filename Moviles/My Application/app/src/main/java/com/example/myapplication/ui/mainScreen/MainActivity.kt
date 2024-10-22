@@ -9,12 +9,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
-import com.example.myapplication.data.Repository
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.domain.model.Book
 import com.example.myapplication.domain.usecases.GetBooks
 import com.example.myapplication.ui.common.MarginItemDecoration
 import com.example.myapplication.ui.detailsScreen.DetailsActivity
+import com.example.myapplication.ui.newBookScreen.NewBookActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels {
         MainViewModelFactory(
-            GetBooks(Repository()),
+            GetBooks(),
         )
     }
 
@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         events()
         configureRecyclerView()
         observarState()
@@ -66,9 +65,8 @@ class MainActivity : AppCompatActivity() {
         },
             actions = object : BookAdapter.BookActions {
                 override fun onItemClick(book: Book) {
-                    navigateToDetail(book.id)
+                    navigateToDetail((book.id-1))
                 }
-
             })
 
         binding.bookList.layoutManager = LinearLayoutManager(this)
@@ -88,14 +86,20 @@ class MainActivity : AppCompatActivity() {
     private fun navigateToDetail(id: Int) {
         val intent = Intent(this, DetailsActivity::class.java)
         intent.putExtra("id", id)
-
-        intent.putExtra(Book(0,"nombre", "apellidos"))
-
         startActivity(intent)
-
     }
 
     private fun events() {
+        with(binding) {
+            add.setOnClickListener() {
+                viewModel.add()
+                navigateToNewBook()
+            }
+        }
+    }
 
+    private fun navigateToNewBook() {
+        val intent = Intent(this, NewBookActivity::class.java)
+        startActivity(intent)
     }
 }

@@ -13,12 +13,12 @@ class MainViewModel(
     private val _uiState = MutableLiveData(MainState())
     val uiState: LiveData<MainState> get() = _uiState
 
-    init {
-        getBooks()
-    }
-
     fun getBooks() {
         _uiState.value = _uiState.value?.copy(books = getBooks.invoke())
+    }
+
+    fun add() {
+
     }
 
 

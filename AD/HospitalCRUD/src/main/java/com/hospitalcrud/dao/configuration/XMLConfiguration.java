@@ -1,6 +1,7 @@
 package com.hospitalcrud.dao.configuration;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
@@ -13,15 +14,18 @@ import java.util.Properties;
 public class XMLConfiguration {
     private static XMLConfiguration instance = null;
     private Path pathMedicalRecords;
+    @Setter
+    private int lastID;
 
     private XMLConfiguration() {
         try {
             Properties p = new Properties();
             p.loadFromXML(getClass().getClassLoader()
                     .getResourceAsStream("config/properties.xml"));
-            this.pathMedicalRecords = Paths.get("pathMedicalRecords");
+            this.pathMedicalRecords = Paths.get(p.getProperty("pathMedicalRecords"));
+            this.lastID = Integer.parseInt(p.getProperty("nextID"));
         } catch (IOException e) {
-            log.error(e.getMessage());
+            //log.error(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -32,4 +36,5 @@ public class XMLConfiguration {
         }
         return instance;
     }
+
 }

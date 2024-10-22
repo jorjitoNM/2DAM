@@ -1,7 +1,6 @@
 package com.hospitalcrud.dao.respositories.Files.XML;
 
 import com.hospitalcrud.dao.configuration.XMLConfiguration;
-import com.hospitalcrud.dao.mappers.LocalDateAdapter;
 import com.hospitalcrud.dao.model.MedicalRecord;
 import com.hospitalcrud.dao.model.MedicalRecords;
 import com.hospitalcrud.dao.respositories.MedicalRecordsRepository;
@@ -27,6 +26,13 @@ public class XmlMedicalRecordRepository implements MedicalRecordsRepository {
 
     public XmlMedicalRecordRepository() {
         this.configuration = XMLConfiguration.getInstance();
+        calculateID();
+    }
+
+    private void calculateID() {
+        List<MedicalRecord> medicalRecords = loadMedicalRecords();
+        int lastID = medicalRecords.get(medicalRecords.size() - 1).getId();
+        configuration.setLastID(lastID);
     }
 
 
@@ -37,16 +43,18 @@ public class XmlMedicalRecordRepository implements MedicalRecordsRepository {
 
     @Override
     public void delete(int id) {
-        List<MedicalRecord> medicalRecords = loadMedicalRecords();
-        medicalRecords.removeIf(m -> m.getIdPatient() == id);
+        List<MedicalRecord> medicalRecords = new ArrayList<>(loadMedicalRecords());
+        medicalRecords.removeIf(m -> m.getId() == id);
         saveMedicalRecords(medicalRecords);
     }
 
     @Override
     public int save(MedicalRecord medicalRecord) {
-        List<MedicalRecord> medicalRecords = loadMedicalRecords();
+        medicalRecord.setId(configuration.getLastID()+1);
+        List<MedicalRecord> medicalRecords = new ArrayList<>(loadMedicalRecords());
         medicalRecords.add(medicalRecord);
         saveMedicalRecords(medicalRecords);
+        configuration.setLastID(medicalRecord.getId());
         return medicalRecord.getId();
     }
 
@@ -78,5 +86,12 @@ public class XmlMedicalRecordRepository implements MedicalRecordsRepository {
             //log.error(e.getMessage(),e);
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void deletePatientMedicalRecords(int patientId) {
+        List<MedicalRecord> medicalRecords = new ArrayList<>(loadMedicalRecords());
+        medicalRecords.removeIf(m -> m.getIdPatient() == patientId);
+        saveMedicalRecords(medicalRecords);
     }
 }

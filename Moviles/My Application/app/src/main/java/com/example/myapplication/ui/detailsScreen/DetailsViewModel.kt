@@ -6,55 +6,53 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.R
 import com.example.myapplication.domain.model.Book
-import com.example.myapplication.domain.usecases.AddBook
 import com.example.myapplication.domain.usecases.DeleteBook
 import com.example.myapplication.domain.usecases.GetBook
 import com.example.myapplication.domain.usecases.GetBooksSize
+import com.example.myapplication.domain.usecases.GetID
 import com.example.myapplication.domain.usecases.UpdateBook
 import com.example.myapplication.ui.common.StringProvider
+import com.example.myapplication.ui.common.UiEvent
 
-class DetailsViewModel (
+class DetailsViewModel(
     private val stringProvider: StringProvider,
-    private val addBookUseCase: AddBook,
+    private val updateBookUseCase: UpdateBook,
     private val deleteBookUseCase: DeleteBook,
     private val getBookUseCase: GetBook,
-    private val updateBookUseCase: UpdateBook,
-    private val getBooksSizeUseCase : GetBooksSize,
+    private val getBooksSize: GetBooksSize,
+    private val getId: GetID,
 ) : ViewModel() {
 
     private var indice = 0
     private val _uiState = MutableLiveData(DetailsState())
     val uiState: LiveData<DetailsState> get() = _uiState
 
+    fun updateBook(book: Book) {
 
-    init {
-        _uiState.value = DetailsState(book=Book())
     }
 
-    fun addBook(book: Book) {
-        if (!addBookUseCase(book)) {
-            _uiState.value = _uiState.value?.copy(mensaje = stringProvider.getString(R.string.addError))
-        } else
-            previous()
+    fun getBook(id: Int) {
+        if (getBooksSize() < id || id < 0) {
+            _uiState.value =
+                _uiState.value?.copy(mensaje = stringProvider.getString(R.string.bookNotFound))
+        } else {
+            _uiState.value =
+                _uiState.value?.copy(book = getBookUseCase(id))        }
     }
 
-    fun updateBook (book : Book) {
-        _uiState.value = _uiState.value?.copy(book = updateBookUseCase(book))
-    }
-
-    private fun getBook(id: Int) : Book? {
-        if (getBooksSizeUseCase() < id || id < 0) {
-            _uiState.value = _uiState.value?.copy(mensaje = stringProvider.getString(R.string.bookNotFound))
-            return null
-        } else
-            return getBookUseCase(id)
-    }
-
-    fun deleteBook(book : Book) {
+    fun deleteBook(book: Book) {
         if (!deleteBookUseCase(book))
-            _uiState.value = _uiState.value?.copy(mensaje = stringProvider.getString(R.string.deleteError))
-        else if (getBook(indice-1) != null)
-            _uiState.value = getBook(indice-1)?.let { _uiState.value?.copy(book = it) }
+            _uiState.value = _uiState.value?.copy(
+                mensaje = stringProvider.getString(R.string.deleteError),
+                event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.deleteError))
+            )
+        /*else if (getBook(indice - 1) != null)
+            _uiState.value = getBook(indice - 1)?.let {
+                _uiState.value?.copy(
+                    book = it,
+                    event = UiEvent.PopBackStack
+                )
+            }*/
     }
 
 
@@ -62,64 +60,36 @@ class DetailsViewModel (
         _uiState.value = _uiState.value?.copy(mensaje = null)
     }
 
-
-    fun previous() {
-        if ((indice-1) == 0)
-            _uiState.value = _uiState.value?.copy(previous = false)
-        if (getBook(indice-1) == null)
-            _uiState.value = _uiState.value?.copy(mensaje = stringProvider.getString(R.string.errorAnterior))
-        else {
-            indice--
-            _uiState.value = getBook(indice)?.let {
-                _uiState.value?.copy(
-                    previous = true,
-                    book = it
-                )
-            }
-        }
-    }
-    fun next() {
-        if ((indice+1) == getBooksSizeUseCase()-1)
-            _uiState.value = _uiState.value?.copy(next = false)
-        if (getBook(indice+1) == null)
-            _uiState.value = _uiState.value?.copy(mensaje = stringProvider.getString(R.string.errorSiguiente))
-        else {
-            indice++
-            _uiState.value = getBook(indice)?.let {
-                _uiState.value?.copy(
-                    next = true,
-                    book = it
-                )
-            }
-        }
-    }
-
     fun showCalendar() {
     }
-}
+
+    fun getId(name: String, author: String): Int {
+        return getId.invoke(name, author)
+    }
 
 
-class MainViewModelFactory(
-    private val stringProvider: StringProvider,
-    private val addBook: AddBook,
-    private val deleteBook: DeleteBook,
-    private val getBook: GetBook,
-    private val updateBook: UpdateBook,
-    private val getBookSizeUseCase : GetBooksSize,
+    class DetailsMainViewModelFactory(
+        private val stringProvider: StringProvider,
+        private val updateBook: UpdateBook,
+        private val deleteBook: DeleteBook,
+        private val getBook: GetBook,
+        private val getBookSizeUseCase: GetBooksSize,
+        private val getId: GetID,
 
-    ) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(DetailsViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return DetailsViewModel(
-                stringProvider,
-                addBook,
-                deleteBook,
-                getBook,
-                updateBook,
-                getBookSizeUseCase,
-            ) as T
+        ) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(DetailsViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return DetailsViewModel(
+                    stringProvider,
+                    updateBook,
+                    deleteBook,
+                    getBook,
+                    getBookSizeUseCase,
+                    getId,
+                ) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

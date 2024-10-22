@@ -15,8 +15,6 @@ public class FilesConfiguration {
     private static FilesConfiguration instance = null;
     private Path pathPatients;
     private Path pathDoctors;
-    private Path pathMedicalRecords;
-    private Path pathMedications;
     private int lastID;
 
     private FilesConfiguration() {
@@ -24,13 +22,11 @@ public class FilesConfiguration {
             Properties p = new Properties();
             p.load(getClass().getClassLoader()
                     .getResourceAsStream("config/properties"));
-            this.pathPatients = Paths.get("pathPatients");
-            this.pathDoctors = Paths.get("pathDoctors");
-            this.pathMedicalRecords = Paths.get("pathMedicalRecords");
-            this.pathMedications = Paths.get("pathMedications");
+            this.pathPatients = Paths.get(p.getProperty("pathPatients"));
+            this.pathDoctors = Paths.get(p.getProperty("pathDoctors"));
             this.lastID = Integer.parseInt(p.getProperty("nextID"));
         } catch (IOException e) {
-            log.error(e.getMessage());
+            //log.error(e.getMessage());
             e.printStackTrace();
         }
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<medicalRecords>
-    <medicalRecords>
+<medRecords>
+    <medRecord>
         <id>1</id>
         <idPatient>1</idPatient>
         <doctor>1</doctor>
@@ -10,7 +10,7 @@
             <medication>Insulin</medication>
             <medication>Glyburide</medication>
         </medications>
-    </medicalRecords>
+    </medRecord>
     <medRecord>
         <id>2</id>
         <idPatient>1</idPatient>
@@ -21,4 +21,44 @@
             <medication>Hydrochlorothiazide</medication>
         </medications>
     </medRecord>
-</medicalRecords>
+    <medRecord>
+        <id>3</id>
+        <idPatient>7</idPatient>
+        <doctor>1</doctor>
+        <diagnosis>cancer</diagnosis>
+        <date>10/10/1010</date>
+        <medications>
+            <medication>Insulin</medication>
+        </medications>
+    </medRecord>
+    <medRecord>
+        <id>5</id>
+        <idPatient>7</idPatient>
+        <doctor>4</doctor>
+        <diagnosis>retraso</diagnosis>
+        <date>22/10/2024</date>
+        <medications>
+            <medication>Insulin</medication>
+        </medications>
+    </medRecord>
+    <medRecord>
+        <id>6</id>
+        <idPatient>6</idPatient>
+        <doctor>1</doctor>
+        <diagnosis>dsa</diagnosis>
+        <date>10/10/0010</date>
+        <medications>
+            <medication>Ibuprofen</medication>
+        </medications>
+    </medRecord>
+    <medRecord>
+        <id>7</id>
+        <idPatient>6</idPatient>
+        <doctor>1</doctor>
+        <diagnosis>dsadas</diagnosis>
+        <date>10/10/0101</date>
+        <medications>
+            <medication>Ibuprofen</medication>
+        </medications>
+    </medRecord>
+</medRecords>

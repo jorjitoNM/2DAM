@@ -3,4 +3,5 @@
 <properties>
     <comment>XML file</comment>
     <entry key="pathMedicalRecords">data/medicalRecords.xml</entry>
+    <entry key="nextID">0</entry>
 </properties>

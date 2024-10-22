@@ -8,31 +8,29 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.myapplication.R
-import com.example.myapplication.data.Repository
 import com.example.myapplication.databinding.BookDetailsBinding
 import com.example.myapplication.domain.model.Book
-import com.example.myapplication.domain.usecases.AddBook
 import com.example.myapplication.domain.usecases.DeleteBook
 import com.example.myapplication.domain.usecases.GetBook
 import com.example.myapplication.domain.usecases.GetBooksSize
+import com.example.myapplication.domain.usecases.GetID
 import com.example.myapplication.domain.usecases.UpdateBook
 import com.example.myapplication.ui.common.StringProvider
+import com.example.myapplication.ui.common.UiEvent
 
 class DetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: BookDetailsBinding
 
-    private val  repository : Repository = Repository.getInstance()
 
-
-    private val viewModel: MainViewModel by viewModels {
-        MainViewModelFactory(
+    private val viewModel: DetailsViewModel by viewModels {
+        DetailsViewModel.DetailsMainViewModelFactory(
             StringProvider.instance(this),
-            AddBook(repository),
-            DeleteBook(repository),
-            GetBook(repository),
-            UpdateBook(repository),
-            GetBooksSize(repository),
+            UpdateBook(),
+            DeleteBook(),
+            GetBook(),
+            GetBooksSize(),
+            GetID(),
         )
     }
 
@@ -40,13 +38,16 @@ class DetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.book_details)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.bookDetails)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
         binding = BookDetailsBinding.inflate(layoutInflater).apply {
             setContentView(root)
+        }
+        intent.extras?.let {
+            viewModel.getBook(it.getInt("id"))
         }
         eventos()
         observarViewModel()
@@ -64,9 +65,20 @@ class DetailsActivity : AppCompatActivity() {
                 binding.bookName.setText(state.book.name)
                 binding.bookAuthor.setText(state.book.author)
                 binding.releaseDate.setText(state.book.releaseDate.toString())
+                binding.ratingBar.rating = state.book.score
             }
-            binding.previous.isEnabled = state.previous
-            binding.next.isEnabled = state.next
+
+            state.event?.let { event ->
+                if (event is UiEvent.PopBackStack) {
+                    this@DetailsActivity.finish()
+                } else if (event is UiEvent.ShowSnackbar) {
+                    Toast.makeText(this@DetailsActivity, event.message, Toast.LENGTH_SHORT).show()
+                }
+                viewModel.errorMostrado()
+            }
+
+            if (state.event == null)
+                binding.bookName.setText(state.book.name)
         }
     }
 
@@ -74,22 +86,12 @@ class DetailsActivity : AppCompatActivity() {
 
         with(binding) {
             update.setOnClickListener {
-                viewModel.updateBook(Book(bookName.text.toString(),
-                    bookAuthor.text.toString(),ratingBar.rating,))
-            }
-            add.setOnClickListener {
-                viewModel.addBook(Book(bookName.text.toString(),
+                viewModel.updateBook(Book(viewModel.getId(bookName.text.toString(),bookAuthor.text.toString()),bookName.text.toString(),
                     bookAuthor.text.toString(),ratingBar.rating,))
             }
             delete.setOnClickListener {
-                viewModel.deleteBook(Book(bookName.text.toString(),
+                viewModel.deleteBook(Book(viewModel.getId(bookName.text.toString(),bookAuthor.text.toString()),bookName.text.toString(),
                     bookAuthor.text.toString(),ratingBar.rating,))
-            }
-            previous.setOnClickListener {
-                viewModel.previous()
-            }
-            next.setOnClickListener {
-                viewModel.next()
             }
             releaseDate.setOnClickListener {
                 viewModel.showCalendar()

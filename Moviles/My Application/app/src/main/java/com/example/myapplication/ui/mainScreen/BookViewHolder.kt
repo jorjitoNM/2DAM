@@ -14,9 +14,7 @@ class BookViewHolder(itemView: View, val actions: BookAdapter.BookActions) : Rec
             listBookName.text = book.name
             listBookAuthor.text = book.author
 
-            itemView.setBackgroundResource(android.R.color.white)
-
-
+            itemView.setBackgroundResource(android.R.color.background_dark)
 
             itemView.setOnLongClickListener{
                 true

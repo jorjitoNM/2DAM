@@ -3,8 +3,8 @@ package com.example.myapplication.domain.usecases
 import com.example.myapplication.data.Repository
 import com.example.myapplication.domain.model.Book
 
-class UpdateBook (private val repository : Repository) {
+class UpdateBook {
     operator fun invoke (book : Book) : Book {
-        return repository.updateBook(book)
+        return Repository.updateBook(book)
     }
 }
