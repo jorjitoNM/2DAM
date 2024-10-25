@@ -7,5 +7,4 @@ data class Book(
     val author : String = "Anonymous",
     val score : Float = 0f,
     val releaseDate : Int = 0,
-) {
-}
+)

@@ -9,7 +9,6 @@ import com.example.myapplication.domain.model.Book
 import com.example.myapplication.domain.usecases.DeleteBook
 import com.example.myapplication.domain.usecases.GetBook
 import com.example.myapplication.domain.usecases.GetBooksSize
-import com.example.myapplication.domain.usecases.GetID
 import com.example.myapplication.domain.usecases.UpdateBook
 import com.example.myapplication.ui.common.StringProvider
 import com.example.myapplication.ui.common.UiEvent
@@ -20,51 +19,43 @@ class DetailsViewModel(
     private val deleteBookUseCase: DeleteBook,
     private val getBookUseCase: GetBook,
     private val getBooksSize: GetBooksSize,
-    private val getId: GetID,
 ) : ViewModel() {
 
-    private var indice = 0
     private val _uiState = MutableLiveData(DetailsState())
     val uiState: LiveData<DetailsState> get() = _uiState
 
     fun updateBook(book: Book) {
-
+        if (!updateBookUseCase(book))
+            _uiState.value =
+                _uiState.value?.copy(event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.errorUpdateBook)))
+        else
+            _uiState.value = _uiState.value?.copy(event = UiEvent.PopBackStack)
     }
 
     fun getBook(id: Int) {
-        if (getBooksSize() < id || id < 0) {
+        val book = getBookUseCase(id)
+        if (book.id < 0) {
             _uiState.value =
-                _uiState.value?.copy(mensaje = stringProvider.getString(R.string.bookNotFound))
+                _uiState.value?.copy(event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.bookNotFound)))
         } else {
             _uiState.value =
-                _uiState.value?.copy(book = getBookUseCase(id))        }
+                _uiState.value?.copy(book = book)}
     }
 
-    fun deleteBook(book: Book) {
-        if (!deleteBookUseCase(book))
+    fun deleteBook(id: Int) {
+        if (!deleteBookUseCase(id))
             _uiState.value = _uiState.value?.copy(
-                mensaje = stringProvider.getString(R.string.deleteError),
                 event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.deleteError))
             )
-        /*else if (getBook(indice - 1) != null)
-            _uiState.value = getBook(indice - 1)?.let {
-                _uiState.value?.copy(
-                    book = it,
-                    event = UiEvent.PopBackStack
-                )
-            }*/
-    }
-
-
-    fun errorMostrado() {
-        _uiState.value = _uiState.value?.copy(mensaje = null)
+        else
+            _uiState.value = _uiState.value?.copy(event = UiEvent.PopBackStack)
     }
 
     fun showCalendar() {
     }
 
-    fun getId(name: String, author: String): Int {
-        return getId.invoke(name, author)
+    fun eventoMostrado() {
+        _uiState.value = _uiState.value?.copy(event = null)
     }
 
 
@@ -74,8 +65,6 @@ class DetailsViewModel(
         private val deleteBook: DeleteBook,
         private val getBook: GetBook,
         private val getBookSizeUseCase: GetBooksSize,
-        private val getId: GetID,
-
         ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(DetailsViewModel::class.java)) {
@@ -86,7 +75,6 @@ class DetailsViewModel(
                     deleteBook,
                     getBook,
                     getBookSizeUseCase,
-                    getId,
                 ) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")

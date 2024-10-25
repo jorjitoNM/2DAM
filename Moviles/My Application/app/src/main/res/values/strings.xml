@@ -22,4 +22,6 @@
     <string name="navigate">Navigate</string>
     <string name="book">book\n</string>
     <string name="cancel">Cancel</string>
+    <string name="addedSuccesfully">Nuevo libro añadido con exito</string>
+    <string name="errorUpdateBook">No se ha podido actualizar el libro</string>
 </resources>

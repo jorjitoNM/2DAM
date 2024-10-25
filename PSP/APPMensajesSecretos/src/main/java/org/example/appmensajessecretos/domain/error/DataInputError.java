@@ -1,0 +1,5 @@
+package org.example.appmensajessecretos.domain.error;
+
+public enum DataInputError implements Error {
+    GROUP_IS_PRIVATE,
+}

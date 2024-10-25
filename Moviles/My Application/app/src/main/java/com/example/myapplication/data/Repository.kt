@@ -6,44 +6,52 @@ object Repository {
 
 
     private val books = mutableListOf<Book>()
+    private var id : Int = 3
 
     init {
-        books.add(Book(1,"La biblia","Anonimo",2f,0))
-        books.add(Book(2,"La biblia 2","Anonimo",1f,1000))
-        books.add(Book(3,"La biblia 3","Anonimo",3f,2000))
+        books.add(Book(0,"La biblia","Anonimo",2f,0))
+        books.add(Book(1,"La biblia 2","Anonimo",1f,1000))
+        books.add(Book(2,"La biblia 3","Anonimo",3f,2000))
     }
 
     fun getBooks () : List<Book> {
-        return books.toList()
+        return books
     }
 
     fun addBook (book : Book) : Boolean {
-        if (books.any{b -> b.name != book.name && b.author != book.author})
+        if (books.any{b -> b.name != book.name && b.author != book.author}) {
+            id++
             return books.add(book)
+        }
         else
             return false;
     }
 
     fun getBook(id : Int) : Book {
-        return books[id]
+        val book : Book
+        if (books.any{b -> b.id == id})
+            book = books.first{b -> b.id == id}
+        else
+            book = Book(-1)
+        return book
     }
-    fun updateBook (book : Book) : Book {
-        var foundBook = books.first { b ->
-            b.name == book.name && b.author == book.author
+    fun updateBook (book : Book) : Boolean {
+        if (books.any {b -> b.id == book.id}){
+            books[books.indexOf(books.find { b -> b.id == book.id })] = book
+            return true;
         }
-        foundBook = Book(foundBook.id,book.name,book.author,book.score,book.releaseDate)
-        return foundBook
+        else return false;
     }
 
-    fun deleteBook(book : Book): Boolean {
-        return books.removeIf { b -> b.name == book.name && b.author == book.author}
+    fun deleteBook(id : Int): Boolean {
+        return books.removeIf { b -> b.id == id}
     }
 
     fun getBooksSize(): Int {
         return books.size
     }
 
-    fun getId(name: String, author: String) : Int {
-        return books.first { b -> b.name == name && b.author == author }.id
+    fun getId() : Int {
+        return id
     }
 }

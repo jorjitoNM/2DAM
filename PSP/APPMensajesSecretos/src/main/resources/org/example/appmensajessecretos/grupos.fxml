@@ -33,6 +33,7 @@
     <TextField fx:id="createGroupName" layoutX="1026.0" layoutY="81.0" prefHeight="26.0" prefWidth="200.0" />
     <Label fx:id="createGroupPasswordLabel" layoutX="1004.0" layoutY="128.0" prefHeight="18.0" prefWidth="271.0" text="Introduzca la contraseña de acceso el nuevo grupo" />
     <TextField fx:id="createGroupPassword" layoutX="1026.0" layoutY="173.0" prefHeight="26.0" prefWidth="200.0" />
+    <CheckBox fx:id="isPrivate" layoutX="1056.0" layoutY="245.0" mnemonicParsing="false" text="Private" />
     <Button fx:id="createGroup" layoutX="1180.0" layoutY="238.0" mnemonicParsing="false" onAction="#createGroup" text="Create" />
     <Label fx:id="createGroupError" layoutX="1026.0" layoutY="282.0" prefHeight="18.0" prefWidth="200.0" />
 
@@ -43,7 +44,7 @@
 
     <Label fx:id="mensajeLabel" layoutX="356.0" layoutY="337.0" text="Introduzca el mensaje" />
     <TextArea fx:id="mensaje" layoutX="314.0" layoutY="372.0" prefHeight="106.0" prefWidth="200.0" />
-    <Button fx:id="enviarMensaje" layoutX="1092.0" layoutY="674.0" mnemonicParsing="false" onAction="#sendMessage" text="Enviar mensaje" />
+    <Button fx:id="inviteUser" layoutX="1092.0" layoutY="674.0" mnemonicParsing="false" onAction="#inviteUser" text="Invitar al grupo" />
     <Button fx:id="enviarAGrupo" layoutX="58.0" layoutY="683.0" mnemonicParsing="false" onAction="#sendGroupMessage" prefHeight="26.0" prefWidth="140.0" text="Enviar mensaje a grupo" />
     <Label fx:id="sendMessageError" layoutX="370.0" layoutY="550.0" prefHeight="18.0" prefWidth="192.0" />
 
@@ -53,10 +54,10 @@
 
     <Label fx:id="chatError" layoutX="680.0" layoutY="675.0" prefHeight="18.0" prefWidth="200.0" />
 
-    <Label layoutX="855.0" layoutY="337.0" text="Private Chats" />
+    <Label layoutX="835.0" layoutY="337.0" text="Private Group Chats" />
     <ListView fx:id="privateChats" layoutX="789.0" layoutY="372.0" prefHeight="282.0" prefWidth="200.0" />
 
 
-    <ListView fx:id="usuarios" layoutX="1040.0" layoutY="372.0" prefHeight="282.0" prefWidth="200.0" onMouseClicked="#loadPrivateChats" />
+    <ListView fx:id="usuarios" layoutX="1040.0" layoutY="372.0" onMouseClicked="#loadPrivateChats" prefHeight="282.0" prefWidth="200.0" />
     <Label fx:id="mensajeUsuarioError" layoutX="1117.0" layoutY="337.0" text="Usuarios" />
 </AnchorPane>

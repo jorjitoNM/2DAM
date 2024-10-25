@@ -2,8 +2,10 @@ package org.example.appmensajessecretos.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.example.appmensajessecretos.domain.error.DataBaseError;
+import org.example.appmensajessecretos.domain.error.DataInputError;
+import org.example.appmensajessecretos.domain.error.Error;
 import org.example.appmensajessecretos.domain.modelo.Grupo;
-import org.example.appmensajessecretos.domain.modelo.Mensaje;
 import org.example.appmensajessecretos.domain.modelo.Usuario;
 import org.example.appmensajessecretos.domain.servicio.GroupService;
 import org.example.appmensajessecretos.domain.servicio.MessageService;
@@ -11,7 +13,6 @@ import org.example.appmensajessecretos.domain.servicio.UserService;
 import org.example.appmensajessecretos.utilities.Constantes;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Component
@@ -53,6 +54,8 @@ public class GroupController {
     private TextField createGroupPassword;
     @FXML
     private Label createGroupError;
+    @FXML
+    private CheckBox isPrivate;
 
 
     @FXML
@@ -85,6 +88,13 @@ public class GroupController {
     }
 
 
+    private boolean checkLogged() {
+        if (usuario == null) {
+            logInError.setText(Constantes.NOT_LOGGED);
+            return false;
+        } else
+            return true;
+    }
     public void iniciarSesion() {
         boolean succes = false;
         if (userName.getText().isEmpty() || userPassword.getText().isEmpty())
@@ -110,20 +120,12 @@ public class GroupController {
         }
     }
 
-    private boolean checkLogged() {
-        if (usuario == null) {
-            logInError.setText(Constantes.NOT_LOGGED);
-            return false;
-        } else
-            return true;
-    }
-
     public void createGroup() {
         if (checkLogged()) {
             if (createGroupName.getText().isEmpty() || createGroupPassword.getText().isEmpty())
                 createGroupError.setText(Constantes.RELLENE_CAMPOS);
             else {
-                Grupo grupo = new Grupo(createGroupName.getText(), createGroupPassword.getText());
+                Grupo grupo = new Grupo(createGroupName.getText(), createGroupPassword.getText(),isPrivate.isSelected());
                 if (!groupService.createGroup(grupo)) {
                     createGroupError.setText(Constantes.ERROR_CREATING_GROUP);
                 } else {
@@ -134,23 +136,37 @@ public class GroupController {
         }
     }
 
+
     public void joinGroup() {
         if (checkLogged()) {
             if (groupName.getText().isEmpty() || groupPassword.getText().isEmpty())
                 joinGroupError.setText(Constantes.RELLENE_CAMPOS);
             else {
-                Grupo grupo = new Grupo(groupName.getText(), groupPassword.getText());
-                if (!groupService.findGroup(grupo)) { //se puede quitar al usar Either
-                    joinGroupError.setText(Constantes.GRUPO_NO_EXISTE);
-                } else if (!groupService.joinGroup(usuario, grupo)) {
-                    joinGroupError.setText(Constantes.ERROR_JOINING_GROUP);
-                } else {
-                    joinGroupError.setText(Constantes.JOINED_GROUP);
-                    actualizarUserInfo();
-                }
+                Grupo grupo = new Grupo(groupName.getText(), groupPassword.getText(),isPrivate.isSelected());
+                groupService.joinGroup(usuario, grupo).peek(ok -> {
+                        joinGroupError.setText(Constantes.JOINED_GROUP);
+                        actualizarUserInfo();
+                }).peekLeft(this::showJoinGroupError);
             }
         }
     }
+    private void showJoinGroupError(Error error) {
+        String errorMessage = "";
+        switch (error) {
+            case DataBaseError e -> {
+                switch (e) {
+                    case GROUP_NOT_FOUND -> errorMessage = Constantes.GRUPO_NO_EXISTE;
+                    case ERROR_JOINING_GROUP -> errorMessage = Constantes.ERROR_JOINING_GROUP;
+                    case ACTION_FAILED -> errorMessage = Constantes.DATABASE_FAILED;
+                }
+            }
+            case DataInputError e when e == DataInputError.GROUP_IS_PRIVATE ->
+                errorMessage = Constantes.GROUP_IS_PRIVATE;
+            default -> errorMessage = Constantes.DATABASE_FAILED;
+        }
+        createGroupError.setText(errorMessage);
+    }
+
 
     public void comfirmDelete() {
         if (checkLogged()) {
@@ -182,15 +198,12 @@ public class GroupController {
         }
     }
 
-    public void sendMessage() {
+    public void inviteUser() {
         if (checkLogged()) {
             if (mensaje.getText().isBlank() || usuarios.getSelectionModel().isEmpty())
                 sendMessageError.setText(Constantes.RELLENE_CAMPOS);
             else {
-                if (!messageService.sendMessage(new Mensaje(mensaje.getText(), LocalDateTime.now(), usuario, new ArrayList<>(usuarios.getSelectionModel().getSelectedItems()))))
-                    sendMessageError.setText(Constantes.ERROR_SENDING_MESSAGE);
-                else
-                    loadUserChats();
+                groupService.inviteUser(myChats.getSelectionModel().getSelectedItem(),usuarios.getSelectionModel().getSelectedItems());
             }
         }
     }

@@ -13,7 +13,6 @@ import com.example.myapplication.domain.model.Book
 import com.example.myapplication.domain.usecases.DeleteBook
 import com.example.myapplication.domain.usecases.GetBook
 import com.example.myapplication.domain.usecases.GetBooksSize
-import com.example.myapplication.domain.usecases.GetID
 import com.example.myapplication.domain.usecases.UpdateBook
 import com.example.myapplication.ui.common.StringProvider
 import com.example.myapplication.ui.common.UiEvent
@@ -21,7 +20,7 @@ import com.example.myapplication.ui.common.UiEvent
 class DetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: BookDetailsBinding
-
+    private var id : Int = 0
 
     private val viewModel: DetailsViewModel by viewModels {
         DetailsViewModel.DetailsMainViewModelFactory(
@@ -30,7 +29,6 @@ class DetailsActivity : AppCompatActivity() {
             DeleteBook(),
             GetBook(),
             GetBooksSize(),
-            GetID(),
         )
     }
 
@@ -46,9 +44,8 @@ class DetailsActivity : AppCompatActivity() {
         binding = BookDetailsBinding.inflate(layoutInflater).apply {
             setContentView(root)
         }
-        intent.extras?.let {
-            viewModel.getBook(it.getInt("id"))
-        }
+        id = intent.extras?.getInt("id") ?: -1
+        viewModel.getBook(id)
         eventos()
         observarViewModel()
     }
@@ -56,12 +53,7 @@ class DetailsActivity : AppCompatActivity() {
     private fun observarViewModel() {
         viewModel.uiState.observe(this@DetailsActivity) { state ->
 
-            state.mensaje?.let { error ->
-                Toast.makeText(this@DetailsActivity, error, Toast.LENGTH_SHORT).show()
-                viewModel.errorMostrado()
-            }
-
-            if (state.mensaje == null) {
+            if (state.event == null) {
                 binding.bookName.setText(state.book.name)
                 binding.bookAuthor.setText(state.book.author)
                 binding.releaseDate.setText(state.book.releaseDate.toString())
@@ -74,7 +66,7 @@ class DetailsActivity : AppCompatActivity() {
                 } else if (event is UiEvent.ShowSnackbar) {
                     Toast.makeText(this@DetailsActivity, event.message, Toast.LENGTH_SHORT).show()
                 }
-                viewModel.errorMostrado()
+                viewModel.eventoMostrado()
             }
 
             if (state.event == null)
@@ -86,12 +78,11 @@ class DetailsActivity : AppCompatActivity() {
 
         with(binding) {
             update.setOnClickListener {
-                viewModel.updateBook(Book(viewModel.getId(bookName.text.toString(),bookAuthor.text.toString()),bookName.text.toString(),
+                viewModel.updateBook(Book(id,bookName.text.toString(),
                     bookAuthor.text.toString(),ratingBar.rating,))
             }
             delete.setOnClickListener {
-                viewModel.deleteBook(Book(viewModel.getId(bookName.text.toString(),bookAuthor.text.toString()),bookName.text.toString(),
-                    bookAuthor.text.toString(),ratingBar.rating,))
+                viewModel.deleteBook(id)
             }
             releaseDate.setOnClickListener {
                 viewModel.showCalendar()

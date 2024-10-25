@@ -59,13 +59,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun configureRecyclerView() {
 
-        adapter = BookAdapter(itemClick = { book ->
-            navigateToDetail(book.id)
-
-        },
+        adapter = BookAdapter(
             actions = object : BookAdapter.BookActions {
                 override fun onItemClick(book: Book) {
-                    navigateToDetail((book.id-1))
+                    navigateToDetail((book.id))
                 }
             })
 
@@ -92,7 +89,6 @@ class MainActivity : AppCompatActivity() {
     private fun events() {
         with(binding) {
             add.setOnClickListener() {
-                viewModel.add()
                 navigateToNewBook()
             }
         }

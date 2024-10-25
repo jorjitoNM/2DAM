@@ -1,6 +1,10 @@
 package org.example.appmensajessecretos.domain.servicio;
 
+import io.vavr.control.Either;
 import org.example.appmensajessecretos.dao.DaoGroups;
+import org.example.appmensajessecretos.domain.error.DataBaseError;
+import org.example.appmensajessecretos.domain.error.DataInputError;
+import org.example.appmensajessecretos.domain.error.Error;
 import org.example.appmensajessecretos.domain.modelo.Grupo;
 import org.example.appmensajessecretos.domain.modelo.Usuario;
 import org.springframework.stereotype.Service;
@@ -16,19 +20,24 @@ public class GroupService {
     }
 
 
-    public boolean joinGroup (Usuario user, Grupo group) {
+    public Either<Error, Boolean> joinGroup (Usuario user, Grupo group) {
         List<Grupo> grupos = dao.loadGroups();
         Grupo foundGroup = grupos.stream()
                 .filter(g -> g.getName().equals(group.getName()) && g.getPassword().equals(group.getPassword()))
                 .findFirst()
                 .orElse(null);
         if (foundGroup != group)
-            return false;
-        else if (!foundGroup.getMembers().contains(user)) {
-            foundGroup.getMembers().add(user);
-            return dao.saveGroups(grupos);
-        } else
-            return false;
+            return Either.left(DataBaseError.GROUP_NOT_FOUND);
+        else if (foundGroup.getIsPrivate())
+            return Either.left(DataInputError.GROUP_IS_PRIVATE);
+        else
+            if (foundGroup.getMembers().add(user))
+                if (!dao.saveGroups(grupos))
+                    return Either.left(DataBaseError.ACTION_FAILED);
+                else
+                    return Either.right(true);
+            else
+                return Either.left(DataBaseError.ERROR_JOINING_GROUP);
     }
 
     public boolean createGroup (Grupo group) {
@@ -37,13 +46,8 @@ public class GroupService {
         return dao.saveGroups(grupos);
     }
 
-    public boolean findGroup(Grupo grupo) {
-        return dao.findGroup(grupo);
-    }
-
     public List<Grupo> getGroups (Usuario user) {
-        return dao.loadGroups().stream()
-                .filter(g -> g.getMembers().contains(user)).toList();
+        return dao.getGroups(user);
     }
     public boolean deleteMember (String userName, String groupName) {
         List<Grupo> grupos = dao.loadGroups();
@@ -68,5 +72,9 @@ public class GroupService {
                     .anyMatch(u -> u.getName().equals(userName));
         else
             return false;
+    }
+
+    public Either<Error,Boolean> inviteUser (Grupo group, List<Usuario> users) {
+
     }
 }

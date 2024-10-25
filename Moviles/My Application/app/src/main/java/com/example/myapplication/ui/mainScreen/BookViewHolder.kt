@@ -2,6 +2,7 @@ package com.example.myapplication.ui.mainScreen
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.R
 import com.example.myapplication.databinding.BookViewBinding
 import com.example.myapplication.domain.model.Book
 
@@ -14,7 +15,7 @@ class BookViewHolder(itemView: View, val actions: BookAdapter.BookActions) : Rec
             listBookName.text = book.name
             listBookAuthor.text = book.author
 
-            itemView.setBackgroundResource(android.R.color.background_dark)
+            itemView.setBackgroundResource(R.color.md_theme_primary)
 
             itemView.setOnLongClickListener{
                 true

@@ -21,5 +21,7 @@ public class Constantes {
     public static final String TODO_BIEN = "Todo correcto";
     public static final String LOGGED_IN = "Logged in";
     public static final String LOGIN_FAILED = "No se ha podido iniciado sesion";
+    public static final String DATABASE_FAILED = "El sistema no ha podido completar su accion, intentelo de nuevo";
+    public static final String GROUP_IS_PRIVATE = "No se puede unir a un grupo privado, debe recibir una invitacion desde dentro";
     private Constantes () {}
 }

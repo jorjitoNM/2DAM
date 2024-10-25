@@ -1,10 +1,13 @@
 package org.example.appmensajessecretos.dao;
 
 
-import com.google.gson.*;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import io.vavr.control.Either;
 import lombok.extern.log4j.Log4j2;
 import org.example.appmensajessecretos.config.ConfigurationFicheros;
+import org.example.appmensajessecretos.domain.error.DataBaseError;
+import org.example.appmensajessecretos.domain.error.Error;
 import org.example.appmensajessecretos.domain.modelo.Grupo;
 import org.example.appmensajessecretos.domain.modelo.Mensaje;
 import org.example.appmensajessecretos.domain.modelo.MensajeGrupo;
@@ -104,7 +107,7 @@ public class DataBase {
         }
     }
 
-    public List<Grupo> loadGroups() {
+    public Either<Error,List<Grupo>> loadGroups() {
         Type groupListType = new TypeToken<ArrayList<Grupo>> () {}.getType();
         List<Grupo> groups = null;
         try {
@@ -115,16 +118,17 @@ public class DataBase {
                 groups = new ArrayList<>();
         } catch (FileNotFoundException e) {
             log.error(e.getMessage(),e);
+            return Either.left(DataBaseError.ERROR_IN_FETCH);
         }
-        return groups;
+        return Either.right(groups);
     }
-    public boolean saveGroups(List<Grupo> groups) {
+    public Either<Error,Boolean> saveGroups(List<Grupo> groups) {
         try (FileWriter fw = new FileWriter(configuration.getPathGrupos())) {
             gson.toJson(groups,fw);
         } catch (IOException e) {
             log.error(e.getMessage(),e);
-            return true;
+            return Either.left(DataBaseError.ERROR_IN_FETCH);
         }
-        return true;
+        return Either.right(true);
     }
 }

@@ -25,6 +25,10 @@
             android:name=".ui.detailsScreen.DetailsActivity"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".ui.newBookScreen.NewBookActivity"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>

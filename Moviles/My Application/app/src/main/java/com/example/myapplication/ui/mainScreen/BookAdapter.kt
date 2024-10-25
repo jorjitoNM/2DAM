@@ -8,7 +8,6 @@ import com.example.myapplication.R
 import com.example.myapplication.domain.model.Book
 
 class BookAdapter(
-    val itemClick: (Book) -> Unit,
     val actions : BookActions,
 ) : ListAdapter<Book, BookViewHolder>(DiffCallback()) {
 

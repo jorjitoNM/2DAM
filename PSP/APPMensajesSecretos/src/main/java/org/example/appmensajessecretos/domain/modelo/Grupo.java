@@ -9,10 +9,12 @@ public class Grupo {
     private final String name;
     private final String password;
     private final ArrayList<Usuario> members;
+    private final Boolean isPrivate;
 
-    public Grupo(String name, String password) {
+    public Grupo(String name, String password, Boolean isPrivate) {
         this.name = name;
         this.password = password;
+        this.isPrivate = isPrivate;
         members = new ArrayList<>();
     }
 

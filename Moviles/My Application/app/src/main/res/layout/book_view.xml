@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/listBookAuthor"
         android:textSize="@dimen/_30sp"
+        android:textColor="@color/md_theme_onPrimary"
         />
 
     <TextView
@@ -25,6 +26,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/listBookName"
         android:textSize="@dimen/_30sp"
+        android:textColor="@color/md_theme_onPrimary"
         />
 
 

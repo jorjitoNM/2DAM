@@ -5,6 +5,5 @@ import com.example.myapplication.ui.common.UiEvent
 
 data class DetailsState(
     val book : Book = Book(),
-    val mensaje : String? = null,
     val event : UiEvent? = null,
 )
