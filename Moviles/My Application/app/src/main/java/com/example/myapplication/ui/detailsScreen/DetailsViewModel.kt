@@ -51,9 +51,6 @@ class DetailsViewModel(
             _uiState.value = _uiState.value?.copy(event = UiEvent.PopBackStack)
     }
 
-    fun showCalendar() {
-    }
-
     fun eventoMostrado() {
         _uiState.value = _uiState.value?.copy(event = null)
     }

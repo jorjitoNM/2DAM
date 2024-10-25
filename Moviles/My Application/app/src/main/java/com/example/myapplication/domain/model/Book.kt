@@ -6,5 +6,5 @@ data class Book(
     val name : String = "",
     val author : String = "Anonymous",
     val score : Float = 0f,
-    val releaseDate : Int = 0,
+    val releaseDate : String = "01/01/2001",
 )

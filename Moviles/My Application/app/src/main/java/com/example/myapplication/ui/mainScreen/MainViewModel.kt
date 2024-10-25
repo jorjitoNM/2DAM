@@ -16,12 +16,6 @@ class MainViewModel(
     fun getBooks() {
         _uiState.value = _uiState.value?.copy(books = getBooks.invoke())
     }
-
-    fun add() {
-
-    }
-
-
 }
 
 

@@ -45,7 +45,7 @@ class NewBookActivity  : AppCompatActivity(){
     private fun events() {
         with(binding) {
             add.setOnClickListener() { viewModel.addBook(Book(viewModel.getId(),bookName.text.toString(),
-                bookAuthor.text.toString(),ratingBar.rating)) }
+                bookAuthor.text.toString(),ratingBar.rating,releaseDate.text.toString())) }
             cancel.setOnClickListener() { viewModel.cancel() }
         }
     }

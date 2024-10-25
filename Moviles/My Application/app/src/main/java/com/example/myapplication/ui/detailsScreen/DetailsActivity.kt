@@ -79,13 +79,10 @@ class DetailsActivity : AppCompatActivity() {
         with(binding) {
             update.setOnClickListener {
                 viewModel.updateBook(Book(id,bookName.text.toString(),
-                    bookAuthor.text.toString(),ratingBar.rating,))
+                    bookAuthor.text.toString(),ratingBar.rating,releaseDate.text.toString()))
             }
             delete.setOnClickListener {
                 viewModel.deleteBook(id)
-            }
-            releaseDate.setOnClickListener {
-                viewModel.showCalendar()
             }
         }
     }

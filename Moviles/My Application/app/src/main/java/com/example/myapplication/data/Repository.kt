@@ -9,9 +9,9 @@ object Repository {
     private var id : Int = 3
 
     init {
-        books.add(Book(0,"La biblia","Anonimo",2f,0))
-        books.add(Book(1,"La biblia 2","Anonimo",1f,1000))
-        books.add(Book(2,"La biblia 3","Anonimo",3f,2000))
+        books.add(Book(0,"La biblia","Anonimo",2f,"01/01/01"))
+        books.add(Book(1,"La biblia 2","Anonimo",1f,"01/01/1000"))
+        books.add(Book(2,"La biblia 3","Anonimo",3f,"01/01/2000"))
     }
 
     fun getBooks () : List<Book> {

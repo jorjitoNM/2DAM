@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import org.example.appmensajessecretos.domain.error.DataBaseError;
 import org.example.appmensajessecretos.domain.error.DataInputError;
 import org.example.appmensajessecretos.domain.error.Error;
+import org.example.appmensajessecretos.domain.error.ServiceError;
 import org.example.appmensajessecretos.domain.modelo.Grupo;
 import org.example.appmensajessecretos.domain.modelo.Usuario;
 import org.example.appmensajessecretos.domain.servicio.GroupService;
@@ -153,15 +154,16 @@ public class GroupController {
     private void showJoinGroupError(Error error) {
         String errorMessage = "";
         switch (error) {
-            case DataBaseError e -> {
-                switch (e) {
-                    case GROUP_NOT_FOUND -> errorMessage = Constantes.GRUPO_NO_EXISTE;
-                    case ERROR_JOINING_GROUP -> errorMessage = Constantes.ERROR_JOINING_GROUP;
-                    case ACTION_FAILED -> errorMessage = Constantes.DATABASE_FAILED;
-                }
-            }
+            case DataBaseError e when e == DataBaseError.ACTION_FAILED
+                    -> errorMessage = Constantes.DATABASE_FAILED;
             case DataInputError e when e == DataInputError.GROUP_IS_PRIVATE ->
                 errorMessage = Constantes.GROUP_IS_PRIVATE;
+            case ServiceError e -> {
+                switch (e) {
+                    case e == ServiceError.GROUP_NOT_FOUND
+                        -> errorMessage = Constantes.GRUPO_NO_EXISTE;
+                }
+            }
             default -> errorMessage = Constantes.DATABASE_FAILED;
         }
         createGroupError.setText(errorMessage);
@@ -172,20 +174,20 @@ public class GroupController {
         if (checkLogged()) {
             if (userNameDelete.getText().isEmpty() || groupNameDelete.getText().isEmpty())
                 deleteError.setText(Constantes.RELLENE_CAMPOS);
-            else if (!groupService.findUser(userNameDelete.getText(), groupNameDelete.getText())) { //se puede quitar con el Either
-                deleteError.setText(Constantes.USER_NOT_FOUND);
             } else {
                 if (alertComfirmation(Constantes.MENSAJE_ELIMINAR_USUARIO)) {
-                    if (!groupService.deleteMember(userNameDelete.getText(), groupNameDelete.getText())) {
+                    groupService.deleteMember(userNameDelete.getText(), groupNameDelete.getText())
+                                    .peek(ok ->
+                                            deleteError.setText(Constantes.MEMBER_DELETED);
+                                            actualizarUserInfo();
+                                    ).
                         deleteError.setText(Constantes.ERROR_DELETING_USER);
                     } else {
-                        deleteError.setText(Constantes.MEMBER_DELETED);
-                        actualizarUserInfo();
+
                     }
                 }
             }
         }
-    }
 
     public void sendGroupMessage() {
         if (checkLogged()) {

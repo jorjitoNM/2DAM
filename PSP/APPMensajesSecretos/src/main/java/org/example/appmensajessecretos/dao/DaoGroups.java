@@ -1,12 +1,15 @@
 package org.example.appmensajessecretos.dao;
 
 import io.vavr.control.Either;
+import org.example.appmensajessecretos.domain.error.DataInputError;
 import org.example.appmensajessecretos.domain.error.Error;
+import org.example.appmensajessecretos.domain.error.ServiceError;
 import org.example.appmensajessecretos.domain.modelo.Grupo;
 import org.example.appmensajessecretos.domain.modelo.Usuario;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class DaoGroups {
@@ -17,16 +20,66 @@ public class DaoGroups {
         this.dataBase = dataBase;
     }
 
-    public Either<Error,List<Grupo>> getGroups (Usuario user) {
-        return dataBase.loadGroups().stream()
-                .filter(g -> g.getMembers().contains(user)).toList();
+    public Either<Error, List<Grupo>> getGroups(Usuario user) {
+        return dataBase.loadGroups().map(grupos -> grupos.stream()
+                .filter(grupo -> grupo.getMembers().contains(user))
+                .collect(Collectors.toList())).flatMap(groups -> {
+            if (groups.isEmpty()) {
+                return Either.left(ServiceError.NOT_IN_GROUPS);
+            } else {
+                return Either.right(groups);
+            }
+        });
     }
 
-    public List<Grupo> loadGroups () {
-        return dataBase.loadGroups();
+    public Either<Error, Boolean> joinGroup(Usuario user, Grupo group) {
+        return dataBase.loadGroups()
+                    .flatMap(grupos -> {
+                        Either<Error, Grupo> grupoEither = grupos.stream()
+                                .filter(g -> g.getName().equals(group.getName()))
+                                .findFirst()
+                                .map(Either::<Error, Grupo>right)
+                                .orElseGet(() -> Either.left(ServiceError.GROUP_NOT_FOUND));
+
+                        return grupoEither.flatMap(foundGroup -> {
+                            foundGroup.getMembers().add(user);
+                            return dataBase.saveGroups(grupos);
+                        });
+                    });
     }
 
-    public boolean saveGroups (List<Grupo> groups) {
-        return dataBase.saveGroups(groups);
+    public Either<Error, Boolean> createGroup(Grupo group) {
+        return dataBase.loadGroups()
+                .flatMap(grupos -> {
+                    if (grupos.stream().anyMatch(g -> g.getName().equals(group.getName()))) {
+                        return Either.left(ServiceError.GROUP_ALREADY_EXISTS);
+                    } else {
+                        return Either.right(grupos);
+                    }
+                })
+                .flatMap(grupos -> {
+                    grupos.add(group);
+                    return dataBase.saveGroups(grupos);
+                });
+    }
+
+    public Either<Error, Boolean> deleteMember(String userName, String groupName) {
+        return dataBase.loadGroups().flatMap(grupos -> {
+
+            Either<Error, Grupo> gruposEither = grupos.stream()
+                    .filter(g -> g.getName().equals(groupName))
+                    .findFirst()
+                    .map(Either::<Error, Grupo>right)
+                    .orElseGet(() -> Either.left(ServiceError.GROUP_NOT_FOUND));
+
+            return gruposEither.flatMap(grupo -> {
+                if (grupo.getMembers().stream().anyMatch(u -> u.getName().equals(userName)))
+                    return Either.left(ServiceError.NOT_IN_GROUP);
+                else {
+                    grupo.getMembers().removeIf(u -> u.getName().equals(userName));
+                    return dataBase.saveGroups(grupos);
+                }
+            });
+        });
     }
 }
