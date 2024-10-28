@@ -54,9 +54,9 @@ public class DataBase {
            gson.toJson(users, fw);
        } catch (IOException e) {
            log.error(e.getMessage(),e);
-           return Either.right(null);
+           return Either.left(DataBaseError.ACTION_FAILED);
        }
-       return Either.left(DataBaseError.ACTION_FAILED);
+       return Either.right(null);
    }
 
 

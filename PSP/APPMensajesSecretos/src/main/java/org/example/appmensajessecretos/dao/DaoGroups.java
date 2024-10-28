@@ -42,8 +42,10 @@ public class DaoGroups {
                                 .orElseGet(() -> Either.left(ServiceError.GROUP_NOT_FOUND));
 
                         return grupoEither.flatMap(foundGroup -> {
-                            foundGroup.getMembers().add(user);
-                            return dataBase.saveGroups(grupos);
+                            if (group.getIsPrivate())
+                                return Either.left(DataInputError.GROUP_IS_PRIVATE);
+                            else foundGroup.getMembers().add(user);
+                                return dataBase.saveGroups(grupos);
                         });
                     });
     }

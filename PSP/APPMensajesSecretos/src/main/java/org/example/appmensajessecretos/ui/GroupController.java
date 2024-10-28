@@ -125,8 +125,15 @@ public class GroupController {
     }
 
     private void createUser() {
-        if (alertComfirmation(Constantes.USUARIO_MISSING))
+        if (alertComfirmation(Constantes.USUARIO_MISSING)) {
+            userService.addUser(new Usuario(userName.getText(), userPassword.getText()))
+                            .peekLeft(error -> {
+                                if (error == DataBaseError.ERROR_IN_FETCH) {
+                                    logInError.setText(Constantes.DATABASE_FAILED);
+                                }
+                            });
             iniciarSesion();
+        }
     }
 
 
@@ -173,7 +180,7 @@ public class GroupController {
     }
 
     private void showJoinGroupError(Error error) {
-        String errorMessage = "";
+        String errorMessage;
         switch (error) {
             case DataBaseError e when e == DataBaseError.ACTION_FAILED -> errorMessage = Constantes.DATABASE_FAILED;
             case DataInputError e when e == DataInputError.GROUP_IS_PRIVATE ->
@@ -225,7 +232,6 @@ public class GroupController {
                     .peek(ok -> {
                         loadUserGroupChats();
                     }).peekLeft(this::showSendingMessageError);
-            sendMessageError.setText(Constantes.ERROR_SENDING_MESSAGE);
         }
     }
 
@@ -257,6 +263,8 @@ public class GroupController {
                                         inviteUserError.setText(Constantes.GRUPO_NO_EXISTE);
                                 case DataBaseError e when e == DataBaseError.ERROR_IN_FETCH ->
                                         inviteUserError.setText(Constantes.DATABASE_FAILED);
+                                case DataInputError e when e == DataInputError.GROUP_IS_PRIVATE
+                                    -> inviteUserError.setText(Constantes.GROUP_IS_PRIVATE);
                                 default -> inviteUserError.setText(Constantes.ERROR_INVITING_USER);
                             }
                         });
@@ -269,19 +277,19 @@ public class GroupController {
         myChats.getItems().clear();
         groupService.getGroups(usuario).peek(ok -> {
             myChats.getItems().addAll(ok);
-        });/*.peekLeft(error ->
-                switch (error) {
-            case DataBaseError e when e == DataBaseError.ERROR_IN_FETCH
-                -> userInfoError.setText(Constantes.DATABASE_FAILED);
-            case ServiceError e when e == ServiceError.NOT_IN_GROUP
-                -> userInfoError.setText(Constantes.USER_NOT_IN_GROUPS);
-            default -> userInfoError.setText(Constantes.ERROR_LOADING_USER_CHATS);
-        });*/
+        }).peekLeft(error -> {
+                if (error == DataBaseError.ERROR_IN_FETCH)
+                    userInfoError.setText(Constantes.DATABASE_FAILED);
+                else if (error == ServiceError.NOT_IN_GROUP)
+                    userInfoError.setText(Constantes.USER_NOT_IN_GROUPS);
+                else
+                    userInfoError.setText(Constantes.ERROR_LOADING_USER_CHATS);
+        });
     }
 
 
     public void loadUsers() {
-        //usuarios.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        usuarios.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         usuarios.getItems().clear();
         userService.loadUsers(usuario).peek(ok ->
                         usuarios.getItems().addAll(ok))

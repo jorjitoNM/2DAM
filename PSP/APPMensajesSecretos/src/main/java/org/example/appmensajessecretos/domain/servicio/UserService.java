@@ -22,15 +22,14 @@ public class UserService {
     }
 
     public Either<Error, Void> logIn(Usuario user) {
-        Usuario finalUser = new Usuario(user.getName(), passwordEncoder.encode(user.getPassword()));
         return dao.loadUsers().flatMap(usuarios -> {
             Either<Error, Usuario> foundUser = usuarios.stream()
-                    .filter(u -> u.getName().equals(finalUser.getName()))
+                    .filter(u -> u.getName().equals(user.getName()))
                     .findFirst()
                     .map(Either::<Error, Usuario>right)
                     .orElseGet(() -> Either.left(ServiceError.USER_NOT_FOUND));
             return foundUser.flatMap(u -> {
-                if (passwordEncoder.matches(u.getPassword(), finalUser.getPassword()))
+                if (passwordEncoder.matches(user.getPassword(),u.getPassword()))
                     return dao.saveUsers(usuarios);
                 else
                     return Either.left(DataInputError.INCORRECT_PASSWORD);
@@ -39,9 +38,15 @@ public class UserService {
     }
 
     public Either<Error, List<Usuario>> loadUsers(Usuario user) {
+        return dao.loadUsers().flatMap(usuarios -> Either.right(usuarios.stream()
+                .filter(u -> !u.getName().equals(user.getName())).toList()));
+    }
+
+    public Either<Error, Void> addUser(Usuario usuario) {
+        Usuario finalUser = new Usuario(usuario.getName(), passwordEncoder.encode(usuario.getPassword()));
         return dao.loadUsers().flatMap(usuarios -> {
-            return Either.right(usuarios.stream()
-                    .filter(u -> !u.getName().equals(user.getName())).toList());
+            usuarios.add(finalUser);
+            return dao.saveUsers(usuarios);
         });
     }
 }
