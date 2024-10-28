@@ -23,5 +23,11 @@ public class Constantes {
     public static final String LOGIN_FAILED = "No se ha podido iniciado sesion";
     public static final String DATABASE_FAILED = "El sistema no ha podido completar su accion, intentelo de nuevo";
     public static final String GROUP_IS_PRIVATE = "No se puede unir a un grupo privado, debe recibir una invitacion desde dentro";
+    public static final String USER_NOT_IN_GROUP = "El usuario seleccionado no se encuentra en este grupo";
+    public static final String GROUP_ALREADY_EXIST = "Ya existe un grupo con ese nombre, utilice otro distinto";
+    public static final String USER_NOT_IN_GROUPS = "No tienes chats disponibles";
+    public static final String ERROR_INVITING_USER = "No se ha podido invitar a el/los usuarios/s al grupo, intentelo de nuevo";
+    public static final String ERROR_LOADING_USER_CHATS = "No se ha podido cargar sus chats, intentelo de nuevo más tarde";
+
     private Constantes () {}
 }

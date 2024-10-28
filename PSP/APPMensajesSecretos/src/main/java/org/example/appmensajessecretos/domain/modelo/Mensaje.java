@@ -3,24 +3,17 @@ package org.example.appmensajessecretos.domain.modelo;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 public class Mensaje {
     private final String content;
     private final LocalDateTime date;
     private final Usuario author;
-    private final List<Usuario> receivers;
+    private final Grupo grupo;
 
     @Override
     public String toString() {
-        return "De " + author.getName() + " para " + parseReceivers() + ": " + content
+        return "De " + author.getName() + ": " + content
                 + " (" + date.getDayOfMonth() + "/" + date.getMonth() + "/" + date.getYear() + ")";
-    }
-
-    private String parseReceivers() {
-        StringBuilder sb = new StringBuilder();
-        receivers.forEach(r -> sb.append(r.getName()).append(", "));
-        return sb.toString();
     }
 }

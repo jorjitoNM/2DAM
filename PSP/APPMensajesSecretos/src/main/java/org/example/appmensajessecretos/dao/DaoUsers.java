@@ -1,5 +1,7 @@
 package org.example.appmensajessecretos.dao;
 
+import io.vavr.control.Either;
+import org.example.appmensajessecretos.domain.error.Error;
 import org.example.appmensajessecretos.domain.modelo.Usuario;
 import org.springframework.stereotype.Repository;
 
@@ -13,11 +15,11 @@ public class DaoUsers {
         this.dataBase = dataBase;
     }
 
-    public boolean saveUsers(List<Usuario> users) {
+    public Either<Error,Void> saveUsers(List<Usuario> users) {
         return dataBase.saveUsers(users);
     }
 
-    public List<Usuario> loadUsers() {
+    public Either<Error,List<Usuario>> loadUsers() {
         return dataBase.loadUsers();
     }
 }

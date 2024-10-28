@@ -23,20 +23,20 @@ public class GroupService {
         return dao.getGroups(user);
     }
 
-    public Either<Error, Boolean> joinGroup (Usuario user, Grupo group) {
+    public Either<Error, Void> joinGroup (Usuario user, Grupo group) {
         if (group.getIsPrivate()) return Either.left(DataInputError.GROUP_IS_PRIVATE);
         else return dao.joinGroup(user,group);
     }
 
-    public Either<Error,Boolean> createGroup (Grupo group) {
-        return dao.createGroup(group);
+    public Either<Error,Void> createGroup (Grupo group, Usuario user) {
+        return dao.createGroup(group,user);
     }
 
-    public Either<Error,Boolean> deleteMember (String userName, String groupName) {
+    public Either<Error,Void> deleteMember (String userName, String groupName) {
         return dao.deleteMember(userName,groupName);
     }
 
-    public Either<Error,Boolean> inviteUser (Grupo group, List<Usuario> users) {
-
+    public Either<Error,Void> inviteUser (Grupo group, List<Usuario> users) {
+        return dao.inviteUser(group,users);
     }
 }

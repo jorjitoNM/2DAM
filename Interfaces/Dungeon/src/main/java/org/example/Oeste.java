@@ -1,9 +1,8 @@
 package org.example;
 
-import javax.swing.*;
-
-public class Oeste extends JButton {
+public class Oeste extends Door {
     public Oeste() {
+        super();
         setBounds(500,250,100,50);
         setText("Oeste");
     }

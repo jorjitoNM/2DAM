@@ -10,7 +10,6 @@ import org.example.appmensajessecretos.domain.error.DataBaseError;
 import org.example.appmensajessecretos.domain.error.Error;
 import org.example.appmensajessecretos.domain.modelo.Grupo;
 import org.example.appmensajessecretos.domain.modelo.Mensaje;
-import org.example.appmensajessecretos.domain.modelo.MensajeGrupo;
 import org.example.appmensajessecretos.domain.modelo.Usuario;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +20,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @Log4j2
@@ -36,7 +34,7 @@ public class DataBase {
        this.configuration = configuration;
    }
 
-   public List<Usuario> loadUsers () {
+   public Either<Error,List<Usuario>> loadUsers () {
         Type userListType = new TypeToken<ArrayList<Usuario>> () {}.getType();
         List<Usuario> users = null;
         try {
@@ -47,20 +45,22 @@ public class DataBase {
                 users = new ArrayList<>();
         } catch (FileNotFoundException e) {
             log.error(e.getMessage(),e);
+            return Either.left(DataBaseError.ERROR_IN_FETCH);
         }
-       return users;
+       return Either.right(users);
    }
-   public boolean saveUsers (List<Usuario> users) {
+   public Either<Error,Void> saveUsers (List<Usuario> users) {
        try (FileWriter fw = new FileWriter(configuration.getPathUsuarios())) {
            gson.toJson(users, fw);
        } catch (IOException e) {
            log.error(e.getMessage(),e);
-           return false;
+           return Either.right(null);
        }
-       return true;
+       return Either.left(DataBaseError.ACTION_FAILED);
    }
 
-    public List<Mensaje> loadMessages() {
+
+    public Either<Error,List<Mensaje>> loadMessages() {
         Type messageListType = new TypeToken<ArrayList<Mensaje>> () {}.getType();
         List<Mensaje> messages = null;
         try {
@@ -71,42 +71,21 @@ public class DataBase {
                 messages = new ArrayList<>();
         } catch (FileNotFoundException e) {
             log.error(e.getMessage(),e);
+            return Either.left(DataBaseError.ERROR_IN_FETCH);
         }
-        return messages;
-    }
-    public boolean saveMessages(List<Mensaje> mensajes) {
-       try (FileWriter fw = new FileWriter(configuration.getPathMensajes())) {
-           gson.toJson(mensajes,fw);
-       } catch (IOException e) {
-           log.error(e.getMessage(),e);
-           return true;
-       }
-       return true;
+        return Either.right(messages);
     }
 
-    public List<MensajeGrupo> loadGroupMessages() {
-        Type messageGrupoListType = new TypeToken<ArrayList<MensajeGrupo>> () {}.getType();
-        List<MensajeGrupo> messages = null;
-        try {
-            messages = gson.fromJson(
-                    new FileReader(configuration.getPathMensajesGrupo()), messageGrupoListType
-            );
-            if (messages == null)
-                messages = new ArrayList<>();
-        } catch (FileNotFoundException e) {
-            log.error(e.getMessage(),e);
-        }
-        return messages;
-    }
-    public boolean saveGroupMessages(List<MensajeGrupo> mensajes) {
-        try (FileWriter fw = new FileWriter(configuration.getPathMensajesGrupo())) {
+    public Either<Error,Void> saveMessages(List<Mensaje> mensajes) {
+        try (FileWriter fw = new FileWriter(configuration.getPathMensajes())) {
             gson.toJson(mensajes,fw);
-            return true;
+            return Either.right(null);
         } catch (IOException e) {
             log.error(e.getMessage(),e);
-            return false;
+            return Either.left(DataBaseError.ACTION_FAILED);
         }
     }
+
 
     public Either<Error,List<Grupo>> loadGroups() {
         Type groupListType = new TypeToken<ArrayList<Grupo>> () {}.getType();
@@ -123,13 +102,13 @@ public class DataBase {
         }
         return Either.right(groups);
     }
-    public Either<Error,Boolean> saveGroups(List<Grupo> groups) {
+    public Either<Error,Void> saveGroups(List<Grupo> groups) {
         try (FileWriter fw = new FileWriter(configuration.getPathGrupos())) {
             gson.toJson(groups,fw);
         } catch (IOException e) {
             log.error(e.getMessage(),e);
-            return Either.left(DataBaseError.ERROR_IN_FETCH);
+            return Either.left(DataBaseError.ACTION_FAILED);
         }
-        return Either.right(true);
+        return Either.right(null);
     }
 }

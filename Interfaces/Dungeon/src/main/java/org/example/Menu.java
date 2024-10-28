@@ -1,7 +1,6 @@
 package org.example;
 
 import javax.swing.*;
-import javax.swing.plaf.IconUIResource;
 
 public class Menu extends JOptionPane {
     public Menu() {

@@ -20,6 +20,9 @@ public class Grupo {
 
     @Override
     public String toString() {
-        return name;
+        String result = name;
+        if (isPrivate)
+            result += " (private)";
+        return result;
     }
 }

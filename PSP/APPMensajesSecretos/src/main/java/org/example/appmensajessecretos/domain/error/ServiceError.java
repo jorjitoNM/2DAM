@@ -6,4 +6,5 @@ public enum ServiceError implements Error{
     NOT_IN_GROUPS,
     GROUP_ALREADY_EXISTS,
     NOT_IN_GROUP,
+    USER_NOT_FOUND, ERROR_SENDING_MESSAGE,
 }

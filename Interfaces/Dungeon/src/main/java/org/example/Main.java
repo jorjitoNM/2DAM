@@ -1,10 +1,14 @@
 package org.example;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Main {
     public static void main(String[] args) {
-        Frame frame = new Frame();
+        DungeonApp app = new DungeonApp();
+        /*Frame frame = new Frame();
         frame.setLayout(null);
         Norte norte = new Norte();
         Sur sur = new Sur();
@@ -18,5 +22,6 @@ public class Main {
         frame.add(sur);
         frame.add(este);
         frame.add(oeste);
+*/
     }
 }

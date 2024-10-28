@@ -32,7 +32,7 @@ public class DaoGroups {
         });
     }
 
-    public Either<Error, Boolean> joinGroup(Usuario user, Grupo group) {
+    public Either<Error, Void> joinGroup(Usuario user, Grupo group) {
         return dataBase.loadGroups()
                     .flatMap(grupos -> {
                         Either<Error, Grupo> grupoEither = grupos.stream()
@@ -48,7 +48,7 @@ public class DaoGroups {
                     });
     }
 
-    public Either<Error, Boolean> createGroup(Grupo group) {
+    public Either<Error, Void> createGroup(Grupo group, Usuario user) {
         return dataBase.loadGroups()
                 .flatMap(grupos -> {
                     if (grupos.stream().anyMatch(g -> g.getName().equals(group.getName()))) {
@@ -58,12 +58,14 @@ public class DaoGroups {
                     }
                 })
                 .flatMap(grupos -> {
+                    if (group.getIsPrivate())
+                        group.getMembers().add(user);
                     grupos.add(group);
                     return dataBase.saveGroups(grupos);
                 });
     }
 
-    public Either<Error, Boolean> deleteMember(String userName, String groupName) {
+    public Either<Error, Void> deleteMember(String userName, String groupName) {
         return dataBase.loadGroups().flatMap(grupos -> {
 
             Either<Error, Grupo> gruposEither = grupos.stream()
@@ -79,6 +81,21 @@ public class DaoGroups {
                     grupo.getMembers().removeIf(u -> u.getName().equals(userName));
                     return dataBase.saveGroups(grupos);
                 }
+            });
+        });
+    }
+
+    public Either<Error, Void> inviteUser(Grupo group, List<Usuario> users) {
+        return dataBase.loadGroups().flatMap(grupos -> {
+            Either<Error, Grupo> gruposEither = grupos.stream()
+                    .filter(g -> g.getName().equals(group.getName()))
+                    .findFirst()
+                    .map(Either::<Error, Grupo>right)
+                    .orElseGet(() -> Either.left(ServiceError.GROUP_NOT_FOUND));
+
+            return gruposEither.flatMap(grupo -> {
+                grupo.getMembers().addAll(users);
+                return dataBase.saveGroups(grupos);
             });
         });
     }

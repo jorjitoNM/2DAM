@@ -14,8 +14,6 @@ import org.example.appmensajessecretos.domain.servicio.UserService;
 import org.example.appmensajessecretos.utilities.Constantes;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-
 @Component
 public class GroupController {
 
@@ -61,6 +59,8 @@ public class GroupController {
 
     @FXML
     private ListView<Grupo> myChats;
+    @FXML
+    private Label userInfoError;
 
 
     @FXML
@@ -71,14 +71,14 @@ public class GroupController {
 
     @FXML
     private ListView<String> groupChats;
-
-
     @FXML
-    private ListView<String> privateChats;
+    private Label chatError;
 
 
     @FXML
     private ListView<Usuario> usuarios;
+    @FXML
+    private Label inviteUserError;
 
 
     public GroupController(UserService userService, MessageService messageService, GroupService groupService) {
@@ -96,45 +96,65 @@ public class GroupController {
         } else
             return true;
     }
+
+
     public void iniciarSesion() {
-        boolean succes = false;
         if (userName.getText().isEmpty() || userPassword.getText().isEmpty())
             logInError.setText(Constantes.RELLENE_CAMPOS);
-        else {
-            usuario = userService.addUser(new Usuario(userName.getText(), userPassword.getText()));
-            if (usuario == null) {
-                if (alertComfirmation(Constantes.USUARIO_MISSING)) {
-                    succes = true;
-                } else {
-                    logInError.setText(Constantes.LOGIN_FAILED);
-                }
-            } else if (usuario.getName().equals(Constantes.CONTRASEÑA_INCORRECTA)) {
-                logInError.setText(Constantes.CONTRASEÑA_INCORRECTA);
-            } else
-                succes = true;
-        }
-        if (succes) {
-            usuario = new Usuario(userName.getText(), userPassword.getText());
-            actualizarUserInfo();
-            logInError.setText(Constantes.LOGGED_IN);
-            loadUsers();
-        }
+        else
+            userService.logIn(new Usuario(userName.getText(), userPassword.getText()))
+                    .peek(ok -> {
+                        usuario = new Usuario(userName.getText(), userPassword.getText());
+                        actualizarUserInfo();
+                        logInError.setText(Constantes.LOGGED_IN);
+                        loadUsers();
+                    })
+                    .peekLeft(this::showLogInError);
     }
+
+    private void showLogInError(Error error) {
+        String errorMessage = "";
+        switch (error) {
+            case DataBaseError e when e == DataBaseError.ERROR_IN_FETCH -> errorMessage = Constantes.DATABASE_FAILED;
+            case ServiceError e when e == ServiceError.USER_NOT_FOUND -> createUser();
+            case DataInputError e when e == DataInputError.INCORRECT_PASSWORD ->
+                    errorMessage = Constantes.CONTRASEÑA_INCORRECTA;
+            default -> errorMessage = Constantes.LOGIN_FAILED;
+        }
+        logInError.setText(errorMessage);
+    }
+
+    private void createUser() {
+        if (alertComfirmation(Constantes.USUARIO_MISSING))
+            iniciarSesion();
+    }
+
 
     public void createGroup() {
         if (checkLogged()) {
             if (createGroupName.getText().isEmpty() || createGroupPassword.getText().isEmpty())
                 createGroupError.setText(Constantes.RELLENE_CAMPOS);
             else {
-                Grupo grupo = new Grupo(createGroupName.getText(), createGroupPassword.getText(),isPrivate.isSelected());
-                if (!groupService.createGroup(grupo)) {
-                    createGroupError.setText(Constantes.ERROR_CREATING_GROUP);
-                } else {
-                    createGroupError.setText(Constantes.GROUP_CREATED);
-                    actualizarUserInfo();
-                }
+                Grupo grupo = new Grupo(createGroupName.getText(), createGroupPassword.getText(), isPrivate.isSelected());
+                groupService.createGroup(grupo, usuario)
+                        .peek(ok -> {
+                            createGroupError.setText(Constantes.GROUP_CREATED);
+                            actualizarUserInfo();
+                        })
+                        .peekLeft(this::showCreateGroupError);
             }
         }
+    }
+
+    private void showCreateGroupError(Error error) {
+        String errorMessage = "";
+        switch (error) {
+            case DataBaseError e when e == DataBaseError.ERROR_IN_FETCH -> errorMessage = Constantes.DATABASE_FAILED;
+            case ServiceError e when e == ServiceError.GROUP_ALREADY_EXISTS ->
+                    errorMessage = Constantes.GROUP_ALREADY_EXIST;
+            default -> errorMessage = Constantes.ERROR_CREATING_GROUP;
+        }
+        createGroupError.setText(errorMessage);
     }
 
 
@@ -143,30 +163,25 @@ public class GroupController {
             if (groupName.getText().isEmpty() || groupPassword.getText().isEmpty())
                 joinGroupError.setText(Constantes.RELLENE_CAMPOS);
             else {
-                Grupo grupo = new Grupo(groupName.getText(), groupPassword.getText(),isPrivate.isSelected());
+                Grupo grupo = new Grupo(groupName.getText(), groupPassword.getText(), isPrivate.isSelected());
                 groupService.joinGroup(usuario, grupo).peek(ok -> {
-                        joinGroupError.setText(Constantes.JOINED_GROUP);
-                        actualizarUserInfo();
+                    joinGroupError.setText(Constantes.JOINED_GROUP);
+                    actualizarUserInfo();
                 }).peekLeft(this::showJoinGroupError);
             }
         }
     }
+
     private void showJoinGroupError(Error error) {
         String errorMessage = "";
         switch (error) {
-            case DataBaseError e when e == DataBaseError.ACTION_FAILED
-                    -> errorMessage = Constantes.DATABASE_FAILED;
+            case DataBaseError e when e == DataBaseError.ACTION_FAILED -> errorMessage = Constantes.DATABASE_FAILED;
             case DataInputError e when e == DataInputError.GROUP_IS_PRIVATE ->
-                errorMessage = Constantes.GROUP_IS_PRIVATE;
-            case ServiceError e -> {
-                switch (e) {
-                    case e == ServiceError.GROUP_NOT_FOUND
-                        -> errorMessage = Constantes.GRUPO_NO_EXISTE;
-                }
-            }
-            default -> errorMessage = Constantes.DATABASE_FAILED;
+                    errorMessage = Constantes.GROUP_IS_PRIVATE;
+            case ServiceError e when e == ServiceError.GROUP_NOT_FOUND -> errorMessage = Constantes.GRUPO_NO_EXISTE;
+            default -> errorMessage = Constantes.ERROR_JOINING_GROUP;
         }
-        createGroupError.setText(errorMessage);
+        joinGroupError.setText(errorMessage);
     }
 
 
@@ -174,52 +189,110 @@ public class GroupController {
         if (checkLogged()) {
             if (userNameDelete.getText().isEmpty() || groupNameDelete.getText().isEmpty())
                 deleteError.setText(Constantes.RELLENE_CAMPOS);
-            } else {
-                if (alertComfirmation(Constantes.MENSAJE_ELIMINAR_USUARIO)) {
-                    groupService.deleteMember(userNameDelete.getText(), groupNameDelete.getText())
-                                    .peek(ok ->
-                                            deleteError.setText(Constantes.MEMBER_DELETED);
-                                            actualizarUserInfo();
-                                    ).
-                        deleteError.setText(Constantes.ERROR_DELETING_USER);
-                    } else {
-
-                    }
-                }
+        } else {
+            if (alertComfirmation(Constantes.MENSAJE_ELIMINAR_USUARIO)) {
+                groupService.deleteMember(userNameDelete.getText(), groupNameDelete.getText())
+                        .peek(ok -> {
+                            deleteError.setText(Constantes.MEMBER_DELETED);
+                            actualizarUserInfo();
+                        })
+                        .peekLeft(this::showDeleteGroupError);
             }
         }
+    }
+
+    private void showDeleteGroupError(Error error) {
+        String errorMessage = "";
+        switch (error) {
+            case DataBaseError e when e == DataBaseError.ERROR_IN_FETCH -> errorMessage = Constantes.DATABASE_FAILED;
+            case ServiceError e -> {
+                switch (e) {
+                    case GROUP_NOT_FOUND -> errorMessage = Constantes.GRUPO_NO_EXISTE;
+                    case NOT_IN_GROUP -> errorMessage = Constantes.USER_NOT_IN_GROUP;
+                }
+            }
+            default -> errorMessage = Constantes.ERROR_DELETING_USER;
+        }
+        deleteError.setText(errorMessage);
+    }
+
 
     public void sendGroupMessage() {
         if (checkLogged()) {
             if (myChats.getSelectionModel().isEmpty() || mensaje.getText().isBlank())
                 sendMessageError.setText(Constantes.RELLENE_CAMPOS);
-            else if (!messageService.sendGroupMessages(mensaje.getText(), usuario, myChats.getSelectionModel().getSelectedItem()))
-                sendMessageError.setText(Constantes.ERROR_SENDING_MESSAGE);
-            else
-                loadUserGroupChats();
+            messageService.sendGroupMessages(mensaje.getText(), usuario, myChats.getSelectionModel().getSelectedItem())
+                    .peek(ok -> {
+                        loadUserGroupChats();
+                    }).peekLeft(this::showSendingMessageError);
+            sendMessageError.setText(Constantes.ERROR_SENDING_MESSAGE);
         }
     }
 
+    private void showSendingMessageError(Error error) {
+        String errorMessage = "";
+        switch (error) {
+            case DataBaseError e when e == DataBaseError.ERROR_IN_FETCH -> errorMessage = Constantes.DATABASE_FAILED;
+            case ServiceError e -> {
+                switch (e) {
+                    case GROUP_NOT_FOUND -> errorMessage = Constantes.GRUPO_NO_EXISTE;
+                    case ERROR_SENDING_MESSAGE -> errorMessage = Constantes.ERROR_SENDING_MESSAGE;
+                }
+            }
+            default -> errorMessage = Constantes.ERROR_SENDING_MESSAGE;
+        }
+        sendMessageError.setText(errorMessage);
+    }
+
+
     public void inviteUser() {
         if (checkLogged()) {
-            if (mensaje.getText().isBlank() || usuarios.getSelectionModel().isEmpty())
+            if (myChats.getSelectionModel().isEmpty() || usuarios.getSelectionModel().isEmpty())
                 sendMessageError.setText(Constantes.RELLENE_CAMPOS);
             else {
-                groupService.inviteUser(myChats.getSelectionModel().getSelectedItem(),usuarios.getSelectionModel().getSelectedItems());
+                groupService.inviteUser(myChats.getSelectionModel().getSelectedItem(), usuarios.getSelectionModel().getSelectedItems())
+                        .peekLeft(error -> {
+                            switch (error) {
+                                case ServiceError e when e == ServiceError.GROUP_NOT_FOUND ->
+                                        inviteUserError.setText(Constantes.GRUPO_NO_EXISTE);
+                                case DataBaseError e when e == DataBaseError.ERROR_IN_FETCH ->
+                                        inviteUserError.setText(Constantes.DATABASE_FAILED);
+                                default -> inviteUserError.setText(Constantes.ERROR_INVITING_USER);
+                            }
+                        });
             }
         }
     }
 
+
     private void actualizarUserInfo() {
         myChats.getItems().clear();
-        myChats.getItems().addAll(groupService.getGroups(usuario));
+        groupService.getGroups(usuario).peek(ok -> {
+            myChats.getItems().addAll(ok);
+        });/*.peekLeft(error ->
+                switch (error) {
+            case DataBaseError e when e == DataBaseError.ERROR_IN_FETCH
+                -> userInfoError.setText(Constantes.DATABASE_FAILED);
+            case ServiceError e when e == ServiceError.NOT_IN_GROUP
+                -> userInfoError.setText(Constantes.USER_NOT_IN_GROUPS);
+            default -> userInfoError.setText(Constantes.ERROR_LOADING_USER_CHATS);
+        });*/
     }
 
+
     public void loadUsers() {
-        usuarios.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        //usuarios.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         usuarios.getItems().clear();
-        usuarios.getItems().addAll(userService.loadUsers(usuario));
+        userService.loadUsers(usuario).peek(ok ->
+                        usuarios.getItems().addAll(ok))
+                .peekLeft(error -> {
+                    if (error instanceof DataBaseError)
+                        inviteUserError.setText(Constantes.DATABASE_FAILED);
+                    else
+                        inviteUserError.setText(Constantes.ERROR_LOADING_USER_CHATS);
+                });
     }
+
 
     private boolean alertComfirmation(String message) {
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
@@ -230,28 +303,21 @@ public class GroupController {
         return confirmation.getResult().equals(ButtonType.OK);
     }
 
-    public void loadUserGroupChats() {
-        groupChats.getItems().clear();
-        messageService.getGroupMessages(myChats.getSelectionModel().getSelectedItem()).forEach(m ->
-                groupChats.getItems().add(m.toString())
-        );
-    }
-
-    private void loadUserChats() {
-        privateChats.getItems().clear();
-        ArrayList<Usuario> selectedUsers = new ArrayList<>(usuarios.getSelectionModel().getSelectedItems());
-        messageService.getMessages(usuario,selectedUsers).forEach(m ->
-                privateChats.getItems().add(m.toString())
-        );
-    }
 
     public void loadGroupChats() {
         if (!myChats.getSelectionModel().isEmpty())
             loadUserGroupChats();
     }
 
-    public void loadPrivateChats() {
-        if (!usuarios.getSelectionModel().isEmpty())
-            loadUserChats();
+    public void loadUserGroupChats() {
+        groupChats.getItems().clear();
+        messageService.getMessages(myChats.getSelectionModel().getSelectedItem()).peek(ok -> ok.forEach(m ->
+                groupChats.getItems().add(m.toString())
+        )).peekLeft(error -> {
+            if (error instanceof DataBaseError)
+                chatError.setText(Constantes.DATABASE_FAILED);
+            else
+                chatError.setText(Constantes.ERROR_LOADING_USER_CHATS);
+        });
     }
 }
