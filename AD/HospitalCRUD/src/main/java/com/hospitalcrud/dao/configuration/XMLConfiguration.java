@@ -14,6 +14,9 @@ import java.util.Properties;
 public class XMLConfiguration {
     private static XMLConfiguration instance = null;
     private Path pathMedicalRecords;
+    private String dbUrl;
+    private String user_name;
+    private String password;
     @Setter
     private int lastID;
 
@@ -24,6 +27,9 @@ public class XMLConfiguration {
                     .getResourceAsStream("config/properties.xml"));
             this.pathMedicalRecords = Paths.get(p.getProperty("pathMedicalRecords"));
             this.lastID = Integer.parseInt(p.getProperty("nextID"));
+            this.dbUrl = p.getProperty("dbUrl");
+            this.user_name = p.getProperty("user_name");
+            this.password = p.getProperty("password");
         } catch (IOException e) {
             //log.error(e.getMessage());
             e.printStackTrace();
@@ -36,5 +42,4 @@ public class XMLConfiguration {
         }
         return instance;
     }
-
 }
