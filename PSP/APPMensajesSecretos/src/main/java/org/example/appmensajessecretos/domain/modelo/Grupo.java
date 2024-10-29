@@ -21,7 +21,7 @@ public class Grupo {
     @Override
     public String toString() {
         String result = name;
-        if (isPrivate)
+        if (Boolean.TRUE.equals(isPrivate))
             result += " (private)";
         return result;
     }
