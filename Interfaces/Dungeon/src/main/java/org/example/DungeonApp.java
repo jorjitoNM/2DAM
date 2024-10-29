@@ -4,8 +4,6 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 
 public class DungeonApp {
@@ -45,29 +43,35 @@ public class DungeonApp {
         menuBar.add(fileMenu);
         frame.setJMenuBar(menuBar);
 
-        // Área de descripción
-        descriptionArea = new JTextArea();
+        descriptionArea = new JTextArea(20,50);
         descriptionArea.setEditable(false);
         descriptionArea.setLineWrap(true);
         descriptionArea.setWrapStyleWord(true);
 
-        // Panel para los botones de las puertas
-        buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(0, 1)); // Una columna, tantas filas como puertas
 
-        // Área de recorrido
+        buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(0, 1));
+
+
         recorridoArea = new JTextArea();
         recorridoArea.setEditable(false);
         recorridoArea.setLineWrap(true);
         recorridoArea.setWrapStyleWord(true);
 
-        // Panel principal
-        JPanel rightPanel = new JPanel(new BorderLayout());
-        rightPanel.add(new JScrollPane(descriptionArea), BorderLayout.CENTER);
-        rightPanel.add(buttonPanel, BorderLayout.EAST);
-        rightPanel.add(new JScrollPane(recorridoArea), BorderLayout.SOUTH);
+        JPanel buttonsPane = new JPanel();
+        buttonPanel.add(new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED),BorderLayout.CENTER);
+        buttonPanel.add(new Norte(), BorderLayout.NORTH);
+        buttonPanel.add(new Sur(), BorderLayout.SOUTH);
+        buttonPanel.add(new Este(), BorderLayout.EAST);
+        buttonPanel.add(new Oeste(), BorderLayout.WEST);
 
-        // Panel izquierdo con el árbol XML
+
+        JPanel rightPanel = new JPanel(new BorderLayout());
+        rightPanel.add(new JScrollPane(descriptionArea), BorderLayout.SOUTH);
+        rightPanel.add(buttonPanel, BorderLayout.NORTH);
+        //rightPanel.add(new JScrollPane(recorridoArea), BorderLayout.SOUTH);
+
+
         xmlTree = new JTree();
         JScrollPane treeScroll = new JScrollPane(xmlTree);
 
@@ -101,8 +105,8 @@ public class DungeonApp {
     }
 
     private void startDungeon() {
-        currentRoom = loader.getRooms().get("R0"); // Comienza en la habitación R0
-        recorrido.setLength(0); // Resetear el recorrido
+        currentRoom = loader.getRooms().get("R0");
+        recorrido.setLength(0);
         recorrido.append("Recorrido: ");
         updateDescription();
         updateButtonPanel();
