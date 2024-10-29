@@ -21,7 +21,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Either<Error, Void> logIn(Usuario user) {
+    public Either<Error, Usuario> logIn(Usuario user) {
         return dao.loadUsers().flatMap(usuarios -> {
             Either<Error, Usuario> foundUser = usuarios.stream()
                     .filter(u -> u.getName().equals(user.getName()))
@@ -30,7 +30,7 @@ public class UserService {
                     .orElseGet(() -> Either.left(ServiceError.USER_NOT_FOUND));
             return foundUser.flatMap(u -> {
                 if (passwordEncoder.matches(user.getPassword(),u.getPassword()))
-                    return dao.saveUsers(usuarios);
+                    return Either.right(u);
                 else
                     return Either.left(DataInputError.INCORRECT_PASSWORD);
             });

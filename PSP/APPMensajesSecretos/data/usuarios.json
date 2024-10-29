@@ -1,14 +1,18 @@
 [
   {
     "name": "juan",
-    "password": "$2a$10$tl6yPzOKJbXwASx/Aw1X7OPPuKU7dYdCHr2rp1T2PEC3vJM2WBMZO"
+    "password": "$2a$10$bguuhASZ.paSu0eDTI9rzucvsCwwMEbUwzartNO2guyK8rMi3de9S"
   },
   {
     "name": "pedro",
-    "password": "$2a$10$K5253fVC5.b/V/fefAArfOsb9HWUI7N2D7dxmCJRBpfBoX6ICoiSa"
+    "password": "$2a$10$iTlxDFcFnm0eyGba1IIiqup5n0Z4jHqyXbphnw76gI3UKQywL3Xlm"
   },
   {
     "name": "jose",
-    "password": "$2a$10$4qZRuMKQ3X3yule42yUseOwP6fIF3/AJy/Gw.MGXQ340aSEYvrPcC"
+    "password": "$2a$10$Hr9d9ACeuNoV.h5A1OWdjudmlF2njKSQBEb5u/OVnfRBhItC18Srm"
+  },
+  {
+    "name": "mario",
+    "password": "$2a$10$gw82ZXHK8d6aRlZfGy35TeCBilSCe9Q5mTxynVPtXX7i4AD4PGShO"
   }
 ]

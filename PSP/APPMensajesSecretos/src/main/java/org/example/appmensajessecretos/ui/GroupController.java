@@ -104,7 +104,7 @@ public class GroupController {
         else
             userService.logIn(new Usuario(userName.getText(), userPassword.getText()))
                     .peek(ok -> {
-                        usuario = new Usuario(userName.getText(), userPassword.getText());
+                        usuario = ok;
                         actualizarUserInfo();
                         logInError.setText(Constantes.LOGGED_IN);
                         loadUsers();
@@ -127,11 +127,11 @@ public class GroupController {
     private void createUser() {
         if (alertComfirmation(Constantes.USUARIO_MISSING)) {
             userService.addUser(new Usuario(userName.getText(), userPassword.getText()))
-                            .peekLeft(error -> {
-                                if (error == DataBaseError.ERROR_IN_FETCH) {
-                                    logInError.setText(Constantes.DATABASE_FAILED);
-                                }
-                            });
+                    .peekLeft(error -> {
+                        if (error == DataBaseError.ERROR_IN_FETCH) {
+                            logInError.setText(Constantes.DATABASE_FAILED);
+                        }
+                    });
             iniciarSesion();
         }
     }
@@ -230,9 +230,11 @@ public class GroupController {
                 sendMessageError.setText(Constantes.RELLENE_CAMPOS);
             else
                 messageService.sendGroupMessages(mensaje.getText(), usuario, myChats.getSelectionModel().getSelectedItem())
-                    .peek(ok -> {
-                        loadUserGroupChats();
-                    }).peekLeft(this::showSendingMessageError);
+                        .peek(ok -> {
+                            loadUserGroupChats();
+                            sendMessageError.setText(Constantes.MESSAGE_SENT);
+                        })
+                        .peekLeft(this::showSendingMessageError);
         }
     }
 
@@ -258,14 +260,15 @@ public class GroupController {
                 sendMessageError.setText(Constantes.RELLENE_CAMPOS);
             else {
                 groupService.inviteUser(myChats.getSelectionModel().getSelectedItem(), usuarios.getSelectionModel().getSelectedItems())
+                        .peek(ok -> inviteUserError.setText(Constantes.USER_INVITED))
                         .peekLeft(error -> {
                             switch (error) {
                                 case ServiceError e when e == ServiceError.GROUP_NOT_FOUND ->
                                         inviteUserError.setText(Constantes.GRUPO_NO_EXISTE);
                                 case DataBaseError e when e == DataBaseError.ERROR_IN_FETCH ->
                                         inviteUserError.setText(Constantes.DATABASE_FAILED);
-                                case DataInputError e when e == DataInputError.GROUP_IS_PRIVATE
-                                    -> inviteUserError.setText(Constantes.GROUP_IS_PRIVATE);
+                                case DataInputError e when e == DataInputError.GROUP_IS_PRIVATE ->
+                                        inviteUserError.setText(Constantes.ERROR_INVITING_USER);
                                 default -> inviteUserError.setText(Constantes.ERROR_INVITING_USER);
                             }
                         });
@@ -279,12 +282,12 @@ public class GroupController {
         groupService.getGroups(usuario).peek(ok -> {
             myChats.getItems().addAll(ok);
         }).peekLeft(error -> {
-                if (error == DataBaseError.ERROR_IN_FETCH)
-                    userInfoError.setText(Constantes.DATABASE_FAILED);
-                else if (error == ServiceError.NOT_IN_GROUP)
-                    userInfoError.setText(Constantes.USER_NOT_IN_GROUPS);
-                else
-                    userInfoError.setText(Constantes.ERROR_LOADING_USER_CHATS);
+            if (error == DataBaseError.ERROR_IN_FETCH)
+                userInfoError.setText(Constantes.DATABASE_FAILED);
+            else if (error == ServiceError.NOT_IN_GROUP)
+                userInfoError.setText(Constantes.USER_NOT_IN_GROUPS);
+            else
+                userInfoError.setText(Constantes.ERROR_LOADING_USER_CHATS);
         });
     }
 

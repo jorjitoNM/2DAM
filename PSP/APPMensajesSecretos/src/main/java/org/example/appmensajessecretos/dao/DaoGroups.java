@@ -91,14 +91,6 @@ public class DaoGroups {
     }
 
     public Either<Error, Void> inviteUser(Grupo group, List<Usuario> users) {
-        Either<Error, List<Usuario>> realUsers = dataBase.loadUsers().flatMap(usuarios -> {
-            List<Usuario> usuarios1 = new ArrayList<>();
-            usuarios.forEach(u -> {
-                if (users.stream().anyMatch(us -> us.getName().equals(u.getName())))
-                    usuarios1.add(u);
-            });
-            return Either.right(usuarios1);
-        });
         return dataBase.loadGroups().flatMap(grupos -> {
             Either<Error, Grupo> gruposEither = grupos.stream()
                     .filter(g -> g.getName().equals(group.getName()))
@@ -107,7 +99,7 @@ public class DaoGroups {
                     .orElseGet(() -> Either.left(ServiceError.GROUP_NOT_FOUND));
 
             return gruposEither.flatMap(grupo -> {
-                grupo.getMembers().addAll(realUsers.get());
+                grupo.getMembers().addAll(users);
                 return dataBase.saveGroups(grupos);
             });
         });
