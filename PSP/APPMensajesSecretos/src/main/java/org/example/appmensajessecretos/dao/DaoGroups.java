@@ -8,6 +8,7 @@ import org.example.appmensajessecretos.domain.modelo.Grupo;
 import org.example.appmensajessecretos.domain.modelo.Usuario;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,20 +35,22 @@ public class DaoGroups {
 
     public Either<Error, Void> joinGroup(Usuario user, Grupo group) {
         return dataBase.loadGroups()
-                    .flatMap(grupos -> {
-                        Either<Error, Grupo> grupoEither = grupos.stream()
-                                .filter(g -> g.getName().equals(group.getName()))
-                                .findFirst()
-                                .map(Either::<Error, Grupo>right)
-                                .orElseGet(() -> Either.left(ServiceError.GROUP_NOT_FOUND));
+                .flatMap(grupos -> {
+                    Either<Error, Grupo> grupoEither = grupos.stream()
+                            .filter(g -> g.getName().equals(group.getName()))
+                            .findFirst()
+                            .map(Either::<Error, Grupo>right)
+                            .orElseGet(() -> Either.left(ServiceError.GROUP_NOT_FOUND));
 
-                        return grupoEither.flatMap(foundGroup -> {
-                            if (group.getIsPrivate())
-                                return Either.left(DataInputError.GROUP_IS_PRIVATE);
-                            else foundGroup.getMembers().add(user);
-                                return dataBase.saveGroups(grupos);
-                        });
+                    return grupoEither.flatMap(foundGroup -> {
+                        if (Boolean.TRUE.equals(group.getIsPrivate()))
+                            return Either.left(DataInputError.GROUP_IS_PRIVATE);
+                        else {
+                            foundGroup.getMembers().add(user);
+                            return dataBase.saveGroups(grupos);
+                        }
                     });
+                });
     }
 
     public Either<Error, Void> createGroup(Grupo group, Usuario user) {
@@ -88,6 +91,14 @@ public class DaoGroups {
     }
 
     public Either<Error, Void> inviteUser(Grupo group, List<Usuario> users) {
+        Either<Error, List<Usuario>> realUsers = dataBase.loadUsers().flatMap(usuarios -> {
+            List<Usuario> usuarios1 = new ArrayList<>();
+            usuarios.forEach(u -> {
+                if (users.stream().anyMatch(us -> us.getName().equals(u.getName())))
+                    usuarios1.add(u);
+            });
+            return Either.right(usuarios1);
+        });
         return dataBase.loadGroups().flatMap(grupos -> {
             Either<Error, Grupo> gruposEither = grupos.stream()
                     .filter(g -> g.getName().equals(group.getName()))
@@ -96,7 +107,7 @@ public class DaoGroups {
                     .orElseGet(() -> Either.left(ServiceError.GROUP_NOT_FOUND));
 
             return gruposEither.flatMap(grupo -> {
-                grupo.getMembers().addAll(users);
+                grupo.getMembers().addAll(realUsers.get());
                 return dataBase.saveGroups(grupos);
             });
         });

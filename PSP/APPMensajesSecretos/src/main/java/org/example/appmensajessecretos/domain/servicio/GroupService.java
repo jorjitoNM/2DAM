@@ -36,7 +36,9 @@ public class GroupService {
     }
 
     public Either<Error,Void> inviteUser (Grupo group, List<Usuario> users) {
-        if (!group.getIsPrivate()) return Either.left(DataInputError.GROUP_IS_PRIVATE);
-        return dao.inviteUser(group,users);
+        if (Boolean.FALSE.equals(group.getIsPrivate()))
+            return Either.left(DataInputError.GROUP_IS_PRIVATE);
+        else
+            return dao.inviteUser(group,users);
     }
 }
