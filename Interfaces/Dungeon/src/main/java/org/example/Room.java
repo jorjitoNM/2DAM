@@ -1,21 +1,16 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-class Room {
+public class Room {
     private String id;
     private String description;
-    private List<Door> doors;
+    private Map<String, String> doors = new HashMap<>();
 
     public Room(String id, String description) {
         this.id = id;
         this.description = description;
-        this.doors = new ArrayList<>();
-    }
-
-    public void addDoor(Door door) {
-        doors.add(door);
     }
 
     public String getId() {
@@ -26,7 +21,16 @@ class Room {
         return description;
     }
 
-    public List<Door> getDoors() {
+    public void addDoor(String direction, String destination) {
+        doors.put(direction, destination);
+    }
+
+    public String getDestination(String direction) {
+        return doors.get(direction);
+    }
+
+    public Map<String, String> getDoors() {
         return doors;
     }
 }
+
