@@ -7,10 +7,7 @@ import com.hospitalcrud.dao.utilities.SQLQueries;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 @Profile("inDevelopment")
@@ -38,16 +35,45 @@ public class JDBCPatientsRepository implements PatientRepository {
 
     @Override
     public int save(Patient patient) {
-        return 0;
+        try (Connection con = dbConnection.getConnection();
+             PreparedStatement insertPatient = con.prepareStatement(SQLQueries.INSERT_PATIENT,Statement.RETURN_GENERATED_KEYS)) {
+            setPatientValues(patient, insertPatient).executeUpdate();
+            ResultSet rs = insertPatient.getGeneratedKeys();
+            if(rs.next()) {
+                return rs.getInt(1);
+            } else
+                return -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void update(Patient patient) {
-
+        try (Connection con = dbConnection.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.UPDATE_PATIENT)) {
+            preparedStatement.setInt(4,patient.getId());
+            setPatientValues(patient,preparedStatement).executeUpdate();
+        } catch (SQLException sqle) {
+            throw new RuntimeException(sqle);
+        }
     }
 
     @Override
     public boolean delete(int patientId, boolean confirmation) {
-        return false;
+        try (Connection con = dbConnection.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.DELETE_PATIENT)) {
+            preparedStatement.setInt(1, patientId);
+            return preparedStatement.executeUpdate() == 1;
+        } catch (SQLException sqle) {
+            throw new RuntimeException(sqle);
+        }
+    }
+
+    private PreparedStatement setPatientValues (Patient patient,PreparedStatement preparedStatement) throws SQLException {
+        preparedStatement.setString(1, patient.getName());
+        preparedStatement.setDate(2,Date.valueOf(patient.getBirthDate()));
+        preparedStatement.setString(3,patient.getPhone());
+        return preparedStatement;
     }
 }

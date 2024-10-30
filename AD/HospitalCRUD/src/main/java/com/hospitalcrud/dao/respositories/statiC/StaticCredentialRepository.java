@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-@Profile("inDevelopment")
+@Profile("statiC")
 public class StaticCredentialRepository implements com.hospitalcrud.dao.respositories.CredentialRepository {
-    private final Credential root = new Credential("root", "quevedo2dam",-1);
+    private final Credential root = new Credential("root", "quevedo2dam",-1,-1);
     private final List<Credential> credentials = new ArrayList<>();
 
     public void save(Credential credential) {

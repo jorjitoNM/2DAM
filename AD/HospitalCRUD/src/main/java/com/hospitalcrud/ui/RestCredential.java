@@ -1,6 +1,5 @@
 package com.hospitalcrud.ui;
 
-import com.hospitalcrud.dao.model.Credential;
 import com.hospitalcrud.domain.model.CredentialUI;
 import com.hospitalcrud.domain.service.CredentialService;
 import org.springframework.web.bind.annotation.*;

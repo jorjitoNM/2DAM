@@ -41,24 +41,4 @@
             <medication>Insulin</medication>
         </medications>
     </medRecord>
-    <medRecord>
-        <id>6</id>
-        <idPatient>6</idPatient>
-        <doctor>1</doctor>
-        <diagnosis>dsa</diagnosis>
-        <date>10/10/0010</date>
-        <medications>
-            <medication>Ibuprofen</medication>
-        </medications>
-    </medRecord>
-    <medRecord>
-        <id>7</id>
-        <idPatient>6</idPatient>
-        <doctor>1</doctor>
-        <diagnosis>dsadas</diagnosis>
-        <date>10/10/0101</date>
-        <medications>
-            <medication>Ibuprofen</medication>
-        </medications>
-    </medRecord>
 </medRecords>

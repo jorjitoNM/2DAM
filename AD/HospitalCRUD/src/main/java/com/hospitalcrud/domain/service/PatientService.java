@@ -35,8 +35,10 @@ public class PatientService {
     public int addPatient(PatientUI patientUI) {
         Patient patient = new Patient(patientUI.getId(),patientUI.getName(),patientUI.getBirthDate(),patientUI.getPhone());
         int serverID = patientRepository.save(patient);
-        Credential credential = new Credential(patientUI.getUserName(),patientUI.getPassword(),serverID);
-        credentialRepository.save(credential);
+        if (serverID != -1) {
+            Credential credential = new Credential(patientUI.getUserName(),patientUI.getPassword(), serverID,-1);
+            credentialRepository.save(credential);
+        }
         return serverID;
     }
 

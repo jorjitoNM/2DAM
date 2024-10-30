@@ -18,9 +18,9 @@ public class MapGetAllPatients {
                     rs.getString("name"),
                     rs.getDate("date_of_birth").toLocalDate(),
                     rs.getString("phone")));
+            return patients;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         }
-        return patients;
     }
 }
