@@ -1,14 +1,18 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.ksp)
+//    alias(libs.plugins.kapt)
+    alias(libs.plugins.hilt)
 }
 
 android {
-    namespace = "com.example.myapplication"
+    namespace = "com.example.viewmodel"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.myapplication"
+        applicationId = "com.example.viewmodel"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -26,8 +30,9 @@ android {
             )
         }
     }
-    buildFeatures {
-        viewBinding = true
+    buildFeatures{
+        viewBinding=true
+        buildConfig=true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -49,9 +54,18 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    // Lifecycle libraries
     // by ViewModels delegation extensions for activity
     implementation(libs.androidx.activity.ktx)
 
+
+    // Hilt
+    implementation(libs.hilt.core)
+    ksp(libs.hilt.compiler)
+
+
+    //Logs
+    implementation(libs.timber)
 
     //librerias del viewmodel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
