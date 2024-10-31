@@ -43,7 +43,7 @@ public class StaticPatientRepository implements PatientRepository {
     }
 
     @Override
-    public boolean delete (int patientId, boolean confirmation) {
+    public boolean delete (int patientId) {
         return getAll().removeIf(p -> p.getId()==patientId);
     }
 }

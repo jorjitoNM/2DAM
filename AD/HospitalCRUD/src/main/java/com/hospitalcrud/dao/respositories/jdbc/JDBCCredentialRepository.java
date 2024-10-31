@@ -26,8 +26,14 @@ public class JDBCCredentialRepository implements CredentialRepository {
     }
 
     @Override
-    public void delete(int id) {
-
+    public boolean delete(int patientId) {
+        try (Connection con = dbConnection.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.DELETE_CREDENTIAL)) {
+            preparedStatement.setInt(1, patientId);
+            return preparedStatement.executeUpdate() == 1;
+        } catch (SQLException sqle) {
+            throw new RuntimeException(sqle);
+        }
     }
 
     @Override
@@ -50,21 +56,22 @@ public class JDBCCredentialRepository implements CredentialRepository {
     }
 
     @Override
-    public boolean login(Credential credential) {
-        String username = "";
-        String password = "";
+    public Credential get(String username) {
+        Credential credential = null;
         try (Connection con = dbConnection.getConnection();
              PreparedStatement insertCredential = con.prepareStatement(SQLQueries.GET_CREDENTIAL)) {
-            insertCredential.setString(1, credential.getUserName());
-            insertCredential.setString(2, credential.getPassword());
+            insertCredential.setString(1, username);
             ResultSet rs = insertCredential.executeQuery();
             if (rs.next()) {
-                 username = rs.getString("username");
-                 password = rs.getString("password");
+                 credential = new Credential(
+                         rs.getString("username"),
+                         rs.getString("password"),
+                         rs.getInt("patient_id"),
+                         rs.getInt("doctor_id"));
             }
+            return credential;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return username.equals(credential.getUserName()) && password.equals(credential.getPassword());
     }
 }

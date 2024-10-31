@@ -7,9 +7,8 @@ import java.util.List;
 public interface CredentialRepository {
 
     List<Credential> getAll();
-    void delete(int id);
+    boolean delete(int patient_id);
     void save(Credential credential);
     void update(Credential credential);
-
-    boolean login(Credential credential);
+    Credential get(String username);
 }

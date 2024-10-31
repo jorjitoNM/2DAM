@@ -10,15 +10,19 @@ import java.util.List;
 @Repository
 @Profile("statiC")
 public class StaticCredentialRepository implements com.hospitalcrud.dao.respositories.CredentialRepository {
-    private final Credential root = new Credential("root", "quevedo2dam",-1,-1);
+    private final Credential root = new Credential("root", "quevedo2dam", -1, -1);
     private final List<Credential> credentials = new ArrayList<>();
 
     public void save(Credential credential) {
         credentials.add(credential);
     }
 
-    public boolean login(Credential userCredentials) {
-        return userCredentials.getUserName().equals(root.getUserName()) && userCredentials.getPassword().equals(root.getPassword());
+    @Override
+    public Credential get(String username) {
+        if (username.equals(root.getUserName()))
+            return new Credential(username, root.getPassword());
+        else
+            return new Credential(username, "");
     }
 
     @Override
@@ -27,8 +31,8 @@ public class StaticCredentialRepository implements com.hospitalcrud.dao.resposit
     }
 
     @Override
-    public void delete(int id) {
-
+    public boolean delete(int id) {
+        return false;
     }
 
     @Override

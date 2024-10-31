@@ -33,13 +33,9 @@ public class PatientService {
     }
 
     public int addPatient(PatientUI patientUI) {
-        Patient patient = new Patient(patientUI.getId(),patientUI.getName(),patientUI.getBirthDate(),patientUI.getPhone());
-        int serverID = patientRepository.save(patient);
-        if (serverID != -1) {
-            Credential credential = new Credential(patientUI.getUserName(),patientUI.getPassword(), serverID,-1);
-            credentialRepository.save(credential);
-        }
-        return serverID;
+        Patient patient = new Patient(patientUI.getId(),patientUI.getName(),patientUI.getBirthDate(),
+                patientUI.getPhone(),new Credential(patientUI.getUserName(),patientUI.getPassword()));
+        return patientRepository.save(patient);
     }
 
     public void updatePatient(PatientUI patientUI) {
@@ -48,7 +44,8 @@ public class PatientService {
     }
 
     public void deletePatient(int patientId, boolean confirmation) {
-        if (patientRepository.delete(patientId,confirmation))
-            medicalRecordsRepository.deletePatientMedicalRecords(patientId);
+        if ((!confirmation) && (patientRepository.delete(patientId))) {
+                medicalRecordsRepository.deletePatientMedicalRecords(patientId);
+        }
     }
 }

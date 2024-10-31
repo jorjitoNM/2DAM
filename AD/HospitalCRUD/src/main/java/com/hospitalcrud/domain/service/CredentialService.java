@@ -14,6 +14,7 @@ public class CredentialService {
     }
 
     public boolean login(CredentialUI userCredentialsUI) {
-        return credentialRepository.login(new Credential(userCredentialsUI.getUsername(), userCredentialsUI.getPassword()));
+        return credentialRepository.get(userCredentialsUI.getUsername())
+                .getPassword().equals(userCredentialsUI.getPassword());
     }
 }

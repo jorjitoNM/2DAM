@@ -29,6 +29,7 @@ public class TxtPatientRepository implements PatientRepository {
         this.patientMapper = patientMapper;
         this.configuration = FilesConfiguration.getInstance();
     }
+
     private void calculateID() {
         List<Patient> patients = loadPatients();
         int lastID = patients.get(patients.size() - 1).getId();
@@ -43,11 +44,10 @@ public class TxtPatientRepository implements PatientRepository {
 
     @Override
     public int save(Patient patient) {
-        patient.setId(configuration.getLastID()+1);
-        try (BufferedWriter bw =  Files.newBufferedWriter(configuration.getPathPatients(),APPEND)) {
+        patient.setId(configuration.getLastID() + 1);
+        try (BufferedWriter bw = Files.newBufferedWriter(configuration.getPathPatients(), APPEND)) {
             bw.append(patient.toStringFichero());
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             //log.error(e.getMessage(),e);
             throw new RuntimeException(e);
         } finally {
@@ -59,7 +59,7 @@ public class TxtPatientRepository implements PatientRepository {
     @Override
     public void update(Patient patient) {
         List<Patient> patients = loadPatients();
-        var foundPatient = patients.stream().filter(p -> p.getId()==patient.getId())
+        var foundPatient = patients.stream().filter(p -> p.getId() == patient.getId())
                 .findFirst().orElse(null);
         if (foundPatient != null) {
             foundPatient.setName(patient.getName());
@@ -71,18 +71,15 @@ public class TxtPatientRepository implements PatientRepository {
     }
 
     @Override
-    public boolean delete(int patientId, boolean confirmation) {
-        if (!confirmation) {
-            List<Patient> patients = loadPatients();
-            if (patients.removeIf(p -> p.getId() == patientId))
-                return savePatients(patients);
-            else
-                return false;
-        }
-        return false;
+    public boolean delete(int patientId) {
+        List<Patient> patients = loadPatients();
+        if (patients.removeIf(p -> p.getId() == patientId))
+            return savePatients(patients);
+        else
+            return false;
     }
 
-    private boolean savePatients (List<Patient> patients) {
+    private boolean savePatients(List<Patient> patients) {
         try (BufferedWriter bw = Files.newBufferedWriter(configuration.getPathPatients(), TRUNCATE_EXISTING)) {
             patients.forEach(p -> {
                 try {
@@ -98,7 +95,8 @@ public class TxtPatientRepository implements PatientRepository {
             throw new RuntimeException(e);
         }
     }
-    private List<Patient> loadPatients () {
+
+    private List<Patient> loadPatients() {
         List<Patient> patients = new ArrayList<>();
         try (BufferedReader br = Files.newBufferedReader(configuration.getPathPatients())) {
             br.lines().forEach(l -> patients.add(patientMapper.mapRow(l)));
