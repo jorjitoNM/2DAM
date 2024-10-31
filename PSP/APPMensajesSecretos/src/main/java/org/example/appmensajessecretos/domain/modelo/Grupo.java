@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Grupo {
     private final String name;
     private final String password;
-    private final ArrayList<Usuario> members;
+    private final ArrayList<String> members;
     private final Boolean isPrivate;
 
     public Grupo(String name, String password, Boolean isPrivate) {

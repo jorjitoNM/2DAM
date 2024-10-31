@@ -45,7 +45,7 @@ public class DaoGroups {
                         if (Boolean.TRUE.equals(group.getIsPrivate()))
                             return Either.left(DataInputError.GROUP_IS_PRIVATE);
                         else {
-                            foundGroup.getMembers().add(user);
+                            foundGroup.getMembers().add(user.getName());
                             return dataBase.saveGroups(grupos);
                         }
                     });
@@ -62,8 +62,8 @@ public class DaoGroups {
                     }
                 })
                 .flatMap(grupos -> {
-                    if (group.getIsPrivate())
-                        group.getMembers().add(user);
+                    if (Boolean.TRUE.equals(group.getIsPrivate()))
+                        group.getMembers().add(user.getName());
                     grupos.add(group);
                     return dataBase.saveGroups(grupos);
                 });
@@ -79,10 +79,10 @@ public class DaoGroups {
                     .orElseGet(() -> Either.left(ServiceError.GROUP_NOT_FOUND));
 
             return gruposEither.flatMap(grupo -> {
-                if (grupo.getMembers().stream().anyMatch(u -> u.getName().equals(userName)))
+                if (grupo.getMembers().stream().anyMatch(u -> u.equals(userName)))
                     return Either.left(ServiceError.NOT_IN_GROUP);
                 else {
-                    grupo.getMembers().removeIf(u -> u.getName().equals(userName));
+                    grupo.getMembers().removeIf(u -> u.equals(userName));
                     return dataBase.saveGroups(grupos);
                 }
             });
@@ -98,7 +98,7 @@ public class DaoGroups {
                     .orElseGet(() -> Either.left(ServiceError.GROUP_NOT_FOUND));
 
             return gruposEither.flatMap(grupo -> {
-                grupo.getMembers().addAll(users);
+                users.forEach(u -> grupo.getMembers().add(u.getName()));
                 return dataBase.saveGroups(grupos);
             });
         });

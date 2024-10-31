@@ -8,12 +8,12 @@ import java.time.LocalDateTime;
 public class Mensaje {
     private final String content;
     private final LocalDateTime date;
-    private final Usuario author;
-    private final Grupo grupo;
+    private final String author;
+    private final String grupo;
 
     @Override
     public String toString() {
-        return "De " + author.getName() + ": " + content
+        return "De " + author + ": " + content
                 + " (" + date.getDayOfMonth() + "/" + date.getMonth() + "/" + date.getYear() + ")";
     }
 }

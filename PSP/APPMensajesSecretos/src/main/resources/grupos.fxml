@@ -21,12 +21,12 @@
     <Label fx:id="joinGroupError" layoutX="356.0" layoutY="273.0" prefHeight="18.0" prefWidth="250.0" />
 
 
-    <Label fx:id="enterGroupNameDelete" layoutX="746.0" layoutY="42.0" text="Introduzca el nombre del grupo" />
-    <TextField fx:id="groupNameDelete" layoutX="730.0" layoutY="82.0" prefHeight="26.0" prefWidth="200.0" />
-    <Label fx:id="enterUserNameDelete" layoutX="689.0" layoutY="134.0" text="Introduzca el nombre del usuario que quiere eliminar" />
-    <TextField fx:id="userNameDelete" layoutX="730.0" layoutY="171.0" prefHeight="26.0" prefWidth="250.0" />
+    <Label fx:id="enterGroupNameDelete" layoutX="704.0" layoutY="46.0" text="Introduzca el nombre del grupo" />
+    <TextField fx:id="groupNameDelete" layoutX="688.0" layoutY="86.0" prefHeight="26.0" prefWidth="200.0" />
+    <Label fx:id="enterUserNameDelete" layoutX="647.0" layoutY="138.0" text="Introduzca el nombre del usuario que quiere eliminar" />
+    <TextField fx:id="userNameDelete" layoutX="688.0" layoutY="175.0" prefHeight="26.0" prefWidth="200.0" />
     <Label fx:id="deleteError" layoutX="692.0" layoutY="273.0" prefHeight="18.0" prefWidth="260.0" />
-    <Button fx:id="deleteUser" layoutX="863.0" layoutY="228.0" mnemonicParsing="false" onAction="#comfirmDelete" text="Delete" />
+    <Button fx:id="deleteUser" layoutX="821.0" layoutY="232.0" mnemonicParsing="false" onAction="#comfirmDelete" text="Delete" />
 
 
     <Label fx:id="createGroupNameLabel" layoutX="1038.0" layoutY="51.0" prefHeight="18.0" prefWidth="176.0" text="Introduzca el nombre del grupo" />
@@ -40,22 +40,24 @@
 
     <Label fx:id="misChats" layoutX="100.0" layoutY="337.0" text="Mis Chats" />
     <ListView fx:id="myChats" layoutX="19.0" layoutY="372.0" onMouseClicked="#loadGroupChats" prefHeight="282.0" prefWidth="238.0" />
-    <Button fx:id="enviarAGrupo" layoutX="345.0" layoutY="500.0" mnemonicParsing="false" onAction="#sendGroupMessage" prefHeight="26.0" prefWidth="140.0" text="Enviar mensaje a grupo" />
-    <Label fx:id="userInfoError" layoutX="20.0" layoutY="670.0" prefHeight="18.0" prefWidth="250.0" />
+    <Button fx:id="enviarAGrupo" layoutX="327.0" layoutY="500.0" mnemonicParsing="false" onAction="#sendGroupMessage" prefHeight="26.0" prefWidth="140.0" text="Enviar mensaje a grupo" />
+    <Label fx:id="userInfoError" layoutX="20.0" layoutY="670.0" prefHeight="18.0" prefWidth="300.0" />
 
 
-    <Label fx:id="mensajeLabel" layoutX="356.0" layoutY="337.0" text="Introduzca el mensaje" />
-    <TextArea fx:id="mensaje" layoutX="314.0" layoutY="372.0" prefHeight="106.0" prefWidth="200.0" />
-    <Label fx:id="sendMessageError" layoutX="330.0" layoutY="550.0" prefHeight="18.0" prefWidth="250.0" />
+    <Label fx:id="mensajeLabel" layoutX="339.0" layoutY="337.0" text="Introduzca el mensaje" />
+    <TextArea fx:id="mensaje" layoutX="297.0" layoutY="372.0" prefHeight="106.0" prefWidth="200.0" />
+    <Label fx:id="sendMessageError" layoutX="272.0" layoutY="548.0" prefHeight="18.0" prefWidth="250.0" />
+    <Label fx:id="encryptPasswordLabel" layoutX="334.0" layoutY="612.0" prefHeight="18.0" prefWidth="124.0" text="Contraseña del grupo:" />
+    <TextField fx:id="encryptPassword" layoutX="296.0" layoutY="641.0" prefHeight="26.0" prefWidth="200.0" />
 
 
-    <Label fx:id="chatActivoLabel" layoutX="616.0" layoutY="337.0" text="Group Chat" />
+    <Label fx:id="chatActivoLabel" layoutX="615.0" layoutY="337.0" text="Group Chat" />
     <ListView fx:id="groupChats" layoutX="546.0" layoutY="372.0" prefHeight="282.0" prefWidth="200.0" />
     <Label fx:id="chatError" layoutX="560.0" layoutY="675.0" prefHeight="18.0" prefWidth="250.0" />
 
 
-    <Label fx:id="usuariosLabel" layoutX="1117.0" layoutY="337.0" text="Usuarios" />
-    <ListView fx:id="usuarios" layoutX="1040.0" layoutY="372.0" prefHeight="282.0" prefWidth="200.0" />
-    <Button fx:id="inviteUser" layoutX="1092.0" layoutY="674.0" mnemonicParsing="false" onAction="#inviteUser" text="Invitar al grupo" />
+    <Label fx:id="usuariosLabel" layoutX="865.0" layoutY="337.0" text="Usuarios" />
+    <ListView fx:id="usuarios" layoutX="788.0" layoutY="372.0" prefHeight="282.0" prefWidth="200.0" />
+    <Button fx:id="inviteUser" layoutX="840.0" layoutY="682.0" mnemonicParsing="false" onAction="#inviteUser" text="Invitar al grupo" />
     <Label fx:id="inviteUserError" layoutX="1050.0" layoutY="710.0" prefHeight="18.0" prefWidth="250.0" />
 </AnchorPane>

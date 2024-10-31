@@ -67,6 +67,10 @@ public class GroupController {
     private TextArea mensaje;
     @FXML
     private Label sendMessageError;
+    @FXML
+    private Label encryptPasswordLabel;
+    @FXML
+    private TextField encryptPassword;
 
 
     @FXML
@@ -267,8 +271,6 @@ public class GroupController {
                                         inviteUserError.setText(Constantes.GRUPO_NO_EXISTE);
                                 case DataBaseError e when e == DataBaseError.ERROR_IN_FETCH ->
                                         inviteUserError.setText(Constantes.DATABASE_FAILED);
-                                case DataInputError e when e == DataInputError.GROUP_IS_PRIVATE ->
-                                        inviteUserError.setText(Constantes.ERROR_INVITING_USER);
                                 default -> inviteUserError.setText(Constantes.ERROR_INVITING_USER);
                             }
                         });
@@ -279,6 +281,7 @@ public class GroupController {
 
     private void actualizarUserInfo() {
         myChats.getItems().clear();
+        groupChats.getItems().clear();
         groupService.getGroups(usuario).peek(ok -> {
             myChats.getItems().addAll(ok);
             loadGroupChats();
@@ -318,7 +321,6 @@ public class GroupController {
 
 
     public void loadGroupChats() {
-        groupChats.getItems().clear();
         if (!myChats.getSelectionModel().isEmpty())
             loadUserGroupChats();
     }

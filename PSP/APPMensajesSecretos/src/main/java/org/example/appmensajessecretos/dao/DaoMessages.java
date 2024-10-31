@@ -23,7 +23,7 @@ public class DaoMessages {
     public Either<Error,Void> sendGroupMessage(String text, Usuario usuario, Grupo group) {
         return dataBase.loadMessages().flatMap(mensajes -> {
                     try {
-                        mensajes.add(new Mensaje(text,LocalDateTime.now(),usuario,group));
+                        mensajes.add(new Mensaje(text,LocalDateTime.now(),usuario.getName(),group.getName()));
                         return dataBase.saveMessages(mensajes);
                     } catch (Exception e) {
                         return Either.left(ServiceError.ERROR_SENDING_MESSAGE);
@@ -32,6 +32,6 @@ public class DaoMessages {
     }
 
     public Either<Error,List<Mensaje>> loadMessages(Grupo group) {
-        return dataBase.loadMessages().flatMap(mensajes -> Either.right(mensajes.stream().filter(m -> m.getGrupo().getName().equals(group.getName())).toList()));
+        return dataBase.loadMessages().flatMap(mensajes -> Either.right(mensajes.stream().filter(m -> m.getGrupo().equals(group.getName())).toList()));
     }
 }
