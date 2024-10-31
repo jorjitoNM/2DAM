@@ -127,12 +127,12 @@ public class GroupController {
     private void createUser() {
         if (alertComfirmation(Constantes.USUARIO_MISSING)) {
             userService.addUser(new Usuario(userName.getText(), userPassword.getText()))
+                    .peek(ok -> iniciarSesion())
                     .peekLeft(error -> {
                         if (error == DataBaseError.ERROR_IN_FETCH) {
                             logInError.setText(Constantes.DATABASE_FAILED);
                         }
                     });
-            iniciarSesion();
         }
     }
 
@@ -281,6 +281,7 @@ public class GroupController {
         myChats.getItems().clear();
         groupService.getGroups(usuario).peek(ok -> {
             myChats.getItems().addAll(ok);
+            loadGroupChats();
         }).peekLeft(error -> {
             if (error == DataBaseError.ERROR_IN_FETCH)
                 userInfoError.setText(Constantes.DATABASE_FAILED);
@@ -317,12 +318,12 @@ public class GroupController {
 
 
     public void loadGroupChats() {
+        groupChats.getItems().clear();
         if (!myChats.getSelectionModel().isEmpty())
             loadUserGroupChats();
     }
 
     public void loadUserGroupChats() {
-        groupChats.getItems().clear();
         messageService.getMessages(myChats.getSelectionModel().getSelectedItem()).peek(ok -> ok.forEach(m ->
                 groupChats.getItems().add(m.toString())
         )).peekLeft(error -> {
