@@ -1,4 +1,4 @@
-package org.example.appmensajessecretos.domain.modelo;
+package org.example.appmensajessecretos.domain.model;
 
 import lombok.Data;
 import org.example.appmensajessecretos.utilities.Constantes;

@@ -5,7 +5,7 @@ import org.example.appmensajessecretos.dao.DaoUsers;
 import org.example.appmensajessecretos.domain.error.DataInputError;
 import org.example.appmensajessecretos.domain.error.Error;
 import org.example.appmensajessecretos.domain.error.ServiceError;
-import org.example.appmensajessecretos.domain.modelo.Usuario;
+import org.example.appmensajessecretos.domain.model.Usuario;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
