@@ -13,12 +13,10 @@
         android:layout_height="wrap_content"
         android:hint="@string/name"
         android:minEms="15"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintBottom_toTopOf="@id/releaseDateInput"
+        app:layout_constraintEnd_toStartOf="@id/author"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.15">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -36,9 +34,8 @@
         android:minEms="15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/nameInput"
-        app:layout_constraintTop_toTopOf="@id/nameInput"
-        app:layout_constraintBottom_toBottomOf="@id/nameInput"
-        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ratingBar"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -58,10 +55,8 @@
         app:layout_constraintEnd_toEndOf="@id/nameInput"
         app:layout_constraintStart_toStartOf="@id/nameInput"
         app:layout_constraintTop_toBottomOf="@id/nameInput"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:endIconMode="custom"
+        app:layout_constraintBottom_toTopOf="@id/cancel"
+        app:layout_constraintVertical_chainStyle="spread"
         app:endIconDrawable="@drawable/calendar_icon_24px"
         >
 
@@ -77,10 +72,10 @@
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/releaseDateInput"
+        app:layout_constraintBottom_toTopOf="@id/cancel"
         app:layout_constraintEnd_toEndOf="@id/author"
         app:layout_constraintStart_toStartOf="@id/author"
-        app:layout_constraintTop_toTopOf="@id/releaseDateInput"
+        app:layout_constraintTop_toBottomOf="@id/author"
         android:rating="3"
         />
 
@@ -91,11 +86,9 @@
         android:text="@string/cancel"
         android:textAllCaps="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintEnd_toStartOf="@id/add"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.8"
+        app:layout_constraintTop_toBottomOf="@id/releaseDateInput"
         style="?attr/materialButtonOutlinedStyle"
         />
 
@@ -105,12 +98,10 @@
         android:layout_height="wrap_content"
         android:text="@string/add"
         android:textAllCaps="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/cancel"
+        app:layout_constraintStart_toEndOf="@id/cancel"
+        app:layout_constraintTop_toTopOf="@id/cancel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.75"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.8"
         />
 
 

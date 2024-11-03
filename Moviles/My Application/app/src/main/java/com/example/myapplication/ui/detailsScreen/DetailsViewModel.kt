@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.myapplication.R
 import com.example.myapplication.domain.model.Book
 import com.example.myapplication.domain.usecases.DeleteBook
 import com.example.myapplication.domain.usecases.GetBook
@@ -12,6 +11,7 @@ import com.example.myapplication.domain.usecases.GetBooksSize
 import com.example.myapplication.domain.usecases.UpdateBook
 import com.example.myapplication.ui.common.StringProvider
 import com.example.myapplication.ui.common.UiEvent
+import com.example.viewmodel.R
 
 class DetailsViewModel(
     private val stringProvider: StringProvider,
@@ -24,7 +24,16 @@ class DetailsViewModel(
     private val _uiState = MutableLiveData(DetailsState())
     val uiState: LiveData<DetailsState> get() = _uiState
 
-    fun updateBook(book: Book) {
+    fun handleEvent (event : DetailsEvents) {
+        when (event) {
+            is DetailsEvents.UpdateBook -> updateBook(event.book)
+            is DetailsEvents.DeleteBook -> deleteBook(event.bookId)
+            is DetailsEvents.GetBook -> getBook(event.bookId)
+            is DetailsEvents.ErrorMostrado -> eventoMostrado()
+        }
+    }
+
+    private fun updateBook(book: Book) {
         if (!updateBookUseCase(book))
             _uiState.value =
                 _uiState.value?.copy(event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.errorUpdateBook)))
@@ -32,7 +41,7 @@ class DetailsViewModel(
             _uiState.value = _uiState.value?.copy(event = UiEvent.PopBackStack)
     }
 
-    fun getBook(id: Int) {
+    private fun getBook(id: Int) {
         val book = getBookUseCase(id)
         if (book.id < 0) {
             _uiState.value =
@@ -42,7 +51,7 @@ class DetailsViewModel(
                 _uiState.value?.copy(book = book)}
     }
 
-    fun deleteBook(id: Int) {
+    private fun deleteBook(id: Int) {
         if (!deleteBookUseCase(id))
             _uiState.value = _uiState.value?.copy(
                 event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.deleteError))
@@ -51,7 +60,7 @@ class DetailsViewModel(
             _uiState.value = _uiState.value?.copy(event = UiEvent.PopBackStack)
     }
 
-    fun eventoMostrado() {
+    private fun eventoMostrado() {
         _uiState.value = _uiState.value?.copy(event = null)
     }
 

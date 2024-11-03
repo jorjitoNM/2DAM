@@ -13,11 +13,10 @@
         android:layout_height="wrap_content"
         android:hint="@string/name"
         android:minEms="15"
-        app:layout_constraintBottom_toTopOf="@id/author"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/releaseDateInput"
+        app:layout_constraintEnd_toStartOf="@id/author"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -34,11 +33,10 @@
         android:layout_height="wrap_content"
         android:hint="@string/author"
         android:minEms="15"
-        app:layout_constraintEnd_toEndOf="@id/nameInput"
-        app:layout_constraintStart_toStartOf="@id/nameInput"
-        app:layout_constraintTop_toBottomOf="@id/nameInput"
-        app:layout_constraintBottom_toTopOf="@id/releaseDateInput"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/nameInput"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ratingBar"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -55,10 +53,10 @@
         android:layout_height="wrap_content"
         android:hint="@string/releasedate"
         android:minEms="15"
-        app:layout_constraintEnd_toEndOf="@id/author"
-        app:layout_constraintStart_toStartOf="@id/author"
-        app:layout_constraintTop_toBottomOf="@id/author"
-        app:layout_constraintBottom_toTopOf="@id/ratingBar"
+        app:layout_constraintEnd_toEndOf="@id/nameInput"
+        app:layout_constraintStart_toStartOf="@id/nameInput"
+        app:layout_constraintTop_toBottomOf="@id/nameInput"
+        app:layout_constraintBottom_toTopOf="@id/update"
         app:layout_constraintVertical_chainStyle="spread"
         app:endIconMode="custom"
         app:endIconDrawable="@drawable/calendar_icon_24px"
@@ -76,10 +74,10 @@
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/update"
-        app:layout_constraintEnd_toEndOf="@id/releaseDateInput"
-        app:layout_constraintStart_toStartOf="@id/releaseDateInput"
-        app:layout_constraintTop_toBottomOf="@id/releaseDateInput"
+        app:layout_constraintBottom_toTopOf="@id/delete"
+        app:layout_constraintEnd_toEndOf="@id/author"
+        app:layout_constraintStart_toStartOf="@id/author"
+        app:layout_constraintTop_toBottomOf="@id/author"
         android:rating="3"
         />
 
@@ -92,7 +90,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/delete"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ratingBar"
+        app:layout_constraintTop_toBottomOf="@id/releaseDateInput"
         />
 
     <com.google.android.material.button.MaterialButton

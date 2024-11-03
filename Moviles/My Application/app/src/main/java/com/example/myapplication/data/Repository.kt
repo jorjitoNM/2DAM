@@ -15,7 +15,7 @@ object Repository {
     }
 
     fun getBooks () : List<Book> {
-        return books
+        return books.toList()
     }
 
     fun addBook (book : Book) : Boolean {

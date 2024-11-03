@@ -1,14 +1,12 @@
 package com.example.myapplication.ui.detailsScreen
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.myapplication.R
-import com.example.myapplication.databinding.BookDetailsBinding
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.myapplication.domain.model.Book
 import com.example.myapplication.domain.usecases.DeleteBook
 import com.example.myapplication.domain.usecases.GetBook
@@ -16,10 +14,12 @@ import com.example.myapplication.domain.usecases.GetBooksSize
 import com.example.myapplication.domain.usecases.UpdateBook
 import com.example.myapplication.ui.common.StringProvider
 import com.example.myapplication.ui.common.UiEvent
+import com.example.viewmodel.databinding.BookDetailsBinding
 
-class DetailsActivity : AppCompatActivity() {
+class DetailsFragment : Fragment() {
 
-    private lateinit var binding: BookDetailsBinding
+    private var _binding: BookDetailsBinding? = null
+    private val binding get() = _binding!!
     private var id : Int = 0
 
     private val viewModel: DetailsViewModel by viewModels {
@@ -32,26 +32,24 @@ class DetailsActivity : AppCompatActivity() {
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.book_details)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.bookDetails)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-        binding = BookDetailsBinding.inflate(layoutInflater).apply {
-            setContentView(root)
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = BookDetailsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         id = intent.extras?.getInt("id") ?: -1
-        viewModel.getBook(id)
+        viewModel.handleEvent(DetailsEvents.GetBook(id))
         eventos()
         observarViewModel()
     }
 
     private fun observarViewModel() {
-        viewModel.uiState.observe(this@DetailsActivity) { state ->
+        viewModel.uiState.observe(viewLifecycleOwner) { state ->
 
             if (state.event == null) {
                 binding.bookName.setText(state.book.name)
@@ -62,11 +60,11 @@ class DetailsActivity : AppCompatActivity() {
 
             state.event?.let { event ->
                 if (event is UiEvent.PopBackStack) {
-                    this@DetailsActivity.finish()
+                    this@DetailsFragment.finish()
                 } else if (event is UiEvent.ShowSnackbar) {
-                    Toast.makeText(this@DetailsActivity, event.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@DetailsFragment, event.message, Toast.LENGTH_SHORT).show()
                 }
-                viewModel.eventoMostrado()
+                viewModel.handleEvent(DetailsEvents.ErrorMostrado)
             }
 
             if (state.event == null)
@@ -78,11 +76,11 @@ class DetailsActivity : AppCompatActivity() {
 
         with(binding) {
             update.setOnClickListener {
-                viewModel.updateBook(Book(id,bookName.text.toString(),
-                    bookAuthor.text.toString(),ratingBar.rating,releaseDate.text.toString()))
+                viewModel.handleEvent(DetailsEvents.UpdateBook(Book(id,bookName.text.toString(),
+                    bookAuthor.text.toString(),ratingBar.rating,releaseDate.text.toString())))
             }
             delete.setOnClickListener {
-                viewModel.deleteBook(id)
+                viewModel.handleEvent(DetailsEvents.DeleteBook(id))
             }
         }
     }
