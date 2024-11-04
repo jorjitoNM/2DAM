@@ -78,8 +78,7 @@ class MainFragment : Fragment() {
 
 
     private fun navigateToDetail(id: Int) {
-        MainFragmentDirections.actionMainFragmentToDetailsFragment().arguments.putInt(R.string.bookId.toString(),id)
-        findNavController().navigate(MainFragmentDirections.actionMainFragmentToDetailsFragment());
+        findNavController().navigate(MainFragmentDirections.actionMainFragmentToDetailsFragment(id));
     }
 
     private fun events() {

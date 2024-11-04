@@ -19,18 +19,18 @@
             android:id="@+id/action_mainFragment_to_newBookFragment"
             app:destination="@id/newBookFragment"
             app:popUpTo="@id/newBookFragment" />
-        <argument
-            android:name="bookId"
-            app:argType="integer"
-            android:defaultValue="-1" />
     </fragment>
 
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.myapplication.ui.detailsScreen.DetailsFragment"
         android:label="BookDetails"
-        tools:layout="@layout/book_details"
-        />
+        tools:layout="@layout/book_details">
+        <argument
+            android:name="bookId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
 
     <fragment
         android:id="@+id/newBookFragment"

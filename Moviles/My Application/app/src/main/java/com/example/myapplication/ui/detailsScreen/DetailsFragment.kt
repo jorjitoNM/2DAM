@@ -16,7 +16,6 @@ import com.example.myapplication.domain.usecases.GetBook
 import com.example.myapplication.domain.usecases.UpdateBook
 import com.example.myapplication.ui.common.StringProvider
 import com.example.myapplication.ui.common.UiEvent
-import com.example.myapplication.ui.mainScreen.MainFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,8 +23,7 @@ class DetailsFragment : Fragment() {
 
     private var _binding: BookDetailsBinding? = null
     private val binding get() = _binding!!
-    private var id : Int = 0
-    private val args : MainFragmentArgs by navArgs()
+    private var id : Int = -1
 
     private val viewModel: DetailsViewModel by viewModels {
         DetailsViewModel.DetailsMainViewModelFactory(
@@ -45,8 +43,9 @@ class DetailsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val args : DetailsFragmentArgs by navArgs()
         super.onViewCreated(view, savedInstanceState)
-        id = args.bookId
+        id = args.bookId.toInt()
         viewModel.handleEvent(DetailsEvents.GetBook(id))
         eventos()
         observarViewModel()
