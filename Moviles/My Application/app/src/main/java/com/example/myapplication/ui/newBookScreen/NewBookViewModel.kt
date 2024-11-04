@@ -57,23 +57,3 @@ class NewBookViewModel @Inject constructor  (
         return getID.invoke()
     }
 }
-
-class NewBookViewModelFactory(
-
-    private val addBook: AddBook,
-    private val getID: GetID,
-    private val stringProvider: StringProvider,
-
-    ) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(NewBookViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return NewBookViewModel(
-                addBook,
-                getID,
-                stringProvider,
-            ) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}

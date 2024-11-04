@@ -22,13 +22,7 @@ class NewBookFragment : Fragment() {
     private var _binding: NewBookBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: NewBookViewModel by viewModels {
-        NewBookViewModelFactory(
-            AddBook(),
-            GetID(),
-            StringProvider(requireContext()),
-        )
-    }
+    private val viewModel: NewBookViewModel by viewModels ()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

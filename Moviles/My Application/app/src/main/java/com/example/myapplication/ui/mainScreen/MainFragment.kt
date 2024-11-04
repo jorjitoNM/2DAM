@@ -21,11 +21,7 @@ class MainFragment : Fragment() {
     private var _binding: BookListFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: BookAdapter
-    private val viewModel: MainViewModel by viewModels {
-        MainViewModelFactory(
-            GetBooks(),
-        )
-    }
+    private val viewModel: MainViewModel by viewModels ()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +40,7 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getBooks()
+        viewModel.handleEvent(MainEvents.GetBooks)
     }
 
     private fun observarState() {

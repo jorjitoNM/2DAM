@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.domain.usecases.GetBooks
-import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -17,24 +16,13 @@ class MainViewModel @Inject constructor (
     private val _uiState = MutableLiveData(MainState())
     val uiState: LiveData<MainState> get() = _uiState
 
-    fun getBooks() {
-        _uiState.value = _uiState.value?.copy(books = getBooks.invoke())
-    }
-}
-
-
-class MainViewModelFactory(
-
-    private val getBooks: GetBooks,
-
-    ) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return MainViewModel(
-                getBooks,
-            ) as T
+    fun handleEvent (event : MainEvents) {
+        when (event) {
+            is MainEvents.GetBooks -> getBooks()
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+
+    private fun getBooks() {
+        _uiState.value = _uiState.value?.copy(books = getBooks.invoke())
     }
 }

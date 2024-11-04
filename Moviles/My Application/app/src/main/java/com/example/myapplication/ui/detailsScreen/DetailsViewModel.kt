@@ -64,25 +64,4 @@ class DetailsViewModel @Inject constructor (
     private fun eventoMostrado() {
         _uiState.value = _uiState.value?.copy(event = null)
     }
-
-
-    class DetailsMainViewModelFactory(
-        private val stringProvider: StringProvider,
-        private val updateBook: UpdateBook,
-        private val deleteBook: DeleteBook,
-        private val getBook: GetBook,
-        ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(DetailsViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return DetailsViewModel(
-                    stringProvider,
-                    updateBook,
-                    deleteBook,
-                    getBook,
-                ) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
 }

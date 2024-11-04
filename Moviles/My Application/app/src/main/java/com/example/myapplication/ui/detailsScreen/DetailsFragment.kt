@@ -25,14 +25,7 @@ class DetailsFragment : Fragment() {
     private val binding get() = _binding!!
     private var id : Int = -1
 
-    private val viewModel: DetailsViewModel by viewModels {
-        DetailsViewModel.DetailsMainViewModelFactory(
-            StringProvider(requireContext()),
-            UpdateBook(),
-            DeleteBook(),
-            GetBook(),
-        )
-    }
+    private val viewModel: DetailsViewModel by viewModels ()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
