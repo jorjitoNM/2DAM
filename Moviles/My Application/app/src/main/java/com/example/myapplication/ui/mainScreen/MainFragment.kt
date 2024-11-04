@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.databinding.BookListFragmentBinding
@@ -22,6 +23,9 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: BookAdapter
     private val viewModel: MainViewModel by viewModels ()
+    private val swipeToDelete by lazy {
+        ItemTouchHelper(adapter.swipeGesture)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +60,8 @@ class MainFragment : Fragment() {
                 override fun onItemClick(book: Book) {
                     navigateToDetail((book.id))
                 }
-            })
+            },requireContext()
+        )
         with (binding) {
             bookList.layoutManager = LinearLayoutManager(requireContext())
 

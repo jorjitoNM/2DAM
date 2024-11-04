@@ -76,4 +76,7 @@ dependencies {
     //Fragments
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+
+    //Swipe
+    implementation(libs.recyclerview.swipedecorator)
 }

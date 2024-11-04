@@ -16,6 +16,7 @@ timber = "5.0.1"
 hilt = "2.51"
 navigationFragmentKtx = "2.7.7"
 navigation = "2.7.7"
+recyclerviewSwipedecorator = "1.4"
 
 
 [libraries]
@@ -36,7 +37,7 @@ hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", v
 hilt-core = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationFragmentKtx" }
-
+recyclerview-swipedecorator = { module = "it.xabaras.android:recyclerview-swipedecorator", version.ref = "recyclerviewSwipedecorator" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
