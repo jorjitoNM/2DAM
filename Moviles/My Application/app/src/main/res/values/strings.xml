@@ -24,4 +24,5 @@
     <string name="cancel">Cancel</string>
     <string name="addedSuccesfully">Nuevo libro añadido con exito</string>
     <string name="errorUpdateBook">No se ha podido actualizar el libro</string>
+    <string name="bookId">id</string>
 </resources>

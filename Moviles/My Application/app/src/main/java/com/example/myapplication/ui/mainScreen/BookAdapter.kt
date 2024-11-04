@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.example.myapplication.R
 import com.example.myapplication.domain.model.Book
-import com.example.viewmodel.R
 
 class BookAdapter(
     val actions : BookActions,

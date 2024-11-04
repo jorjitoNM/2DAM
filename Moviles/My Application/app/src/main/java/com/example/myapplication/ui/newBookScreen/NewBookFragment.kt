@@ -7,14 +7,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.myapplication.databinding.NewBookBinding
 import com.example.myapplication.domain.model.Book
 import com.example.myapplication.domain.usecases.AddBook
 import com.example.myapplication.domain.usecases.GetID
 import com.example.myapplication.ui.common.StringProvider
 import com.example.myapplication.ui.common.UiEvent
-import com.example.viewmodel.databinding.NewBookBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-class NewBookFragment  : Fragment(){
+@AndroidEntryPoint
+class NewBookFragment : Fragment() {
 
     private var _binding: NewBookBinding? = null
     private val binding get() = _binding!!
@@ -23,7 +26,7 @@ class NewBookFragment  : Fragment(){
         NewBookViewModelFactory(
             AddBook(),
             GetID(),
-            StringProvider.instance(this),
+            StringProvider(requireContext()),
         )
     }
 
@@ -43,9 +46,18 @@ class NewBookFragment  : Fragment(){
 
     private fun events() {
         with(binding) {
-            add.setOnClickListener() { viewModel.handleEvent(
-                NewBookEvents.AddBook(Book(viewModel.getId(),bookName.text.toString(),
-                bookAuthor.text.toString(),ratingBar.rating,releaseDate.text.toString())))
+            add.setOnClickListener() {
+                viewModel.handleEvent(
+                    NewBookEvents.AddBook(
+                        Book(
+                            -1,
+                            bookName.text.toString(),
+                            bookAuthor.text.toString(),
+                            ratingBar.rating,
+                            releaseDate.text.toString(),
+                        )
+                    )
+                )
             }
             cancel.setOnClickListener() { viewModel.handleEvent(NewBookEvents.Cancel) }
         }
@@ -54,29 +66,21 @@ class NewBookFragment  : Fragment(){
     private fun observarState() {
         viewModel.uiState.observe(viewLifecycleOwner) { state ->
 
-            state.mensaje?.let { error ->
-                Toast.makeText(this@NewBookFragment, error, Toast.LENGTH_SHORT).show()
-                viewModel.errorMostrado()
+            state.event?.let { event ->
+                if (event is UiEvent.PopBackStack) {
+                    findNavController().navigateUp()
+                } else if (event is UiEvent.ShowSnackbar) {
+                    Toast.makeText(requireContext(), event.message, Toast.LENGTH_SHORT).show()
+                }
+                viewModel.handleEvent(NewBookEvents.EventoMostrado)
             }
 
-            if (state.mensaje == null) {
+            if (state.event == null) {
                 binding.bookName.setText(state.book.name)
                 binding.bookAuthor.setText(state.book.author)
                 binding.releaseDate.setText(state.book.releaseDate.toString())
                 binding.ratingBar.rating = state.book.score
             }
-
-            state.event?.let { event ->
-                if (event is UiEvent.PopBackStack) {
-                    this@NewBookFragment.finish()
-                } else if (event is UiEvent.ShowSnackbar) {
-                    Toast.makeText(this@NewBookFragment, event.message, Toast.LENGTH_SHORT).show()
-                }
-                viewModel.eventoMostrado()
-            }
-
-            if (state.event == null)
-                binding.bookName.setText(state.book.name)
         }
     }
 }

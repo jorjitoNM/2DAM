@@ -4,21 +4,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.myapplication.R
 import com.example.myapplication.domain.model.Book
 import com.example.myapplication.domain.usecases.DeleteBook
 import com.example.myapplication.domain.usecases.GetBook
-import com.example.myapplication.domain.usecases.GetBooksSize
 import com.example.myapplication.domain.usecases.UpdateBook
 import com.example.myapplication.ui.common.StringProvider
 import com.example.myapplication.ui.common.UiEvent
-import com.example.viewmodel.R
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class DetailsViewModel(
+@HiltViewModel
+class DetailsViewModel @Inject constructor (
     private val stringProvider: StringProvider,
     private val updateBookUseCase: UpdateBook,
     private val deleteBookUseCase: DeleteBook,
     private val getBookUseCase: GetBook,
-    private val getBooksSize: GetBooksSize,
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData(DetailsState())
@@ -70,7 +71,6 @@ class DetailsViewModel(
         private val updateBook: UpdateBook,
         private val deleteBook: DeleteBook,
         private val getBook: GetBook,
-        private val getBookSizeUseCase: GetBooksSize,
         ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(DetailsViewModel::class.java)) {
@@ -80,7 +80,6 @@ class DetailsViewModel(
                     updateBook,
                     deleteBook,
                     getBook,
-                    getBookSizeUseCase,
                 ) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")

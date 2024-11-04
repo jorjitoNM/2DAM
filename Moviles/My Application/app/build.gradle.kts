@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.viewmodel"
+    namespace = "com.example.myapplication"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.viewmodel"
+        applicationId = "com.example.myapplication"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -65,6 +65,7 @@ dependencies {
 
     //Logs
     implementation(libs.timber)
+
 
     //librerias del viewmodel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)

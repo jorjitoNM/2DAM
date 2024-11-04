@@ -7,28 +7,32 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.example.myapplication.databinding.BookDetailsBinding
 import com.example.myapplication.domain.model.Book
 import com.example.myapplication.domain.usecases.DeleteBook
 import com.example.myapplication.domain.usecases.GetBook
-import com.example.myapplication.domain.usecases.GetBooksSize
 import com.example.myapplication.domain.usecases.UpdateBook
 import com.example.myapplication.ui.common.StringProvider
 import com.example.myapplication.ui.common.UiEvent
-import com.example.viewmodel.databinding.BookDetailsBinding
+import com.example.myapplication.ui.mainScreen.MainFragmentArgs
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailsFragment : Fragment() {
 
     private var _binding: BookDetailsBinding? = null
     private val binding get() = _binding!!
     private var id : Int = 0
+    private val args : MainFragmentArgs by navArgs()
 
     private val viewModel: DetailsViewModel by viewModels {
         DetailsViewModel.DetailsMainViewModelFactory(
-            StringProvider.instance(this),
+            StringProvider(requireContext()),
             UpdateBook(),
             DeleteBook(),
             GetBook(),
-            GetBooksSize(),
         )
     }
 
@@ -42,7 +46,7 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        id = intent.extras?.getInt("id") ?: -1
+        id = args.bookId
         viewModel.handleEvent(DetailsEvents.GetBook(id))
         eventos()
         observarViewModel()
@@ -60,9 +64,9 @@ class DetailsFragment : Fragment() {
 
             state.event?.let { event ->
                 if (event is UiEvent.PopBackStack) {
-                    this@DetailsFragment.finish()
+                    findNavController().navigateUp()
                 } else if (event is UiEvent.ShowSnackbar) {
-                    Toast.makeText(this@DetailsFragment, event.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), event.message, Toast.LENGTH_SHORT).show()
                 }
                 viewModel.handleEvent(DetailsEvents.ErrorMostrado)
             }

@@ -4,14 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.myapplication.R
 import com.example.myapplication.domain.model.Book
 import com.example.myapplication.domain.usecases.AddBook
 import com.example.myapplication.domain.usecases.GetID
 import com.example.myapplication.ui.common.StringProvider
 import com.example.myapplication.ui.common.UiEvent
-import com.example.viewmodel.R
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class NewBookViewModel  (
+@HiltViewModel
+class NewBookViewModel @Inject constructor  (
     private val addBookUseCase : AddBook,
     private val getID: GetID,
     private val stringProvider: StringProvider,
@@ -25,19 +28,19 @@ class NewBookViewModel  (
         when (event) {
             is NewBookEvents.AddBook -> addBook(event.book)
             is NewBookEvents.Cancel -> cancel()
+            is NewBookEvents.EventoMostrado -> eventoMostrado()
         }
     }
 
     private fun addBook (book: Book) {
+        book.id = getId()
         if (!addBookUseCase(book)) {
             _uiState.value = _uiState.value?.copy(
-                mensaje = stringProvider.getString(R.string.deleteError),
                 event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.deleteError))
             )
         }
         else {
             _uiState.value = _uiState.value?.copy(
-                mensaje = stringProvider.getString(R.string.addedSuccesfully),
                 event = UiEvent.PopBackStack)
         }
     }
@@ -46,14 +49,11 @@ class NewBookViewModel  (
         _uiState.value = _uiState.value?.copy(event = UiEvent.PopBackStack)
     }
 
-    fun errorMostrado() {
-        _uiState.value = _uiState.value?.copy(mensaje = null)
-    }
-
-    fun eventoMostrado() {
+    private fun eventoMostrado() {
         _uiState.value = _uiState.value?.copy(event = null)
     }
-    fun getId () : Int {
+
+    private fun getId () : Int {
         return getID.invoke()
     }
 }

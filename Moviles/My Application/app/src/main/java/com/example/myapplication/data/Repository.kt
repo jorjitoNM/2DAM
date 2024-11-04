@@ -47,10 +47,6 @@ object Repository {
         return books.removeIf { b -> b.id == id}
     }
 
-    fun getBooksSize(): Int {
-        return books.size
-    }
-
     fun getId() : Int {
         return id
     }
