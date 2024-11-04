@@ -4,6 +4,7 @@ import io.vavr.control.Either;
 import org.example.appmensajessecretos.dao.DaoGroups;
 import org.example.appmensajessecretos.domain.error.DataInputError;
 import org.example.appmensajessecretos.domain.error.Error;
+import org.example.appmensajessecretos.domain.error.ServiceError;
 import org.example.appmensajessecretos.domain.modelo.Grupo;
 import org.example.appmensajessecretos.domain.modelo.Usuario;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,12 @@ public class GroupService {
 
 
     public Either<Error,List<Grupo>> getGroups (Usuario user) {
-        return dao.getGroups(user);
+        return dao.getGroups(user).flatMap(groups -> {
+            if (groups.isEmpty())
+                return Either.left(ServiceError.NOT_IN_GROUPS);
+            else
+                return Either.right(groups);
+        });
     }
 
     public Either<Error, Void> joinGroup (Usuario user, Grupo group) {

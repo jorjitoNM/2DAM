@@ -1,7 +1,9 @@
 package org.example.appmensajessecretos.dao;
 
 import io.vavr.control.Either;
+import org.example.appmensajessecretos.domain.error.DataBaseError;
 import org.example.appmensajessecretos.domain.error.Error;
+import org.example.appmensajessecretos.domain.error.ServiceError;
 import org.example.appmensajessecretos.domain.modelo.Usuario;
 import org.springframework.stereotype.Repository;
 
@@ -15,11 +17,21 @@ public class DaoUsers {
         this.dataBase = dataBase;
     }
 
-    public Either<Error,Void> saveUsers(List<Usuario> users) {
-        return dataBase.saveUsers(users);
+    public Either<Error, List<Usuario>> loadUsers(Usuario user) {
+        return dataBase.loadUsers().flatMap(usuarios -> Either.right(usuarios.stream()
+                .filter(u -> !u.getName().equals(user.getName())).toList()));
     }
 
-    public Either<Error,List<Usuario>> loadUsers() {
-        return dataBase.loadUsers();
+    public Either<Error, Void> addUser(Usuario finalUser) {
+        return dataBase.loadUsers().flatMap(usuarios -> {
+            usuarios.add(finalUser);
+            return dataBase.saveUsers(usuarios);
+        });
+    }
+
+    public Either<Error, Usuario> getUser(Usuario user) {
+        return dataBase.loadUsers().flatMap(usuarios -> Either.right(usuarios.stream()
+                .filter(u -> u.getName().equals(user.getName()))
+                .findFirst().orElse(null)));
     }
 }

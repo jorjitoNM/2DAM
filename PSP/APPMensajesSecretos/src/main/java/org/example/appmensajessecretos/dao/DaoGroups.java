@@ -21,15 +21,10 @@ public class DaoGroups {
     }
 
     public Either<Error, List<Grupo>> getGroups(Usuario user) {
-        return dataBase.loadGroups().map(grupos -> grupos.stream()
-                .filter(grupo -> grupo.getMembers().contains(user))
-                .collect(Collectors.toList())).flatMap(groups -> {
-            if (groups.isEmpty()) {
-                return Either.left(ServiceError.NOT_IN_GROUPS);
-            } else {
-                return Either.right(groups);
-            }
-        });
+        return dataBase.loadGroups().flatMap(grupos ->
+                Either.right(grupos.stream()
+                .filter(grupo -> grupo.getMembers().contains(user.getName()))
+                .toList()));
     }
 
     public Either<Error, Void> joinGroup(Usuario user, Grupo group) {

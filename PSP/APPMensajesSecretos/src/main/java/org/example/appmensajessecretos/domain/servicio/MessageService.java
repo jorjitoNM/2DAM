@@ -18,8 +18,8 @@ public class MessageService {
         this.dao = dao;
     }
 
-    public Either<Error, Void> sendGroupMessages(String text, Usuario usuario, Grupo group) {
-        return dao.sendGroupMessage(text,usuario,group);
+    public Either<Error, Void> sendMessages(String text, Usuario usuario, Grupo group) {
+        return dao.sendMessage(text,usuario,group);
     }
 
     public Either<Error,List<Mensaje>> getMessages(Grupo group) {

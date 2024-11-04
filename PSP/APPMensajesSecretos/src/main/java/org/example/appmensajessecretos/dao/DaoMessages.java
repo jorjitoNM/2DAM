@@ -20,7 +20,7 @@ public class DaoMessages {
         this.dataBase = dataBase;
     }
 
-    public Either<Error,Void> sendGroupMessage(String text, Usuario usuario, Grupo group) {
+    public Either<Error,Void> sendMessage(String text, Usuario usuario, Grupo group) {
         return dataBase.loadMessages().flatMap(mensajes -> {
                     try {
                         mensajes.add(new Mensaje(text,LocalDateTime.now(),usuario.getName(),group.getName()));
@@ -32,6 +32,7 @@ public class DaoMessages {
     }
 
     public Either<Error,List<Mensaje>> loadMessages(Grupo group) {
-        return dataBase.loadMessages().flatMap(mensajes -> Either.right(mensajes.stream().filter(m -> m.getGrupo().equals(group.getName())).toList()));
+        return dataBase.loadMessages().flatMap(mensajes ->
+                Either.right(mensajes.stream().filter(m -> m.getGrupo().equals(group.getName())).toList()));
     }
 }

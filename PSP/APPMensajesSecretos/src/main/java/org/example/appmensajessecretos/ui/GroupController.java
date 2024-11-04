@@ -228,12 +228,12 @@ public class GroupController {
     }
 
 
-    public void sendGroupMessage() {
+    public void sendMessage() {
         if (checkLogged()) {
             if (myChats.getSelectionModel().isEmpty() || mensaje.getText().isBlank())
                 sendMessageError.setText(Constantes.RELLENE_CAMPOS);
             else
-                messageService.sendGroupMessages(mensaje.getText(), usuario, myChats.getSelectionModel().getSelectedItem())
+                messageService.sendMessages(mensaje.getText(), usuario, myChats.getSelectionModel().getSelectedItem())
                         .peek(ok -> {
                             loadUserGroupChats();
                             sendMessageError.setText(Constantes.MESSAGE_SENT);

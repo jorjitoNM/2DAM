@@ -22,31 +22,24 @@ public class UserService {
     }
 
     public Either<Error, Usuario> logIn(Usuario user) {
-        return dao.loadUsers().flatMap(usuarios -> {
-            Either<Error, Usuario> foundUser = usuarios.stream()
-                    .filter(u -> u.getName().equals(user.getName()))
-                    .findFirst()
-                    .map(Either::<Error, Usuario>right)
-                    .orElseGet(() -> Either.left(ServiceError.USER_NOT_FOUND));
-            return foundUser.flatMap(u -> {
+        return dao.getUser(user).flatMap(u -> {
+            if (u == null)
+                return Either.left(ServiceError.USER_NOT_FOUND);
+            else {
                 if (passwordEncoder.matches(user.getPassword(),u.getPassword()))
                     return Either.right(u);
                 else
                     return Either.left(DataInputError.INCORRECT_PASSWORD);
-            });
+            }
         });
     }
 
     public Either<Error, List<Usuario>> loadUsers(Usuario user) {
-        return dao.loadUsers().flatMap(usuarios -> Either.right(usuarios.stream()
-                .filter(u -> !u.getName().equals(user.getName())).toList()));
+        return dao.loadUsers(user);
     }
 
     public Either<Error, Void> addUser(Usuario usuario) {
         Usuario finalUser = new Usuario(usuario.getName(), passwordEncoder.encode(usuario.getPassword()));
-        return dao.loadUsers().flatMap(usuarios -> {
-            usuarios.add(finalUser);
-            return dao.saveUsers(usuarios);
-        });
+        return dao.addUser(finalUser);
     }
 }
