@@ -39,7 +39,11 @@ public class UserService {
     }
 
     public Either<Error, Void> addUser(Usuario usuario) {
-        Usuario finalUser = new Usuario(usuario.getName(), passwordEncoder.encode(usuario.getPassword()));
-        return dao.addUser(finalUser);
+        if (dao.getUser(usuario).get() == null) {
+            Usuario finalUser = new Usuario(usuario.getName(), passwordEncoder.encode(usuario.getPassword()));
+            return dao.addUser(finalUser);
+        }
+        else
+            return Either.left(ServiceError.USER_ALREADY_EXIST);
     }
 }

@@ -18,6 +18,7 @@ public class Constantes {
     public static final String LOGGED_IN = "Logged in";
     public static final String LOGIN_FAILED = "No se ha podido iniciado sesion";
     public static final String DATABASE_FAILED = "El sistema no ha podido completar su accion, intentelo de nuevo";
+    public static final String DATABASE_CONECCTION_FAILED = "No se ha podido conectar con las base de datos";
     public static final String GROUP_IS_PRIVATE = "No se puede unir a un grupo pu, debe recibir una invitacion desde dentro";
     public static final String USER_NOT_IN_GROUP = "El usuario seleccionado no se encuentra en este grupo";
     public static final String GROUP_ALREADY_EXIST = "Ya existe un grupo con ese nombre, utilice otro distinto";
@@ -26,6 +27,10 @@ public class Constantes {
     public static final String ERROR_LOADING_USER_CHATS = "No se ha podido cargar sus chats, intentelo de nuevo más tarde";
     public static final String MESSAGE_SENT = "Mensaje enviado con exito";
     public static final String USER_INVITED = "Se ha invitado al usuario al grupo seleccionado";
+    public static final String UNEXPECTED_ERROR = "Ha ocurrido un error inesperado";
+    public static final String USER_ALREADY_EXISTS = "Su nombre de usuario ya esta empleado por otro usuario, introduzca uno distinto";
+    public static final String INFO = "Information";
+    public static final String ACTION_COMPLETED = "Accion completada:";
 
     private Constantes () {}
 }
