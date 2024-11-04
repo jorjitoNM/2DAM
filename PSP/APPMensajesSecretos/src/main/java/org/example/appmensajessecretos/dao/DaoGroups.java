@@ -4,8 +4,8 @@ import io.vavr.control.Either;
 import org.example.appmensajessecretos.domain.error.DataInputError;
 import org.example.appmensajessecretos.domain.error.Error;
 import org.example.appmensajessecretos.domain.error.ServiceError;
-import org.example.appmensajessecretos.domain.modelo.Grupo;
-import org.example.appmensajessecretos.domain.modelo.Usuario;
+import org.example.appmensajessecretos.domain.model.Grupo;
+import org.example.appmensajessecretos.domain.model.Usuario;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

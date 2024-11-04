@@ -8,9 +8,9 @@ import lombok.extern.log4j.Log4j2;
 import org.example.appmensajessecretos.config.ConfigurationFicheros;
 import org.example.appmensajessecretos.domain.error.DataBaseError;
 import org.example.appmensajessecretos.domain.error.Error;
-import org.example.appmensajessecretos.domain.modelo.Grupo;
-import org.example.appmensajessecretos.domain.modelo.Mensaje;
-import org.example.appmensajessecretos.domain.modelo.Usuario;
+import org.example.appmensajessecretos.domain.model.Grupo;
+import org.example.appmensajessecretos.domain.model.Mensaje;
+import org.example.appmensajessecretos.domain.model.Usuario;
 import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
