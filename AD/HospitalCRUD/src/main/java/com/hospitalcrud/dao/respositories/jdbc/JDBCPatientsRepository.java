@@ -3,7 +3,10 @@ package com.hospitalcrud.dao.respositories.jdbc;
 import com.hospitalcrud.dao.mappers.jdbc_mappers.MapGetAllPatients;
 import com.hospitalcrud.dao.model.Patient;
 import com.hospitalcrud.dao.respositories.PatientRepository;
+import com.hospitalcrud.dao.utilities.DBConnectionPool;
 import com.hospitalcrud.dao.utilities.SQLQueries;
+import com.hospitalcrud.domain.error.DUPLICATED_USERNAME;
+import com.hospitalcrud.domain.error.FOREIGN_KEY_ERROR;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
@@ -13,22 +16,23 @@ import java.util.List;
 @Profile("inDevelopment")
 @Repository
 public class JDBCPatientsRepository implements PatientRepository {
-    private final DBConnection dbConnection;
     private final MapGetAllPatients patientsMapper;
+    private final DBConnectionPool pool;
 
-    public JDBCPatientsRepository(DBConnection dbConnection, MapGetAllPatients patientsMapper) {
-        this.dbConnection = dbConnection;
+    public JDBCPatientsRepository(MapGetAllPatients patientsMapper, DBConnectionPool pool) {
         this.patientsMapper = patientsMapper;
+        this.pool = pool;
     }
 
 
     @Override
     public List<Patient> getAll() {
-        try (Connection con = dbConnection.getConnection();
-             Statement statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-        ) {
+        try (Connection con = pool.getConnection();
+             Statement statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+             ) {
+            ResultSet paid = statement.executeQuery(SQLQueries.GET_ALL_PAYMENTS);
             ResultSet resultSet = statement.executeQuery(SQLQueries.GET_ALL_PATIENTS);
-            return patientsMapper.readRS(resultSet);
+            return patientsMapper.readRS(resultSet,paid);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -36,21 +40,25 @@ public class JDBCPatientsRepository implements PatientRepository {
 
     @Override
     public int save(Patient patient) {
-        try (Connection con = dbConnection.getConnection();
+        try (Connection con = pool.getConnection();
              PreparedStatement insertPatient = con.prepareStatement(SQLQueries.INSERT_PATIENT,Statement.RETURN_GENERATED_KEYS);
              PreparedStatement insertCredential = con.prepareStatement(SQLQueries.INSERT_CREDENTIAL)
         ) {
             con.setAutoCommit(false);
             setPatientValues(patient, insertPatient).executeUpdate();
             ResultSet rs = insertPatient.getGeneratedKeys();
-            if(rs.next()) {
+            if (rs.next()) {
                 insertCredential.setString(1, patient.getCredential().getUserName());
                 insertCredential.setString(2, patient.getCredential().getPassword());
                 insertCredential.setInt(3, rs.getInt(1));
                 insertCredential.setNull(4, 0);
-                insertCredential.executeUpdate();
-                con.commit();
-                return rs.getInt(1);
+                try {
+                    insertCredential.executeUpdate();
+                    con.commit();
+                    return rs.getInt(1);
+                } catch (SQLException e) {
+                    throw new DUPLICATED_USERNAME();
+                }
             } else {
                 con.rollback();
                 return -1;
@@ -62,7 +70,7 @@ public class JDBCPatientsRepository implements PatientRepository {
 
     @Override
     public void update(Patient patient) {
-        try (Connection con = dbConnection.getConnection();
+        try (Connection con = pool.getConnection();
              PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.UPDATE_PATIENT)
         ) {
             preparedStatement.setInt(4,patient.getId());
@@ -74,8 +82,8 @@ public class JDBCPatientsRepository implements PatientRepository {
 
     @Override
     public boolean delete(int patientId) {
-        int result = 0;
-        try (Connection con = dbConnection.getConnection();
+        int result;
+        try (Connection con = pool.getConnection();
              PreparedStatement deletePatient = con.prepareStatement(SQLQueries.DELETE_PATIENT);
              PreparedStatement deleteCredential = con.prepareStatement(SQLQueries.DELETE_CREDENTIAL)
         ) {
@@ -83,7 +91,11 @@ public class JDBCPatientsRepository implements PatientRepository {
             deleteCredential.setInt(1, patientId);
             if (deleteCredential.executeUpdate() > 0) {
                 deletePatient.setInt(1, patientId);
-                result = deletePatient.executeUpdate();
+                try {
+                    result = deletePatient.executeUpdate();
+                } catch (SQLIntegrityConstraintViolationException e) {
+                    throw new FOREIGN_KEY_ERROR();
+                }
                 con.commit();
                 return result == 1;
             }

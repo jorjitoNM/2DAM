@@ -17,6 +17,7 @@ public class XMLConfiguration {
     private String dbUrl;
     private String user_name;
     private String password;
+    private String driver;
     @Setter
     private int lastID;
 
@@ -30,6 +31,7 @@ public class XMLConfiguration {
             this.dbUrl = p.getProperty("dbUrl");
             this.user_name = p.getProperty("user_name");
             this.password = p.getProperty("password");
+            this.driver = p.getProperty("driver");
         } catch (IOException e) {
             //log.error(e.getMessage());
             e.printStackTrace();

@@ -14,12 +14,29 @@ public class Patient {
     private LocalDate birthDate;
     private String phone;
     private Credential credential;
+    private int paid;
 
     public Patient(int id, String name, LocalDate birthDate, String phone) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
         this.phone = phone;
+    }
+
+    public Patient(int id, String name, LocalDate birthDate, String phone, Credential credential) {
+        this.id = id;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.phone = phone;
+        this.credential = credential;
+    }
+
+    public Patient(int id, String name, LocalDate birthDate, String phone, int paid) {
+        this.id = id;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.phone = phone;
+        this.paid = paid;
     }
 
     public String toStringFichero() {

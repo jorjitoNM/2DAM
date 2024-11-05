@@ -16,12 +16,10 @@ import java.util.List;
 public class PatientService {
 
     private final PatientRepository patientRepository;
-    private final CredentialRepository credentialRepository;
     private final MedicalRecordsRepository medicalRecordsRepository;
 
-    public PatientService(PatientRepository patientRepository, CredentialRepository credentialRepository, MedicalRecordsRepository medicalRecordsRepository) {
+    public PatientService(PatientRepository patientRepository, MedicalRecordsRepository medicalRecordsRepository) {
         this.patientRepository = patientRepository;
-        this.credentialRepository = credentialRepository;
         this.medicalRecordsRepository = medicalRecordsRepository;
     }
 

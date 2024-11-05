@@ -8,6 +8,7 @@ public class SQLQueries {
     public static final String INSERT_CREDENTIAL = "insert into user_login (username,password,patient_id,doctor_id) values (?,?,?,?)";
     public static final String GET_CREDENTIAL = "select * from user_login where username = ?";
     public static final String DELETE_CREDENTIAL = "delete from user_login where patient_id = ?";
+    public static final String GET_ALL_PAYMENTS = "select sum(amount) from patient_payment group by patient_id";
 
     private SQLQueries() {
     }

@@ -10,14 +10,16 @@ import java.util.List;
 
 @Component
 public class MapGetAllPatients {
-    public List<Patient> readRS(ResultSet rs) {
+    public List<Patient> readRS(ResultSet pacientes, ResultSet paid) {
         List<Patient> patients = new ArrayList<>();
         try {
-            while (rs.next()) patients.add(new Patient(
-                    rs.getInt("patient_id"),
-                    rs.getString("name"),
-                    rs.getDate("date_of_birth").toLocalDate(),
-                    rs.getString("phone")));
+            while (pacientes.next()) patients.add(new Patient(
+                    pacientes.getInt("patient_id"),
+                    pacientes.getString("name"),
+                    pacientes.getDate("date_of_birth").toLocalDate(),
+                    pacientes.getString("phone"),
+                    paid.getInt("amount")
+            ));
             return patients;
         } catch (SQLException e) {
             throw new RuntimeException();
