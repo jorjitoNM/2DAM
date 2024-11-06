@@ -32,5 +32,11 @@ public class Constantes {
     public static final String INFO = "Information";
     public static final String ACTION_COMPLETED = "Accion completada:";
 
+
+    public static final String CIPHER_ALGORITHM = "PBKDF2WithHmacSHA256";
+    public static final String CIPHER_SALT = "El_bicho_siuuuuuu";
+    public static final String CIPHER_TRANSFORMATION = "AES/CBC/PKCS5Padding";
+    public static final String AES = "AES";
+
     private Constantes () {}
 }

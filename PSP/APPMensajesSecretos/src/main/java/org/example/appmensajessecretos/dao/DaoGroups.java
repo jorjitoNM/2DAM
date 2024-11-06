@@ -27,7 +27,8 @@ public class DaoGroups {
     }
 
     public Either<Error, Void> joinGroup(Usuario user, Grupo group) {
-        return dataBase.loadGroups()
+        Either<Error,List<Grupo>> gruposEither = dataBase.loadGroups();
+        return gruposEither
                 .flatMap(grupos -> grupos.stream()
                         .filter(g -> g.getName().equals(group.getName()))
                         .findFirst()
@@ -39,7 +40,7 @@ public class DaoGroups {
                         return Either.left(DataInputError.GROUP_IS_PRIVATE);
                     else {
                         foundGroup.getMembers().add(user.getName());
-                        return dataBase.saveGroups(grupos);
+                        return dataBase.saveGroups(gruposEither.get());
                     }
                 });
     }
@@ -62,20 +63,20 @@ public class DaoGroups {
     }
 
     public Either<Error, Void> deleteMember(String userName, String groupName) {
-        return dataBase.loadGroups().flatMap(
-                grupos -> grupos.stream()
+        Either<Error,List<Grupo>> gruposEither = dataBase.loadGroups();
+        return gruposEither
+                .flatMap(grupos -> grupos.stream()
                         .filter(g -> g.getName().equals(groupName))
                         .findFirst()
                         .map(Either::<Error, Grupo>right)
                         .orElseGet(() -> Either.left(ServiceError.GROUP_NOT_FOUND))
                 )
-                .flatMap(
-                        grupo -> {
+                .flatMap(grupo -> {
                     if (grupo.getMembers().stream().anyMatch(u -> u.equals(userName)))
                         return Either.left(ServiceError.NOT_IN_GROUP);
                     else {
                         grupo.getMembers().removeIf(u -> u.equals(userName));
-                        return dataBase.saveGroups(grupos);
+                        return dataBase.saveGroups(gruposEither.get());
                     }
                 });
 }

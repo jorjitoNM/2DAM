@@ -58,8 +58,6 @@ public class GroupController {
     @FXML
     private TextArea mensaje;
     @FXML
-    private Label encryptPasswordLabel;
-    @FXML
     private TextField encryptPassword;
 
 
@@ -211,7 +209,7 @@ public class GroupController {
             if (myChats.getSelectionModel().isEmpty() || mensaje.getText().isBlank())
                showError(DataInputError.EMPTY_FIELDS);
             else
-                messageService.sendMessages(mensaje.getText(), usuario, myChats.getSelectionModel().getSelectedItem())
+                messageService.sendMessages(mensaje.getText(), usuario, myChats.getSelectionModel().getSelectedItem(),encryptPassword.getText())
                         .peek(ok -> {
                             loadUserGroupChats();
                             showInfo(Constantes.MESSAGE_SENT);
@@ -269,7 +267,7 @@ public class GroupController {
     }
 
     public void loadUserGroupChats() {
-        messageService.getMessages(myChats.getSelectionModel().getSelectedItem()).peek(ok -> ok.forEach(m ->
+        messageService.getMessages(myChats.getSelectionModel().getSelectedItem(),encryptPassword.getText()).peek(ok -> ok.forEach(m ->
                 groupChats.getItems().add(m.toString())
         )).peekLeft(this::showError);
     }

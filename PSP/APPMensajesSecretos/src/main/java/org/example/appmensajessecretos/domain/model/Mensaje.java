@@ -1,6 +1,7 @@
 package org.example.appmensajessecretos.domain.model;
 
 import lombok.Data;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 

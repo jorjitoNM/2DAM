@@ -9,7 +9,9 @@ import org.example.appmensajessecretos.domain.model.Grupo;
 import org.example.appmensajessecretos.domain.model.Usuario;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class GroupService {
@@ -19,32 +21,67 @@ public class GroupService {
         this.dao = dao;
     }
 
-
-    public Either<Error,List<Grupo>> getGroups (Usuario user) {
-        return dao.getGroups(user).flatMap(groups -> {
-            if (groups.isEmpty())
-                return Either.left(ServiceError.NOT_IN_GROUPS);
-            else
-                return Either.right(groups);
+    private boolean anyEmptyFields(Object[] objects) {
+        AtomicBoolean empty = new AtomicBoolean(true);
+        Arrays.stream(objects).forEach(object -> {
+            if (object instanceof Usuario usuario
+                    && (usuario.getName() == null || usuario.getName().isEmpty()
+                    || usuario.getPassword() == null || usuario.getPassword().isEmpty())
+                    || (object instanceof Grupo grupo
+                    && (grupo.getName() == null || grupo.getName().isEmpty()
+                    || grupo.getPassword() == null || grupo.getPassword().isEmpty()))) {
+                empty.set(false);
+            }
         });
+        return empty.get();
     }
 
-    public Either<Error, Void> joinGroup (Usuario user, Grupo group) {
-        return dao.joinGroup(user,group);
+    public Either<Error, List<Grupo>> getGroups(Usuario user) {
+        if (user.getName() == null || user.getPassword() == null) {
+            return Either.left(DataInputError.EMPTY_FIELDS);
+        } else {
+            return dao.getGroups(user).flatMap(groups -> {
+                if (groups.isEmpty())
+                    return Either.left(ServiceError.NOT_IN_GROUPS);
+                else
+                    return Either.right(groups);
+            });
+        }
     }
 
-    public Either<Error,Void> createGroup (Grupo group, Usuario user) {
-        return dao.createGroup(group,user);
+
+    public Either<Error, Void> joinGroup(Usuario user, Grupo group) {
+        if (user.getName() == null || user.getPassword() == null || group == null) {
+            return Either.left(DataInputError.EMPTY_FIELDS);
+        } else {
+            return dao.joinGroup(user, group);
+        }
     }
 
-    public Either<Error,Void> deleteMember (String userName, String groupName) {
-        return dao.deleteMember(userName,groupName);
+    public Either<Error, Void> createGroup(Grupo group, Usuario user) {
+        if (user == null || group == null) {
+            return Either.left(DataInputError.EMPTY_FIELDS);
+        } else {
+            return dao.createGroup(group, user);
+        }
     }
 
-    public Either<Error,Void> inviteUser (Grupo group, List<Usuario> users) {
-        if (Boolean.FALSE.equals(group.getIsPrivate()))
-            return Either.left(DataInputError.GROUP_IS_PRIVATE);
-        else
-            return dao.inviteUser(group,users);
+    public Either<Error, Void> deleteMember(String userName, String groupName) {
+        if (userName.isEmpty() || groupName.trim().isEmpty()) {
+            return Either.left(DataInputError.EMPTY_FIELDS);
+        } else {
+            return dao.deleteMember(userName, groupName);
+        }
+    }
+
+    public Either<Error, Void> inviteUser(Grupo group, List<Usuario> users) {
+        if (users == null || group == null) {
+            return Either.left(DataInputError.EMPTY_FIELDS);
+        } else {
+            if (Boolean.FALSE.equals(group.getIsPrivate()))
+                return Either.left(DataInputError.GROUP_IS_PRIVATE);
+            else
+                return dao.inviteUser(group, users);
+        }
     }
 }
