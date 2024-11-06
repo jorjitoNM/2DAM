@@ -1,0 +1,34 @@
+package com.hospitalcrud.dao.respositories.jdbc;
+
+import com.hospitalcrud.dao.mappers.jdbc_mappers.MapMedications;
+import com.hospitalcrud.dao.model.Medication;
+import com.hospitalcrud.dao.utilities.DBConnectionPool;
+import com.hospitalcrud.dao.utilities.SQLQueries;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+public class JDBCMedicationsRepository {
+
+    private final DBConnectionPool pool;
+    private final MapMedications medicationsMapper;
+
+    public JDBCMedicationsRepository(DBConnectionPool pool, MapMedications medicationsMapper) {
+        this.pool = pool;
+        this.medicationsMapper = medicationsMapper;
+    }
+
+    public List<Medication> getAll (int medicalRecordId) {
+        try (Connection conn = pool.getConnection()) {
+            PreparedStatement getPrescribedMedications = conn.prepareStatement(SQLQueries.GET_PRESCRIBED_MEDICATIONS);
+            getPrescribedMedications.setInt(1, medicalRecordId);
+            ResultSet rs = getPrescribedMedications.executeQuery();
+            return medicationsMapper.readRS(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}

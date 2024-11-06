@@ -1,8 +1,8 @@
 package com.hospitalcrud.dao.respositories.jdbc;
 
 import com.hospitalcrud.dao.model.Credential;
-import com.hospitalcrud.dao.model.Patient;
 import com.hospitalcrud.dao.respositories.CredentialRepository;
+import com.hospitalcrud.dao.utilities.DBConnection;
 import com.hospitalcrud.dao.utilities.SQLQueries;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;

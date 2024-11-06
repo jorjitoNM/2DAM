@@ -20,9 +20,9 @@ public class PatientUI {
          id = patient.getId();
          name = patient.getName();
          birthDate = patient.getBirthDate();
-         paid = 0;
-         password = null;
+         paid = patient.getPaid();
+         password = "";
          phone = patient.getPhone();
-         userName = null;
+         userName = "";
      }
 }

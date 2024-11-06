@@ -1,4 +1,4 @@
-package com.hospitalcrud.dao.respositories.jdbc;
+package com.hospitalcrud.dao.utilities;
 
 import com.hospitalcrud.dao.configuration.XMLConfiguration;
 import org.springframework.stereotype.Component;

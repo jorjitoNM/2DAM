@@ -1,6 +1,6 @@
 package com.hospitalcrud.dao.respositories.jdbc;
 
-import com.hospitalcrud.dao.mappers.jdbc_mappers.MapGetAllPatients;
+import com.hospitalcrud.dao.mappers.jdbc_mappers.MapPatients;
 import com.hospitalcrud.dao.model.Patient;
 import com.hospitalcrud.dao.respositories.PatientRepository;
 import com.hospitalcrud.dao.utilities.DBConnectionPool;
@@ -16,10 +16,10 @@ import java.util.List;
 @Profile("inDevelopment")
 @Repository
 public class JDBCPatientsRepository implements PatientRepository {
-    private final MapGetAllPatients patientsMapper;
+    private final MapPatients patientsMapper;
     private final DBConnectionPool pool;
 
-    public JDBCPatientsRepository(MapGetAllPatients patientsMapper, DBConnectionPool pool) {
+    public JDBCPatientsRepository(MapPatients patientsMapper, DBConnectionPool pool) {
         this.patientsMapper = patientsMapper;
         this.pool = pool;
     }
@@ -28,11 +28,10 @@ public class JDBCPatientsRepository implements PatientRepository {
     @Override
     public List<Patient> getAll() {
         try (Connection con = pool.getConnection();
-             Statement statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+             Statement getPatients = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
              ) {
-            ResultSet paid = statement.executeQuery(SQLQueries.GET_ALL_PAYMENTS);
-            ResultSet resultSet = statement.executeQuery(SQLQueries.GET_ALL_PATIENTS);
-            return patientsMapper.readRS(resultSet,paid);
+            ResultSet resultSet = getPatients.executeQuery(SQLQueries.GET_ALL_PATIENTS);
+            return patientsMapper.readRS(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

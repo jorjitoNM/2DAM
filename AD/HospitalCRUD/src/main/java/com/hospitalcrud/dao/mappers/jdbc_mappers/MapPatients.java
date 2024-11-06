@@ -9,17 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class MapGetAllPatients {
-    public List<Patient> readRS(ResultSet pacientes, ResultSet paid) {
+public class MapPatients {
+    public List<Patient> readRS(ResultSet pacientes) {
         List<Patient> patients = new ArrayList<>();
         try {
-            while (pacientes.next()) patients.add(new Patient(
-                    pacientes.getInt("patient_id"),
-                    pacientes.getString("name"),
-                    pacientes.getDate("date_of_birth").toLocalDate(),
-                    pacientes.getString("phone"),
-                    paid.getInt("amount")
-            ));
+            while (pacientes.next()) {
+                patients.add(new Patient(
+                        pacientes.getInt("patient_id"),
+                        pacientes.getString("name"),
+                        pacientes.getDate("date_of_birth").toLocalDate(),
+                        pacientes.getString("phone")));
+            }
             return patients;
         } catch (SQLException e) {
             throw new RuntimeException();

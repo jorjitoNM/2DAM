@@ -18,4 +18,13 @@ public class Medication {
     private String medicationName;
     @XmlTransient
     private int medRecordId;
+    private String dosage;
+
+
+    public Medication(int id, String medicationName, int medRecordId) {
+        this.id = id;
+        this.medicationName = medicationName;
+        this.medRecordId = medRecordId;
+        this.dosage = "";
+    }
 }

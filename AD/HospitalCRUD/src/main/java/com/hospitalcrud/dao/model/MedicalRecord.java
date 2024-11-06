@@ -29,4 +29,12 @@ public class MedicalRecord {
     @XmlElementWrapper(name="medications")
     @XmlElement(name = "medication")
     private List<Medication> medications;
+
+    public MedicalRecord(int id, int idPatient, int idDoctor, String diagnosis, LocalDate date) {
+        this.id = id;
+        this.idPatient = idPatient;
+        this.idDoctor = idDoctor;
+        this.diagnosis = diagnosis;
+        this.date = date;
+    }
 }

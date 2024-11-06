@@ -3,9 +3,11 @@ package com.hospitalcrud.domain.service;
 
 import com.hospitalcrud.dao.model.Credential;
 import com.hospitalcrud.dao.model.Patient;
+import com.hospitalcrud.dao.model.Payment;
 import com.hospitalcrud.dao.respositories.CredentialRepository;
 import com.hospitalcrud.dao.respositories.MedicalRecordsRepository;
 import com.hospitalcrud.dao.respositories.PatientRepository;
+import com.hospitalcrud.dao.respositories.PaymentsRepository;
 import com.hospitalcrud.domain.model.PatientUI;
 import org.springframework.stereotype.Service;
 
@@ -17,33 +19,40 @@ public class PatientService {
 
     private final PatientRepository patientRepository;
     private final MedicalRecordsRepository medicalRecordsRepository;
+    private final PaymentsRepository paymentsRepository;
 
-    public PatientService(PatientRepository patientRepository, MedicalRecordsRepository medicalRecordsRepository) {
+    public PatientService(PatientRepository patientRepository, MedicalRecordsRepository medicalRecordsRepository, PaymentsRepository paymentsRepository) {
         this.patientRepository = patientRepository;
         this.medicalRecordsRepository = medicalRecordsRepository;
+        this.paymentsRepository = paymentsRepository;
     }
 
     public List<PatientUI> getPatients() {
         List<Patient> patients = patientRepository.getAll();
+        List<Payment> payments = paymentsRepository.getAll();
+        payments.forEach(p ->
+                patients.stream()
+                .filter(patient -> patient.getId() == p.getPatientId())
+                .forEach(found -> found.setPaid(p.getAmount())));
         List<PatientUI> patientsUI = new ArrayList<>();
         patients.forEach(p -> patientsUI.add(new PatientUI(p)));
         return patientsUI;
     }
 
     public int addPatient(PatientUI patientUI) {
-        Patient patient = new Patient(patientUI.getId(),patientUI.getName(),patientUI.getBirthDate(),
-                patientUI.getPhone(),new Credential(patientUI.getUserName(),patientUI.getPassword()));
+        Patient patient = new Patient(patientUI.getId(), patientUI.getName(), patientUI.getBirthDate(),
+                patientUI.getPhone(), new Credential(patientUI.getUserName(), patientUI.getPassword()));
         return patientRepository.save(patient);
     }
 
     public void updatePatient(PatientUI patientUI) {
-        Patient patient = new Patient(patientUI.getId(),patientUI.getName(),patientUI.getBirthDate(),patientUI.getPhone());
+        Patient patient = new Patient(patientUI.getId(), patientUI.getName(), patientUI.getBirthDate(), patientUI.getPhone());
         patientRepository.update(patient);
     }
 
     public void deletePatient(int patientId, boolean confirmation) {
         if ((!confirmation) && (patientRepository.delete(patientId))) {
-                medicalRecordsRepository.deletePatientMedicalRecords(patientId);
+            medicalRecordsRepository.deletePatientMedicalRecords(patientId);
         }
     }
 }
