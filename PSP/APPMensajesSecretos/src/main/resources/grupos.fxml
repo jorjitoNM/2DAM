@@ -9,7 +9,7 @@
     <TextField fx:id="userName" layoutX="26.0" layoutY="82.0" prefHeight="26.0" prefWidth="200.0" />
     <Label fx:id="enterPassword" layoutX="58.0" layoutY="134.0" prefHeight="18.0" prefWidth="132.0" text="Introduzca la contraseña" />
     <TextField fx:id="userPassword" layoutX="26.0" layoutY="172.0" prefHeight="11.0" prefWidth="200.0" />
-    <Button fx:id="submitCredentials" layoutX="138.0" layoutY="228.0" mnemonicParsing="false" onAction="#iniciarSesion" text="Submit" />
+    <Button fx:id="submitCredentials" layoutX="138.0" layoutY="228.0" mnemonicParsing="false" onAction="#logIn" text="Submit" />
     <Label fx:id="logInError" layoutX="28.0" layoutY="264.0" prefHeight="18.0" prefWidth="250.0" />
 
 
@@ -26,7 +26,7 @@
     <Label fx:id="enterUserNameDelete" layoutX="647.0" layoutY="138.0" text="Introduzca el nombre del usuario que quiere eliminar" />
     <TextField fx:id="userNameDelete" layoutX="688.0" layoutY="175.0" prefHeight="26.0" prefWidth="200.0" />
     <Label fx:id="deleteError" layoutX="692.0" layoutY="273.0" prefHeight="18.0" prefWidth="260.0" />
-    <Button fx:id="deleteUser" layoutX="821.0" layoutY="232.0" mnemonicParsing="false" onAction="#comfirmDelete" text="Delete" />
+    <Button fx:id="deleteUser" layoutX="821.0" layoutY="232.0" mnemonicParsing="false" onAction="#confirmDelete" text="Delete" />
 
 
     <Label fx:id="createGroupNameLabel" layoutX="1038.0" layoutY="51.0" prefHeight="18.0" prefWidth="176.0" text="Introduzca el nombre del grupo" />
@@ -45,7 +45,7 @@
 
 
     <Label fx:id="mensajeLabel" layoutX="339.0" layoutY="337.0" text="Introduzca el mensaje" />
-    <TextArea fx:id="mensaje" layoutX="297.0" layoutY="372.0" prefHeight="106.0" prefWidth="200.0" />
+    <TextArea fx:id="message" layoutX="297.0" layoutY="372.0" prefHeight="106.0" prefWidth="200.0" />
     <Label fx:id="sendMessageError" layoutX="272.0" layoutY="548.0" prefHeight="18.0" prefWidth="250.0" />
     <Label fx:id="encryptPasswordLabel" layoutX="334.0" layoutY="612.0" prefHeight="18.0" prefWidth="124.0" text="Contraseña del grupo:" />
     <TextField fx:id="encryptPassword" layoutX="296.0" layoutY="641.0" prefHeight="26.0" prefWidth="200.0" />

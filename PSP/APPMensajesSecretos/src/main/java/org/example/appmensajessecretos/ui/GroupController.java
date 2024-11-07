@@ -8,9 +8,9 @@ import org.example.appmensajessecretos.domain.error.Error;
 import org.example.appmensajessecretos.domain.error.ServiceError;
 import org.example.appmensajessecretos.domain.model.Grupo;
 import org.example.appmensajessecretos.domain.model.Usuario;
-import org.example.appmensajessecretos.domain.servicio.GroupService;
-import org.example.appmensajessecretos.domain.servicio.MessageService;
-import org.example.appmensajessecretos.domain.servicio.UserService;
+import org.example.appmensajessecretos.domain.service.GroupService;
+import org.example.appmensajessecretos.domain.service.MessageService;
+import org.example.appmensajessecretos.domain.service.UserService;
 import org.example.appmensajessecretos.utilities.Constantes;
 import org.springframework.stereotype.Component;
 
@@ -21,8 +21,6 @@ public class GroupController {
     private final MessageService messageService;
     private final GroupService groupService;
     private Usuario usuario;
-    private final Alert errorAlert;
-    private final Alert infoAlert;
 
 
     @FXML
@@ -56,7 +54,7 @@ public class GroupController {
 
 
     @FXML
-    private TextArea mensaje;
+    private TextArea message;
     @FXML
     private TextField encryptPassword;
 
@@ -74,52 +72,40 @@ public class GroupController {
         this.messageService = messageService;
         this.groupService = groupService;
         usuario = null;
-        errorAlert = new Alert(Alert.AlertType.ERROR);
-        errorAlert.setTitle("Error");
-        errorAlert.setHeaderText("Error");
-        infoAlert = new Alert(Alert.AlertType.INFORMATION);
+    }
+
+
+    public void logIn() {
+        userService.logIn(new Usuario(userName.getText(), userPassword.getText()))
+                .peek(ok -> {
+                    usuario = ok;
+                    updateUserInfo();
+                    showInfo(Constantes.LOGGED_IN);
+                    loadUsers();
+                })
+                .peekLeft(this::showError);
+    }
+
+    public void showInfo(String info) {
+        Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
         infoAlert.setTitle(Constantes.INFO);
         infoAlert.setHeaderText(Constantes.ACTION_COMPLETED);
-    }
-
-
-    private boolean checkLogged() {
-        if (usuario == null) {
-            showError(DataInputError.NOT_LOGGED);
-            return false;
-        } else
-            return true;
-    }
-
-
-    public void iniciarSesion() {
-        if (userName.getText().isEmpty() || userPassword.getText().isEmpty())
-            showError(DataInputError.EMPTY_FIELDS);
-        else
-            userService.logIn(new Usuario(userName.getText(), userPassword.getText()))
-                    .peek(ok -> {
-                        usuario = ok;
-                        actualizarUserInfo();
-                        showInfo(Constantes.LOGGED_IN);
-                        loadUsers();
-                    })
-                    .peekLeft(this::showError);
-    }
-
-    public void showInfo (String info) {
-        infoAlert.setTitle(info);
+        infoAlert.setContentText(info);
         infoAlert.showAndWait();
     }
 
 
-    private void showError (Error error) {
+    private void showError(Error error) {
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+        errorAlert.setTitle("Error");
+        errorAlert.setHeaderText("Error");
         String errorMessage = "";
         switch (error) {
             case DataBaseError e -> {
-               if (e == DataBaseError.ACTION_FAILED)
-                   errorMessage = Constantes.DATABASE_FAILED;
-               else
-                   errorMessage = Constantes.DATABASE_CONECCTION_FAILED;
+                if (e == DataBaseError.ACTION_FAILED)
+                    errorMessage = Constantes.DATABASE_FAILED;
+                else
+                    errorMessage = Constantes.DATABASE_CONECCTION_FAILED;
             }
             case ServiceError e -> {
                 switch (e) {
@@ -144,95 +130,68 @@ public class GroupController {
             default -> errorMessage = Constantes.UNEXPECTED_ERROR;
         }
         errorAlert.setContentText(errorMessage);
+        errorAlert.showAndWait();
     }
 
     private void createUser() {
-        if (alertComfirmation(Constantes.USUARIO_MISSING)) {
+        if (confirmationAlert(Constantes.USUARIO_MISSING)) {
             userService.addUser(new Usuario(userName.getText(), userPassword.getText()))
-                    .peek(ok -> iniciarSesion())
+                    .peek(ok -> logIn())
                     .peekLeft(this::showError);
         }
     }
 
 
     public void createGroup() {
-        if (checkLogged()) {
-            if (createGroupName.getText().isEmpty() || createGroupPassword.getText().isEmpty())
-                showError(DataInputError.EMPTY_FIELDS);
-            else {
-                Grupo grupo = new Grupo(createGroupName.getText(), createGroupPassword.getText(), isPrivate.isSelected());
-                groupService.createGroup(grupo, usuario)
-                        .peek(ok -> {
-                            showInfo(Constantes.GROUP_CREATED);
-                            actualizarUserInfo();
-                        })
-                        .peekLeft(this::showError);
-            }
-        }
+        Grupo grupo = new Grupo(createGroupName.getText(), createGroupPassword.getText(), isPrivate.isSelected());
+        groupService.createGroup(grupo, usuario)
+                .peek(ok -> {
+                    showInfo(Constantes.GROUP_CREATED);
+                    updateUserInfo();
+                })
+                .peekLeft(this::showError);
     }
 
 
     public void joinGroup() {
-        if (checkLogged()) {
-            if (groupName.getText().isEmpty() || groupPassword.getText().isEmpty())
-                showError(DataInputError.EMPTY_FIELDS);
-            else {
-                Grupo grupo = new Grupo(groupName.getText(), groupPassword.getText(), isPrivate.isSelected());
-                groupService.joinGroup(usuario, grupo).peek(ok -> {
-                    showInfo(Constantes.JOINED_GROUP);
-                    actualizarUserInfo();
-                }).peekLeft(this::showError);
-            }
-        }
+        Grupo grupo = new Grupo(groupName.getText(), groupPassword.getText(), isPrivate.isSelected());
+        groupService.joinGroup(usuario, grupo).peek(ok -> {
+            showInfo(Constantes.JOINED_GROUP);
+            updateUserInfo();
+        }).peekLeft(this::showError);
     }
 
 
-    public void comfirmDelete() {
-        if (checkLogged()) {
-            if (userNameDelete.getText().isEmpty() || groupNameDelete.getText().isEmpty())
-                showError(DataInputError.EMPTY_FIELDS);
-        } else {
-            if (alertComfirmation(Constantes.MENSAJE_ELIMINAR_USUARIO)) {
-                groupService.deleteMember(userNameDelete.getText(), groupNameDelete.getText())
-                        .peek(ok -> {
-                            showInfo(Constantes.MEMBER_DELETED);
-                            actualizarUserInfo();
-                        })
-                        .peekLeft(this::showError);
-            }
+    public void confirmDelete() {
+        if (confirmationAlert(Constantes.MENSAJE_ELIMINAR_USUARIO)) {
+            groupService.deleteMember(userNameDelete.getText(), groupNameDelete.getText(), usuario)
+                    .peek(ok -> {
+                        showInfo(Constantes.MEMBER_DELETED);
+                        updateUserInfo();
+                    })
+                    .peekLeft(this::showError);
         }
     }
 
 
     public void sendMessage() {
-        if (checkLogged()) {
-            if (myChats.getSelectionModel().isEmpty() || mensaje.getText().isBlank())
-               showError(DataInputError.EMPTY_FIELDS);
-            else
-                messageService.sendMessages(mensaje.getText(), usuario, myChats.getSelectionModel().getSelectedItem(),encryptPassword.getText())
-                        .peek(ok -> {
-                            loadUserGroupChats();
-                            showInfo(Constantes.MESSAGE_SENT);
-                        })
-                        .peekLeft(this::showError);
-        }
+        messageService.sendMessage(message.getText(), usuario, myChats.getSelectionModel().getSelectedItem(), encryptPassword.getText(), usuario)
+                .peek(ok -> {
+                    loadUserGroupChats();
+                    showInfo(Constantes.MESSAGE_SENT);
+                })
+                .peekLeft(this::showError);
     }
 
 
     public void inviteUser() {
-        if (checkLogged()) {
-            if (myChats.getSelectionModel().isEmpty() || usuarios.getSelectionModel().isEmpty())
-                showError(DataInputError.EMPTY_FIELDS);
-            else {
-                groupService.inviteUser(myChats.getSelectionModel().getSelectedItem(), usuarios.getSelectionModel().getSelectedItems())
-                        .peek(ok -> showInfo(Constantes.USER_INVITED))
-                        .peekLeft(this::showError);
-            }
-        }
+        groupService.inviteUser(myChats.getSelectionModel().getSelectedItem(), usuarios.getSelectionModel().getSelectedItems(), usuario)
+                .peek(ok -> showInfo(Constantes.USER_INVITED))
+                .peekLeft(this::showError);
     }
 
 
-    private void actualizarUserInfo() {
+    private void updateUserInfo() {
         myChats.getItems().clear();
         groupChats.getItems().clear();
         groupService.getGroups(usuario).peek(ok -> {
@@ -251,7 +210,7 @@ public class GroupController {
     }
 
 
-    private boolean alertComfirmation(String message) {
+    private boolean confirmationAlert(String message) {
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
         confirmation.setTitle(Constantes.COMFIRMACION);
         confirmation.setHeaderText(message);
@@ -267,7 +226,7 @@ public class GroupController {
     }
 
     public void loadUserGroupChats() {
-        messageService.getMessages(myChats.getSelectionModel().getSelectedItem(),encryptPassword.getText()).peek(ok -> ok.forEach(m ->
+        messageService.getMessages(myChats.getSelectionModel().getSelectedItem(), encryptPassword.getText()).peek(ok -> ok.forEach(m ->
                 groupChats.getItems().add(m.toString())
         )).peekLeft(this::showError);
     }

@@ -1,4 +1,4 @@
-package org.example.appmensajessecretos.security;
+package org.example.appmensajessecretos.domain.security;
 
 import lombok.extern.log4j.Log4j2;
 import org.example.appmensajessecretos.utilities.Constantes;
@@ -18,7 +18,6 @@ import java.util.Base64;
 @Component
 public class MainAesTest {
 
-    private static final String salt = Constantes.CIPHER_SALT;
     private final byte[] iv = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
     public String encrypt(String strToEncrypt, String secret) {
@@ -26,7 +25,7 @@ public class MainAesTest {
             IvParameterSpec ivspec = new IvParameterSpec(iv);
 
             SecretKeyFactory factory = SecretKeyFactory.getInstance(Constantes.CIPHER_ALGORITHM);
-            KeySpec spec = new PBEKeySpec(secret.toCharArray(), salt.getBytes(), 65536,256);
+            KeySpec spec = new PBEKeySpec(secret.toCharArray(), Constantes.CIPHER_SALT.getBytes(), 65536,256);
             SecretKey tmp = factory.generateSecret(spec);
             SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), Constantes.AES);
 
@@ -45,7 +44,7 @@ public class MainAesTest {
             IvParameterSpec ivspec = new IvParameterSpec(iv);
 
             SecretKeyFactory factory = SecretKeyFactory.getInstance(Constantes.CIPHER_ALGORITHM);
-            KeySpec spec = new PBEKeySpec(secret.toCharArray(), salt.getBytes(), 65536,256);
+            KeySpec spec = new PBEKeySpec(secret.toCharArray(), Constantes.CIPHER_SALT.getBytes(), 65536,256);
             SecretKey tmp = factory.generateSecret(spec);
             SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), Constantes.AES);
 
