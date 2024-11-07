@@ -117,6 +117,9 @@ public class GroupController {
                     case ERROR_SENDING_MESSAGE -> errorMessage = Constantes.ERROR_SENDING_MESSAGE;
                     case ERROR_JOINING_GROUP -> errorMessage = Constantes.ERROR_JOINING_GROUP;
                     case USER_ALREADY_EXIST -> errorMessage = Constantes.USER_ALREADY_EXISTS;
+                    case ERROR_ENCRYPTING -> errorMessage = Constantes.ERROR_ENCRYPTING;
+                    case ERROR_DECRYPTING -> errorMessage = Constantes.ERROR_DECRYPTING;
+                    case ALREADY_IN_GROUP -> errorMessage = Constantes.ALREADY_IN_GROUP;
                 }
             }
             case DataInputError e -> {
@@ -175,7 +178,7 @@ public class GroupController {
 
 
     public void sendMessage() {
-        messageService.sendMessage(message.getText(), usuario, myChats.getSelectionModel().getSelectedItem(), encryptPassword.getText(), usuario)
+        messageService.sendMessage(message.getText(), usuario, myChats.getSelectionModel().getSelectedItem(), encryptPassword.getText())
                 .peek(ok -> {
                     loadUserGroupChats();
                     showInfo(Constantes.MESSAGE_SENT);
@@ -221,6 +224,7 @@ public class GroupController {
 
 
     public void loadGroupChats() {
+        groupChats.getItems().clear();
         if (!myChats.getSelectionModel().isEmpty())
             loadUserGroupChats();
     }

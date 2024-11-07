@@ -9,6 +9,7 @@ import org.example.appmensajessecretos.domain.model.Grupo;
 import org.example.appmensajessecretos.domain.model.Usuario;
 import org.example.appmensajessecretos.domain.validator.ValidateGroup;
 import org.example.appmensajessecretos.domain.validator.ValidateUser;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,11 +19,14 @@ public class GroupService {
     private final DaoGroups dao;
     private final ValidateUser userValidator;
     private final ValidateGroup groupValidator;
+    private final PasswordEncoder passwordEncoder;
 
-    public GroupService(DaoGroups dao, ValidateUser userValidator, ValidateGroup groupValidator) {
+
+    public GroupService(DaoGroups dao, ValidateUser userValidator, ValidateGroup groupValidator, PasswordEncoder passwordEncoder) {
         this.dao = dao;
         this.userValidator = userValidator;
         this.groupValidator = groupValidator;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Either<Error, List<Grupo>> getGroups(Usuario user) {
@@ -42,14 +46,25 @@ public class GroupService {
         return userValidator.validateUserIsLogged(user)
                 .flatMap(nada -> userValidator.validateUser(user))
                 .flatMap(nada -> groupValidator.validateGroup(group))
-                .flatMap(nada -> dao.joinGroup(user, group));
+                .flatMap(nada ->  {
+                    Grupo g = dao.getGroup(group).get();
+                    if (g == null)
+                        return Either.left(ServiceError.GROUP_NOT_FOUND);
+                    else if (g.getMembers().contains(user.getName()))
+                        return Either.left(ServiceError.ALREADY_IN_GROUP);
+                    else if (passwordEncoder.matches(group.getPassword(), g.getPassword()))
+                        return Either.right(g);
+                    else
+                        return Either.left(DataInputError.INCORRECT_PASSWORD);
+                })
+                .flatMap(grupo -> dao.joinGroup(user, group));
     }
 
     public Either<Error, Void> createGroup(Grupo group, Usuario user) {
         return userValidator.validateUserIsLogged(user)
                 .flatMap(nada -> userValidator.validateUser(user))
                 .flatMap(nada -> groupValidator.validateGroup(group))
-                .flatMap(nada -> dao.createGroup(group, user));
+                .flatMap(nada -> dao.createGroup(new Grupo(group.getName(),passwordEncoder.encode(group.getPassword()),group.getIsPrivate()), user));
     }
 
     public Either<Error, Void> deleteMember(String userName, String groupName, Usuario user) {

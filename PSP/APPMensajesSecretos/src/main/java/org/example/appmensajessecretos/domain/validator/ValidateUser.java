@@ -11,7 +11,7 @@ import java.util.List;
 @Component
 public class ValidateUser {
     public Either<Error,Void> validateUser (Usuario user) {
-        if (user.getName().trim().isEmpty() || user.getPassword().trim().isEmpty()) {
+        if (user.getName().trim().isBlank() || user.getPassword().trim().isBlank()) {
             return Either.left(DataInputError.EMPTY_FIELDS);
         }
         else {

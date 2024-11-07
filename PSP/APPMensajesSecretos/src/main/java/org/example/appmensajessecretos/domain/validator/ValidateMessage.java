@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ValidateMessage {
     public Either<Error,Void> validateMessage(Mensaje message) {
-        if (message.getContent().trim().isEmpty() || message.getAuthor().trim().isEmpty() || message.getGrupo().trim().isEmpty())
+        if (message.getContent().trim().isBlank() || message.getAuthor().trim().isBlank() || message.getGrupo().trim().isBlank())
             return Either.left(DataInputError.EMPTY_FIELDS);
         else
             return Either.right(null);

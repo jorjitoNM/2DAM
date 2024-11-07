@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Grupo1",
+    "password": "$2a$10$ETUY59LY6rRItRBy1RmtPeGqIF9Pf16Cgn1cMQThBaZKIbvzfjOqq",
+    "members": [
+      "juan",
+      "pedro"
+    ],
+    "isPrivate": false
+  },
+  {
+    "name": "Grupo2",
+    "password": "$2a$10$4KMnTa/vowmuZ4QY/gmltO/otyJFYRJ1HzVJtOr//Vv.qY6jdY2Yq",
+    "members": [
+      "pedro",
+      "juan"
+    ],
+    "isPrivate": true
+  }
+]

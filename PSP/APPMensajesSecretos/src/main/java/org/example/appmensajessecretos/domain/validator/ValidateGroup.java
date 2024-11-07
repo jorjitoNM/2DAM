@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ValidateGroup {
     public Either<Error,Void> validateGroup(Grupo group) {
-        if (group.getName().trim().isEmpty() || group.getPassword().trim().isEmpty()) {
+        if (group.getName().trim().isBlank() || group.getPassword().trim().isBlank()) {
             return Either.left(DataInputError.EMPTY_FIELDS);
         }
         else {

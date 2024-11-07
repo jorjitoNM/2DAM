@@ -95,4 +95,11 @@ public Either<Error, Void> inviteUser(Grupo group, List<Usuario> users) {
         });
     });
 }
+
+    public Either<Error,Grupo> getGroup(Grupo group) {
+        return dataBase.loadGroups()
+                .flatMap(grupos ->
+                        Either.right(grupos.stream().filter(g -> g.getName().equals(group.getName())).findFirst().orElse(null))
+                );
+    }
 }
