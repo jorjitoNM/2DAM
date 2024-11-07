@@ -1,4 +1,4 @@
-package component;
+package componente_fecha;
 
 import javax.swing.*;
 import java.awt.*;
@@ -82,5 +82,4 @@ public class QDate extends JPanel {
         }
     }
 }
-class QDateException extends Exception {
-}
+
