@@ -18,7 +18,8 @@ public class MapPatients {
                         pacientes.getInt("patient_id"),
                         pacientes.getString("name"),
                         pacientes.getDate("date_of_birth").toLocalDate(),
-                        pacientes.getString("phone")));
+                        pacientes.getString("phone"),
+                        0));
             }
             return patients;
         } catch (SQLException e) {

@@ -30,16 +30,10 @@ public class PatientService {
     public List<PatientUI> getPatients() {
         List<Patient> patients = patientRepository.getAll();
         List<Payment> payments = paymentsRepository.getPaymentsByPatient();
-        for (int i = 0;i < patients.size(); i++) {
-
-        }
-        patients.forEach(patient -> {
-            if (payments.stream().filter(payment -> payment.getPatientId()==patient.getId()).findFirst().ifPresent(patient.setId())) {}
-        });
-        payments.forEach(p ->
-                patients.stream()
+        payments.forEach(p -> patients.stream()
                 .filter(patient -> patient.getId() == p.getPatientId())
-                .forEach(found -> found.setPaid(p.getAmount())));
+                .findAny()
+                .ifPresent(found -> found.setPaid(p.getAmount())));
         List<PatientUI> patientsUI = new ArrayList<>();
         patients.forEach(p -> patientsUI.add(new PatientUI(p)));
         return patientsUI;
