@@ -50,4 +50,16 @@ public class JDBCPaymentsRepository implements PaymentsRepository {
     public boolean delete(int paymentId) {
         return false;
     }
+
+    @Override
+    public List<Payment> getPaymentsByPatient() {
+        try (Connection conn = pool.getConnection();
+            Statement getPayments = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        ) {
+            ResultSet paid = getPayments.executeQuery(SQLQueries.GET_GROUPED_PAYMENTS);
+            return paymentsMapper.mapPayments(paid);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

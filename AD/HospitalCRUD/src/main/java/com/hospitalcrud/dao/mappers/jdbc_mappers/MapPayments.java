@@ -24,4 +24,17 @@ public class MapPayments {
             throw new RuntimeException();
         }
     }
+
+    public List<Payment> mapPayments(ResultSet paid) {
+        List<Payment> payments = new ArrayList<>();
+        try {
+            while (paid.next()) new Payment(
+                    paid.getInt(2),
+                    (int)paid.getFloat(1)
+            );
+            return payments;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
