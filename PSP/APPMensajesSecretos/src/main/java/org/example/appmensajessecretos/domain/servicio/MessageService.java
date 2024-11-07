@@ -9,9 +9,12 @@ import org.example.appmensajessecretos.domain.model.Mensaje;
 import org.example.appmensajessecretos.domain.model.Usuario;
 import org.example.appmensajessecretos.security.MainAesTest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class MessageService {
@@ -23,8 +26,26 @@ public class MessageService {
         this.security = security;
     }
 
+    private boolean anyEmptyFields (Object[] objects) {
+        AtomicBoolean empty = new AtomicBoolean(false);
+        Arrays.stream(objects).forEach(object -> {
+            if (    object instanceof Usuario usuario
+                    && (usuario.getName() == null || usuario.getName().isEmpty()
+                    || usuario.getPassword() == null || usuario.getPassword().isEmpty())
+                    || (object instanceof Grupo grupo
+                    && (grupo.getName() == null || grupo.getName().isEmpty()
+                    || grupo.getPassword() == null || grupo.getPassword().isEmpty()))
+                    || (object instanceof String text
+                    && (text.trim().isEmpty()))
+            ) {
+                empty.set(true);
+            }
+        });
+        return empty.get();
+    }
+
     public Either<Error, Void> sendMessages(String text, Usuario usuario, Grupo group, String secretKey) {
-        if (secretKey == null || secretKey.isEmpty() || group == null || text == null || text.isEmpty() || usuario == null) {
+        if (anyEmptyFields(new Object[]{text,usuario,group,secretKey})) {
             return Either.left(DataInputError.EMPTY_FIELDS);
         }
         else {
@@ -36,7 +57,7 @@ public class MessageService {
     }
 
     public Either<Error,List<Mensaje>> getMessages(Grupo group,String secretKey) {
-        if (secretKey == null || secretKey.isEmpty() || group == null) {
+        if (anyEmptyFields(new Object[]{group,secretKey})) {
             return Either.left(DataInputError.EMPTY_FIELDS);
         }
         else {

@@ -21,23 +21,24 @@ public class GroupService {
         this.dao = dao;
     }
 
-    private boolean anyEmptyFields(Object[] objects) {
-        AtomicBoolean empty = new AtomicBoolean(true);
+    private boolean anyEmptyFields (Object[] objects) {
+        AtomicBoolean empty = new AtomicBoolean(false);
         Arrays.stream(objects).forEach(object -> {
             if (object instanceof Usuario usuario
                     && (usuario.getName() == null || usuario.getName().isEmpty()
                     || usuario.getPassword() == null || usuario.getPassword().isEmpty())
                     || (object instanceof Grupo grupo
                     && (grupo.getName() == null || grupo.getName().isEmpty()
-                    || grupo.getPassword() == null || grupo.getPassword().isEmpty()))) {
-                empty.set(false);
+                    || grupo.getPassword() == null || grupo.getPassword().isEmpty()))
+            ) {
+                empty.set(true);
             }
         });
         return empty.get();
     }
 
     public Either<Error, List<Grupo>> getGroups(Usuario user) {
-        if (user.getName() == null || user.getPassword() == null) {
+        if (anyEmptyFields(new Object[]{user})) {
             return Either.left(DataInputError.EMPTY_FIELDS);
         } else {
             return dao.getGroups(user).flatMap(groups -> {
@@ -51,7 +52,7 @@ public class GroupService {
 
 
     public Either<Error, Void> joinGroup(Usuario user, Grupo group) {
-        if (user.getName() == null || user.getPassword() == null || group == null) {
+        if (anyEmptyFields(new Object[]{user,group})) {
             return Either.left(DataInputError.EMPTY_FIELDS);
         } else {
             return dao.joinGroup(user, group);
@@ -59,7 +60,7 @@ public class GroupService {
     }
 
     public Either<Error, Void> createGroup(Grupo group, Usuario user) {
-        if (user == null || group == null) {
+        if (anyEmptyFields(new Object[]{user,group})) {
             return Either.left(DataInputError.EMPTY_FIELDS);
         } else {
             return dao.createGroup(group, user);
@@ -67,7 +68,7 @@ public class GroupService {
     }
 
     public Either<Error, Void> deleteMember(String userName, String groupName) {
-        if (userName.isEmpty() || groupName.trim().isEmpty()) {
+        if (userName.trim().isEmpty() || groupName.trim().isEmpty()) {
             return Either.left(DataInputError.EMPTY_FIELDS);
         } else {
             return dao.deleteMember(userName, groupName);
@@ -75,7 +76,7 @@ public class GroupService {
     }
 
     public Either<Error, Void> inviteUser(Grupo group, List<Usuario> users) {
-        if (users == null || group == null) {
+        if (anyEmptyFields(new Object[]{group}) && users.isEmpty()) {
             return Either.left(DataInputError.EMPTY_FIELDS);
         } else {
             if (Boolean.FALSE.equals(group.getIsPrivate()))
