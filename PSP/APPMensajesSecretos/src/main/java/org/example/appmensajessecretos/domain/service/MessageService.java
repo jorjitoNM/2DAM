@@ -39,7 +39,10 @@ public class MessageService {
         return userValidator.validateUserIsLogged(usuario)
                 .flatMap(nada -> groupValidator.validateGroup(group))
                 .flatMap(nada -> {
-                    if (Boolean.TRUE.equals(group.getIsPrivate())) {
+                    if (Boolean.TRUE.equals(group.getIsPrivate()))
+                        return messageValidator.validateMessage(new Mensaje(text, usuario.getName(), group.getName()))
+                                .flatMap(nada2 -> dao.sendMessage(text, usuario, group));
+                    else {
                         if (secretKey.isEmpty())
                             return Either.left(DataInputError.EMPTY_FIELDS);
                         else
@@ -53,9 +56,6 @@ public class MessageService {
                                             return Either.left(ServiceError.ERROR_ENCRYPTING);
                                         }
                                     });
-                    } else {
-                        return messageValidator.validateMessage(new Mensaje(text, usuario.getName(), group.getName()))
-                                .flatMap(nada2 -> dao.sendMessage(text, usuario, group));
                     }
                 });
     }
@@ -64,25 +64,24 @@ public class MessageService {
         return groupValidator.validateGroup(group)
                 .flatMap(nada -> {
                     if (Boolean.TRUE.equals(group.getIsPrivate())) {
-                        if (group.getName().trim().isBlank() || secretKey.trim().isBlank())
-                            return Either.left(DataInputError.EMPTY_FIELDS);
-                        else {
-                            return dao.loadMessages(group)
-                                    .flatMap(mensajes -> {
-                                        List<Mensaje> decryptedMessages = new ArrayList<>();
-                                        try {
-                                            mensajes.forEach(m -> decryptedMessages.add(new Mensaje(
-                                                    security.decrypt(m.getContent(), secretKey)
-                                                    , m.getDate(), security.decrypt(m.getAuthor(), secretKey)
-                                                    , m.getGrupo())));
-                                            return Either.right(decryptedMessages);
-                                        } catch (EncryptingException e) {
-                                            return Either.left(ServiceError.ERROR_DECRYPTING);
-                                        }
-                                    });
-                        }
-                    } else
                         return dao.loadMessages(group);
+                    } else if (group.getName().trim().isBlank() || secretKey.trim().isBlank())
+                        return Either.left(DataInputError.EMPTY_FIELDS);
+                    else {
+                        return dao.loadMessages(group)
+                                .flatMap(mensajes -> {
+                                    List<Mensaje> decryptedMessages = new ArrayList<>();
+                                    try {
+                                        mensajes.forEach(m -> decryptedMessages.add(new Mensaje(
+                                                security.decrypt(m.getContent(), secretKey)
+                                                , m.getDate(), security.decrypt(m.getAuthor(), secretKey)
+                                                , m.getGrupo())));
+                                        return Either.right(decryptedMessages);
+                                    } catch (EncryptingException e) {
+                                        return Either.left(ServiceError.ERROR_DECRYPTING);
+                                    }
+                                });
+                    }
                 });
     }
 }
