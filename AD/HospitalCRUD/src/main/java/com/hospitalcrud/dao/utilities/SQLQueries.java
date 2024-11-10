@@ -12,6 +12,9 @@ public class SQLQueries {
     public static final String GET_ALL_PAYMENTS = "select * from patient_payments";
     public static final String GET_MEDICAL_RECORDS = "select * from medical_records where patient_id = ?";
     public static final String GET_PRESCRIBED_MEDICATIONS = "select * from prescribed_medications where record_id = ?";
+    public static final String DELETE_MEDICAL_RECORD = "delete from medical_records where record_id = ?";
+    public static final String DELETE_PRESCRIBED_MEDICATIONS = "delete from prescribed_medications where records_id = ?";
+    public static final String INSERT_MEDICAL_RECORD = "insert into medical_records (patient_id,doctor_id,diagnosis,admission_Date) values (?,?,?,?)";
 
     private SQLQueries() {
     }

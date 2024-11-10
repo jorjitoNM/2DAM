@@ -5,12 +5,14 @@ import com.hospitalcrud.dao.model.MedicalRecord;
 import com.hospitalcrud.dao.respositories.MedicalRecordsRepository;
 import com.hospitalcrud.dao.utilities.DBConnectionPool;
 import com.hospitalcrud.dao.utilities.SQLQueries;
+import com.hospitalcrud.domain.error.FOREIGN_KEY_ERROR;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -38,12 +40,38 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int medicalRecordId) {
+        try (Connection conn = pool.getConnection()) {
+            conn.setAutoCommit(false);
+            PreparedStatement deleteMedicalRecord = conn.prepareStatement(SQLQueries.DELETE_MEDICAL_RECORD);
+            PreparedStatement deletePrescribedMedications = conn.prepareStatement(SQLQueries.DELETE_PRESCRIBED_MEDICATIONS);
+            deletePrescribedMedications.setInt(1, medicalRecordId);
+            if (deletePrescribedMedications.executeUpdate() == 1) {
+                deleteMedicalRecord.setInt(1,medicalRecordId);
+                if (deletePrescribedMedications.executeUpdate() == 1)
+                    conn.commit();
+                else
+                    conn.rollback();
+            }
+            else
+                throw new FOREIGN_KEY_ERROR();
+        } catch (SQLException e) {
+            throw new FOREIGN_KEY_ERROR();
+        }
 
     }
 
     @Override
     public int save(MedicalRecord medicalRecord) {
+        try (Connection conn = pool.getConnection()) {
+            PreparedStatement addMedicalRecord = conn.prepareStatement(SQLQueries.INSERT_MEDICAL_RECORD);
+            addMedicalRecord.setInt(1,medicalRecord.getIdPatient());
+            addMedicalRecord.setInt(2,medicalRecord.getIdDoctor());
+            addMedicalRecord.setString(3,medicalRecord.getDiagnosis());
+            addMedicalRecord.setDate(4, medicalRecord.getDate().toString());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return 0;
     }
 
