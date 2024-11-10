@@ -1,7 +1,6 @@
 package com.hospitalcrud.dao.respositories;
 
 import com.hospitalcrud.dao.model.MedicalRecord;
-import org.springframework.context.annotation.Profile;
 
 import java.util.List;
 

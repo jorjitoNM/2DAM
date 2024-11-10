@@ -17,7 +17,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-@Profile("inDevelopment")
+@Profile("TXT")
 @Log4j2
 @Repository
 public class XmlMedicalRecordRepository implements MedicalRecordsRepository {

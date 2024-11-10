@@ -5,12 +5,16 @@ import com.hospitalcrud.dao.model.MedicalRecord;
 import com.hospitalcrud.dao.respositories.MedicalRecordsRepository;
 import com.hospitalcrud.dao.utilities.DBConnectionPool;
 import com.hospitalcrud.dao.utilities.SQLQueries;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+@Component
+@Profile("inDevelopment")
 public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
 
 

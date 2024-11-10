@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.sql.*;
 
 @Component
-class DBConnection {
+public class DBConnection {
 
     private XMLConfiguration config;
 

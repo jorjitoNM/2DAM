@@ -1,6 +1,5 @@
 package com.hospitalcrud.dao.respositories;
 
-import com.hospitalcrud.dao.model.Patient;
 import com.hospitalcrud.dao.model.Payment;
 
 import java.util.List;
