@@ -8,6 +8,7 @@ public class SpringjavafxApplication {
 
     public static void main(String[] args) {
         Application.launch(DIJavafx.class, args);
+
     }
 
 }
