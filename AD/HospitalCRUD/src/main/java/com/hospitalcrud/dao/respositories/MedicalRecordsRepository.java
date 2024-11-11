@@ -9,6 +9,6 @@ public interface MedicalRecordsRepository {
     List<MedicalRecord> getAll(int idPatient);
     void delete(int id);
     int save(MedicalRecord medicalRecord);
-    List<MedicalRecord> update(MedicalRecord medicalRecord);
+    void update(MedicalRecord medicalRecord);
     void saveMedicalRecords(List<MedicalRecord> medicalRecords);
 }

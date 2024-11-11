@@ -2,6 +2,7 @@ package com.hospitalcrud.dao.respositories.jdbc;
 
 import com.hospitalcrud.dao.mappers.jdbc_mappers.MapMedicalRecords;
 import com.hospitalcrud.dao.model.MedicalRecord;
+import com.hospitalcrud.dao.model.Medication;
 import com.hospitalcrud.dao.respositories.MedicalRecordsRepository;
 import com.hospitalcrud.dao.utilities.DBConnectionPool;
 import com.hospitalcrud.dao.utilities.SQLQueries;
@@ -64,7 +65,8 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
     public int save(MedicalRecord medicalRecord) {
         try (Connection conn = pool.getConnection();
             PreparedStatement addMedicalRecord = conn.prepareStatement(SQLQueries.INSERT_MEDICAL_RECORD, Statement.RETURN_GENERATED_KEYS);
-            PreparedStatement addPrescribedMedications = conn.prepareStatement(SQLQueries.ADD_PRESCRIBED_MEDICATIONS)) {
+            PreparedStatement addPrescribedMedications = conn.prepareStatement(SQLQueries.ADD_PRESCRIBED_MEDICATIONS);
+        ) {
             conn.setAutoCommit(false);
             addMedicalRecord.setInt(1,medicalRecord.getIdPatient());
             addMedicalRecord.setInt(2,medicalRecord.getIdDoctor());
@@ -72,27 +74,15 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
             addMedicalRecord.setDate(4, Date.valueOf(medicalRecord.getDate().toString()));
             addMedicalRecord.executeUpdate();
             ResultSet rs = addMedicalRecord.getGeneratedKeys();
-            int medicalRecordId;
-            AtomicInteger i = new AtomicInteger();
+            int medicalRecordId = -1;
             if (rs.next()) {
                 medicalRecordId = rs.getInt(1);
-                medicalRecord.getMedications().forEach(m -> {
-                    try {
-                        addPrescribedMedications.setInt(1, medicalRecordId);
-                        addPrescribedMedications.setString(2, medicalRecord.getMedications().get(i.get()).getMedicationName());
-                        addPrescribedMedications.setString(3,medicalRecord.getMedications().get(i.get()).getDosage());
-                        i.addAndGet(1);
-                        addPrescribedMedications.executeUpdate();
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+                medicalRecord.setId(medicalRecordId);
+                addMedications(addPrescribedMedications, medicalRecord);
                 conn.commit();
             }
-            else {
-                medicalRecordId = -1;
+            else
                 conn.rollback();
-            }
             return medicalRecordId;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -100,19 +90,46 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
     }
 
     @Override
-    public List<MedicalRecord> update(MedicalRecord medicalRecord) {
+    public void update(MedicalRecord medicalRecord) {
         try (Connection conn = pool.getConnection();
             PreparedStatement updateMedicalRecord = conn.prepareStatement(SQLQueries.UPDATE_MEDICAL_RECORD);
             PreparedStatement getPrescribedMedications = conn.prepareStatement(SQLQueries.GET_PRESCRIBED_MEDICATIONS);
+            PreparedStatement deletePrescribedMedications = conn.prepareStatement(SQLQueries.DELETE_PRESCRIBED_MEDICATIONS);
+            PreparedStatement addPrescribedMedications = conn.prepareStatement(SQLQueries.ADD_PRESCRIBED_MEDICATIONS);
         ) {
-            conn.setAutoCommit(false);
+            deletePrescribedMedications.setInt(1, medicalRecord.getId());
+            deletePrescribedMedications.executeUpdate();
+            addMedications(addPrescribedMedications,medicalRecord);
+
+            /*conn.setAutoCommit(false);
             getPrescribedMedications.setInt(1, medicalRecord.getId());
             getPrescribedMedications.executeUpdate();
-            medicalRecordsMapper.compareMedications(getPrescribedMedications.getGeneratedKeys(),medicalRecord.getMedications());
+            medicalRecordsMapper.compareMedications(getPrescribedMedications.getGeneratedKeys(),medicalRecord.getMedications());*/
+
+            updateMedicalRecord.setInt(1,medicalRecord.getIdDoctor());
+            updateMedicalRecord.setString(2,medicalRecord.getDiagnosis());
+            updateMedicalRecord.setDate(3,Date.valueOf(medicalRecord.getDate().toString()));
+            updateMedicalRecord.setInt(4,medicalRecord.getId());
+            if (updateMedicalRecord.executeUpdate() == 1)
+                conn.commit();
+            else
+                conn.rollback();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return List.of();
+    }
+
+    private void addMedications(PreparedStatement addPrescribedMedications, MedicalRecord medicalRecord) throws SQLException {
+        medicalRecord.getMedications().forEach(m -> {
+            try {
+                addPrescribedMedications.setInt(1, medicalRecord.getId());
+                addPrescribedMedications.setString(2, m.getMedicationName());
+                addPrescribedMedications.setString(3, m.getDosage());
+                addPrescribedMedications.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @Override

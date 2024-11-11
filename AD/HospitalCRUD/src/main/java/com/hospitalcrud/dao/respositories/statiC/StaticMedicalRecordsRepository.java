@@ -41,8 +41,7 @@ public class StaticMedicalRecordsRepository implements MedicalRecordsRepository 
     }
 
     @Override
-    public List<MedicalRecord> update(MedicalRecord medicalRecord) {
-        return null;
+    public void update(MedicalRecord medicalRecord) {
     }
 
     @Override
@@ -50,7 +49,6 @@ public class StaticMedicalRecordsRepository implements MedicalRecordsRepository 
 
     }
 
-    @Override
     public void deletePatientMedicalRecords(int patientId) {
 
     }

@@ -59,8 +59,7 @@ public class XmlMedicalRecordRepository implements MedicalRecordsRepository {
     }
 
     @Override
-    public List<MedicalRecord> update(MedicalRecord medicalRecord) {
-       return loadMedicalRecords();
+    public void update(MedicalRecord medicalRecord) {
     }
 
     private List<MedicalRecord> loadMedicalRecords() {
@@ -88,7 +87,6 @@ public class XmlMedicalRecordRepository implements MedicalRecordsRepository {
         }
     }
 
-    @Override
     public void deletePatientMedicalRecords(int patientId) {
         List<MedicalRecord> medicalRecords = new ArrayList<>(loadMedicalRecords());
         medicalRecords.removeIf(m -> m.getIdPatient() == patientId);
