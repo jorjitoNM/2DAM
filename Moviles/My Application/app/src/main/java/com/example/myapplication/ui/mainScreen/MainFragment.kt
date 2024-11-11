@@ -7,12 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.databinding.BookListFragmentBinding
 import com.example.myapplication.domain.model.Book
-import com.example.myapplication.domain.usecases.GetBooks
 import com.example.myapplication.ui.common.MarginItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,9 +21,6 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: BookAdapter
     private val viewModel: MainViewModel by viewModels ()
-    private val swipeToDelete by lazy {
-        ItemTouchHelper(adapter.swipeGesture)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,6 +54,10 @@ class MainFragment : Fragment() {
             actions = object : BookAdapter.BookActions {
                 override fun onItemClick(book: Book) {
                     navigateToDetail((book.id))
+                }
+
+                override fun onDelete(book: Book) {
+                    TODO("Not yet implemented")
                 }
             },requireContext()
         )

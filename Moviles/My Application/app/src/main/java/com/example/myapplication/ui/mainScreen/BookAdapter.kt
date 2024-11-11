@@ -4,9 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.domain.model.Book
 
@@ -43,16 +41,5 @@ class BookAdapter(
         fun onItemClick(book: Book)
         fun onDelete(book: Book)
 
-    }
-
-    val swipeGesture = object : SwipeGesture(context) {
-
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            when (direction) {
-                ItemTouchHelper.LEFT -> {
-                    actions.onDelete(currentList[viewHolder.absoluteAdapterPosition])
-                }
-            }
-        }
     }
 }
