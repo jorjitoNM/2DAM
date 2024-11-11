@@ -84,7 +84,8 @@ public class JDBCPatientsRepository implements PatientRepository {
         int result;
         try (Connection con = pool.getConnection();
              PreparedStatement deletePatient = con.prepareStatement(SQLQueries.DELETE_PATIENT);
-             PreparedStatement deleteCredential = con.prepareStatement(SQLQueries.DELETE_CREDENTIAL)
+             PreparedStatement deleteCredential = con.prepareStatement(SQLQueries.DELETE_CREDENTIAL);
+
         ) {
             con.setAutoCommit(false);
             deleteCredential.setInt(1, patientId);

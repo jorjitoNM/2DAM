@@ -16,6 +16,7 @@ public class SQLQueries {
     public static final String DELETE_PRESCRIBED_MEDICATIONS = "delete from prescribed_medications where records_id = ?";
     public static final String INSERT_MEDICAL_RECORD = "insert into medical_records (patient_id,doctor_id,diagnosis,admission_Date) values (?,?,?,?)";
     public static final String ADD_PRESCRIBED_MEDICATIONS = "insert into prescribed_medications (record_id,medication_name,dosage) values (?,?,?)";
+    public static final String UPDATE_MEDICAL_RECORD = "update medical_records set doctor_id = ?, diagnosis = ?, admission_Date = ? where record_id = ?";
 
     private SQLQueries() {
     }

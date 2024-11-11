@@ -51,8 +51,7 @@ public class PatientService {
     }
 
     public void deletePatient(int patientId, boolean confirmation) {
-        if ((!confirmation) && (patientRepository.delete(patientId))) {
-            medicalRecordsRepository.deletePatientMedicalRecords(patientId);
-        }
+        if (!confirmation)
+            patientRepository.delete(patientId);
     }
 }

@@ -46,13 +46,15 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
             deletePrescribedMedications.setInt(1, medicalRecordId);
             if (deletePrescribedMedications.executeUpdate() == 1) {
                 deleteMedicalRecord.setInt(1,medicalRecordId);
-                if (deletePrescribedMedications.executeUpdate() == 1)
+                if (deleteMedicalRecord.executeUpdate() == 1)
                     conn.commit();
                 else
                     conn.rollback();
             }
-            else
+            else {
+                conn.rollback();
                 throw new FOREIGN_KEY_ERROR();
+            }
         } catch (SQLException e) {
             throw new FOREIGN_KEY_ERROR();
         }
@@ -99,16 +101,22 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
 
     @Override
     public List<MedicalRecord> update(MedicalRecord medicalRecord) {
+        try (Connection conn = pool.getConnection();
+            PreparedStatement updateMedicalRecord = conn.prepareStatement(SQLQueries.UPDATE_MEDICAL_RECORD);
+            PreparedStatement getPrescribedMedications = conn.prepareStatement(SQLQueries.GET_PRESCRIBED_MEDICATIONS);
+        ) {
+            conn.setAutoCommit(false);
+            getPrescribedMedications.setInt(1, medicalRecord.getId());
+            getPrescribedMedications.executeUpdate();
+            medicalRecordsMapper.compareMedications(getPrescribedMedications.getGeneratedKeys(),medicalRecord.getMedications());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return List.of();
     }
 
     @Override
     public void saveMedicalRecords(List<MedicalRecord> medicalRecords) {
-
-    }
-
-    @Override
-    public void deletePatientMedicalRecords(int patientId) {
 
     }
 }
