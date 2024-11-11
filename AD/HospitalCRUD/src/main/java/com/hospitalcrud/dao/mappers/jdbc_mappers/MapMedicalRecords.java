@@ -33,18 +33,16 @@ public class MapMedicalRecords {
         List<Medication> deleteMedications = new ArrayList<>();
         try {
             while (dataBaseMedications.next()) {
-                medications.forEach(m -> {
-                    try {
-                        if (!medicationNames.contains(dataBaseMedications.getString("medication_name")))
-                            addMedications.add(m);
-                        else if (medicationNames.contains(dataBaseMedications.getString("medication_name")))
-                            deleteMedications.add(m);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-                return addMedications;
+                try {
+                    if (!medicationNames.contains(dataBaseMedications.getString("medication_name")))
+                        addMedications.add(m);
+                    else if (medicationNames.contains(dataBaseMedications.getString("medication_name")))
+                        deleteMedications.add(m);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
+            return addMedications;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
