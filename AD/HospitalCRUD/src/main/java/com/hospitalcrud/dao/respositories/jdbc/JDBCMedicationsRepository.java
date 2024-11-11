@@ -5,6 +5,9 @@ import com.hospitalcrud.dao.model.Medication;
 import com.hospitalcrud.dao.respositories.MedicationsRepository;
 import com.hospitalcrud.dao.utilities.DBConnectionPool;
 import com.hospitalcrud.dao.utilities.SQLQueries;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +15,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-
+@Profile("inDevelopment")
+@Repository
 public class JDBCMedicationsRepository implements MedicationsRepository {
 
     private final DBConnectionPool pool;

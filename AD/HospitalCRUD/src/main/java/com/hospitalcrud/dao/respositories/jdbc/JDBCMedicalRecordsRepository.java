@@ -9,12 +9,13 @@ import com.hospitalcrud.dao.utilities.SQLQueries;
 import com.hospitalcrud.domain.error.FOREIGN_KEY_ERROR;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Component
+@Repository
 @Profile("inDevelopment")
 public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
 
@@ -130,10 +131,5 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
                 throw new RuntimeException(e);
             }
         });
-    }
-
-    @Override
-    public void saveMedicalRecords(List<MedicalRecord> medicalRecords) {
-
     }
 }

@@ -10,5 +10,4 @@ public interface MedicalRecordsRepository {
     void delete(int id);
     int save(MedicalRecord medicalRecord);
     void update(MedicalRecord medicalRecord);
-    void saveMedicalRecords(List<MedicalRecord> medicalRecords);
 }

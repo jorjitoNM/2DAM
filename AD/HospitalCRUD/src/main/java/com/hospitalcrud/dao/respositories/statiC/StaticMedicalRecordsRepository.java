@@ -44,10 +44,6 @@ public class StaticMedicalRecordsRepository implements MedicalRecordsRepository 
     public void update(MedicalRecord medicalRecord) {
     }
 
-    @Override
-    public void saveMedicalRecords(List<MedicalRecord> medicalRecords) {
-
-    }
 
     public void deletePatientMedicalRecords(int patientId) {
 

@@ -74,7 +74,6 @@ public class XmlMedicalRecordRepository implements MedicalRecordsRepository {
         }
     }
 
-    @Override
     public void saveMedicalRecords (List<MedicalRecord> medicalRecords) {
         try {
             JAXBContext context = JAXBContext.newInstance(MedicalRecords.class);

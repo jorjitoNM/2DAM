@@ -53,17 +53,9 @@ public class MedicalRecordService {
     }
 
     public void updateMedicalRecord(MedicalRecordUI medicalRecordUI) {
-        MedicalRecord medicalRecord = new MedicalRecord(medicalRecordUI.getId(), medicalRecordUI.getIdPatient()
-                , medicalRecordUI.getIdDoctor(), medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate())
+        MedicalRecord medicalRecord = new MedicalRecord(medicalRecordUI.getId(), medicalRecordUI.getIdPatient(),
+                medicalRecordUI.getIdDoctor(), medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate())
                 );
-        List<MedicalRecord> medicalRecords = medicalRecordsRepository.update(medicalRecord);
-        MedicalRecord found = medicalRecords.stream().filter(m -> m.getId() == medicalRecord.getId()).findAny().orElse(null);
-        if (found != null) {
-            found.setDate(medicalRecord.getDate());
-            found.setMedications(medicalRecord.getMedications());
-            found.setDiagnosis(medicalRecord.getDiagnosis());
-            found.setIdDoctor(medicalRecord.getIdDoctor());
-            medicalRecordsRepository.saveMedicalRecords(medicalRecords);
-        }
+        medicalRecordsRepository.update(medicalRecord);
     }
 }
