@@ -13,9 +13,9 @@ import java.util.List;
 public class StaticDoctorRepository implements DoctorsRepository {
     public List<Doctor> getAll() {
         List<Doctor> doctors = new ArrayList<>();
-        doctors.add(new Doctor(1,"Paco","Dormir"));
-        doctors.add(new Doctor(2,"Pedro","Dormir"));
-        doctors.add(new Doctor(3,"Perico","Dormir"));
+        doctors.add(new Doctor(1,"Paco","Dormir",""));
+        doctors.add(new Doctor(2,"Pedro","Dormir",""));
+        doctors.add(new Doctor(3,"Perico","Dormir",""));
         return doctors;
     }
 }

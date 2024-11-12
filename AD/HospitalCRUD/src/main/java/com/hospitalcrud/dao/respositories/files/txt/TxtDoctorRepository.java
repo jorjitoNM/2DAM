@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
-@Profile("inDevelopment")
+@Profile("TXT")
 @Repository
 public class TxtDoctorRepository implements DoctorsRepository {
     private final FilesConfiguration configuration;
