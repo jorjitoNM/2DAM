@@ -27,9 +27,14 @@ public class MedicalRecordService {
     public int addMedicalRecord(MedicalRecordUI medicalRecordUI) {
         return medicalRecordsRepository.save(new MedicalRecord(medicalRecordUI.getId(),
                 medicalRecordUI.getIdPatient(), medicalRecordUI.getIdDoctor(),
-                medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate())
-                ));
+                medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),parseMedications(medicalRecordUI.getMedications(),medicalRecordUI.getId())));
 
+    }
+
+    private List<Medication> parseMedications(List<String> medications, int medicalRecordId) {
+        List<Medication> medicationList = new ArrayList<>();
+        medications.forEach(medication -> medicationList.add(new Medication(1,medication,medicalRecordId,"every 8 hours")));
+        return medicationList;
     }
 
     public List<MedicalRecordUI> getMedicalRecords(int idPatient) {

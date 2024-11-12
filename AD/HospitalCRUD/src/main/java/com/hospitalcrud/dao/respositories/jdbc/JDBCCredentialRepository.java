@@ -4,6 +4,7 @@ import com.hospitalcrud.dao.model.Credential;
 import com.hospitalcrud.dao.respositories.CredentialRepository;
 import com.hospitalcrud.dao.utilities.DBConnection;
 import com.hospitalcrud.dao.utilities.SQLQueries;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Repository
 @Profile("inDevelopment")
+@Log4j2
 public class JDBCCredentialRepository implements CredentialRepository {
 
     private final DBConnection dbConnection;

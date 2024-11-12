@@ -73,18 +73,21 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
             addMedicalRecord.setInt(2,medicalRecord.getIdDoctor());
             addMedicalRecord.setString(3,medicalRecord.getDiagnosis());
             addMedicalRecord.setDate(4, Date.valueOf(medicalRecord.getDate().toString()));
-            addMedicalRecord.executeUpdate();
-            ResultSet rs = addMedicalRecord.getGeneratedKeys();
-            int medicalRecordId = -1;
-            if (rs.next()) {
-                medicalRecordId = rs.getInt(1);
-                medicalRecord.setId(medicalRecordId);
-                addMedications(addPrescribedMedications, medicalRecord);
-                conn.commit();
+            try {
+                addMedicalRecord.executeUpdate();
+                ResultSet rs = addMedicalRecord.getGeneratedKeys();
+                int medicalRecordId = -1;
+                if (rs.next()) {
+                    medicalRecordId = rs.getInt(1);
+                    medicalRecord.setId(medicalRecordId);
+                    addMedications(addPrescribedMedications, medicalRecord);
+                    conn.commit();
+                } else
+                    conn.rollback();
+                return medicalRecordId;
+            } catch (SQLIntegrityConstraintViolationException e) {
+                throw new FOREIGN_KEY_ERROR();
             }
-            else
-                conn.rollback();
-            return medicalRecordId;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

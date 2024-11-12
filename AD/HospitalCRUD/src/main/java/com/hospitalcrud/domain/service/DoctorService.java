@@ -1,5 +1,6 @@
 package com.hospitalcrud.domain.service;
 
+import com.hospitalcrud.dao.model.Doctor;
 import com.hospitalcrud.dao.respositories.DoctorsRepository;
 import com.hospitalcrud.domain.model.DoctorUI;
 import org.springframework.stereotype.Service;
@@ -15,8 +16,8 @@ public class DoctorService {
         this.doctorsRepository = doctorsRepository;
     }
     public List<DoctorUI> getAll() {
-        List<DoctorUI> doctors = new ArrayList<>();
-        doctorsRepository.getAll().forEach(d -> doctors.add(new DoctorUI(d.getId(),d.getName())));
-        return doctors;
+        List<Doctor> doctors = doctorsRepository.getAll();
+
+        return ;
     }
 }
