@@ -4,8 +4,6 @@ package com.hospitalcrud.domain.service;
 import com.hospitalcrud.dao.model.Credential;
 import com.hospitalcrud.dao.model.Patient;
 import com.hospitalcrud.dao.model.Payment;
-import com.hospitalcrud.dao.respositories.CredentialRepository;
-import com.hospitalcrud.dao.respositories.MedicalRecordsRepository;
 import com.hospitalcrud.dao.respositories.PatientRepository;
 import com.hospitalcrud.dao.respositories.PaymentsRepository;
 import com.hospitalcrud.domain.model.PatientUI;
@@ -18,12 +16,10 @@ import java.util.List;
 public class PatientService {
 
     private final PatientRepository patientRepository;
-    private final MedicalRecordsRepository medicalRecordsRepository;
     private final PaymentsRepository paymentsRepository;
 
-    public PatientService(PatientRepository patientRepository, MedicalRecordsRepository medicalRecordsRepository, PaymentsRepository paymentsRepository) {
+    public PatientService(PatientRepository patientRepository, PaymentsRepository paymentsRepository) {
         this.patientRepository = patientRepository;
-        this.medicalRecordsRepository = medicalRecordsRepository;
         this.paymentsRepository = paymentsRepository;
     }
 
@@ -51,7 +47,7 @@ public class PatientService {
     }
 
     public void deletePatient(int patientId, boolean confirmation) {
-        if (confirmation)
+        if (!confirmation)
             patientRepository.delete(patientId);
     }
 }

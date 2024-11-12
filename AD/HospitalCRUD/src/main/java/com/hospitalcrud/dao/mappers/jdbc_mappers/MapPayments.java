@@ -28,9 +28,9 @@ public class MapPayments {
     public List<Payment> mapPayments(ResultSet paid) {
         List<Payment> payments = new ArrayList<>();
         try {
-            while (paid.next()) new Payment(
+            while (paid.next()) payments.add(new Payment(
                     paid.getInt(2),
-                    (int)paid.getFloat(1)
+                    (int)paid.getFloat(1))
             );
             return payments;
         } catch (SQLException e) {

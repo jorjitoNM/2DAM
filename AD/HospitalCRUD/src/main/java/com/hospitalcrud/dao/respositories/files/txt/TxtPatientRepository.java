@@ -18,7 +18,7 @@ import java.util.List;
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
-@Profile("withTXTFiles")
+@Profile("TXT")
 @Log4j2
 @Repository
 public class TxtPatientRepository implements PatientRepository {

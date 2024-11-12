@@ -19,6 +19,7 @@ public class SQLQueries {
     public static final String UPDATE_MEDICAL_RECORD = "update medical_records set doctor_id = ?, diagnosis = ?, admission_Date = ? where record_id = ?";
     public static final String GET_ALL_MEDICATIONS = "select distinct(medication_name) from prescribed_medications";
     public static final String GET_ALL_DOCTORS = "select * from doctors";
+    public static final String DELETE_PATIENT_MEDICAL_RECORDS = "delete from medical_records where patient_id = ?";
 
     private SQLQueries() {
     }

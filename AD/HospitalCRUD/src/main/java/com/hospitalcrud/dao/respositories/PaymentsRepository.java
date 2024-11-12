@@ -9,5 +9,5 @@ public interface PaymentsRepository {
     int save(Payment payment);
     void update(Payment payment);
     boolean delete(int paymentId);
-    List<Payment> getPaymentsByPatient ();
+    List<Payment> getPaymentsByPatient();
 }

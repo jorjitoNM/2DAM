@@ -29,7 +29,7 @@ public class JDBCPatientsRepository implements PatientRepository {
     public List<Patient> getAll() {
         try (Connection con = pool.getConnection();
              Statement getPatients = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-             ) {
+        ) {
             ResultSet resultSet = getPatients.executeQuery(SQLQueries.GET_ALL_PATIENTS);
             return patientsMapper.readRS(resultSet);
         } catch (SQLException e) {
@@ -40,7 +40,7 @@ public class JDBCPatientsRepository implements PatientRepository {
     @Override
     public int save(Patient patient) {
         try (Connection con = pool.getConnection();
-             PreparedStatement insertPatient = con.prepareStatement(SQLQueries.INSERT_PATIENT,Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement insertPatient = con.prepareStatement(SQLQueries.INSERT_PATIENT, Statement.RETURN_GENERATED_KEYS);
              PreparedStatement insertCredential = con.prepareStatement(SQLQueries.INSERT_CREDENTIAL)
         ) {
             con.setAutoCommit(false);
@@ -56,6 +56,7 @@ public class JDBCPatientsRepository implements PatientRepository {
                     con.commit();
                     return rs.getInt(1);
                 } catch (SQLException e) {
+                    con.rollback();
                     throw new DUPLICATED_USERNAME();
                 }
             } else {
@@ -72,8 +73,8 @@ public class JDBCPatientsRepository implements PatientRepository {
         try (Connection con = pool.getConnection();
              PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.UPDATE_PATIENT)
         ) {
-            preparedStatement.setInt(4,patient.getId());
-            setPatientValues(patient,preparedStatement).executeUpdate();
+            preparedStatement.setInt(4, patient.getId());
+            setPatientValues(patient, preparedStatement).executeUpdate();
         } catch (SQLException sqle) {
             throw new RuntimeException(sqle);
         }
@@ -81,37 +82,54 @@ public class JDBCPatientsRepository implements PatientRepository {
 
     @Override
     public boolean delete(int patientId) {
-        int result;
+        int result = 0;
         try (Connection con = pool.getConnection();
              PreparedStatement deletePatient = con.prepareStatement(SQLQueries.DELETE_PATIENT);
+             PreparedStatement getMedicalRecords = con.prepareStatement(SQLQueries.GET_MEDICAL_RECORDS);
              PreparedStatement deleteCredential = con.prepareStatement(SQLQueries.DELETE_CREDENTIAL);
+             PreparedStatement deleteMedicalRecords = con.prepareStatement(SQLQueries.DELETE_PATIENT_MEDICAL_RECORDS);
+             PreparedStatement deletePrescribedMedications = con.prepareStatement(SQLQueries.DELETE_PRESCRIBED_MEDICATIONS);
 
         ) {
+            boolean rollback = false;
             con.setAutoCommit(false);
-            deleteCredential.setInt(1, patientId);
-            if (deleteCredential.executeUpdate() > 0) {
-                deletePatient.setInt(1, patientId);
-                try {
-                    result = deletePatient.executeUpdate();
-                } catch (SQLIntegrityConstraintViolationException e) {
-                    throw new FOREIGN_KEY_ERROR();
+            getMedicalRecords.setInt(1, patientId);
+            ResultSet resultSet = getMedicalRecords.executeQuery();
+            while (resultSet.next()) {
+                deletePrescribedMedications.setInt(1, resultSet.getInt("record_id"));
+                deletePrescribedMedications.executeUpdate();
+            }
+            deleteMedicalRecords.setInt(1, patientId);
+            if (deleteMedicalRecords.executeUpdate() > 0) {
+                deleteCredential.setInt(1, patientId);
+                if (deleteCredential.executeUpdate() > 0) {
+                    deletePatient.setInt(1, patientId);
+                    try {
+                        result = deletePatient.executeUpdate();
+                        con.commit();
+                    } catch (SQLIntegrityConstraintViolationException e) {
+                        con.rollback();
+                        throw new FOREIGN_KEY_ERROR();
+                    }
+                } else {
+                    rollback = true;
                 }
-                con.commit();
-                return result == 1;
-            }
-            else {
+            } else
+                rollback = true;
+            if (rollback)
                 con.rollback();
-                return false;
-            }
+            else
+                con.commit();
+            return result == 1;
         } catch (SQLException sqle) {
             throw new RuntimeException(sqle);
         }
     }
 
-    private PreparedStatement setPatientValues (Patient patient,PreparedStatement preparedStatement) throws SQLException {
+    private PreparedStatement setPatientValues(Patient patient, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setString(1, patient.getName());
-        preparedStatement.setDate(2,Date.valueOf(patient.getBirthDate()));
-        preparedStatement.setString(3,patient.getPhone());
+        preparedStatement.setDate(2, Date.valueOf(patient.getBirthDate()));
+        preparedStatement.setString(3, patient.getPhone());
         return preparedStatement;
     }
 }
