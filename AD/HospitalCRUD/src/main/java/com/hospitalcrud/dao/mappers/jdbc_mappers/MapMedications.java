@@ -24,4 +24,13 @@ public class MapMedications {
             throw new RuntimeException(e);
         }
     }
+    public List<String> allMedicationsToString (ResultSet rs) {
+        List<String> medications = new ArrayList<>();
+        try {
+            while (rs.next()) medications.add(rs.getString("medication_name"));
+            return medications;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

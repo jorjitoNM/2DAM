@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface MedicationsRepository {
     List<Medication> getPrescribedMedications (int medicalRecordId);
+    List<String> getAll();
 }

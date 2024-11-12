@@ -15,7 +15,6 @@ import java.util.List;
 public class JDBCCredentialRepository implements CredentialRepository {
 
     private final DBConnection dbConnection;
-
     public JDBCCredentialRepository(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
     }

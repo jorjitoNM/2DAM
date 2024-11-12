@@ -9,10 +9,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 @Profile("inDevelopment")
@@ -33,6 +30,17 @@ public class JDBCMedicationsRepository implements MedicationsRepository {
             getPrescribedMedications.setInt(1, medicalRecordId);
             ResultSet rs = getPrescribedMedications.executeQuery();
             return medicationsMapper.readRS(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<String> getAll() {
+        try (Connection conn = pool.getConnection();
+        Statement stmt = conn.createStatement();
+        ) {
+            return medicationsMapper.allMedicationsToString(stmt.executeQuery(SQLQueries.GET_ALL_MEDICATIONS));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
