@@ -296,24 +296,29 @@ function fillDoctorCombo(combo, callback) {
 
 function fillMedicationsCombo(combo) {
 
-    let medsSelect = document.getElementById(combo);
-    medsSelect.innerHTML = '';
+    fetch('http://localhost:8080/medications')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+        .then(data => {
+            // Obtener la combobox de profesores
+            let medsSelect = document.getElementById(combo);
 
-    let option = document.createElement('option');
-    option.textContent = "Ibuprofen";
-    medsSelect.appendChild(option);
-    option = document.createElement('option');
-    option.textContent = "Tylenol";
-    medsSelect.appendChild(option);
-    option = document.createElement('option');
-    option.textContent = "Penicilina";
-    medsSelect.appendChild(option);
-    option = document.createElement('option');
-    option.textContent = "Insulin";
-    medsSelect.appendChild(option);
-    option = document.createElement('option');
-    option.textContent = "Folic acid";
-    medsSelect.appendChild(option);
+            // Limpiar cualquier opción previa
+            medsSelect.innerHTML = '';
+
+            // Agregar una opción por cada profesor obtenido
+            data.forEach(medication => {
+                let option = document.createElement('option');
+                option.textContent = medication;
+                medsSelect.appendChild(option);
+            });
+            callback();
+        })
+        .catch(error => console.error('Error when fetching doctors:', error));
 }
 
 //Function to add row to the medRecord table
