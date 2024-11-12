@@ -5,7 +5,6 @@ import com.hospitalcrud.dao.respositories.DoctorsRepository;
 import com.hospitalcrud.domain.model.DoctorUI;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
