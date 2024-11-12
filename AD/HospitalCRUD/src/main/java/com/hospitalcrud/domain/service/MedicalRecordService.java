@@ -2,11 +2,9 @@ package com.hospitalcrud.domain.service;
 
 
 import com.hospitalcrud.dao.model.MedicalRecord;
-import com.hospitalcrud.dao.model.MedicalRecords;
 import com.hospitalcrud.dao.model.Medication;
 import com.hospitalcrud.dao.respositories.MedicalRecordsRepository;
 import com.hospitalcrud.dao.respositories.MedicationsRepository;
-import com.hospitalcrud.dao.respositories.statiC.StaticMedicationsRepository;
 import com.hospitalcrud.domain.model.MedicalRecordUI;
 import org.springframework.stereotype.Service;
 
@@ -59,8 +57,8 @@ public class MedicalRecordService {
 
     public void updateMedicalRecord(MedicalRecordUI medicalRecordUI) {
         MedicalRecord medicalRecord = new MedicalRecord(medicalRecordUI.getId(), medicalRecordUI.getIdPatient(),
-                medicalRecordUI.getIdDoctor(), medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate())
-                );
+                medicalRecordUI.getIdDoctor(), medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),
+                parseMedications(medicalRecordUI.getMedications(),medicalRecordUI.getId()));
         medicalRecordsRepository.update(medicalRecord);
     }
 }

@@ -82,6 +82,7 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
                     conn.rollback();
                 return medicalRecordId;
             } catch (SQLIntegrityConstraintViolationException e) {
+                conn.rollback();
                 throw new FOREIGN_KEY_ERROR();
             }
         } catch (SQLException e) {
@@ -98,11 +99,12 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
              PreparedStatement addPrescribedMedications = conn.prepareStatement(SQLQueries.ADD_PRESCRIBED_MEDICATIONS);
         ) {
             boolean rollback = false;
+            conn.setAutoCommit(false);
             deletePrescribedMedications.setInt(1, medicalRecord.getId());
             deletePrescribedMedications.executeUpdate();
             if (!medicalRecord.getMedications().isEmpty()) {
                 addMedications(addPrescribedMedications, medicalRecord);
-                if (addPrescribedMedications.executeUpdate() == medicalRecord.getMedications().size() - 1) {
+                if (addPrescribedMedications.executeUpdate() == medicalRecord.getMedications().size()) {
                     updateMedicalRecord.setInt(1, medicalRecord.getIdDoctor());
                     updateMedicalRecord.setString(2, medicalRecord.getDiagnosis());
                     updateMedicalRecord.setDate(3, Date.valueOf(medicalRecord.getDate().toString()));
@@ -132,7 +134,6 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
                 addPrescribedMedications.setInt(1, medicalRecord.getId());
                 addPrescribedMedications.setString(2, m.getMedicationName());
                 addPrescribedMedications.setString(3, m.getDosage());
-                addPrescribedMedications.executeUpdate();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
