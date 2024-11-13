@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Profile("inDevelopment")
 public class DoctorService {
     private final DoctorsRepository doctorsRepository;
 

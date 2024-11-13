@@ -12,7 +12,7 @@ import java.sql.*;
 import java.util.List;
 
 @Repository
-@Profile("inDevelopment")
+@Profile("jdbc")
 @Log4j2
 public class JDBCCredentialRepository implements CredentialRepository {
 

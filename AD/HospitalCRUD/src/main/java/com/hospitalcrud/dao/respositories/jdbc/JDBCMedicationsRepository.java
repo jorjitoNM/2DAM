@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.List;
 
-@Profile("inDevelopment")
+@Profile("jdbc")
 @Repository
 public class JDBCMedicationsRepository implements MedicationsRepository {
 

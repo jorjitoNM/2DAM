@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.List;
 
-@Profile("inDevelopment")
+@Profile("jdbc")
 @Repository
 public class JDBCPatientsRepository implements PatientRepository {
     private final MapPatients patientsMapper;

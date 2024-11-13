@@ -13,7 +13,7 @@ import java.sql.*;
 import java.util.List;
 
 @Repository
-@Profile("inDevelopment")
+@Profile("jdbc")
 public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
 
 

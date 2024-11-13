@@ -5,6 +5,7 @@ import com.hospitalcrud.dao.model.Doctor;
 import com.hospitalcrud.dao.respositories.DoctorsRepository;
 import com.hospitalcrud.dao.utilities.DBConnectionPool;
 import com.hospitalcrud.dao.utilities.SQLQueries;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -13,6 +14,7 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
+@Profile("jdbc")
 public class JDBCDoctorsRepository implements DoctorsRepository {
     private final DBConnectionPool pool;
     private final MapDoctors doctorsMapper;
