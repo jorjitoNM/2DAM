@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class DungeonInterface extends JFrame {
     private DungeonController controller;
-    private JTree tree;  // Árbol para mostrar habitaciones y puertas
+    private JTree tree;
     private DefaultTreeModel treeModel;
 
     public DungeonInterface() {
@@ -18,7 +18,6 @@ public class DungeonInterface extends JFrame {
         setSize(600, 500);
         setLocationRelativeTo(null);
 
-        // Barra de menú
         JMenuBar menuBar = new JMenuBar();
         JMenu optionsMenu = new JMenu("Options");
         JMenuItem startOption = new JMenuItem("Start");
@@ -32,15 +31,12 @@ public class DungeonInterface extends JFrame {
         menuBar.add(optionsMenu);
         setJMenuBar(menuBar);
 
-        // Árbol de navegación inicial
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("dungeon");
         treeModel = new DefaultTreeModel(root);
         tree = new JTree(treeModel);
         JScrollPane treeScroll = new JScrollPane(tree);
 
-        // Panel de botones cardinales y áreas de texto
         JPanel cardinalButtonsPanel = new JPanel(new BorderLayout());
-
         JButton northButton = new JButton("Norte");
         JButton southButton = new JButton("Sur");
         JButton eastButton = new JButton("Este");
@@ -74,7 +70,6 @@ public class DungeonInterface extends JFrame {
         splitPane.setDividerLocation(200);
         add(splitPane);
 
-        // Controlador de la mazmorra
         controller = new DungeonController(recorridoArea, descriptionArea, this);
 
         northButton.addActionListener(e -> controller.move("Norte"));
@@ -96,7 +91,6 @@ public class DungeonInterface extends JFrame {
         }
     }
 
-    // Método para actualizar el árbol de habitaciones y puertas
     public void updateDungeonTree(Map<String, Room> rooms) {
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("dungeon");
         for (Room room : rooms.values()) {

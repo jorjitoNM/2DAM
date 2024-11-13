@@ -33,4 +33,3 @@ public class Room {
         return doors;
     }
 }
-

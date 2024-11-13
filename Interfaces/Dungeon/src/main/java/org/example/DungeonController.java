@@ -9,7 +9,7 @@ public class DungeonController {
     private JTextArea recorridoArea;
     private JTextArea descriptionArea;
     private Room currentRoom;
-    private DungeonInterface dungeonInterface; // Referencia a la interfaz para actualizar el árbol
+    private DungeonInterface dungeonInterface;
 
     public DungeonController(JTextArea recorridoArea, JTextArea descriptionArea, DungeonInterface dungeonInterface) {
         this.recorridoArea = recorridoArea;
@@ -21,7 +21,7 @@ public class DungeonController {
         this.rooms = rooms;
         currentRoom = rooms.get("R0");
         updateRoomDescription();
-        dungeonInterface.updateDungeonTree(rooms);  // Actualizar el árbol de habitaciones y puertas
+        dungeonInterface.updateDungeonTree(rooms);
     }
 
     public void loadDungeon(File file) {
