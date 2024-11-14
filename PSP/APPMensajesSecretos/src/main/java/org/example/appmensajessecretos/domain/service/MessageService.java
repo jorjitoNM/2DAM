@@ -9,7 +9,7 @@ import org.example.appmensajessecretos.domain.error.ServiceError;
 import org.example.appmensajessecretos.domain.model.Grupo;
 import org.example.appmensajessecretos.domain.model.Mensaje;
 import org.example.appmensajessecretos.domain.model.Usuario;
-import org.example.appmensajessecretos.domain.security.Encrypt;
+import org.example.appmensajessecretos.utilities.security.Encrypt;
 import org.example.appmensajessecretos.domain.validator.ValidateGroup;
 import org.example.appmensajessecretos.domain.validator.ValidateMessage;
 import org.example.appmensajessecretos.domain.validator.ValidateUser;
@@ -47,15 +47,14 @@ public class MessageService {
                             return Either.left(DataInputError.EMPTY_FIELDS);
                         else
                             return messageValidator.validateMessage(new Mensaje(text, usuario.getName(), group.getName()))
-                                    .flatMap(nada2 -> {
-                                        try {
-                                            return dao.sendMessage(security.encrypt(text, secretKey),
-                                                    new Usuario(security.encrypt(usuario.getName(), secretKey), usuario.getPassword()),
-                                                    group);
-                                        } catch (EncryptingException e) {
-                                            return Either.left(ServiceError.ERROR_ENCRYPTING);
-                                        }
-                                    });
+                                    .flatMap(nada2 -> security.encrypt(text, secretKey)
+                                            .flatMap(encryptedText ->
+                                                    security.encrypt(usuario.getName(), secretKey)
+                                                            .flatMap(encryptedUsername ->
+                                                                    dao.sendMessage(encryptedText,
+                                                                            new Usuario(encryptedUsername, usuario.getPassword()),
+                                                                            group
+                                                                    ))));
                     }
                 });
     }

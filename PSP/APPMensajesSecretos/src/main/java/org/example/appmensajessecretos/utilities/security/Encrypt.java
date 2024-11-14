@@ -1,7 +1,10 @@
-package org.example.appmensajessecretos.domain.security;
+package org.example.appmensajessecretos.utilities.security;
 
 import com.google.common.primitives.Bytes;
+import io.vavr.control.Either;
 import org.example.appmensajessecretos.domain.error.EncryptingException;
+import org.example.appmensajessecretos.domain.error.Error;
+import org.example.appmensajessecretos.domain.error.ServiceError;
 import org.example.appmensajessecretos.utilities.Constantes;
 import org.springframework.stereotype.Component;
 
@@ -20,12 +23,11 @@ import java.util.Base64;
 @Component
 public class Encrypt {
 
-    public String encrypt(String text, String secretKey) throws EncryptingException {
+    public Either<Error,String> encrypt(String text, String secretKey)º {
         try {
 
             byte[] iv = new byte[12];
             byte[] salt = new byte[16];
-
             SecureRandom sr = new SecureRandom();
             sr.nextBytes(iv);
             sr.nextBytes(salt);
@@ -39,14 +41,14 @@ public class Encrypt {
 
             Cipher cipher = Cipher.getInstance(Constantes.CIPHER_TRANSFORMATION);
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, parameterSpec);
-            return Base64.getUrlEncoder().encodeToString(Bytes.concat(iv,salt,
-                cipher.doFinal(text.getBytes(StandardCharsets.UTF_8))));
+            return Either.right(Base64.getUrlEncoder().encodeToString(Bytes.concat(iv,salt,
+                cipher.doFinal(text.getBytes(StandardCharsets.UTF_8)))));
         } catch (Exception e) {
-            throw new EncryptingException();
+            return Either.left(ServiceError.ERROR_ENCRYPTING);
         }
     }
 
-    public String decrypt (String strToDecrypt, String secret) throws EncryptingException {
+    public Either<Error,String> decrypt (String strToDecrypt, String secret) {
         try {
             byte[] decoded = Base64.getUrlDecoder().decode(strToDecrypt);
             byte[] iv = Arrays.copyOf(decoded, 12);
@@ -61,9 +63,9 @@ public class Encrypt {
 
             Cipher cipher = Cipher.getInstance(Constantes.CIPHER_TRANSFORMATION);
             cipher.init(Cipher.DECRYPT_MODE, secretKey, parameterSpec);
-            return new String(cipher.doFinal(Arrays.copyOfRange(decoded, 28, decoded.length)), StandardCharsets.UTF_8);
+            return Either.right(new String(cipher.doFinal(Arrays.copyOfRange(decoded, 28, decoded.length)), StandardCharsets.UTF_8));
         } catch (Exception e) {
-            throw new EncryptingException();
+            return Either.left(ServiceError.ERROR_DECRYPTING);
         }
     }
 }
