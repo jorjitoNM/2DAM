@@ -32,7 +32,7 @@
     <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
     <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="8" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
     <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="9" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="×" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="x" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
 
     <!-- Tercera fila -->
     <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
