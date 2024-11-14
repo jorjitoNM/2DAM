@@ -1,0 +1,22 @@
+package com.example.myapplication.data.remote.datasource
+
+import com.example.myapplication.data.remote.NetworkResult
+import com.example.myapplication.data.remote.apiService.SpotifyService
+import com.example.myapplication.data.remote.model.Album
+import com.example.myapplication.data.remote.model.getSongsList
+import com.example.myapplication.di.IoDispatcher
+import com.example.myapplication.domain.model.Song
+import com.example.viewmodel.data.remote.datasource.BaseApiResponse
+import kotlinx.coroutines.CoroutineDispatcher
+import javax.inject.Inject
+
+class SongsRemoteDataSource @Inject constructor(
+    private val spotifyService: SpotifyService,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
+) : BaseApiResponse() {
+    suspend fun fetchSongs (): NetworkResult<List<Song>?> =
+        safeApiCall { spotifyService.getAlbum("8") }.map { album ->
+            album?.getSongsList() }
+        }
+}
+

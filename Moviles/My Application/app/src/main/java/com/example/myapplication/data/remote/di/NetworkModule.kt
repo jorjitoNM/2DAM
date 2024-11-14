@@ -1,5 +1,6 @@
 package com.example.myapplication.data.remote.di
 
+import com.example.myapplication.BuildConfig
 import com.example.myapplication.data.remote.apiService.SpotifyService
 import dagger.Module
 import dagger.Provides

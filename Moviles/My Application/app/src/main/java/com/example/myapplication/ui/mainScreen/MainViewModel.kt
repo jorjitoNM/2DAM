@@ -3,14 +3,13 @@ package com.example.myapplication.ui.mainScreen
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.example.myapplication.domain.usecases.GetBooks
+import com.example.myapplication.domain.usecases.GetAlbum
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor (
-    private val getBooks: GetBooks,
+    private val getAlbum: GetAlbum,
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData(MainState())
@@ -23,6 +22,6 @@ class MainViewModel @Inject constructor (
     }
 
     private fun getBooks() {
-        _uiState.value = _uiState.value?.copy(books = getBooks.invoke())
+        _uiState.value = _uiState.value?.copy(books = getAlbum.invoke())
     }
 }

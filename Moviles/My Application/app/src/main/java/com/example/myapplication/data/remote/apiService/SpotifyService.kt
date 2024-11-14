@@ -1,20 +1,16 @@
 package com.example.myapplication.data.remote.apiService
 
+import com.example.myapplication.data.remote.model.Album
+import com.example.myapplication.data.remote.model.SongRemote
 import retrofit2.Response
-import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface SpotifyService {
-    @GET("/users")
-    suspend fun getUsers(@Query("user") user: String) : Response<List<UserRemote>>
+    @GET("/v1/albums/{id}")
+    suspend fun getAlbum(@Path("id") id: String) : Response<Album?>
 
+    @GET("/v1/tracks/{id}")
+    suspend fun getSong(@Path("id") id : String) : Response<SongRemote>
 
-    @GET("/users/{id}")
-    suspend fun getUser(@Path("id") id : Int) : Response<UserRemote>
-
-
-    @DELETE("/users/{id}")
-    suspend fun delUser(@Path("id") id : Int) : Response<Unit>
 }
