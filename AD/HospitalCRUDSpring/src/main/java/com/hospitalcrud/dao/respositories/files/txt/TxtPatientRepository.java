@@ -71,7 +71,7 @@ public class TxtPatientRepository implements PatientRepository {
     }
 
     @Override
-    public boolean delete(int patientId) {
+    public boolean delete(int patientId,boolean confirmation) {
         List<Patient> patients = loadPatients();
         if (patients.removeIf(p -> p.getId() == patientId))
             return savePatients(patients);

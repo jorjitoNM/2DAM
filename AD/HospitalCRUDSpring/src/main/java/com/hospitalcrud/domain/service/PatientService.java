@@ -47,7 +47,6 @@ public class PatientService {
     }
 
     public void deletePatient(int patientId, boolean confirmation) {
-        if (!confirmation)
-            patientRepository.delete(patientId);
+        patientRepository.delete(patientId,confirmation);
     }
 }

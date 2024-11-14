@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(DUPLICATED_USERNAME.class)
@@ -17,6 +19,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
     @ExceptionHandler(FOREIGN_KEY_ERROR.class)
     public ResponseEntity<DataBaseError> handleForeignKetException(FOREIGN_KEY_ERROR e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new FOREIGN_KEY_ERROR());
+    }
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<RuntimeException> handleForeignKetException(SQLIntegrityConstraintViolationException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new FOREIGN_KEY_ERROR());
     }
 }

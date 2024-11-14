@@ -81,7 +81,7 @@ public class JDBCPatientsRepository implements PatientRepository {
     }
 
     @Override
-    public boolean delete(int patientId) {
+    public boolean delete(int patientId, boolean confirmation) {
         int result = 0;
         try (Connection con = pool.getConnection();
              PreparedStatement deletePatient = con.prepareStatement(SQLQueries.DELETE_PATIENT);
