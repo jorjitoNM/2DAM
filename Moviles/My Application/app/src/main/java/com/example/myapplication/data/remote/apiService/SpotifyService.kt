@@ -8,7 +8,7 @@ import retrofit2.http.Path
 
 interface SpotifyService {
     @GET("/v1/albums/{id}")
-    suspend fun getAlbum(@Path("id") id: String) : Response<Album?>
+    suspend fun getAlbum(@Path("id") id: String) : Response<Album>
 
     @GET("/v1/tracks/{id}")
     suspend fun getSong(@Path("id") id : String) : Response<SongRemote>

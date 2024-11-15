@@ -7,7 +7,7 @@
     <string name="receive_news">Receive News</string>
     <string name="previous"><![CDATA[<]]></string>
     <string name="next"><![CDATA[>]]></string>
-    <string name="author">Author</string>
+    <string name="artist">Artist</string>
     <string name="update">Update</string>
     <string name="delete">Delete</string>
     <string name="add">Add</string>
@@ -25,4 +25,7 @@
     <string name="addedSuccesfully">Nuevo libro añadido con exito</string>
     <string name="errorUpdateBook">No se ha podido actualizar el libro</string>
     <string name="bookId">id</string>
+    <string name="explicit">Explicit</string>
+    <string name="not_explicit">Not explicit</string>
+    <string name="album_id">4aawyAB9vmqN3uQ7FjRGTy</string>
 </resources>

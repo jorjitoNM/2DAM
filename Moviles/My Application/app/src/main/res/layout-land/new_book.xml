@@ -14,23 +14,23 @@
         android:hint="@string/name"
         android:minEms="15"
         app:layout_constraintBottom_toTopOf="@id/releaseDateInput"
-        app:layout_constraintEnd_toStartOf="@id/author"
+        app:layout_constraintEnd_toStartOf="@id/artist"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/bookName"
+            android:id="@+id/songName"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/author"
+        android:id="@+id/artist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/author"
+        android:hint="@string/artist"
         android:minEms="15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/nameInput"
@@ -41,7 +41,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/bookAuthor"
+            android:id="@+id/songArtist"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -73,9 +73,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/cancel"
-        app:layout_constraintEnd_toEndOf="@id/author"
-        app:layout_constraintStart_toStartOf="@id/author"
-        app:layout_constraintTop_toBottomOf="@id/author"
+        app:layout_constraintEnd_toEndOf="@id/artist"
+        app:layout_constraintStart_toStartOf="@id/artist"
+        app:layout_constraintTop_toBottomOf="@id/artist"
         android:rating="3"
         />
 

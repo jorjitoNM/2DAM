@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Images (
 
-    @SerializedName("url"    ) var url    : String? = null,
+    @SerializedName("url"    ) var url    : String  ,
     @SerializedName("height" ) var height : Int?    = null,
     @SerializedName("width"  ) var width  : Int?    = null
 

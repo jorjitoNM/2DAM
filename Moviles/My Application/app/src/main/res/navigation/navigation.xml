@@ -25,7 +25,7 @@
         android:id="@+id/detailsFragment"
         android:name="com.example.myapplication.ui.detailsScreen.DetailsFragment"
         android:label="BookDetails"
-        tools:layout="@layout/book_details">
+        tools:layout="@layout/song_details">
         <argument
             android:name="bookId"
             app:argType="integer"

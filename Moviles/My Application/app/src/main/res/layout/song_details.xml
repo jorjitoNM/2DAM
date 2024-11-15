@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/bookDetails"
+    android:id="@+id/songDetails"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/name"
         android:minEms="15"
-        app:layout_constraintBottom_toTopOf="@id/author"
+        app:layout_constraintBottom_toTopOf="@id/artist"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -19,16 +19,16 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/bookName"
+            android:id="@+id/songName"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/author"
+        android:id="@+id/artist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/author"
+        android:hint="@string/artist"
         android:minEms="15"
         app:layout_constraintEnd_toEndOf="@id/nameInput"
         app:layout_constraintStart_toStartOf="@id/nameInput"
@@ -39,7 +39,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/bookAuthor"
+            android:id="@+id/songArtist"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -50,10 +50,10 @@
         android:layout_height="wrap_content"
         android:hint="@string/releasedate"
         android:minEms="15"
-        app:layout_constraintEnd_toEndOf="@id/author"
-        app:layout_constraintStart_toStartOf="@id/author"
-        app:layout_constraintTop_toBottomOf="@id/author"
-        app:layout_constraintBottom_toTopOf="@id/ratingBar"
+        app:layout_constraintEnd_toEndOf="@id/artist"
+        app:layout_constraintStart_toStartOf="@id/artist"
+        app:layout_constraintTop_toBottomOf="@id/artist"
+        app:layout_constraintBottom_toTopOf="@id/explicit"
         app:layout_constraintVertical_chainStyle="spread"
         app:endIconMode="custom"
         app:endIconDrawable="@drawable/calendar_icon_24px"
@@ -67,16 +67,33 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <RatingBar
-        android:id="@+id/ratingBar"
+    <RadioGroup
+        app:useMaterialThemeColors="true"
+        android:checkedButton="@+id/explicit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/update"
         app:layout_constraintEnd_toEndOf="@id/releaseDateInput"
         app:layout_constraintStart_toStartOf="@id/releaseDateInput"
         app:layout_constraintTop_toBottomOf="@id/releaseDateInput"
-        android:rating="3"
-        />
+        >
+        <RadioButton
+            android:id="@+id/explicit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:enabled="true"
+            android:text="@string/explicit"
+            android:minEms="10"
+            />
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:checked="false"
+            android:enabled="true"
+            android:text="@string/not_explicit"
+            android:minEms="10"
+            />
+    </RadioGroup>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/update"
@@ -87,7 +104,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/delete"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ratingBar"
+        app:layout_constraintTop_toBottomOf="@id/explicit"
         />
 
     <com.google.android.material.button.MaterialButton

@@ -3,17 +3,17 @@ package com.example.myapplication.data.remote.model
 import com.example.myapplication.domain.model.Song
 
 data class SongRemote(
-    val artist : String,
-    val duration : Int,
-    val explicit : Boolean,
-    val name : String,
-    val albumImage : String,
+    val name: String,
+    val artist: ArrayList<Artists>,
+    val duration: Int,
+    val explicit: Boolean,
+    val albumImage: String,
 )
 
 fun SongRemote.toSong() = Song(
-    artist  = artist,
-    duration =  duration,
-    explicit = explicit,
     name = name,
+    artist = artist,
+    duration = duration,
+    explicit = explicit,
     albumImage = albumImage,
     )
