@@ -9,64 +9,56 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
-import com.example.myapplication.databinding.BookListFragmentBinding
-import com.example.myapplication.domain.model.Book
+import com.example.myapplication.databinding.SongsListFragmentBinding
+import com.example.myapplication.domain.model.Song
 import com.example.myapplication.ui.common.MarginItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
 
-    private var _binding: BookListFragmentBinding? = null
+    private var _binding: SongsListFragmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter: BookAdapter
+    private lateinit var adapter: SongAdapter
     private val viewModel: MainViewModel by viewModels ()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = BookListFragmentBinding.inflate(inflater, container, false)
+        _binding = SongsListFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        events()
         configureRecyclerView()
         observarState()
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.handleEvent(MainEvents.GetBooks)
+        viewModel.handleEvent(MainEvents.GetSongs)
     }
 
     private fun observarState() {
         viewModel.uiState.observe(viewLifecycleOwner) { state ->
-            adapter.submitList(state.books)
+            adapter.submitList(state.songs)
         }
     }
 
     private fun configureRecyclerView() {
-
-        adapter = BookAdapter(
-            actions = object : BookAdapter.BookActions {
-                override fun onItemClick(book: Book) {
-                    navigateToDetail((book.id))
-                }
-
-                override fun onDelete(book: Book) {
-                    TODO("Not yet implemented")
+        adapter = SongAdapter(
+            actions = object : SongAdapter.SongActions {
+                override fun onItemClick(song: Song) {
+                    navigateToDetail((song.id))
                 }
             },requireContext()
         )
         with (binding) {
-            bookList.layoutManager = LinearLayoutManager(requireContext())
-
-            bookList.adapter = adapter
-
-            bookList.addItemDecoration(
+            songList.layoutManager = LinearLayoutManager(requireContext())
+            songList.adapter = adapter
+            songList.addItemDecoration(
                 MarginItemDecoration(
                     resources.getDimensionPixelSize(
                         R.dimen.margin
@@ -77,19 +69,7 @@ class MainFragment : Fragment() {
     }
 
 
-    private fun navigateToDetail(id: Int) {
+    private fun navigateToDetail(id: String) {
         findNavController().navigate(MainFragmentDirections.actionMainFragmentToDetailsFragment(id));
-    }
-
-    private fun events() {
-        with(binding) {
-            add.setOnClickListener {
-                navigateToNewBook()
-            }
-        }
-    }
-
-    private fun navigateToNewBook() {
-        findNavController().navigate(MainFragmentDirections.actionMainFragmentToNewBookFragment());
     }
 }

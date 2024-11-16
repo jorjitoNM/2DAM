@@ -27,5 +27,7 @@
     <string name="bookId">id</string>
     <string name="explicit">Explicit</string>
     <string name="not_explicit">Not explicit</string>
-    <string name="album_id">4aawyAB9vmqN3uQ7FjRGTy</string>
+    <string name="album_id">2GTwVzWYGOxTLCmkxunYbQ</string>
+    <string name="duration">Duration</string>
+    <string name="albumImageDescription">Official album image</string>
 </resources>

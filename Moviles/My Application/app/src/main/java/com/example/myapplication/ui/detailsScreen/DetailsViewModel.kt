@@ -3,23 +3,19 @@ package com.example.myapplication.ui.detailsScreen
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.myapplication.R
-import com.example.myapplication.domain.model.Book
-import com.example.myapplication.domain.usecases.DeleteBook
-import com.example.myapplication.domain.usecases.GetBook
-import com.example.myapplication.domain.usecases.UpdateBook
+import com.example.myapplication.domain.usecases.GetSong
 import com.example.myapplication.ui.common.StringProvider
 import com.example.myapplication.ui.common.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor (
     private val stringProvider: StringProvider,
-    private val updateBookUseCase: UpdateBook,
-    private val deleteBookUseCase: DeleteBook,
-    private val getBookUseCase: GetBook,
+    private val getSongUseCase: GetSong,
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData(DetailsState())
@@ -27,38 +23,23 @@ class DetailsViewModel @Inject constructor (
 
     fun handleEvent (event : DetailsEvents) {
         when (event) {
-            is DetailsEvents.UpdateBook -> updateBook(event.book)
-            is DetailsEvents.DeleteBook -> deleteBook(event.bookId)
-            is DetailsEvents.GetBook -> getBook(event.bookId)
+            is DetailsEvents.GetSong -> getSong(event.songId)
             is DetailsEvents.ErrorMostrado -> eventoMostrado()
         }
     }
 
-    private fun updateBook(book: Book) {
-        if (!updateBookUseCase(book))
-            _uiState.value =
-                _uiState.value?.copy(event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.errorUpdateBook)))
-        else
-            _uiState.value = _uiState.value?.copy(event = UiEvent.PopBackStack)
-    }
 
-    private fun getBook(id: Int) {
-        val book = getBookUseCase(id)
-        if (book.id < 0) {
-            _uiState.value =
-                _uiState.value?.copy(event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.bookNotFound)))
-        } else {
-            _uiState.value =
-                _uiState.value?.copy(book = book)}
-    }
-
-    private fun deleteBook(id: Int) {
-        if (!deleteBookUseCase(id))
-            _uiState.value = _uiState.value?.copy(
-                event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.deleteError))
-            )
-        else
-            _uiState.value = _uiState.value?.copy(event = UiEvent.PopBackStack)
+    private fun getSong(id: String) {
+        viewModelScope.launch {
+            val song = getSongUseCase(id)
+            if (song.id < 0) {
+                _uiState.value =
+                    _uiState.value?.copy(event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.bookNotFound)))
+            } else {
+                _uiState.value =
+                    _uiState.value?.copy(song = song)
+            }
+        }
     }
 
     private fun eventoMostrado() {

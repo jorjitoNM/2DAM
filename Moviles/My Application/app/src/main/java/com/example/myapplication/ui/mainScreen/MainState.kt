@@ -1,7 +1,7 @@
 package com.example.myapplication.ui.mainScreen
 
-import com.example.myapplication.domain.model.Book
+import com.example.myapplication.domain.model.Song
 
 data class MainState(
-    val books: List<Book> = emptyList(),
+    val songs: List<Song> = emptyList(),
 )

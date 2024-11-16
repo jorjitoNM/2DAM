@@ -1,6 +1,5 @@
 package com.example.myapplication.data.remote
 
-import com.example.myapplication.data.remote.model.Album
 import retrofit2.Response
 
 
@@ -16,11 +15,11 @@ sealed class NetworkResult<T>(
     class Loading<T> : NetworkResult<T>()
 
 
-    fun <R> map(transform: (data: Album?) -> Unit) : NetworkResult<R> =
+    fun <R> map(transform: (data: T?) -> Unit) : NetworkResult<R> =
         when(this){
-            is Error -> Error(message!!,transform(data))
+            is Error -> TODO()
             is Loading -> Loading()
-            is Success -> Success(transform(data))
+            is Success -> TODO()
         }
 
 

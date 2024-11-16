@@ -3,6 +3,7 @@ package com.example.myapplication.data.remote.model
 import com.example.myapplication.domain.model.Song
 
 data class SongRemote(
+    val id :String,
     val name: String,
     val artist: ArrayList<Artists>,
     val duration: Int,
@@ -11,8 +12,9 @@ data class SongRemote(
 )
 
 fun SongRemote.toSong() = Song(
+    id = id,
     name = name,
-    artist = artist,
+    artist = artist.map { a -> a.name }.toList(),
     duration = duration,
     explicit = explicit,
     albumImage = albumImage,

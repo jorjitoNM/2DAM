@@ -9,21 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.myapplication.databinding.BookDetailsBinding
-import com.example.myapplication.domain.model.Book
-import com.example.myapplication.domain.usecases.DeleteBook
-import com.example.myapplication.domain.usecases.GetBook
-import com.example.myapplication.domain.usecases.UpdateBook
-import com.example.myapplication.ui.common.StringProvider
+import com.example.myapplication.databinding.SongDetailsBinding
 import com.example.myapplication.ui.common.UiEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment() {
 
-    private var _binding: BookDetailsBinding? = null
+    private var _binding: SongDetailsBinding? = null
     private val binding get() = _binding!!
-    private var id : Int = -1
+    private var id : String = ""
 
     private val viewModel: DetailsViewModel by viewModels ()
 
@@ -31,16 +26,15 @@ class DetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = BookDetailsBinding.inflate(inflater, container, false)
+        _binding = SongDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val args : DetailsFragmentArgs by navArgs()
         super.onViewCreated(view, savedInstanceState)
-        id = args.bookId.toInt()
-        viewModel.handleEvent(DetailsEvents.GetBook(id))
-        eventos()
+        id = args.songId
+        viewModel.handleEvent(DetailsEvents.GetSong(id))
         observarViewModel()
     }
 
@@ -48,10 +42,10 @@ class DetailsFragment : Fragment() {
         viewModel.uiState.observe(viewLifecycleOwner) { state ->
 
             if (state.event == null) {
-                binding.bookName.setText(state.book.name)
-                binding.bookAuthor.setText(state.book.author)
-                binding.releaseDate.setText(state.book.releaseDate.toString())
-                binding.ratingBar.rating = state.book.score
+                binding.songName.setText(state.song.name)
+                binding.songArtist.setText(parseArtists(state.song.artist))
+                binding.songDuration.setText(state.song.duration.toString())
+                binding.explicit.check(fillCheckButton(state.song.explicit))
             }
 
             state.event?.let { event ->
@@ -64,20 +58,18 @@ class DetailsFragment : Fragment() {
             }
 
             if (state.event == null)
-                binding.bookName.setText(state.book.name)
+                binding.songName.setText(state.song.name)
         }
     }
 
-    private fun eventos() {
+    private fun parseArtists(artist: List<String>): String {
+        val sb : StringBuilder = StringBuilder()
+        artist.forEach { a -> sb.append(a).append(",") }
+        return sb.toString()
+    }
 
-        with(binding) {
-            update.setOnClickListener {
-                viewModel.handleEvent(DetailsEvents.UpdateBook(Book(id,bookName.text.toString(),
-                    bookAuthor.text.toString(),ratingBar.rating,releaseDate.text.toString())))
-            }
-            delete.setOnClickListener {
-                viewModel.handleEvent(DetailsEvents.DeleteBook(id))
-            }
-        }
+    private fun fillCheckButton(explicit: Boolean): Int {
+        return if (explicit) 0
+        else 1
     }
 }

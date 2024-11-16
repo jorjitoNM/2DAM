@@ -29,6 +29,7 @@ fun Album.getSongsList() {
   val track : Tracks = this.tracks
   val songs : ArrayList<SongRemote> = ArrayList()
   track.items.forEach { item -> songs.add(SongRemote(
+    item.id,
     item.name,
     item.artists,
     item.durationMs,

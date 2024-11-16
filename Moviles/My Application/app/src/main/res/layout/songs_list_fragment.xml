@@ -5,10 +5,10 @@
     android:id="@+id/book_list_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.mainScreen.MainActivity">
+    tools:context=".ui.mainScreen.MainFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/bookList"
+        android:id="@+id/songList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"

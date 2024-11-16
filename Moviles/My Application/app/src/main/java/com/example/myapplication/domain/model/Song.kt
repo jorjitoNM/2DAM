@@ -3,9 +3,10 @@ package com.example.myapplication.domain.model
 import com.example.myapplication.data.remote.model.Artists
 
 data class Song(
-    val name: String,
-    val artist: ArrayList<Artists>,
-    val duration: Int,
-    val explicit: Boolean,
-    val albumImage: String,
+    val id : String = "",
+    val name: String = "song",
+    val artist: List<String> = emptyList(),
+    val duration: Int = 0,
+    val explicit: Boolean = false,
+    val albumImage: String = "https://thispersondoesnotexist.com/",
 )
