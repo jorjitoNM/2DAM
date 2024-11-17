@@ -21,6 +21,9 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: SongAdapter
     private val viewModel: MainViewModel by viewModels ()
+    private val token : String by lazy {
+        viewModel.getToken()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +41,7 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.handleEvent(MainEvents.GetSongs)
+        viewModel.handleEvent(MainEvents.GetSongs(token))
     }
 
     private fun observarState() {
@@ -68,8 +71,7 @@ class MainFragment : Fragment() {
         }
     }
 
-
     private fun navigateToDetail(id: String) {
-        findNavController().navigate(MainFragmentDirections.actionMainFragmentToDetailsFragment(id));
+        findNavController().navigate(MainFragmentDirections.actionMainFragmentToDetailsFragment(id,token));
     }
 }

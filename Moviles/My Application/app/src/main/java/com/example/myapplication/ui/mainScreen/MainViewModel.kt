@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.remote.NetworkResult
 import com.example.myapplication.domain.usecases.GetSongs
+import com.example.myapplication.domain.usecases.GetToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -13,6 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor (
     private val getSongs: GetSongs,
+    private val getToken : GetToken,
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData(MainState())
@@ -20,13 +22,13 @@ class MainViewModel @Inject constructor (
 
     fun handleEvent (event : MainEvents) {
         when (event) {
-            is MainEvents.GetSongs -> getSongs()
+            is MainEvents.GetSongs -> getSongs(event.token)
         }
     }
 
-    private fun getSongs() {
+    private fun getSongs(token : String) {
         viewModelScope.launch {
-            when (val networkResult = getSongs.invoke()) {
+            when (val networkResult = getSongs.invoke(token)) {
                 is NetworkResult.Error -> TODO()
                 is NetworkResult.Loading -> TODO()
                 is NetworkResult.Success -> {
@@ -35,5 +37,18 @@ class MainViewModel @Inject constructor (
                 }
             }
         }
+    }
+
+    fun getToken () : String {
+        viewModelScope.launch {
+            when (val networkResult = getToken.invoke()) {
+                is NetworkResult.Error -> TODO()
+                is NetworkResult.Loading -> TODO()
+                is NetworkResult.Success -> {
+                    return@launch networkResult.let { it.data.toString() }
+                }
+            }
+        }
+        return ""
     }
 }

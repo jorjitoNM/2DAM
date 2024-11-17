@@ -19,6 +19,7 @@ class DetailsFragment : Fragment() {
     private var _binding: SongDetailsBinding? = null
     private val binding get() = _binding!!
     private var id : String = ""
+    private var token : String = ""
 
     private val viewModel: DetailsViewModel by viewModels ()
 
@@ -34,7 +35,8 @@ class DetailsFragment : Fragment() {
         val args : DetailsFragmentArgs by navArgs()
         super.onViewCreated(view, savedInstanceState)
         id = args.songId
-        viewModel.handleEvent(DetailsEvents.GetSong(id))
+        token = args.token
+        viewModel.handleEvent(DetailsEvents.GetSong(id,token))
         observarViewModel()
     }
 

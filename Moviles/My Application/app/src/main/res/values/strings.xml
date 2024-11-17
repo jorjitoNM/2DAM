@@ -30,4 +30,8 @@
     <string name="album_id">2GTwVzWYGOxTLCmkxunYbQ</string>
     <string name="duration">Duration</string>
     <string name="albumImageDescription">Official album image</string>
+    <string name="tokenRequestContentType">application/x-www-form-urlencoded</string>
+    <string name="clientID">9b9e1f80ec1d4900aa0f166333f328ff</string>
+    <string name="clientSecret">a70ef47356c841169f81ca3b9c22fbef</string>
+    <string name="bearer">Bearer  </string>
 </resources>

@@ -26,6 +26,10 @@
             android:name="songId"
             app:argType="string"
             android:defaultValue="&quot;&quot;" />
+        <argument
+            android:name="token"
+            app:argType="string"
+            android:defaultValue='""' />
     </fragment>
 
 </navigation>

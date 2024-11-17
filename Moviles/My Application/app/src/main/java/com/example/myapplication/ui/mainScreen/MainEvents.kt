@@ -1,5 +1,5 @@
 package com.example.myapplication.ui.mainScreen
 
 sealed interface MainEvents {
-    data object GetSongs : MainEvents
+    data class GetSongs(val token : String) : MainEvents
 }

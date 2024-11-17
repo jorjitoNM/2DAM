@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.R
+import com.example.myapplication.data.remote.NetworkResult
 import com.example.myapplication.domain.usecases.GetSong
 import com.example.myapplication.ui.common.StringProvider
 import com.example.myapplication.ui.common.UiEvent
@@ -23,21 +24,20 @@ class DetailsViewModel @Inject constructor (
 
     fun handleEvent (event : DetailsEvents) {
         when (event) {
-            is DetailsEvents.GetSong -> getSong(event.songId)
+            is DetailsEvents.GetSong -> getSong(event.songId, event.token)
             is DetailsEvents.ErrorMostrado -> eventoMostrado()
         }
     }
 
 
-    private fun getSong(id: String) {
+    private fun getSong(id: String, token : String) {
         viewModelScope.launch {
-            val song = getSongUseCase(id)
-            if (song.id < 0) {
-                _uiState.value =
+            val song = getSongUseCase(id,token)
+            when (song) {
+                is NetworkResult.Error -> _uiState.value =
                     _uiState.value?.copy(event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.bookNotFound)))
-            } else {
-                _uiState.value =
-                    _uiState.value?.copy(song = song)
+                is NetworkResult.Loading -> TODO()
+                is NetworkResult.Success -> _uiState.value = song.data?.let { _uiState.value?.copy(song = it) }
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.example.viewmodel.data.remote.datasource
+package com.example.myapplication.data.remote.datasource
 
 import com.example.myapplication.data.remote.NetworkResult
 import retrofit2.Response

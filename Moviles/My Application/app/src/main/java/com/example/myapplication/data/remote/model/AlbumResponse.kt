@@ -1,5 +1,6 @@
 package com.example.myapplication.data.remote.model
 
+import com.example.myapplication.domain.model.Song
 import com.google.gson.annotations.SerializedName
 
 data class Album (
@@ -25,14 +26,15 @@ data class Album (
   @SerializedName("label"                  ) var label                : String?               = null,
   @SerializedName("popularity"             ) var popularity           : Int?                  = null
 )
-fun Album.getSongsList() {
+fun Album.getSongsList() : List<Song> {
   val track : Tracks = this.tracks
-  val songs : ArrayList<SongRemote> = ArrayList()
-  track.items.forEach { item -> songs.add(SongRemote(
+  val songs : ArrayList<Song> = ArrayList()
+  track.items.forEach { item -> songs.add(Song(
     item.id,
     item.name,
-    item.artists,
+    item.artists.map { a -> a.name }.toList(),
     item.durationMs,
     item.explicit,
     this.images[images.lastIndex].url)) }
+  return songs
 }
