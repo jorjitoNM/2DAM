@@ -8,6 +8,7 @@ import com.example.myapplication.data.remote.model.getKey
 import com.example.myapplication.data.remote.model.getSongsList
 import com.example.myapplication.data.remote.model.toSong
 import com.example.myapplication.domain.model.Song
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
@@ -65,12 +66,13 @@ class SongsRepository @Inject constructor(
     @OptIn(ExperimentalEncodingApi::class)
     suspend fun fetchToken (): NetworkResult<String> {
         val clientCredentials = "${R.string.clientID}${R.string.clientSecret}"
-        val base64ClientCredential  = Base64.encode(clientCredentials.toByteArray())
+        val base64ClientCredential  = Base64.Default.encode(clientCredentials.encodeToByteArray())
         try {
             val response = spotifyService.getToken(R.string.tokenRequestContentType.toString(),base64ClientCredential)
             if (response.isSuccessful) {
                 val body = response.body()
                 body?.let {
+                    Timber.i("Tenemos el token!!")
                     return NetworkResult.Success(body.getKey())
                 }
             }

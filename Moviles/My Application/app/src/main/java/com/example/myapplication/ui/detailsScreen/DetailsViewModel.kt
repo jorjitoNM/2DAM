@@ -35,7 +35,7 @@ class DetailsViewModel @Inject constructor (
             val song = getSongUseCase(id,token)
             when (song) {
                 is NetworkResult.Error -> _uiState.value =
-                    _uiState.value?.copy(event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.bookNotFound)))
+                    _uiState.value?.copy(event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.songNotFound)))
                 is NetworkResult.Loading -> TODO()
                 is NetworkResult.Success -> _uiState.value = song.data?.let { _uiState.value?.copy(song = it) }
             }
