@@ -33,32 +33,28 @@ class SongsRepository @Inject constructor(
         val base64ClientCredential  = Base64.encode(clientCredentials.toByteArray())
         return songsRemoteDataSource.fetchToken(R.string.tokenRequestContentType.toString(),base64ClientCredential)
     }
-    suspend fun fetchAlbum(authorization : String): NetworkResult<List<Song>?> {
+    suspend fun fetchAlbum(authorization : String): NetworkResult<List<Song>> {
         try {
             val response = spotifyService.getAlbum(R.string.album_id.toString(),authorization)
             if (response.isSuccessful) {
-                val body = response.body()
-                body?.let {
-                    return NetworkResult.Success(body.getSongsList())
-                }
+                return NetworkResult.Success(response.body().getSongsList())
             }
             return error("${response.code()} ${response.message()}")
         } catch (e: Exception) {
+            Timber.e(e.message ?: e.toString())
             return error(e.message ?: e.toString())
         }
     }
 
-    suspend fun fetchSong (id: String, authorization : String): NetworkResult<Song?> {
+    suspend fun fetchSong (id: String, authorization : String): NetworkResult<Song> {
         try {
             val response = spotifyService.getSong(id,authorization)
             if (response.isSuccessful) {
-                val body = response.body()
-                body?.let {
-                    return NetworkResult.Success(body.toSong())
-                }
+                return NetworkResult.Success(response.body().toSong())
             }
             return error("${response.code()} ${response.message()}")
         } catch (e: Exception) {
+            Timber.e(e.message ?: e.toString())
             return error(e.message ?: e.toString())
         }
     }
@@ -66,18 +62,16 @@ class SongsRepository @Inject constructor(
     @OptIn(ExperimentalEncodingApi::class)
     suspend fun fetchToken (): NetworkResult<String> {
         val clientCredentials = "${R.string.clientID}${R.string.clientSecret}"
-        val base64ClientCredential  = Base64.Default.encode(clientCredentials.encodeToByteArray())
+        val base64ClientCredential  = Base64.UrlSafe.encode(clientCredentials.encodeToByteArray())
         try {
             val response = spotifyService.getToken(R.string.tokenRequestContentType.toString(),base64ClientCredential)
             if (response.isSuccessful) {
-                val body = response.body()
-                body?.let {
-                    Timber.i("Tenemos el token!!")
-                    return NetworkResult.Success(body.getKey())
-                }
+                Timber.i("Tenemos el token!!")
+                return NetworkResult.Success(response.body().getKey())
             }
             return error("${response.code()} ${response.message()}")
         } catch (e: Exception) {
+            Timber.e(e.message ?: e.toString())
             return error(e.message ?: e.toString())
         }
     }
@@ -85,6 +79,5 @@ class SongsRepository @Inject constructor(
 
 
     private fun <T> error(errorMessage: String): NetworkResult<T> =
-        NetworkResult.Error("Api call failed $errorMessage")
-
+        NetworkResult.Error("${R.string.callFailed} $errorMessage")
 }

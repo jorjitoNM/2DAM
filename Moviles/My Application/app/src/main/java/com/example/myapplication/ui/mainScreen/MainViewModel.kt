@@ -32,7 +32,7 @@ class MainViewModel @Inject constructor (
                 is NetworkResult.Error -> TODO()
                 is NetworkResult.Loading -> TODO()
                 is NetworkResult.Success -> {
-                    val songs = networkResult.data?.toList() ?: emptyList()
+                    val songs = networkResult.data.toList()
                     _uiState.value = _uiState.value?.copy(songs = songs)
                 }
             }
@@ -45,7 +45,7 @@ class MainViewModel @Inject constructor (
                 is NetworkResult.Error -> TODO()
                 is NetworkResult.Loading -> TODO()
                 is NetworkResult.Success -> {
-                    return@launch networkResult.let { it.data.toString() }
+                    return@launch networkResult.let { it.data }
                 }
             }
         }

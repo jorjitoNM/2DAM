@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import coil.load
 import com.example.myapplication.databinding.SongDetailsBinding
 import com.example.myapplication.ui.common.UiEvent
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,19 +45,22 @@ class DetailsFragment : Fragment() {
         viewModel.uiState.observe(viewLifecycleOwner) { state ->
 
             if (state.event == null) {
-                binding.songName.setText(state.song.name)
-                binding.songArtist.setText(parseArtists(state.song.artist))
-                binding.songDuration.setText(state.song.duration.toString())
-                binding.explicit.check(fillCheckButton(state.song.explicit))
+                with (binding) {
+                    songName.setText(state.song.name)
+                    songArtist.setText(parseArtists(state.song.artist))
+                    songDuration.setText(state.song.duration.toString())
+                    explicit.check(fillCheckButton(state.song.explicit))
+                    image.load(state.song.albumImage)
+                }
             }
 
             state.event?.let { event ->
                 if (event is UiEvent.PopBackStack) {
                     findNavController().navigateUp()
                 } else if (event is UiEvent.ShowSnackbar) {
-                    Toast.makeText(requireContext(), event.message, Toast.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
                 }
-                viewModel.handleEvent(DetailsEvents.ErrorMostrado)
+                viewModel.handleEvent(DetailsEvents.EventDone)
             }
 
             if (state.event == null)

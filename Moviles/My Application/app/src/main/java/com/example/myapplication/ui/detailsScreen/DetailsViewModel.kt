@@ -25,24 +25,23 @@ class DetailsViewModel @Inject constructor (
     fun handleEvent (event : DetailsEvents) {
         when (event) {
             is DetailsEvents.GetSong -> getSong(event.songId, event.token)
-            is DetailsEvents.ErrorMostrado -> eventoMostrado()
+            is DetailsEvents.EventDone -> eventDone()
         }
     }
 
 
     private fun getSong(id: String, token : String) {
         viewModelScope.launch {
-            val song = getSongUseCase(id,token)
-            when (song) {
+            when (val song = getSongUseCase(id,token)) {
                 is NetworkResult.Error -> _uiState.value =
                     _uiState.value?.copy(event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.songNotFound)))
                 is NetworkResult.Loading -> TODO()
-                is NetworkResult.Success -> _uiState.value = song.data?.let { _uiState.value?.copy(song = it) }
+                is NetworkResult.Success -> _uiState.value = song.data.let { _uiState.value?.copy(song = it) }
             }
         }
     }
 
-    private fun eventoMostrado() {
+    private fun eventDone() {
         _uiState.value = _uiState.value?.copy(event = null)
     }
 }

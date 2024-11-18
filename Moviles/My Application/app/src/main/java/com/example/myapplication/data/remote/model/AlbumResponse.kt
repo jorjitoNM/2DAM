@@ -27,9 +27,9 @@ data class Album (
   @SerializedName("popularity"             ) var popularity           : Int?                  = null
 )
 fun Album.getSongsList() : List<Song> {
-  val track : Tracks = this.tracks
+  val tracks : Tracks = this.tracks
   val songs : ArrayList<Song> = ArrayList()
-  track.items.forEach { item -> songs.add(Song(
+  tracks.items.forEach { item -> songs.add(Song(
     item.id,
     item.name,
     item.artists.map { a -> a.name }.toList(),
