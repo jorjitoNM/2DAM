@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.calculadorajavafx.HelloController">
 
@@ -23,33 +24,93 @@
     </rowConstraints>
 
     <!-- Primera fila -->
-    <Button mnemonicParsing="false" prefHeight="45" prefWidth="45" text="\%" GridPane.halignment="CENTER" />
-    <Button mnemonicParsing="false" prefHeight="45" prefWidth="45" text="CE" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-    <Button mnemonicParsing="false" prefHeight="45" prefWidth="45" text="C" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-    <Button mnemonicParsing="false" prefHeight="45" prefWidth="45" text="⬅" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+    <Button mnemonicParsing="false" prefHeight="45" prefWidth="45" style="-fx-background-color: #4992ff" text="\%" GridPane.halignment="CENTER">
+      <font>
+        <Font name="Arial" size="12.0" />
+      </font></Button>
+    <Button mnemonicParsing="false" prefHeight="45" prefWidth="45" style="-fx-background-color: #fffa49" text="CE" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+      <font>
+        <Font name="Arial" size="12.0" />
+      </font></Button>
+    <Button mnemonicParsing="false" prefHeight="45" prefWidth="45" style="-fx-background-color: #fffa49" text="C" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+      <font>
+        <Font name="Arial" size="12.0" />
+      </font></Button>
+    <Button mnemonicParsing="false" prefHeight="45" prefWidth="45" style="-fx-background-color: #fc6c6c" text="⬅" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+      <font>
+        <Font name="Arial" size="12.0" />
+      </font></Button>
 
     <!-- Segunda fila -->
-    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="8" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="9" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="x" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="7" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      <font>
+        <Font name="Arial" size="12.0" />
+      </font></Button>
+    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="8" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      <font>
+        <Font name="Arial" size="12.0" />
+      </font></Button>
+    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="9" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      <font>
+        <Font name="Arial" size="12.0" />
+      </font></Button>
+    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" style="-fx-background-color: #4992ff" text="x" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      <font>
+        <Font name="Arial" size="15.0" />
+      </font></Button>
 
     <!-- Tercera fila -->
-    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="5" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="6" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="-" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="4" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+      <font>
+        <Font name="Arial" size="12.0" />
+      </font></Button>
+    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="5" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+      <font>
+        <Font name="Arial" size="12.0" />
+      </font></Button>
+    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="6" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+      <font>
+        <Font name="Arial" size="12.0" />
+      </font></Button>
+    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" style="-fx-background-color: #4992ff" text="-" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+      <font>
+        <Font name="Arial" size="15.0" />
+      </font></Button>
 
     <!-- Cuarta fila -->
-    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="2" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="3" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="+" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+      <font>
+        <Font name="Arial" size="12.0" />
+      </font></Button>
+    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="2" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+      <font>
+        <Font name="Arial" size="12.0" />
+      </font></Button>
+    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="3" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+      <font>
+        <Font name="Arial" size="12.0" />
+      </font></Button>
+    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" style="-fx-background-color: #4992ff" text="+" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+      <font>
+        <Font name="Arial" size="15.0" />
+      </font></Button>
 
     <!-- Quinta fila -->
-    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-    <Button mnemonicParsing="false" prefHeight="45" prefWidth="45" text="." GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-    <Button mnemonicParsing="false" prefHeight="45" prefWidth="45" text="=" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" onAction="#onEqualClicked" />
-    <Button mnemonicParsing="false" prefHeight="45" prefWidth="45" text="/" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+    <Button mnemonicParsing="false" onAction="#onNumberClicked" prefHeight="45" prefWidth="45" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+      <font>
+        <Font name="Arial" size="12.0" />
+      </font></Button>
+    <Button mnemonicParsing="false" prefHeight="45" prefWidth="45" style="-fx-background-color: #fffa49" text="." GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+      <font>
+        <Font name="Arial" size="20.0" />
+      </font></Button>
+    <Button mnemonicParsing="false" onAction="#onEqualClicked" prefHeight="45" prefWidth="45" style="-fx-background-color: #53ff75" text="=" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font></Button>
+    <Button mnemonicParsing="false" prefHeight="45" prefWidth="45" style="-fx-background-color: #4992ff" text="/" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+      <font>
+        <Font name="Arial" size="15.0" />
+      </font></Button>
   </GridPane>
 </AnchorPane>
