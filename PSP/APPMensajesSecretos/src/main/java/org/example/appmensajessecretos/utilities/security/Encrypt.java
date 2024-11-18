@@ -23,7 +23,7 @@ import java.util.Base64;
 @Component
 public class Encrypt {
 
-    public Either<Error,String> encrypt(String text, String secretKey)º {
+    public Either<Error,String> encrypt(String text, String secretKey) {
         try {
 
             byte[] iv = new byte[12];
