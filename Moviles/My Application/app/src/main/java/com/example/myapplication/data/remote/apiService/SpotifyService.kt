@@ -11,12 +11,12 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface SpotifyService {
-    @GET("/v1/albums/{id}")
+    @GET("v1/albums/{id}")
     suspend fun getAlbum(@Path("id") id: String, @Header("Authorization") authorization : String) : Response<Album>
 
-    @GET("/v1/tracks/{id}")
+    @GET("v1/tracks/{id}")
     suspend fun getSong(@Path("id") id : String, @Header("Authorization") authorization : String) : Response<Track>
 
-    @POST("/api/token")
+    @POST("api/token")
     suspend fun getToken(@Header("Content-type") content : String, @Body grant_type : String) : Response<Token>
 }

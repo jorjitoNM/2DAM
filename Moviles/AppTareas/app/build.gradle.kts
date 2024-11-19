@@ -7,18 +7,18 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myapplication"
+    namespace = "com.example.apptareas"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.myapplication"
+        applicationId = "com.example.apptareas"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "API_URL", "\"https://api.spotify.com/\"")
+        buildConfigField("String", "API_URL", "\"https://jsonplaceholder.typicode.com/\"")
     }
 
     buildTypes {
