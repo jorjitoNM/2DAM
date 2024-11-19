@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="431833f6-67ed-4576-bfcf-46a046d16740" name="Changes" comment="" />
+    <list default="true" id="431833f6-67ed-4576-bfcf-46a046d16740" name="Changes" comment="liada que no entiendo" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,22 +18,22 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "jorjitoNM"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;jorjitoNM&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/jorjitoNM/2DAM.git",
-    "accountId": "8a378f4a-2147-47a7-8eb1-64e66706b89c"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/jorjitoNM/2DAM.git&quot;,
+    &quot;accountId&quot;: &quot;8a378f4a-2147-47a7-8eb1-64e66706b89c&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 0
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2p499FDKbmCcjB4wi5V3m3UNll4" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -42,6 +42,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "git-widget-placeholder": "AD",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/cnovi/OneDrive/Escritorio/Jorge/GitHub2DAM/AD/HospitalCRUDSpring",
     "nodejs_package_manager_path": "npm",
@@ -86,7 +88,17 @@
       <option name="presentableId" value="Default" />
       <updated>1732014326821</updated>
       <workItem from="1732014328283" duration="198000" />
+      <workItem from="1732018876844" duration="167000" />
     </task>
+    <task id="LOCAL-00001" summary="liada que no entiendo">
+      <option name="closed" value="true" />
+      <created>1732018958406</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1732018958406</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -102,5 +114,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="liada que no entiendo" />
+    <option name="LAST_COMMIT_MESSAGE" value="liada que no entiendo" />
   </component>
 </project>
