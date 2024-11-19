@@ -59,7 +59,7 @@ public class MessageService {
                 });
     }
 
-    /*public Either<Error, List<Mensaje>> getMessages(Grupo group, String secretKey) {
+    public Either<Error, List<Mensaje>> getMessages(Grupo group, String secretKey) {
         return groupValidator.validateGroup(group)
                 .flatMap(nada -> {
                     if (Boolean.TRUE.equals(group.getIsPrivate())) {
@@ -82,5 +82,5 @@ public class MessageService {
                                 });
                     }
                 });
-    }*/
+    }
 }
