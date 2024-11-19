@@ -39,18 +39,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "AD",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/cnovi/OneDrive/Escritorio/Jorge/GitHub2DAM/AD/HospitalCRUDSpring",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;AD&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/cnovi/OneDrive/Escritorio/Jorge/GitHub2DAM/AD/HospitalCRUDSpring&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="SpringjavafxApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="APPMensajesSecretos" />
@@ -117,6 +117,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="liada que no entiendo" />
-    <option name="LAST_COMMIT_MESSAGE" value="liada que no entiendo" />
+    <MESSAGE value="liada" />
+    <option name="LAST_COMMIT_MESSAGE" value="liada" />
   </component>
 </project>

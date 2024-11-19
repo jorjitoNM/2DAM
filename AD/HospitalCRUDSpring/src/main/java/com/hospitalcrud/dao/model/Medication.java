@@ -27,4 +27,10 @@ public class Medication {
         this.medRecordId = medRecordId;
         this.dosage = "";
     }
+    public Medication(String medicationName, int medRecordId, String dosage) {
+        this.id = 0;
+        this.medicationName = medicationName;
+        this.medRecordId = medRecordId;
+        this.dosage = "";
+    }
 }

@@ -8,4 +8,5 @@ public interface MedicationsRepository {
     List<Medication> getPrescribedMedications (int medicalRecordId);
     List<String> getAll();
     void deletePatientMedications(int patientId);
+    void deleteMedicalRecordMedications(int medicalRecordId);
 }

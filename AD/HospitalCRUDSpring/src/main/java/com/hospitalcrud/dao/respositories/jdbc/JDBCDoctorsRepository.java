@@ -14,7 +14,7 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
-@Profile("asd")
+@Profile("jdbc")
 public class JDBCDoctorsRepository implements DoctorsRepository {
     private final DBConnectionPool pool;
     private final MapDoctors doctorsMapper;

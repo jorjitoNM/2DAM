@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Repository
-@Profile("jdbc")
+@Profile("spring")
 public class SpringPatientsRepository implements PatientRepository {
     private final MapSpringPatients patientMapper;
     private final CredentialRepository credentialRepository;
@@ -59,7 +59,12 @@ public class SpringPatientsRepository implements PatientRepository {
 
     @Override
     public void update(Patient patient) {
-
+        jdbcClient.sql(SQLQueries.UPDATE_PATIENT)
+                .param("name", patient.getName())
+                .param("date_of_birth",patient.getBirthDate())
+                .param("phone",patient.getPhone())
+                .param("patient_id",patient.getId())
+                .update();
     }
 
     @Override
@@ -70,7 +75,7 @@ public class SpringPatientsRepository implements PatientRepository {
             medicalRecordsRepository.deletePatientMedicalRecords(patientId);
         }
         credentialRepository.delete(patientId);
-        paymentsRepository.delete(patientId);
+        paymentsRepository.deletePatientPayments(patientId);
         jdbcClient.sql(SQLQueries.DELETE_PATIENT).param("id", patientId).update();
         return false;
     }

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.List;
 
-@Profile("jdbcasd")
+@Profile("jdbc")
 @Repository
 public class JDBCPatientsRepository implements PatientRepository {
     private final MapPatients patientsMapper;
@@ -87,7 +87,7 @@ public class JDBCPatientsRepository implements PatientRepository {
              PreparedStatement deletePatient = con.prepareStatement(SQLQueries.DELETE_PATIENT);
              PreparedStatement deleteCredential = con.prepareStatement(SQLQueries.DELETE_CREDENTIAL);
              PreparedStatement deleteMedicalRecords = con.prepareStatement(SQLQueries.DELETE_PATIENT_MEDICAL_RECORDS);
-             PreparedStatement deletePrescribedMedications = con.prepareStatement(SQLQueries.DELETE_PRESCRIBED_MEDICATIONS);
+             PreparedStatement deletePrescribedMedications = con.prepareStatement(SQLQueries.DELETE_PATIENT_PRESCRIBED_MEDICATIONS);
 
         ) {
             boolean rollback = false;

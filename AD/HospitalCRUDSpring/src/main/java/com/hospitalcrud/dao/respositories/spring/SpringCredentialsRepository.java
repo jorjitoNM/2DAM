@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Profile("jdbc")
+@Profile("spring")
 public class SpringCredentialsRepository implements CredentialRepository {
     @Autowired
     private JdbcClient jdbcClient;

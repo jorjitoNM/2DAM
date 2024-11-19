@@ -15,7 +15,7 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
-@Profile("sdasd")
+@Profile("jdbc")
 public class JDBCPaymentsRepository implements PaymentsRepository {
 
     private final DBConnectionPool pool;
@@ -63,5 +63,10 @@ public class JDBCPaymentsRepository implements PaymentsRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void deletePatientPayments(int patientId) {
+
     }
 }

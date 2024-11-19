@@ -13,7 +13,7 @@ import java.sql.*;
 import java.util.List;
 
 @Repository
-@Profile("sadvW")
+@Profile("jdbc")
 public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
 
 
@@ -40,7 +40,7 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
     public void delete(int medicalRecordId) {
         try (Connection conn = pool.getConnection();
              PreparedStatement deleteMedicalRecord = conn.prepareStatement(SQLQueries.DELETE_MEDICAL_RECORD);
-             PreparedStatement deletePrescribedMedications = conn.prepareStatement(SQLQueries.DELETE_PRESCRIBED_MEDICATIONS)) {
+             PreparedStatement deletePrescribedMedications = conn.prepareStatement(SQLQueries.DELETE_PATIENT_PRESCRIBED_MEDICATIONS)) {
             conn.setAutoCommit(false);
             deletePrescribedMedications.setInt(1, medicalRecordId);
             if (deletePrescribedMedications.executeUpdate() > 0) {
@@ -95,7 +95,7 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
         try (Connection conn = pool.getConnection();
              PreparedStatement updateMedicalRecord = conn.prepareStatement(SQLQueries.UPDATE_MEDICAL_RECORD);
              PreparedStatement getPrescribedMedications = conn.prepareStatement(SQLQueries.GET_PRESCRIBED_MEDICATIONS);
-             PreparedStatement deletePrescribedMedications = conn.prepareStatement(SQLQueries.DELETE_PRESCRIBED_MEDICATIONS);
+             PreparedStatement deletePrescribedMedications = conn.prepareStatement(SQLQueries.DELETE_PATIENT_PRESCRIBED_MEDICATIONS);
              PreparedStatement addPrescribedMedications = conn.prepareStatement(SQLQueries.ADD_PRESCRIBED_MEDICATIONS);
         ) {
             boolean rollback = false;

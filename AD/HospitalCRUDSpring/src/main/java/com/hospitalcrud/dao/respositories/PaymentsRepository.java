@@ -10,4 +10,5 @@ public interface PaymentsRepository {
     void update(Payment payment);
     boolean delete(int paymentId);
     List<Payment> getPaymentsByPatient();
+    void deletePatientPayments(int patientId);
 }

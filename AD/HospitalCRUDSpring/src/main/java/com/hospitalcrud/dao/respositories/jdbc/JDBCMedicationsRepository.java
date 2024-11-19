@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.List;
 
-@Profile("dsfsd")
+@Profile("jdbc")
 @Repository
 public class JDBCMedicationsRepository implements MedicationsRepository {
 
@@ -48,6 +48,11 @@ public class JDBCMedicationsRepository implements MedicationsRepository {
 
     @Override
     public void deletePatientMedications(int patientId) {
+
+    }
+
+    @Override
+    public void deleteMedicalRecordMedications(int medicalRecordId) {
 
     }
 }
