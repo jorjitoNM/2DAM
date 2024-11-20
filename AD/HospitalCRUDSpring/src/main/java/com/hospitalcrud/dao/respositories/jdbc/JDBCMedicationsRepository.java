@@ -6,7 +6,6 @@ import com.hospitalcrud.dao.respositories.MedicationsRepository;
 import com.hospitalcrud.dao.utilities.DBConnectionPool;
 import com.hospitalcrud.dao.utilities.SQLQueries;
 import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -25,8 +24,9 @@ public class JDBCMedicationsRepository implements MedicationsRepository {
     }
 
     public List<Medication> getPrescribedMedications (int medicalRecordId) {
-        try (Connection conn = pool.getConnection()) {
+        try (Connection conn = pool.getConnection();
             PreparedStatement getPrescribedMedications = conn.prepareStatement(SQLQueries.GET_PRESCRIBED_MEDICATIONS);
+        ) {
             getPrescribedMedications.setInt(1, medicalRecordId);
             ResultSet rs = getPrescribedMedications.executeQuery();
             return medicationsMapper.readRS(rs);
