@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Dungeon [
+        <!ELEMENT dungeon (room+)>
+        <!ELEMENT room (door+, description)>
+        <!ELEMENT door EMPTY >
+        <!ELEMENT description (#PCDATA)>
+        <!ATTLIST dungeon name CDATA #REQUIRED>
+        <!ATTLIST room id ID #REQUIRED>
+        <!ATTLIST door name CDATA #REQUIRED>
+        <!ATTLIST door dest IDREF #REQUIRED>
+        ]>
