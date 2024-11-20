@@ -4,7 +4,7 @@ import com.hospitalcrud.dao.mappers.spring_mappers.MapSpringPatients;
 import com.hospitalcrud.dao.model.MedicalRecord;
 import com.hospitalcrud.dao.model.Patient;
 import com.hospitalcrud.dao.respositories.*;
-import com.hospitalcrud.dao.utilities.Constantes;
+import com.hospitalcrud.common.Constantes;
 import com.hospitalcrud.dao.utilities.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;

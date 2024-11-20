@@ -1,7 +1,7 @@
 package com.hospitalcrud.dao.mappers.files_mappers;
 
 import com.hospitalcrud.dao.model.Doctor;
-import com.hospitalcrud.dao.utilities.Constantes;
+import com.hospitalcrud.common.Constantes;
 import org.springframework.stereotype.Component;
 
 @Component

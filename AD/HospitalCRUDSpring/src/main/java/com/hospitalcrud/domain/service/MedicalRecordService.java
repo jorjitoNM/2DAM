@@ -57,9 +57,8 @@ public class MedicalRecordService {
     }
 
     public void updateMedicalRecord(MedicalRecordUI medicalRecordUI) {
-        MedicalRecord medicalRecord = new MedicalRecord(medicalRecordUI.getId(), medicalRecordUI.getIdPatient(),
+        medicalRecordsRepository.update(new MedicalRecord(medicalRecordUI.getId(), medicalRecordUI.getIdPatient(),
                 medicalRecordUI.getIdDoctor(), medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),
-                parseMedications(medicalRecordUI.getMedications(),medicalRecordUI.getId()));
-        medicalRecordsRepository.update(medicalRecord);
+                parseMedications(medicalRecordUI.getMedications(),medicalRecordUI.getId())));
     }
 }

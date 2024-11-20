@@ -14,15 +14,11 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(DUPLICATED_USERNAME.class)
-    public ResponseEntity<DataBaseError> handleForeignKetException(DUPLICATED_USERNAME e) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new DUPLICATED_USERNAME());
+    public ResponseEntity<String> handleForeignKetException(DUPLICATED_USERNAME e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
     @ExceptionHandler(FOREIGN_KEY_ERROR.class)
-    public ResponseEntity<DataBaseError> handleForeignKetException(FOREIGN_KEY_ERROR e) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new FOREIGN_KEY_ERROR());
-    }
-    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public ResponseEntity<RuntimeException> handleForeignKetException(SQLIntegrityConstraintViolationException e) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new FOREIGN_KEY_ERROR());
+    public ResponseEntity<String> handleForeignKetException(FOREIGN_KEY_ERROR e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 }

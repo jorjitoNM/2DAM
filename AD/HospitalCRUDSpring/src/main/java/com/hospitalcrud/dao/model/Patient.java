@@ -1,6 +1,6 @@
 package com.hospitalcrud.dao.model;
 
-import com.hospitalcrud.dao.utilities.Constantes;
+import com.hospitalcrud.common.Constantes;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

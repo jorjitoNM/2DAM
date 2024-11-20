@@ -1,6 +1,6 @@
 package com.hospitalcrud.domain.error;
 
-import com.hospitalcrud.dao.utilities.Constantes;
+import com.hospitalcrud.common.Constantes;
 
 public final class FOREIGN_KEY_ERROR extends DataBaseError {
     public FOREIGN_KEY_ERROR() {

@@ -95,17 +95,15 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
     public void update(MedicalRecord medicalRecord) {
         try (Connection conn = pool.getConnection();
              PreparedStatement updateMedicalRecord = conn.prepareStatement(SQLQueries.UPDATE_MEDICAL_RECORD);
-             PreparedStatement deletePrescribedMedications = conn.prepareStatement(SQLQueries.DELETE_PATIENT_PRESCRIBED_MEDICATIONS);
+             PreparedStatement deletePrescribedMedications = conn.prepareStatement(SQLQueries.DELETE_PRESCRIBED_MEDICATIONS);
              PreparedStatement addPrescribedMedications = conn.prepareStatement(SQLQueries.ADD_PRESCRIBED_MEDICATIONS);
         ) {
             try {
                 conn.setAutoCommit(false);
                 deletePrescribedMedications.setInt(1, medicalRecord.getId());
                 deletePrescribedMedications.executeUpdate();
-                if (!medicalRecord.getMedications().isEmpty()) {
+                if (!medicalRecord.getMedications().isEmpty())
                     addMedications(addPrescribedMedications, medicalRecord);
-                    addPrescribedMedications.executeUpdate();
-                }
                 updateMedicalRecord.setInt(1, medicalRecord.getIdDoctor());
                 updateMedicalRecord.setString(2, medicalRecord.getDiagnosis());
                 updateMedicalRecord.setDate(3, Date.valueOf(medicalRecord.getDate().toString()));
