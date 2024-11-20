@@ -36,15 +36,15 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
     }
 
     @Override
-    public void delete(int medicalRecordId) {
+    public void delete(MedicalRecord medicalRecord) {
         try (Connection conn = pool.getConnection();
              PreparedStatement deleteMedicalRecord = conn.prepareStatement(SQLQueries.DELETE_MEDICAL_RECORD);
              PreparedStatement deletePrescribedMedications = conn.prepareStatement(SQLQueries.DELETE_PATIENT_PRESCRIBED_MEDICATIONS)) {
             try {
                 conn.setAutoCommit(false);
-                deletePrescribedMedications.setInt(1, medicalRecordId);
+                deletePrescribedMedications.setInt(1, medicalRecord.getId());
                 deletePrescribedMedications.executeUpdate();
-                deleteMedicalRecord.setInt(1, medicalRecordId);
+                deleteMedicalRecord.setInt(1, medicalRecord.getId());
                 deleteMedicalRecord.executeUpdate();
                 conn.commit();
             } catch (SQLIntegrityConstraintViolationException e) {
@@ -95,7 +95,6 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
     public void update(MedicalRecord medicalRecord) {
         try (Connection conn = pool.getConnection();
              PreparedStatement updateMedicalRecord = conn.prepareStatement(SQLQueries.UPDATE_MEDICAL_RECORD);
-             PreparedStatement getPrescribedMedications = conn.prepareStatement(SQLQueries.GET_PRESCRIBED_MEDICATIONS);
              PreparedStatement deletePrescribedMedications = conn.prepareStatement(SQLQueries.DELETE_PATIENT_PRESCRIBED_MEDICATIONS);
              PreparedStatement addPrescribedMedications = conn.prepareStatement(SQLQueries.ADD_PRESCRIBED_MEDICATIONS);
         ) {
@@ -105,15 +104,14 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
                 deletePrescribedMedications.executeUpdate();
                 if (!medicalRecord.getMedications().isEmpty()) {
                     addMedications(addPrescribedMedications, medicalRecord);
+                    addPrescribedMedications.executeUpdate();
                 }
-                if (addPrescribedMedications.executeUpdate() == medicalRecord.getMedications().size()) {
-                    updateMedicalRecord.setInt(1, medicalRecord.getIdDoctor());
-                    updateMedicalRecord.setString(2, medicalRecord.getDiagnosis());
-                    updateMedicalRecord.setDate(3, Date.valueOf(medicalRecord.getDate().toString()));
-                    updateMedicalRecord.setInt(4, medicalRecord.getId());
-                    updateMedicalRecord.executeUpdate();
-                    conn.commit();
-                }
+                updateMedicalRecord.setInt(1, medicalRecord.getIdDoctor());
+                updateMedicalRecord.setString(2, medicalRecord.getDiagnosis());
+                updateMedicalRecord.setDate(3, Date.valueOf(medicalRecord.getDate().toString()));
+                updateMedicalRecord.setInt(4, medicalRecord.getId());
+                updateMedicalRecord.executeUpdate();
+                conn.commit();
             } catch (SQLIntegrityConstraintViolationException e) {
                 conn.rollback();
                 throw new FOREIGN_KEY_ERROR();
@@ -123,11 +121,6 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void deletePatientMedicalRecords(int patientId) {
-
     }
 
     private void addMedications(PreparedStatement addPrescribedMedications, MedicalRecord medicalRecord) throws SQLException {

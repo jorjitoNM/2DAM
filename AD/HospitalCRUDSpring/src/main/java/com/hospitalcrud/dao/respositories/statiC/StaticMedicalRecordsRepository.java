@@ -50,7 +50,7 @@ public class StaticMedicalRecordsRepository implements MedicalRecordsRepository 
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(MedicalRecord medicalRecord) {
     }
 
 }

@@ -52,7 +52,8 @@ public class MedicalRecordService {
     }
 
     public void deleteMedicalRecord(int id) {
-        medicalRecordsRepository.delete(id);
+        medicalRecordsRepository.delete(new MedicalRecord(
+                id,-1,-1,null,null));
     }
 
     public void updateMedicalRecord(MedicalRecordUI medicalRecordUI) {

@@ -42,9 +42,9 @@ public class XmlMedicalRecordRepository implements MedicalRecordsRepository {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(MedicalRecord medicalRecord) {
         List<MedicalRecord> medicalRecords = new ArrayList<>(loadMedicalRecords());
-        medicalRecords.removeIf(m -> m.getId() == id);
+        medicalRecords.removeIf(m -> m.getId() == medicalRecord.getId());
         saveMedicalRecords(medicalRecords);
     }
 

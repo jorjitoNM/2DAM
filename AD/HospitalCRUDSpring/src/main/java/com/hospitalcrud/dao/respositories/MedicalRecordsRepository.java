@@ -7,8 +7,7 @@ import java.util.List;
 
 public interface MedicalRecordsRepository {
     List<MedicalRecord> getAll(int idPatient);
-    void delete(int medicalRecordId);
+    void delete(MedicalRecord medicalRecord);
     int save(MedicalRecord medicalRecord);
     void update(MedicalRecord medicalRecord);
-    void deletePatientMedicalRecords(int patientId);
 }

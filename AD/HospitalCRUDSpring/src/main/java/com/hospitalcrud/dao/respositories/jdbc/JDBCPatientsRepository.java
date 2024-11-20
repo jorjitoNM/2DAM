@@ -88,7 +88,6 @@ public class JDBCPatientsRepository implements PatientRepository {
              PreparedStatement deleteCredential = con.prepareStatement(SQLQueries.DELETE_CREDENTIAL);
              PreparedStatement deleteMedicalRecords = con.prepareStatement(SQLQueries.DELETE_PATIENT_MEDICAL_RECORDS);
              PreparedStatement deletePrescribedMedications = con.prepareStatement(SQLQueries.DELETE_PATIENT_PRESCRIBED_MEDICATIONS);
-
         ) {
             boolean rollback = false;
             con.setAutoCommit(false);
