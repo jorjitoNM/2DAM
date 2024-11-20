@@ -30,6 +30,7 @@ public class Constantes {
 
 
 
+    //Symmetric
     public static final String CIPHER_ALGORITHM = "PBKDF2WithHmacSHA256";
     public static final String CIPHER_TRANSFORMATION = "AES/GCM/noPadding";
     public static final String AES = "AES";
@@ -37,6 +38,15 @@ public class Constantes {
     public static final String ERROR_DECRYPTING = "No se han podido desencriptar sus mensajes, asegurese de que la contraseña introducida es su contraseña de encriptacion";
     public static final int ITERATIONS = 65536;
     public static final int CIPHER_KEY_LENGTH = 256;
+
+    //Asymmetric
+    public static final String SERVER_PRIVATE_KEY = "keyStorePassword";
+    public static final String KEY_STORE_PATH = "keyStorePath";
+    public static final String SERVER = "server";
+    public static final String KEY_STORE_TYPE = "JKS";
+
+
+    //Ficheros
     public static final String RUTA_CONFIG_PROPERTIES = "config/config.properties";
     public static final String PATH_USUARIOS = "pathUsuarios";
     public static final String PATH_GRUPOS = "pathGrupos";

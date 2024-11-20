@@ -86,6 +86,14 @@ public class GroupController {
                 .peekLeft(this::showError);
     }
 
+    private void createUser() {
+        if (confirmationAlert(Constantes.USUARIO_MISSING)) {
+            userService.addUser(new Usuario(userName.getText(), userPassword.getText()))
+                    .peek(ok -> logIn())
+                    .peekLeft(this::showError);
+        }
+    }
+
     public void showInfo(String info) {
         Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
         infoAlert.setTitle(Constantes.INFO);
@@ -134,14 +142,6 @@ public class GroupController {
         }
         errorAlert.setContentText(errorMessage);
         errorAlert.showAndWait();
-    }
-
-    private void createUser() {
-        if (confirmationAlert(Constantes.USUARIO_MISSING)) {
-            userService.addUser(new Usuario(userName.getText(), userPassword.getText()))
-                    .peek(ok -> logIn())
-                    .peekLeft(this::showError);
-        }
     }
 
 

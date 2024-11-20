@@ -18,6 +18,8 @@ public class ConfigurationFicheros {
     private String pathUsuarios;
     private String pathGrupos;
     private String pathMensajes;
+    private String serverKey;
+    private String pathKeyStore;
 
 
     public ConfigurationFicheros(Configuration configuration) {
@@ -28,6 +30,8 @@ public class ConfigurationFicheros {
             this.pathUsuarios = p.getProperty(Constantes.PATH_USUARIOS);
             this.pathGrupos = p.getProperty(Constantes.PATH_GRUPOS);
             this.pathMensajes = p.getProperty(Constantes.PATH_MENSAJES);
+            this.serverKey = p.getProperty(Constantes.SERVER_PRIVATE_KEY);
+            this.pathKeyStore = p.getProperty(Constantes.KEY_STORE_PATH);
 
         } catch (IOException e) {
             log.error(e.getMessage(),e);
