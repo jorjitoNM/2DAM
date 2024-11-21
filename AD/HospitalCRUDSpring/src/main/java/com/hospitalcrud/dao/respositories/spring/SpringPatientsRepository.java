@@ -68,8 +68,8 @@ public class SpringPatientsRepository implements PatientRepository {
 
     @Override
     @Transactional
-    public boolean delete(int patientId, boolean comfirmation) {
-        if (comfirmation) {
+    public boolean delete(int patientId, boolean confirmation) {
+        if (confirmation) {
             medicationsRepository.deletePatientMedications(patientId);
             medicalRecordsRepository.delete(new MedicalRecord(
                     -1,patientId,-1,null,null));

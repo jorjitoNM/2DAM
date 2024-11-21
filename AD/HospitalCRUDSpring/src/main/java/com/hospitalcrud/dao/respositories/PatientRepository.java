@@ -9,5 +9,5 @@ public interface PatientRepository {
     List<Patient> getAll();
     int save(Patient patient);
     void update(Patient patient);
-    boolean delete(int patientId,boolean comfirmation);
+    boolean delete(int patientId,boolean confirmation);
 }

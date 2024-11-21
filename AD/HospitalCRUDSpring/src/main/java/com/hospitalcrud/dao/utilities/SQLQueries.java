@@ -23,6 +23,7 @@ public class SQLQueries {
     public static final String DELETE_PATIENT_MEDICAL_RECORDS = "delete from medical_records where patient_id = ?";
     public static final String DELETE_PATIENT_PAYMENTS = "delete from patient_payments where patient_id = ?";
     public static final String DELETE_PRESCRIBED_MEDICATIONS = "delete from prescribed_medications where record_id = ?";
+    public static final String DELETE_PATIENT_APPOINTMENTS = "delete form appointments where patient_id = ?";
 
     private SQLQueries() {
     }

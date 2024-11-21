@@ -43,29 +43,29 @@ public class JDBCPatientsRepository implements PatientRepository {
              PreparedStatement insertPatient = con.prepareStatement(SQLQueries.INSERT_PATIENT, Statement.RETURN_GENERATED_KEYS);
              PreparedStatement insertCredential = con.prepareStatement(SQLQueries.INSERT_CREDENTIAL)
         ) {
-            con.setAutoCommit(false);
-            setPatientValues(patient, insertPatient).executeUpdate();
-            ResultSet rs = insertPatient.getGeneratedKeys();
-            if (rs.next()) {
+            try {
+                con.setAutoCommit(false);
+                setPatientValues(patient, insertPatient).executeUpdate();
+                ResultSet rs = insertPatient.getGeneratedKeys();
+                rs.next();
                 insertCredential.setString(1, patient.getCredential().getUserName());
                 insertCredential.setString(2, patient.getCredential().getPassword());
                 insertCredential.setInt(3, rs.getInt(1));
                 insertCredential.setNull(4, 0);
-                try {
-                    insertCredential.executeUpdate();
-                    con.commit();
-                    return rs.getInt(1);
-                } catch (SQLException e) {
-                    con.rollback();
-                    throw new DUPLICATED_USERNAME();
-                }
-            } else {
+                insertCredential.executeUpdate();
+                con.commit();
+                patient.setId(rs.getInt(1));
+            } catch (SQLIntegrityConstraintViolationException e) {
                 con.rollback();
-                return -1;
+                e.printStackTrace();
+                throw new DUPLICATED_USERNAME();
+            } catch (SQLException e) {
+                con.rollback();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return patient.getId();
     }
 
     @Override
@@ -88,36 +88,37 @@ public class JDBCPatientsRepository implements PatientRepository {
              PreparedStatement deleteCredential = con.prepareStatement(SQLQueries.DELETE_CREDENTIAL);
              PreparedStatement deleteMedicalRecords = con.prepareStatement(SQLQueries.DELETE_PATIENT_MEDICAL_RECORDS);
              PreparedStatement deletePrescribedMedications = con.prepareStatement(SQLQueries.DELETE_PATIENT_PRESCRIBED_MEDICATIONS);
+             PreparedStatement deletePatientPayments = con.prepareStatement(SQLQueries.DELETE_PATIENT_PAYMENTS);
+             PreparedStatement deletePatientAppointments = con.prepareStatement(SQLQueries.DELETE_PATIENT_APPOINTMENTS);
         ) {
-            boolean rollback = false;
-            con.setAutoCommit(false);
-            deletePrescribedMedications.setInt(1, patientId);
-            deletePrescribedMedications.executeUpdate();
-            deleteMedicalRecords.setInt(1, patientId);
-            if (deleteMedicalRecords.executeUpdate() > 0) {
-                deleteCredential.setInt(1, patientId);
-                if (deleteCredential.executeUpdate() > 0) {
-                    deletePatient.setInt(1, patientId);
-                    try {
-                        result = deletePatient.executeUpdate();
-                        con.commit();
-                    } catch (SQLIntegrityConstraintViolationException e) {
-                        con.rollback();
-                        throw new FOREIGN_KEY_ERROR();
-                    }
-                } else {
-                    rollback = true;
+            try {
+                con.setAutoCommit(false);
+                if (confirmation) {
+                    deletePrescribedMedications.setInt(1, patientId);
+                    deletePrescribedMedications.executeUpdate();
+                    deleteMedicalRecords.setInt(1, patientId);
+                    deleteMedicalRecords.executeUpdate();
+                    deletePatientPayments.setInt(1, patientId);
+                    deletePatientPayments.executeUpdate();
+                    deletePatientAppointments.setInt(1,patientId);
+                    deletePatientPayments.executeUpdate();
                 }
-            } else
-                rollback = true;
-            if (rollback)
-                con.rollback();
-            else
+                deleteCredential.setInt(1, patientId);
+                deleteCredential.executeUpdate();
+                deletePatient.setInt(1, patientId);
+                result = deletePatient.executeUpdate();
                 con.commit();
-            return result == 1;
+            } catch (SQLIntegrityConstraintViolationException e) {
+                con.rollback();
+                e.printStackTrace();
+                throw new FOREIGN_KEY_ERROR();
+            } catch (SQLException e) {
+                con.rollback();
+            }
         } catch (SQLException sqle) {
             throw new RuntimeException(sqle);
         }
+        return result == 1;
     }
 
     private PreparedStatement setPatientValues(Patient patient, PreparedStatement preparedStatement) throws SQLException {
