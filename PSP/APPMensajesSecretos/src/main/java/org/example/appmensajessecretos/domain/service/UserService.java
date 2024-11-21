@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class UserService {
@@ -25,16 +26,16 @@ public class UserService {
         this.userValidator = userValidator;
     }
 
-    public Either<Error, Usuario> logIn(Usuario user) {
+    public CompletableFuture<Either<Error, Usuario>> logIn(Usuario user) {
         return userValidator.validateUser(user)
                 .flatMap(nada -> dao.getUser(user).flatMap(u -> {
                         if (u == null)
                             return Either.left(ServiceError.USER_NOT_FOUND);
                         else {
-                            if (asymmetric.getPrivateKey(user)))
-                                return Either.right(u);
+                            if (asymmetric.getPrivateKey(user).get().isRight())
+                                return Either.right(user);
                             else
-                                return Either.left(DataInputError.INCORRECT_PASSWORD);
+                                return CompletableFuture.completedFuture(Either.left(DataInputError.INCORRECT_PASSWORD));
                         }
                     })
                 );
@@ -45,14 +46,17 @@ public class UserService {
                 .flatMap(nada -> dao.loadUsers(user));
     }
 
-    public Either<Error, Void> addUser(Usuario user) {
+    public CompletableFuture<Either<Error, Void>> addUser(Usuario user) {
         return userValidator.validateUser(user)
                 .flatMap(nada -> {
                     if (dao.getUser(user).get() == null) {
-                        asymmetric.saveUserKeys(user));
-                        return dao.addUser(user.getName());
+                        if (asymmetric.saveUserKeys(user).isRight()) {
+                            dao.addUser(user);
+                            return CompletableFuture.completedFuture(Either.right(user));
+                        } else
+                            return CompletableFuture.completedFuture(Either.left(ServiceError.ERROR_GENERATING_KEYS));
                     } else
-                        return Either.left(ServiceError.USER_ALREADY_EXIST);
+                        return CompletableFuture.completedFuture(Either.left(ServiceError.USER_ALREADY_EXIST));
                 });
     }
 }

@@ -57,7 +57,7 @@ public class Asymmetric {
         this.configuration = configuration;
     }
 
-    public CompletableFuture<Either<Error, Void>> saveUserKeys(Usuario user) {
+    public Either<Error, Void> saveUserKeys(Usuario user) {
         try {
             FileInputStream fis = new FileInputStream(configuration.getPathKeyStore());
             KeyStore keyStore = KeyStore.getInstance(Constantes.KEY_STORE_TYPE);
@@ -151,13 +151,13 @@ public class Asymmetric {
                 .getCertificate(certificateHolder);
     }
 
-    public CompletableFuture<Either<Error,PublicKey>> getPublicKey (Usuario user) {
+    public Either<Error,PublicKey> getPublicKey (Usuario user) {
         try {
             FileInputStream fis = new FileInputStream(configuration.getPathKeyStore());
             KeyStore keyStore = KeyStore.getInstance(Constantes.KEY_STORE_TYPE);
             char[] keyStorePassword = configuration.getServerKey().toCharArray();
             keyStore.load(fis, keyStorePassword);
-            return CompletableFuture.completedFuture(Either.right(keyStore.getCertificate(user.getName()).getPublicKey()));
+            return Either.right(keyStore.getCertificate(user.getName()).getPublicKey());
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (CertificateException e) {
@@ -170,13 +170,13 @@ public class Asymmetric {
             throw new RuntimeException(e);
         }
     }
-    public CompletableFuture<Either<Error,PrivateKey>> getPrivateKey (Usuario user) {
+    public Either<Error,PrivateKey> getPrivateKey (Usuario user) {
         try {
             FileInputStream fis = new FileInputStream(configuration.getPathKeyStore());
             KeyStore keyStore = KeyStore.getInstance(Constantes.KEY_STORE_TYPE);
             char[] keyStorePassword = configuration.getServerKey().toCharArray();
             keyStore.load(fis, keyStorePassword);
-            return CompletableFuture.completedFuture(Either.right((KeyStore.PrivateKeyEntry)keyStore.getKey(user.getName(),user.getPassword().toCharArray())));
+            return Either.right((PrivateKey)keyStore.getKey(user.getName(),user.getPassword().toCharArray()));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (CertificateException e) {
