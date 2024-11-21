@@ -15,35 +15,33 @@ import org.bouncycastle.crypto.params.ECDomainParameters;
 import org.bouncycastle.crypto.params.ECKeyGenerationParameters;
 import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
 import org.bouncycastle.crypto.params.ECPublicKeyParameters;
-import org.bouncycastle.jce.X509Principal;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
-import org.bouncycastle.x509.X509V3CertificateGenerator;
 import org.example.appmensajessecretos.config.ConfigurationFicheros;
+import org.example.appmensajessecretos.domain.model.Grupo;
 import org.example.appmensajessecretos.domain.model.Usuario;
 import org.example.appmensajessecretos.utilities.Constantes;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.PBEKeySpec;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.security.spec.*;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
-import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.Date;
-import java.util.Random;
-import java.util.concurrent.CompletableFuture;
 
 @Component
 public class Asymmetric {
@@ -67,7 +65,6 @@ public class Asymmetric {
             KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(Constantes.SERVER, entryPassword);
             PrivateKey serverPrivateKey = privateKeyEntry.getPrivateKey();
 
-
             KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC");
             keyGen.initialize(new ECGenParameterSpec("secp256r1"), new SecureRandom());
             KeyPair keyPair2 = keyGen.generateKeyPair();
@@ -82,7 +79,6 @@ public class Asymmetric {
             generator.init(keyGenParams);
             keyPair = generator.generateKeyPair();
 
-
             ECPrivateKeyParameters privateKey = (ECPrivateKeyParameters) keyPair.getPrivate();
             ECPublicKeyParameters publicKey = (ECPublicKeyParameters) keyPair.getPublic();
             byte[] privateKeyBytes = privateKey.getD().toByteArray();
@@ -94,9 +90,9 @@ public class Asymmetric {
             PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(privateKeyBytes);
             PrivateKey privateKeyJava = keyFactory.generatePrivate(privateKeySpec);
 
-             X509Certificate certificate = generateCertificate(publicKeyJava,serverPrivateKey);
+            X509Certificate certificate = generateCertificate(publicKeyJava, serverPrivateKey);
 
-             keyStore.setKeyEntry(user.getName(),privateKeyJava, user.getPassword().toCharArray(),new Certificate[]{certificate});
+            keyStore.setKeyEntry(user.getName(), privateKeyJava, user.getPassword().toCharArray(), new Certificate[]{certificate});
 
         } catch (InvalidAlgorithmParameterException e) {
             throw new RuntimeException(e);
@@ -151,7 +147,7 @@ public class Asymmetric {
                 .getCertificate(certificateHolder);
     }
 
-    public Either<Error,PublicKey> getPublicKey (Usuario user) {
+    public Either<Error, PublicKey> getPublicKey(Usuario user) {
         try {
             FileInputStream fis = new FileInputStream(configuration.getPathKeyStore());
             KeyStore keyStore = KeyStore.getInstance(Constantes.KEY_STORE_TYPE);
@@ -170,13 +166,14 @@ public class Asymmetric {
             throw new RuntimeException(e);
         }
     }
-    public Either<Error,PrivateKey> getPrivateKey (Usuario user) {
+
+    public Either<Error, PrivateKey> getPrivateKey(Usuario user) {
         try {
             FileInputStream fis = new FileInputStream(configuration.getPathKeyStore());
             KeyStore keyStore = KeyStore.getInstance(Constantes.KEY_STORE_TYPE);
             char[] keyStorePassword = configuration.getServerKey().toCharArray();
             keyStore.load(fis, keyStorePassword);
-            return Either.right((PrivateKey)keyStore.getKey(user.getName(),user.getPassword().toCharArray()));
+            return Either.right((PrivateKey) keyStore.getKey(user.getName(), user.getPassword().toCharArray()));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (CertificateException e) {
@@ -192,7 +189,7 @@ public class Asymmetric {
         }
     }
 
-    public KeySpec getRandomKey () {
+    public KeySpec getRandomKey() {
         byte[] salt = new byte[16];
         SecureRandom sr = new SecureRandom();
         sr.nextBytes(salt);
@@ -200,4 +197,79 @@ public class Asymmetric {
         sr.nextBytes(password);
         return new PBEKeySpec(Base64.getUrlEncoder().encodeToString(password).toCharArray(), salt, 100000, 256);
     }
+
+    public Either<Error, Void> saveGroupPassword(Usuario user, Grupo group) {
+        try {
+            FileInputStream fis = new FileInputStream(configuration.getPathKeyStore());
+            KeyStore keyStore = KeyStore.getInstance(Constantes.KEY_STORE_TYPE);
+            char[] keyStorePassword = configuration.getServerKey().toCharArray();
+            keyStore.load(fis, keyStorePassword);
+            KeyStore.ProtectionParameter entryPassword = new KeyStore.PasswordProtection(keyStorePassword);
+            KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(Constantes.SERVER, entryPassword);
+            PrivateKey serverPrivateKey = privateKeyEntry.getPrivateKey();
+            getPrivateKey(user).flatMap(userPrivateKey ->
+                    getPublicKey(user).flatMap(userPublicKey ->
+                            cypher(group.getPassword(), userPublicKey)
+                                    .flatMap(cypheredText -> keyStore.setKeyEntry(user.getName() + group.getName(), cypheredText.toCharArray(), userPrivateKey))
+                    )
+            );
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (UnrecoverableEntryException e) {
+            throw new RuntimeException(e);
+        } catch (CertificateException e) {
+            throw new RuntimeException(e);
+        } catch (KeyStoreException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (OperatorCreationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Either<Error, String> cypher(String text, PublicKey publicKey) {
+        try {
+            Cipher cipher = Cipher.getInstance("RSA", "BC");
+            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+            byte[] byteText = text.getBytes(StandardCharsets.UTF_8);
+            return Either.right(new String(cipher.doFinal(byteText), StandardCharsets.UTF_8));
+        } catch (NoSuchPaddingException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchProviderException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidKeyException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalBlockSizeException e) {
+            throw new RuntimeException(e);
+        } catch (BadPaddingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Either<Error, String> decipher(String text, PrivateKey privateKey) {
+        try {
+            Cipher cipher = Cipher.getInstance("RSA", "BC");
+            cipher.init(Cipher.ENCRYPT_MODE, privateKey);
+            byte[] byteText = text.getBytes(StandardCharsets.UTF_8);
+            return Either.right(new String(cipher.doFinal(byteText), StandardCharsets.UTF_8));
+        } catch (NoSuchPaddingException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchProviderException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidKeyException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalBlockSizeException e) {
+            throw new RuntimeException(e);
+        } catch (BadPaddingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

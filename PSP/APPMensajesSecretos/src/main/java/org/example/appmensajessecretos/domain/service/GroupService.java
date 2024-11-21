@@ -9,6 +9,7 @@ import org.example.appmensajessecretos.domain.model.Grupo;
 import org.example.appmensajessecretos.domain.model.Usuario;
 import org.example.appmensajessecretos.domain.validator.ValidateGroup;
 import org.example.appmensajessecretos.domain.validator.ValidateUser;
+import org.example.appmensajessecretos.utilities.security.Asymmetric;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +21,15 @@ public class GroupService {
     private final ValidateUser userValidator;
     private final ValidateGroup groupValidator;
     private final PasswordEncoder passwordEncoder;
+    private final Asymmetric asymmetric;
 
 
-    public GroupService(DaoGroups dao, ValidateUser userValidator, ValidateGroup groupValidator, PasswordEncoder passwordEncoder) {
+    public GroupService(DaoGroups dao, ValidateUser userValidator, ValidateGroup groupValidator, PasswordEncoder passwordEncoder, Asymmetric asymmetric) {
         this.dao = dao;
         this.userValidator = userValidator;
         this.groupValidator = groupValidator;
         this.passwordEncoder = passwordEncoder;
+        this.asymmetric = asymmetric;
     }
 
     public Either<Error, List<Grupo>> getGroups(Usuario user) {

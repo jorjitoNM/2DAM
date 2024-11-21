@@ -27,18 +27,18 @@ public class UserService {
     }
 
     public CompletableFuture<Either<Error, Usuario>> logIn(Usuario user) {
-        return userValidator.validateUser(user)
+        return CompletableFuture.completedFuture(userValidator.validateUser(user)
                 .flatMap(nada -> dao.getUser(user).flatMap(u -> {
                         if (u == null)
-                            return Either.left(ServiceError.USER_NOT_FOUND);
+                            return CompletableFuture.completedFuture(Either.left(ServiceError.USER_NOT_FOUND));
                         else {
-                            if (asymmetric.getPrivateKey(user).get().isRight())
-                                return Either.right(user);
+                            if (asymmetric.getPrivateKey(user).isRight())
+                                return CompletableFuture.completedFuture(Either.right(user));
                             else
                                 return CompletableFuture.completedFuture(Either.left(DataInputError.INCORRECT_PASSWORD));
                         }
                     })
-                );
+                ));
     }
 
     public Either<Error, List<Usuario>> loadUsers (Usuario user) {
@@ -47,16 +47,16 @@ public class UserService {
     }
 
     public CompletableFuture<Either<Error, Void>> addUser(Usuario user) {
-        return userValidator.validateUser(user)
-                .flatMap(nada -> {
+        return CompletableFuture.completedFuture(userValidator.validateUser(user)
+                .flatMap(nada -> CompletableFuture.completedFuture({
                     if (dao.getUser(user).get() == null) {
                         if (asymmetric.saveUserKeys(user).isRight()) {
                             dao.addUser(user);
-                            return CompletableFuture.completedFuture(Either.right(user));
+                            return CompletableFuture.completedFuture(Either.right(null));
                         } else
                             return CompletableFuture.completedFuture(Either.left(ServiceError.ERROR_GENERATING_KEYS));
                     } else
                         return CompletableFuture.completedFuture(Either.left(ServiceError.USER_ALREADY_EXIST));
-                });
+                })));
     }
 }
