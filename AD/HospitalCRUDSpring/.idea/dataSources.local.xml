@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal" created-in="IU-241.19072.14">
+    <data-source name="jorge_novillo_hospital@dam2.mysql.iesquevedo.es" uuid="647a1359-8106-44ce-97b2-54803170ca38">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
+      <schema-mapping />
+    </data-source>
+  </component>
+</project>
