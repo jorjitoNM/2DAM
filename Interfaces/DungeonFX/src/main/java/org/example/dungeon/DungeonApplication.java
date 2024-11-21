@@ -1,4 +1,4 @@
-package org.example.dungeonfx;
+package org.example.dungeon;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

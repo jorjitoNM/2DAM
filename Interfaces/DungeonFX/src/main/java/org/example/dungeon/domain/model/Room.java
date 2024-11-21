@@ -1,4 +1,4 @@
-package org.example.dungeonfx.domain.model;
+package org.example.dungeon.domain.model;
 
 import java.util.HashMap;
 import java.util.Map;

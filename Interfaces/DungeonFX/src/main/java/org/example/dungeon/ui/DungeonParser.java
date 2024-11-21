@@ -1,6 +1,6 @@
-package org.example.dungeonfx.ui;
+package org.example.dungeon.ui;
 
-import org.example.dungeonfx.domain.model.Room;
+import org.example.dungeon.domain.model.Room;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

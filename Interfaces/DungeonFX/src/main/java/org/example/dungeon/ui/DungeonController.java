@@ -1,4 +1,4 @@
-package org.example.dungeonfx.ui;
+package org.example.dungeon.ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,7 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import org.example.dungeonfx.domain.model.Room;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import org.example.dungeon.domain.model.Room;
 
 import javax.swing.*;
 import java.io.File;
@@ -71,10 +73,11 @@ public class DungeonController extends JFrame {
 
     @FXML
     public void loadGame() {
-        JFileChooser fileChooser = new JFileChooser();
-        int result = fileChooser.showOpenDialog(this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Dungeon Files", "*.dungeon", "*.txt");
+        fileChooser.getExtensionFilters().add(filter);
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        if (selectedFile != null) {
             loadDungeon(selectedFile);
         }
     }
