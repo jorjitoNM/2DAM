@@ -1,12 +1,32 @@
 package org.example.appmensajessecretos.utilities.security;
 
 import io.vavr.control.Either;
+import org.bouncycastle.asn1.sec.SECNamedCurves;
+import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
+import org.bouncycastle.asn1.x9.X9ECParameters;
+import org.bouncycastle.cert.X509CertificateHolder;
+import org.bouncycastle.cert.X509v3CertificateBuilder;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
+import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
+import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
+import org.bouncycastle.crypto.generators.ECKeyPairGenerator;
+import org.bouncycastle.crypto.params.ECDomainParameters;
+import org.bouncycastle.crypto.params.ECKeyGenerationParameters;
+import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
+import org.bouncycastle.crypto.params.ECPublicKeyParameters;
 import org.bouncycastle.jce.X509Principal;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.operator.ContentSigner;
+import org.bouncycastle.operator.OperatorCreationException;
+import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.bouncycastle.x509.X509V3CertificateGenerator;
 import org.example.appmensajessecretos.config.ConfigurationFicheros;
 import org.example.appmensajessecretos.domain.model.Usuario;
 import org.example.appmensajessecretos.utilities.Constantes;
+import org.springframework.stereotype.Component;
 
+import javax.crypto.spec.PBEKeySpec;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -16,14 +36,20 @@ import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.security.spec.ECGenParameterSpec;
+import java.security.spec.*;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
+import java.util.Base64;
 import java.util.Date;
+import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 
+@Component
 public class Asymmetric {
+    static {
+        Security.addProvider(new BouncyCastleProvider());
+    }
 
     private final ConfigurationFicheros configuration;
 
@@ -42,24 +68,35 @@ public class Asymmetric {
             PrivateKey serverPrivateKey = privateKeyEntry.getPrivateKey();
 
 
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("EC", "BC");
-            keyPairGenerator.initialize(new ECGenParameterSpec("secp521r1"));
-            KeyPair keyPair = keyPairGenerator.generateKeyPair();
+            KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC");
+            keyGen.initialize(new ECGenParameterSpec("secp256r1"), new SecureRandom());
+            KeyPair keyPair2 = keyGen.generateKeyPair();
+            X9ECParameters ecp = SECNamedCurves.getByName("secp256r1");
+            ECDomainParameters domainParams = new ECDomainParameters(ecp.getCurve(),
+                    ecp.getG(), ecp.getN(), ecp.getH(),
+                    ecp.getSeed());
 
-            X509V3CertificateGenerator cert1 = new X509V3CertificateGenerator();
-            cert1.setSerialNumber(BigInteger.valueOf(1));   //or generate a random number
-            cert1.setSubjectDN(new X509Principal("CN=Oscar"));  //see examples to add O,OU etc
-            cert1.setIssuerDN(new X509Principal("CN=Oscar")); //same since it is self-signed
-            cert1.setPublicKey(clavesRSA.getPublic());
-            cert1.setNotBefore(
-                    Date.from(LocalDate.now().plus(365, ChronoUnit.DAYS).atStartOfDay().toInstant(ZoneOffset.UTC)));
-            cert1.setNotAfter(new Date());
-            cert1.setSignatureAlgorithm("SHA256WithRSAEncryption");
-            PrivateKey signingKey = clavesRSA.getPrivate();
+            AsymmetricCipherKeyPair keyPair;
+            ECKeyGenerationParameters keyGenParams = new ECKeyGenerationParameters(domainParams, new SecureRandom());
+            ECKeyPairGenerator generator = new ECKeyPairGenerator();
+            generator.init(keyGenParams);
+            keyPair = generator.generateKeyPair();
 
 
-            X509Certificate cert =  cert1.generate(signingKey);
+            ECPrivateKeyParameters privateKey = (ECPrivateKeyParameters) keyPair.getPrivate();
+            ECPublicKeyParameters publicKey = (ECPublicKeyParameters) keyPair.getPublic();
+            byte[] privateKeyBytes = privateKey.getD().toByteArray();
+            byte[] publicKeyBytes = publicKey.getQ().getEncoded(false);
 
+            KeyFactory keyFactory = KeyFactory.getInstance("EC", "BC");
+            X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(publicKeyBytes);
+            PublicKey publicKeyJava = keyFactory.generatePublic(publicKeySpec);
+            PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(privateKeyBytes);
+            PrivateKey privateKeyJava = keyFactory.generatePrivate(privateKeySpec);
+
+             X509Certificate certificate = generateCertificate(publicKeyJava,serverPrivateKey);
+
+             keyStore.setKeyEntry(user.getName(),privateKeyJava, user.getPassword().toCharArray(),new Certificate[]{certificate});
 
         } catch (InvalidAlgorithmParameterException e) {
             throw new RuntimeException(e);
@@ -77,22 +114,90 @@ public class Asymmetric {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (InvalidKeySpecException e) {
+            throw new RuntimeException(e);
+        } catch (SignatureException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidKeyException e) {
+            throw new RuntimeException(e);
+        } catch (OperatorCreationException e) {
+            throw new RuntimeException(e);
         }
+    }
 
-        // Generar el certificado autofirmado
-        X509Certificate certificate = generateSignedCertificate(keyPair);
+    private X509Certificate generateCertificate(PublicKey userPublicKey, PrivateKey serverPrivateKey) throws OperatorCreationException, CertificateException {
 
-        // Crear un keystore de tipo JKS
-        KeyStore keyStore = KeyStore.getInstance("JKS");
-        char[] password = "password".toCharArray(); // Contraseña para proteger el keystore
-        keyStore.load(null, password);
+        X500Name issuer = new X500Name(Constantes.GENERATING_CERTIFICATE_COMMON_NAME);
+        X500Name subject = issuer;
 
-        // Guardar la clave privada y el certificado en el keystore
-        keyStore.setKeyEntry("alias2", keyPair.getPrivate(), password, new Certificate[]{certificate});
+        Date notBefore = new Date(System.currentTimeMillis() - 1000L * 60 * 60 * 24);
+        Date notAfter = new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 365);
 
-        // Guardar el keystore en un archivo
-        try (FileOutputStream fos = new FileOutputStream("keystore.jks")) {
-            keyStore.store(fos, password);
+        BigInteger serialNumber = BigInteger.valueOf(System.currentTimeMillis());
+
+        SubjectPublicKeyInfo subjectPublicKeyInfo = SubjectPublicKeyInfo.getInstance(userPublicKey.getEncoded());
+        X509v3CertificateBuilder certificateBuilder = new JcaX509v3CertificateBuilder(
+                issuer, serialNumber, notBefore, notAfter, subject, subjectPublicKeyInfo
+        );
+
+        ContentSigner contentSigner = new JcaContentSignerBuilder("SHA256withECDSA")
+                .setProvider("BC")
+                .build(serverPrivateKey);
+
+        X509CertificateHolder certificateHolder = certificateBuilder.build(contentSigner);
+
+        return new JcaX509CertificateConverter()
+                .setProvider("BC")
+                .getCertificate(certificateHolder);
+    }
+
+    public CompletableFuture<Either<Error,PublicKey>> getPublicKey (Usuario user) {
+        try {
+            FileInputStream fis = new FileInputStream(configuration.getPathKeyStore());
+            KeyStore keyStore = KeyStore.getInstance(Constantes.KEY_STORE_TYPE);
+            char[] keyStorePassword = configuration.getServerKey().toCharArray();
+            keyStore.load(fis, keyStorePassword);
+            return CompletableFuture.completedFuture(Either.right(keyStore.getCertificate(user.getName()).getPublicKey()));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (CertificateException e) {
+            throw new RuntimeException(e);
+        } catch (KeyStoreException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
+    }
+    public CompletableFuture<Either<Error,PrivateKey>> getPrivateKey (Usuario user) {
+        try {
+            FileInputStream fis = new FileInputStream(configuration.getPathKeyStore());
+            KeyStore keyStore = KeyStore.getInstance(Constantes.KEY_STORE_TYPE);
+            char[] keyStorePassword = configuration.getServerKey().toCharArray();
+            keyStore.load(fis, keyStorePassword);
+            return CompletableFuture.completedFuture(Either.right((KeyStore.PrivateKeyEntry)keyStore.getKey(user.getName(),user.getPassword().toCharArray())));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (CertificateException e) {
+            throw new RuntimeException(e);
+        } catch (KeyStoreException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (UnrecoverableKeyException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public KeySpec getRandomKey () {
+        byte[] salt = new byte[16];
+        SecureRandom sr = new SecureRandom();
+        sr.nextBytes(salt);
+        byte[] password = new byte[16];
+        sr.nextBytes(password);
+        return new PBEKeySpec(Base64.getUrlEncoder().encodeToString(password).toCharArray(), salt, 100000, 256);
     }
 }

@@ -2,7 +2,6 @@ package org.example.appmensajessecretos.utilities.security;
 
 import com.google.common.primitives.Bytes;
 import io.vavr.control.Either;
-import org.example.appmensajessecretos.domain.error.EncryptingException;
 import org.example.appmensajessecretos.domain.error.Error;
 import org.example.appmensajessecretos.domain.error.ServiceError;
 import org.example.appmensajessecretos.utilities.Constantes;
@@ -21,7 +20,7 @@ import java.util.Arrays;
 import java.util.Base64;
 
 @Component
-public class Encrypt {
+public class Symmetric {
 
     public Either<Error,String> encrypt(String text, String secretKey) {
         try {

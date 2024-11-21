@@ -9,7 +9,7 @@ import org.example.appmensajessecretos.domain.error.ServiceError;
 import org.example.appmensajessecretos.domain.model.Grupo;
 import org.example.appmensajessecretos.domain.model.Mensaje;
 import org.example.appmensajessecretos.domain.model.Usuario;
-import org.example.appmensajessecretos.utilities.security.Encrypt;
+import org.example.appmensajessecretos.utilities.security.Symmetric;
 import org.example.appmensajessecretos.domain.validator.ValidateGroup;
 import org.example.appmensajessecretos.domain.validator.ValidateMessage;
 import org.example.appmensajessecretos.domain.validator.ValidateUser;
@@ -21,13 +21,13 @@ import java.util.List;
 @Service
 public class MessageService {
     private final DaoMessages dao;
-    private final Encrypt security;
+    private final Symmetric security;
     private final ValidateMessage messageValidator;
     private final ValidateUser userValidator;
     private final ValidateGroup groupValidator;
 
 
-    public MessageService(DaoMessages dao, Encrypt security, ValidateMessage messageValidator, ValidateUser userValidator, ValidateGroup groupValidator) {
+    public MessageService(DaoMessages dao, Symmetric security, ValidateMessage messageValidator, ValidateUser userValidator, ValidateGroup groupValidator) {
         this.dao = dao;
         this.security = security;
         this.messageValidator = messageValidator;

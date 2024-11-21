@@ -44,6 +44,7 @@ public class Constantes {
     public static final String KEY_STORE_PATH = "keyStorePath";
     public static final String SERVER = "server";
     public static final String KEY_STORE_TYPE = "JKS";
+    public static final String GENERATING_CERTIFICATE_COMMON_NAME = "CN=Test Certificate";
 
 
     //Ficheros
