@@ -2,5 +2,5 @@ package com.example.apptareas.data.remote.model
 
 
 data class ApiResponse(
-    val users : List<UserRemote>
+    val users : List<E>
 )
