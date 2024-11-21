@@ -64,7 +64,6 @@ function deletePatient(button) {
                                 // Volvemos a llamar al delete pero con la confirmación
                                 sendDeleteRequest(true);
                                 throw new Error('Patient has medical records');
-                                
                                
                             } else {
                                 // El usuario canceló, lanzar un error
