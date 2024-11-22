@@ -20,7 +20,7 @@ public class GroupController {
     private final UserService userService;
     private final MessageService messageService;
     private final GroupService groupService;
-    private Usuario usuario;
+    private Usuario user;
 
 
     @FXML
@@ -60,7 +60,7 @@ public class GroupController {
 
 
     @FXML
-    private ListView<String> groupChats;
+    private ListView<String> chat;
 
 
     @FXML
@@ -71,14 +71,14 @@ public class GroupController {
         this.userService = userService;
         this.messageService = messageService;
         this.groupService = groupService;
-        usuario = null;
+        user = null;
     }
 
 
     public void logIn() {
         userService.logIn(new Usuario(userName.getText(), userPassword.getText()))
                 .peek(ok -> {
-                    usuario = ok;
+                    user = ok;
                     updateUserInfo();
                     showInfo(Constantes.LOGGED_IN);
                     loadUsers();
@@ -147,7 +147,7 @@ public class GroupController {
 
     public void createGroup() {
         Grupo grupo = new Grupo(createGroupName.getText(), createGroupPassword.getText(), isPrivate.isSelected());
-        groupService.createGroup(grupo, usuario)
+        groupService.createGroup(grupo, user)
                 .peek(ok -> {
                     showInfo(Constantes.GROUP_CREATED);
                     updateUserInfo();
@@ -158,7 +158,8 @@ public class GroupController {
 
     public void joinGroup() {
         Grupo grupo = new Grupo(groupName.getText(), groupPassword.getText(), isPrivate.isSelected());
-        groupService.joinGroup(usuario, grupo).peek(ok -> {
+        groupService.joinGroup(user, grupo).peek(ok -> {
+            userService.saveGroupPassword(user, grupo).thenAcceptAsync(() ->);
             showInfo(Constantes.JOINED_GROUP);
             updateUserInfo();
         }).peekLeft(this::showError);
@@ -167,7 +168,7 @@ public class GroupController {
 
     public void confirmDelete() {
         if (confirmationAlert(Constantes.MENSAJE_ELIMINAR_USUARIO)) {
-            groupService.deleteMember(userNameDelete.getText(), groupNameDelete.getText(), usuario)
+            groupService.deleteMember(userNameDelete.getText(), groupNameDelete.getText(), user)
                     .peek(ok -> {
                         showInfo(Constantes.MEMBER_DELETED);
                         updateUserInfo();
@@ -178,17 +179,21 @@ public class GroupController {
 
 
     public void sendMessage() {
-        messageService.sendMessage(message.getText(), usuario, myChats.getSelectionModel().getSelectedItem(), encryptPassword.getText())
-                .peek(ok -> {
-                    loadUserGroupChats();
-                    showInfo(Constantes.MESSAGE_SENT);
-                })
-                .peekLeft(this::showError);
+        Grupo g = myChats.getSelectionModel().getSelectedItem();
+        if (g.getIsPrivate())
+            messageService.sendPrivateMessage();
+        else
+            messageService.sendMessage(message.getText(), user, g, encryptPassword.getText())
+                    .peek(ok -> {
+                        loadChatMessages();
+                        showInfo(Constantes.MESSAGE_SENT);
+                    })
+                    .peekLeft(this::showError);
     }
 
 
     public void inviteUser() {
-        groupService.inviteUser(myChats.getSelectionModel().getSelectedItem(), usuarios.getSelectionModel().getSelectedItems(), usuario)
+        groupService.inviteUser(myChats.getSelectionModel().getSelectedItem(), usuarios.getSelectionModel().getSelectedItems(), user)
                 .peek(ok -> showInfo(Constantes.USER_INVITED))
                 .peekLeft(this::showError);
     }
@@ -196,10 +201,10 @@ public class GroupController {
 
     private void updateUserInfo() {
         myChats.getItems().clear();
-        groupChats.getItems().clear();
-        groupService.getGroups(usuario).peek(ok -> {
+        chat.getItems().clear();
+        groupService.getGroups(user).peek(ok -> {
             myChats.getItems().addAll(ok);
-            loadGroupChats();
+            loadGroups();
         }).peekLeft(this::showError);
     }
 
@@ -207,7 +212,7 @@ public class GroupController {
     public void loadUsers() {
         usuarios.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         usuarios.getItems().clear();
-        userService.loadUsers(usuario).peek(ok ->
+        userService.loadUsers(user).peek(ok ->
                         usuarios.getItems().addAll(ok))
                 .peekLeft(this::showError);
     }
@@ -223,15 +228,19 @@ public class GroupController {
     }
 
 
-    public void loadGroupChats() {
-        groupChats.getItems().clear();
+    public void loadGroups() {
+        chat.getItems().clear();
         if (!myChats.getSelectionModel().isEmpty())
-            loadUserGroupChats();
+            loadChatMessages();
     }
 
-    public void loadUserGroupChats() {
-        messageService.getMessages(myChats.getSelectionModel().getSelectedItem(), encryptPassword.getText()).peek(ok -> ok.forEach(m ->
-                groupChats.getItems().add(m.toString())
-        )).peekLeft(this::showError);
+    public void loadChatMessages() {
+        Grupo g = myChats.getSelectionModel().getSelectedItem();
+        if (g.getIsPrivate())
+            messageService.getPrivateMessages(user, g);
+        else
+            messageService.getMessages(myChats.getSelectionModel().getSelectedItem(), user).peek(ok -> ok.forEach(m ->
+                    chat.getItems().add(m.toString())
+            )).peekLeft(this::showError);
     }
 }

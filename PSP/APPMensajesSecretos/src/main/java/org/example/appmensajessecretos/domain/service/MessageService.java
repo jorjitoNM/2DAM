@@ -2,8 +2,8 @@ package org.example.appmensajessecretos.domain.service;
 
 import io.vavr.control.Either;
 import org.example.appmensajessecretos.dao.DaoMessages;
+import org.example.appmensajessecretos.dao.DaoUsers;
 import org.example.appmensajessecretos.domain.error.DataInputError;
-import org.example.appmensajessecretos.domain.error.EncryptingException;
 import org.example.appmensajessecretos.domain.error.Error;
 import org.example.appmensajessecretos.domain.error.ServiceError;
 import org.example.appmensajessecretos.domain.model.Grupo;
@@ -14,10 +14,13 @@ import org.example.appmensajessecretos.utilities.security.Symmetric;
 import org.example.appmensajessecretos.domain.validator.ValidateGroup;
 import org.example.appmensajessecretos.domain.validator.ValidateMessage;
 import org.example.appmensajessecretos.domain.validator.ValidateUser;
+import org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration;
 import org.springframework.stereotype.Service;
 
+import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class MessageService {
@@ -27,18 +30,48 @@ public class MessageService {
     private final ValidateUser userValidator;
     private final ValidateGroup groupValidator;
     private final Asymmetric asymmetric;
+    private final DaoUsers daoUsers;
 
 
-    public MessageService(DaoMessages dao, Symmetric symmetric, ValidateMessage messageValidator, ValidateUser userValidator, ValidateGroup groupValidator, Asymmetric asymmetric) {
+    public MessageService(DaoMessages dao, Symmetric symmetric, ValidateMessage messageValidator, ValidateUser userValidator, ValidateGroup groupValidator, Asymmetric asymmetric, MessageSourceAutoConfiguration messageSourceAutoConfiguration, DaoUsers daoUsers) {
         this.dao = dao;
         this.symmetric = symmetric;
         this.messageValidator = messageValidator;
         this.userValidator = userValidator;
         this.groupValidator = groupValidator;
         this.asymmetric = asymmetric;
+        this.daoUsers = daoUsers;
     }
 
-    public Either<Error, Void> sendMessage(String text, Usuario usuario, Grupo group, String secretKey) {
+    public Either<Error, Void> sendMessage(String text, Usuario user, Grupo group) {
+        return userValidator.validateUserIsLogged(user)
+                .flatMap(nada -> groupValidator.validateGroup(group))
+                .flatMap(nada -> {
+                    if (Boolean.TRUE.equals(group.getIsPrivate()))
+                        return messageValidator.validateMessage(new Mensaje(text, user.getName(), group.getName()))
+                                .flatMap(nada2 -> dao.sendMessage(text, user, group));
+                    else {
+                        return messageValidator.validateMessage(new Mensaje(text, user.getName(), group.getName()))
+                                .flatMap(nada2 -> cipherMessage(group,user))
+                                .flatMap(nada2 -> asymmetric.getPrivateKey(user))
+                                .flatMap(userPrivateKey -> symmetric.decipher(groupPassword,groupPassword))
+                                .flatMap(decipherGroupPassword -> )
+                                .flatMap(encryptedText ->
+                                        symmetric.cipher(user.getName(), secretKey)
+                                                .flatMap(encryptedUsername ->
+                                                        dao.sendMessage(encryptedText,
+                                                                new Usuario(encryptedUsername, user.getPassword()), group
+                                                        )));
+                    }
+                });
+    }
+
+    private Either<Error,String> cipherMessage (Grupo group, Usuario user) {
+
+        asymmetric.cipher(text,)
+    }
+
+    public Either<Error, Void> sendPrivateMessage(String text, Usuario usuario, Grupo group, String secretKey) {
         return userValidator.validateUserIsLogged(usuario)
                 .flatMap(nada -> groupValidator.validateGroup(group))
                 .flatMap(nada -> {
@@ -50,68 +83,56 @@ public class MessageService {
                             return Either.left(DataInputError.EMPTY_FIELDS);
                         else
                             return messageValidator.validateMessage(new Mensaje(text, usuario.getName(), group.getName()))
-                                    .flatMap(nada2 -> symmetric.encrypt(text, secretKey)
-                                            .flatMap(encryptedText ->
-                                                    symmetric.encrypt(usuario.getName(), secretKey)
-                                                            .flatMap(encryptedUsername ->
-                                                                    dao.sendMessage(encryptedText,
-                                                                            new Usuario(encryptedUsername, usuario.getPassword()),
-                                                                            group
-                                                                    ))));
+                                    .flatMap(nada2 -> symmetric.cipher(text, secretKey))
+                                    .flatMap(encryptedText ->
+                                            symmetric.cipher(usuario.getName(), secretKey)
+                                                    .flatMap(encryptedUsername ->
+                                                            dao.sendMessage(encryptedText,
+                                                                    new Usuario(encryptedUsername, usuario.getPassword()), group
+                                                            )));
                     }
                 });
     }
 
-    public Either<Error, List<Mensaje>> getMessages(Grupo group, String secretKey) {
-        return groupValidator.validateGroup(group)
-                .flatMap(nada -> {
-                    if (Boolean.TRUE.equals(group.getIsPrivate())) {
-                        return dao.loadMessages(group);
-                    } else if (group.getName().trim().isBlank() || secretKey.trim().isBlank())
-                        return Either.left(DataInputError.EMPTY_FIELDS);
-                    else {
-                        return dao.loadMessages(group)
-                                .flatMap(mensajes -> decryptMessages(mensajes,secretKey));
-                        return dao.loadMessages(group)
-                                .flatMap(mensajes -> {
-                                    List<Mensaje> decryptedMessages = new ArrayList<>();
-                                    try {
-                                        mensajes.forEach(m -> decryptedMessages.add(new Mensaje(
-                                                symmetric.decrypt(m.getContent(), secretKey)
-                                                , m.getDate(), symmetric.decrypt(m.getAuthor(), secretKey)
-                                                , m.getGrupo())));
-                                        return Either.right(decryptedMessages);
-                                    } catch (EncryptingException e) {
-                                        return Either.left(ServiceError.ERROR_DECRYPTING);
-                                    }
-                                });
-                    }
-                });
+    public CompletableFuture<Either<Error, List<Mensaje>>> getMessages(Grupo group, Usuario user) {
+        return CompletableFuture.completedFuture(groupValidator.validateGroup(group)
+                .flatMap(nada -> asymmetric.getPrivateKey(user))
+                .flatMap(userPrivateKey -> asymmetric.decipher(user.getGroupPasswords().get(group.getName()), userPrivateKey))
+                .flatMap(groupPassword -> dao.loadMessages(group)
+                        .flatMap(messages -> decipherSymmetricMessages(messages, groupPassword)
+                        )));
     }
 
-    private Either<Error,List<Mensaje>> decryptMessages(List<Mensaje> mensajes, String secretKey) {
-            // Usamos un Stream para procesar los mensajes
-            List<Either<Error, Mensaje>> result = mensajes.stream()
-                    .map(message -> new Mensaje(symmetric.decrypt(message.getContent(), secretKey),message.getAuthor(),message.getGrupo())) // Desencriptamos cada mensaje
-                    .toList(); // Recopilamos los resultados en una lista
+    private Either<Error, List<Mensaje>> decipherSymmetricMessages (List<Mensaje> messages, String groupKey) {
+        List<Mensaje> decipheredMessages = new ArrayList<>();
+        for (Mensaje message : messages) {
+            Either<Error, String> either = symmetric.decipher(message.getContent(), groupKey);
+            if (either.isLeft())
+                return Either.left(ServiceError.ERROR_DECRYPTING);
+            else
+                decipheredMessages.add(new Mensaje(either.get(), message.getAuthor(), message.getGrupo()));
+        }
+        return Either.right(decipheredMessages);
+    }
 
-            // Verificamos si hay errores en la lista de resultados
-            List<Error> errors = result.stream()
-                    .filter(Either::isLeft) // Filtramos los mensajes con error
-                    .map(Either::getLeft) // Extraemos los errores
-                    .toList();
+    private Either<Error, List<Mensaje>> decipherAsymmetricMessages (List<Mensaje> messages, PrivateKey userPrivateKey) {
+        List<Mensaje> decipheredMessages = new ArrayList<>();
+        for (Mensaje message : messages) {
+            Either<Error, String> either = asymmetric.decipher(message.getContent(), userPrivateKey);
+            if (either.isLeft())
+                return Either.left(ServiceError.ERROR_DECRYPTING);
+            else
+                decipheredMessages.add(new Mensaje(either.get(), message.getAuthor(), message.getGrupo()));
+        }
+        return Either.right(decipheredMessages);
+    }
 
-            if (!errors.isEmpty()) {
-                // Si encontramos algún error, devolvemos el primer error
-                return Either.left(errors.getFirst());
-            }
 
-            // Si no hubo errores, devolvemos los mensajes desencriptados
-            List<Mensaje> validMessages = result.stream()
-                    .filter(Either::isRight) // Filtramos los mensajes exitosos
-                    .map(Either::get) // Extraemos los mensajes
-                    .toList();
-
-            return Either.right(validMessages); // Devolvemos la lista de mensajes exitosos
+    public CompletableFuture<Either<Error, List<Mensaje>>> getPrivateMessages(Usuario user, Grupo group) {
+        return CompletableFuture.completedFuture(groupValidator.validateGroup(group)
+                .flatMap(nada -> asymmetric.getPrivateKey(user))
+                .flatMap(userPrivateKey -> dao.loadMessages(group)
+                        .flatMap(messages -> decipherAsymmetricMessages(messages, userPrivateKey)
+                        )));
     }
 }

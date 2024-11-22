@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @Data
@@ -12,6 +14,7 @@ public class Mensaje {
     private final LocalDateTime date;
     private final String author;
     private final String grupo;
+    private final List<String> asymmetricPassword = new ArrayList<>();
 
     public Mensaje(String content, String author, String grupo) {
         this.content = content;

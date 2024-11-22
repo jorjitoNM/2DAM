@@ -20,7 +20,7 @@ import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.example.appmensajessecretos.config.ConfigurationFicheros;
-import org.example.appmensajessecretos.domain.model.Grupo;
+import org.example.appmensajessecretos.domain.error.Error;
 import org.example.appmensajessecretos.domain.model.Usuario;
 import org.example.appmensajessecretos.utilities.Constantes;
 import org.springframework.stereotype.Component;
@@ -65,9 +65,6 @@ public class Asymmetric {
             KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(Constantes.SERVER, entryPassword);
             PrivateKey serverPrivateKey = privateKeyEntry.getPrivateKey();
 
-            KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC");
-            keyGen.initialize(new ECGenParameterSpec("secp256r1"), new SecureRandom());
-            KeyPair keyPair2 = keyGen.generateKeyPair();
             X9ECParameters ecp = SECNamedCurves.getByName("secp256r1");
             ECDomainParameters domainParams = new ECDomainParameters(ecp.getCurve(),
                     ecp.getG(), ecp.getN(), ecp.getH(),
@@ -94,8 +91,6 @@ public class Asymmetric {
 
             keyStore.setKeyEntry(user.getName(), privateKeyJava, user.getPassword().toCharArray(), new Certificate[]{certificate});
 
-        } catch (InvalidAlgorithmParameterException e) {
-            throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         } catch (UnrecoverableEntryException e) {
@@ -111,10 +106,6 @@ public class Asymmetric {
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InvalidKeySpecException e) {
-            throw new RuntimeException(e);
-        } catch (SignatureException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidKeyException e) {
             throw new RuntimeException(e);
         } catch (OperatorCreationException e) {
             throw new RuntimeException(e);
@@ -198,39 +189,7 @@ public class Asymmetric {
         return new PBEKeySpec(Base64.getUrlEncoder().encodeToString(password).toCharArray(), salt, 100000, 256);
     }
 
-    public Either<Error, Void> saveGroupPassword(Usuario user, Grupo group) {
-        try {
-            FileInputStream fis = new FileInputStream(configuration.getPathKeyStore());
-            KeyStore keyStore = KeyStore.getInstance(Constantes.KEY_STORE_TYPE);
-            char[] keyStorePassword = configuration.getServerKey().toCharArray();
-            keyStore.load(fis, keyStorePassword);
-            KeyStore.ProtectionParameter entryPassword = new KeyStore.PasswordProtection(keyStorePassword);
-            KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(Constantes.SERVER, entryPassword);
-            PrivateKey serverPrivateKey = privateKeyEntry.getPrivateKey();
-            getPrivateKey(user).flatMap(userPrivateKey ->
-                    getPublicKey(user).flatMap(userPublicKey ->
-                            cypher(group.getPassword(), userPublicKey)
-                                    .flatMap(cypheredText -> keyStore.setKeyEntry(user.getName() + group.getName(), cypheredText.toCharArray(), userPrivateKey))
-                    )
-            );
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (UnrecoverableEntryException e) {
-            throw new RuntimeException(e);
-        } catch (CertificateException e) {
-            throw new RuntimeException(e);
-        } catch (KeyStoreException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (OperatorCreationException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public Either<Error, String> cypher(String text, PublicKey publicKey) {
+    public Either<Error, String> cipher(String text, PublicKey publicKey) {
         try {
             Cipher cipher = Cipher.getInstance("RSA", "BC");
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);

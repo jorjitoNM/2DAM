@@ -5,10 +5,10 @@ import org.example.appmensajessecretos.dao.DaoUsers;
 import org.example.appmensajessecretos.domain.error.DataInputError;
 import org.example.appmensajessecretos.domain.error.Error;
 import org.example.appmensajessecretos.domain.error.ServiceError;
+import org.example.appmensajessecretos.domain.model.Grupo;
 import org.example.appmensajessecretos.domain.model.Usuario;
 import org.example.appmensajessecretos.domain.validator.ValidateUser;
 import org.example.appmensajessecretos.utilities.security.Asymmetric;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,12 +30,12 @@ public class UserService {
         return CompletableFuture.completedFuture(userValidator.validateUser(user)
                 .flatMap(nada -> dao.getUser(user).flatMap(u -> {
                         if (u == null)
-                            return CompletableFuture.completedFuture(Either.left(ServiceError.USER_NOT_FOUND));
+                            return Either.left(ServiceError.USER_NOT_FOUND);
                         else {
                             if (asymmetric.getPrivateKey(user).isRight())
-                                return CompletableFuture.completedFuture(Either.right(user));
+                                return Either.right(user);
                             else
-                                return CompletableFuture.completedFuture(Either.left(DataInputError.INCORRECT_PASSWORD));
+                                return Either.left(DataInputError.INCORRECT_PASSWORD);
                         }
                     })
                 ));
@@ -48,15 +48,25 @@ public class UserService {
 
     public CompletableFuture<Either<Error, Void>> addUser(Usuario user) {
         return CompletableFuture.completedFuture(userValidator.validateUser(user)
-                .flatMap(nada -> CompletableFuture.completedFuture({
+                .flatMap(nada -> {
                     if (dao.getUser(user).get() == null) {
                         if (asymmetric.saveUserKeys(user).isRight()) {
                             dao.addUser(user);
-                            return CompletableFuture.completedFuture(Either.right(null));
+                            return Either.right(null);
                         } else
-                            return CompletableFuture.completedFuture(Either.left(ServiceError.ERROR_GENERATING_KEYS));
+                            return Either.left(ServiceError.ERROR_GENERATING_KEYS);
                     } else
-                        return CompletableFuture.completedFuture(Either.left(ServiceError.USER_ALREADY_EXIST));
-                })));
+                        return Either.left(ServiceError.USER_ALREADY_EXIST);
+                }));
+    }
+
+    public CompletableFuture<Either<Error, String>> saveGroupPassword (Usuario user, Grupo group) {
+        return CompletableFuture.completedFuture(asymmetric.getPublicKey(user)
+                .flatMap(userPublicKey -> asymmetric.cipher(group.getPassword(),userPublicKey))
+                .flatMap(password -> dao.getUser(user)
+                        .flatMap(foundUser -> {
+                            foundUser.addGroupPassword(group.getName(),password);
+                            return Either.right(password);
+                        })));
     }
 }

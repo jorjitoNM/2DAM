@@ -22,7 +22,7 @@ import java.util.Base64;
 @Component
 public class Symmetric {
 
-    public Either<Error,String> encrypt(String text, String secretKey) {
+    public Either<Error,String> cipher (String text, String secretKey) {
         try {
 
             byte[] iv = new byte[12];
@@ -47,7 +47,7 @@ public class Symmetric {
         }
     }
 
-    public Either<Error,String> decrypt (String strToDecrypt, String secret) {
+    public Either<Error,String> decipher (String strToDecrypt, String secret) {
         try {
             byte[] decoded = Base64.getUrlDecoder().decode(strToDecrypt);
             byte[] iv = Arrays.copyOf(decoded, 12);

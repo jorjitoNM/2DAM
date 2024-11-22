@@ -1,14 +1,17 @@
 package org.example.appmensajessecretos.domain.model;
 
+import io.vavr.control.Either;
 import lombok.Data;
 import org.example.appmensajessecretos.utilities.Constantes;
 
-import java.util.Objects;
+import javax.print.attribute.HashAttributeSet;
+import java.util.*;
 
 @Data
 public class Usuario {
     private final String name;
     private final String password;
+    private final Map<String,String> groupPasswords = new HashMap<>(); //<nombreGrupo, contraseña>
 
     public Usuario() {
         name = Constantes.CONTRASEÑA_INCORRECTA;
@@ -36,5 +39,9 @@ public class Usuario {
     @Override
     public String toString() {
         return name;
+    }
+
+    public void addGroupPassword (String groupName, String password) {
+        groupPasswords.put(groupName,password);
     }
 }
