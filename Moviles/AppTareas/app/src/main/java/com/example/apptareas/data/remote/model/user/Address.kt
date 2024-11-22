@@ -1,4 +1,4 @@
-package com.example.apptareas.data.remote.model
+package com.example.apptareas.data.remote.model.user
 
 
 import com.google.gson.annotations.SerializedName
