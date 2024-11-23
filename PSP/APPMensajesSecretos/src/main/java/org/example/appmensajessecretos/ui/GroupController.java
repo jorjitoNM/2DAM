@@ -181,9 +181,9 @@ public class GroupController {
     public void sendMessage() {
         Grupo g = myChats.getSelectionModel().getSelectedItem();
         if (g.getIsPrivate())
-            messageService.sendPrivateMessage();
+            messageService.sendPrivateMessage(message.getText(), user, g);
         else
-            messageService.sendMessage(message.getText(), user, g, encryptPassword.getText())
+            messageService.sendMessage(message.getText(), user, g)
                     .peek(ok -> {
                         loadChatMessages();
                         showInfo(Constantes.MESSAGE_SENT);

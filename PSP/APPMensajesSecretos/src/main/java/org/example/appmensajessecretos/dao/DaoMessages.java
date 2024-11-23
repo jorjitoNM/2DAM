@@ -21,11 +21,11 @@ public class DaoMessages {
         this.dataBase = dataBase;
     }
 
-    public Either<Error,Void> sendMessage(String text, Usuario usuario, Grupo group) {
+    public Either<Error,Void> sendMessage(Mensaje message) {
         return dataBase.loadMessages()
                 .flatMap(mensajes -> {
                     try {
-                        mensajes.add(new Mensaje(text,LocalDateTime.now(),usuario.getName(),group.getName()));
+                        mensajes.add(message);
                         return dataBase.saveMessages(mensajes);
                     } catch (Exception e) {
                         return Either.left(ServiceError.ERROR_SENDING_MESSAGE);

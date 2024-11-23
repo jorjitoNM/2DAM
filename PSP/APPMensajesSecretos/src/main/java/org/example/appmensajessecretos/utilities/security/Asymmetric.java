@@ -29,7 +29,6 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.PBEKeySpec;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -180,13 +179,13 @@ public class Asymmetric {
         }
     }
 
-    public KeySpec getRandomKey() {
+    public String getRandomKey() {
         byte[] salt = new byte[16];
         SecureRandom sr = new SecureRandom();
         sr.nextBytes(salt);
         byte[] password = new byte[16];
         sr.nextBytes(password);
-        return new PBEKeySpec(Base64.getUrlEncoder().encodeToString(password).toCharArray(), salt, 100000, 256);
+        return Base64.getUrlEncoder().encodeToString(password);
     }
 
     public Either<Error, String> cipher(String text, PublicKey publicKey) {
