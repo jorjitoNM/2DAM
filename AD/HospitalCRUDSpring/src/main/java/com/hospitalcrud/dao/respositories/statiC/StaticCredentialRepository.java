@@ -1,6 +1,7 @@
 package com.hospitalcrud.dao.respositories.statiC;
 
 import com.hospitalcrud.dao.model.Credential;
+import com.hospitalcrud.dao.model.Patient;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
@@ -13,8 +14,8 @@ public class StaticCredentialRepository implements com.hospitalcrud.dao.resposit
     private final Credential root = new Credential("root", "quevedo2dam", -1, -1);
     private final List<Credential> credentials = new ArrayList<>();
 
-    public void save(Credential credential) {
-        credentials.add(credential);
+    public void save(Patient patient) {
+        credentials.add(patient.getCredential());
     }
 
     @Override

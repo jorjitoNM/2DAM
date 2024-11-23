@@ -4,6 +4,7 @@ import com.hospitalcrud.dao.model.Medication;
 import com.hospitalcrud.dao.respositories.MedicationsRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,6 +17,8 @@ public class MedicationsService {
     }
 
     public List<String> getAll() {
-        return medicationsRepository.getAll();
+        List<String> medications = new ArrayList<>();
+        medicationsRepository.getAll().forEach(m -> medications.add(m.getMedicationName()));
+        return medications;
     }
 }

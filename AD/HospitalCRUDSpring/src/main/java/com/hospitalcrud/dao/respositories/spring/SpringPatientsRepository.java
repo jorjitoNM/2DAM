@@ -6,8 +6,12 @@ import com.hospitalcrud.dao.model.Patient;
 import com.hospitalcrud.dao.respositories.*;
 import com.hospitalcrud.common.Constantes;
 import com.hospitalcrud.dao.utilities.SQLQueries;
+import com.hospitalcrud.dao.utilities.SQLQueriesSpring;
+import com.hospitalcrud.domain.error.DUPLICATED_USERNAME;
+import com.hospitalcrud.domain.error.FOREIGN_KEY_ERROR;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -25,40 +29,46 @@ public class SpringPatientsRepository implements PatientRepository {
     private final MedicalRecordsRepository medicalRecordsRepository;
     private final PaymentsRepository paymentsRepository;
     private final MedicationsRepository medicationsRepository;
-    @Autowired
-    private JdbcClient jdbcClient;
+    private final AppointmentsRepository appointmentsRepository;
+    private final JdbcClient jdbcClient;
 
-    public SpringPatientsRepository(MapSpringPatients patientMapper, CredentialRepository credentialRepository, MedicalRecordsRepository medicalRecordsRepository, PaymentsRepository paymentsRepository, MedicationsRepository medicationsRepository) {
+    public SpringPatientsRepository(MapSpringPatients patientMapper, CredentialRepository credentialRepository, MedicalRecordsRepository medicalRecordsRepository, PaymentsRepository paymentsRepository, MedicationsRepository medicationsRepository, AppointmentsRepository appointmentsRepository, JdbcClient jdbcClient) {
         this.patientMapper = patientMapper;
         this.credentialRepository = credentialRepository;
         this.medicalRecordsRepository = medicalRecordsRepository;
         this.paymentsRepository = paymentsRepository;
         this.medicationsRepository = medicationsRepository;
+        this.appointmentsRepository = appointmentsRepository;
+        this.jdbcClient = jdbcClient;
     }
 
     @Override
     public List<Patient> getAll() {
-        return jdbcClient.sql(SQLQueries.GET_ALL_PATIENTS).query(patientMapper).list();
+        return jdbcClient.sql(SQLQueriesSpring.GET_ALL_PATIENTS).query(patientMapper).list();
     }
 
     @Override
     @Transactional
     public int save(Patient patient) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcClient.sql(SQLQueries.INSERT_PATIENT)
-                .param("name", patient.getName())
-                .param("date_of_birth",patient.getBirthDate())
-                .param("phone",patient.getPhone())
-                .update(keyHolder);
+        try {
+            jdbcClient.sql(SQLQueriesSpring.INSERT_PATIENT)
+                    .param("name", patient.getName())
+                    .param("date_of_birth", patient.getBirthDate())
+                    .param("phone", patient.getPhone())
+                    .update(keyHolder);
+        } catch (DataIntegrityViolationException e) {
+            throw new DUPLICATED_USERNAME();
+        }
         int newId = Objects.requireNonNull(keyHolder.getKey(), Constantes.ERROR_GENERATING_KEY).intValue();
         patient.getCredential().setPatientId(newId);
-        credentialRepository.save(patient.getCredential());
+        credentialRepository.save(patient);
         return newId;
     }
 
     @Override
     public void update(Patient patient) {
-        jdbcClient.sql(SQLQueries.UPDATE_PATIENT)
+        jdbcClient.sql(SQLQueriesSpring.UPDATE_PATIENT)
                 .param("name", patient.getName())
                 .param("date_of_birth",patient.getBirthDate())
                 .param("phone",patient.getPhone())
@@ -74,9 +84,14 @@ public class SpringPatientsRepository implements PatientRepository {
             medicalRecordsRepository.delete(new MedicalRecord(
                     -1,patientId,-1,null,null));
         }
+        appointmentsRepository.delete(patientId);
         credentialRepository.delete(patientId);
         paymentsRepository.deletePatientPayments(patientId);
-        jdbcClient.sql(SQLQueries.DELETE_PATIENT).param("id", patientId).update();
+        try {
+            jdbcClient.sql(SQLQueriesSpring.DELETE_PATIENT).param("id", patientId).update();
+        } catch (DataIntegrityViolationException e) {
+            throw new FOREIGN_KEY_ERROR();
+        }
         return false;
     }
 }

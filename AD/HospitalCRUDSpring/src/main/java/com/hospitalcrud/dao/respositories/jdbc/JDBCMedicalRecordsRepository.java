@@ -39,7 +39,7 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
     public void delete(MedicalRecord medicalRecord) {
         try (Connection conn = pool.getConnection();
              PreparedStatement deleteMedicalRecord = conn.prepareStatement(SQLQueries.DELETE_MEDICAL_RECORD);
-             PreparedStatement deletePrescribedMedications = conn.prepareStatement(SQLQueries.DELETE_PATIENT_PRESCRIBED_MEDICATIONS)) {
+             PreparedStatement deletePrescribedMedications = conn.prepareStatement(SQLQueries.DELETE_PRESCRIBED_MEDICATIONS)) {
             try {
                 conn.setAutoCommit(false);
                 deletePrescribedMedications.setInt(1, medicalRecord.getId());
@@ -54,7 +54,7 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
                 conn.rollback();
             }
         } catch (SQLException e) {
-            throw new FOREIGN_KEY_ERROR();
+           throw new RuntimeException();
         }
     }
 
@@ -62,7 +62,7 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
     public int save(MedicalRecord medicalRecord) {
         try (Connection conn = pool.getConnection();
              PreparedStatement addMedicalRecord = conn.prepareStatement(SQLQueries.INSERT_MEDICAL_RECORD, Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement addPrescribedMedications = conn.prepareStatement(SQLQueries.ADD_PRESCRIBED_MEDICATIONS);
+             PreparedStatement addPrescribedMedications = conn.prepareStatement(SQLQueries.INSERT_MEDICATION);
         ) {
             try {
                 conn.setAutoCommit(false);
@@ -96,7 +96,7 @@ public class JDBCMedicalRecordsRepository implements MedicalRecordsRepository {
         try (Connection conn = pool.getConnection();
              PreparedStatement updateMedicalRecord = conn.prepareStatement(SQLQueries.UPDATE_MEDICAL_RECORD);
              PreparedStatement deletePrescribedMedications = conn.prepareStatement(SQLQueries.DELETE_PRESCRIBED_MEDICATIONS);
-             PreparedStatement addPrescribedMedications = conn.prepareStatement(SQLQueries.ADD_PRESCRIBED_MEDICATIONS);
+             PreparedStatement addPrescribedMedications = conn.prepareStatement(SQLQueries.INSERT_MEDICATION);
         ) {
             try {
                 conn.setAutoCommit(false);

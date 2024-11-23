@@ -1,6 +1,7 @@
 package com.hospitalcrud.dao.respositories.jdbc;
 
 import com.hospitalcrud.dao.mappers.jdbc_mappers.MapMedications;
+import com.hospitalcrud.dao.model.MedicalRecord;
 import com.hospitalcrud.dao.model.Medication;
 import com.hospitalcrud.dao.respositories.MedicationsRepository;
 import com.hospitalcrud.dao.utilities.DBConnectionPool;
@@ -28,19 +29,18 @@ public class JDBCMedicationsRepository implements MedicationsRepository {
             PreparedStatement getPrescribedMedications = conn.prepareStatement(SQLQueries.GET_PRESCRIBED_MEDICATIONS);
         ) {
             getPrescribedMedications.setInt(1, medicalRecordId);
-            ResultSet rs = getPrescribedMedications.executeQuery();
-            return medicationsMapper.readRS(rs);
+            return medicationsMapper.readRS(getPrescribedMedications.executeQuery());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public List<String> getAll() {
+    public List<Medication> getAll() {
         try (Connection conn = pool.getConnection();
         Statement stmt = conn.createStatement();
         ) {
-            return medicationsMapper.allMedicationsToString(stmt.executeQuery(SQLQueries.GET_ALL_MEDICATIONS));
+            return medicationsMapper.readRS(stmt.executeQuery(SQLQueries.GET_ALL_MEDICATIONS));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -53,6 +53,16 @@ public class JDBCMedicationsRepository implements MedicationsRepository {
 
     @Override
     public void deleteMedicalRecordMedications(int medicalRecordId) {
+
+    }
+
+    @Override
+    public void save(MedicalRecord medicalRecord) {
+
+    }
+
+    @Override
+    public void update(MedicalRecord medicalRecord) {
 
     }
 }

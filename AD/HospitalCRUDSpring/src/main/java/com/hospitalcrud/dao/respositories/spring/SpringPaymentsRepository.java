@@ -5,6 +5,7 @@ import com.hospitalcrud.dao.mappers.spring_mappers.MapSpringPayments;
 import com.hospitalcrud.dao.model.Payment;
 import com.hospitalcrud.dao.respositories.PaymentsRepository;
 import com.hospitalcrud.dao.utilities.SQLQueries;
+import com.hospitalcrud.dao.utilities.SQLQueriesSpring;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.simple.JdbcClient;
@@ -15,16 +16,16 @@ import java.util.List;
 @Repository
 @Profile("spring")
 public class SpringPaymentsRepository implements PaymentsRepository {
-    @Autowired
-    private JdbcClient jdbcClient;
+    private final JdbcClient jdbcClient;
     private final MapSpringPayments paymentsMapper;
 
-    public SpringPaymentsRepository(MapSpringPayments paymentsMapper) {
+    public SpringPaymentsRepository(JdbcClient jdbcClient, MapSpringPayments paymentsMapper) {
+        this.jdbcClient = jdbcClient;
         this.paymentsMapper = paymentsMapper;
     }
 
     public void deletePatientPayments (int patientId) {
-        jdbcClient.sql(SQLQueries.DELETE_PATIENT_PAYMENTS).param("id",patientId).query();
+        jdbcClient.sql(SQLQueriesSpring.DELETE_PATIENT_PAYMENTS).param("id",patientId).query();
     }
 
     @Override
@@ -49,6 +50,6 @@ public class SpringPaymentsRepository implements PaymentsRepository {
 
     @Override
     public List<Payment> getPaymentsByPatient() {
-        return jdbcClient.sql(SQLQueries.GET_GROUPED_PAYMENTS).query(paymentsMapper).list();
+        return jdbcClient.sql(SQLQueriesSpring.GET_GROUPED_PAYMENTS).query(paymentsMapper).list();
     }
 }

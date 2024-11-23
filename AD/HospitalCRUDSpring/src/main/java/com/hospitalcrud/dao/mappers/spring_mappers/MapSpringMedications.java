@@ -14,7 +14,7 @@ public class MapSpringMedications implements RowMapper<Medication> {
         return new Medication(
                 rs.getString("medication_name"),
                 rs.getInt("record_id"),
-                rs.getString("dossage")
+                rs.getString("dosage")
         );
     }
 }

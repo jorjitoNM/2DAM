@@ -1,6 +1,7 @@
 package com.hospitalcrud.dao.respositories.jdbc;
 
 import com.hospitalcrud.dao.model.Credential;
+import com.hospitalcrud.dao.model.Patient;
 import com.hospitalcrud.dao.respositories.CredentialRepository;
 import com.hospitalcrud.dao.utilities.DBConnection;
 import com.hospitalcrud.dao.utilities.SQLQueries;
@@ -38,12 +39,12 @@ public class JDBCCredentialRepository implements CredentialRepository {
     }
 
     @Override
-    public void save(Credential credential) {
+    public void save(Patient patient) {
         try (Connection con = dbConnection.getConnection();
              PreparedStatement insertCredential = con.prepareStatement(SQLQueries.INSERT_CREDENTIAL)) {
-            insertCredential.setString(1, credential.getUserName());
-            insertCredential.setString(2, credential.getPassword());
-            insertCredential.setInt(3, credential.getPatientId());
+            insertCredential.setString(1, patient.getCredential().getUserName());
+            insertCredential.setString(2, patient.getCredential().getPassword());
+            insertCredential.setInt(3, patient.getId());
             insertCredential.setNull(4, 0);
             insertCredential.executeUpdate();
         } catch (SQLException e) {
