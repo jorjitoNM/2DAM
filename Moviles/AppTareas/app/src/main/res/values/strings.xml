@@ -3,4 +3,14 @@
     <string name="username">Username (ex. Juanjo123)</string>
     <string name="password">Password</string>
     <string name="submit">Submit</string>
+    <string name="login_error">Login failed, please check the fields and try again</string>
+    <string name="user">user</string>
+    <string name="user_id">user_id</string>
+    <string name="get_events_failed">An error occured when getting your events, please, try again</string>
+    <string name="image">An image</string>
+    <string name="event_title">Event title</string>
+    <string name="event_id">1</string>
+    <string name="event_description">Event description</string>
+    <string name="add">Add</string>
+    <string name="image_provider">https://thispersondoesnotexist.com/</string>
 </resources>

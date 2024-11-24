@@ -1,4 +1,6 @@
-package com.example.myapplication.data.remote
+package com.example.viewmodel.data.remote
+
+import com.example.apptareas.data.remote.model.events.EventRemote
 
 
 sealed class NetworkResult<T>(
@@ -17,7 +19,7 @@ sealed class NetworkResult<T>(
             is Loading -> Loading()
             is Success -> Success(transform(data))
         }
-    inline fun <R> then(transform: (data: T) -> NetworkResult<R>): NetworkResult<R> =
+    inline fun <R> then(transform: (data: List<EventRemote>) -> () -> Any): NetworkResult<R> =
         when (this) {
             is Error -> Error(message)
             is Loading -> Loading()

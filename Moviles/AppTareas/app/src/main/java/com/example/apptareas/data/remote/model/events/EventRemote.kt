@@ -1,6 +1,7 @@
 package com.example.apptareas.data.remote.model.events
 
 
+import com.example.apptareas.domain.model.Event
 import com.google.gson.annotations.SerializedName
 
 data class EventRemote(
@@ -13,3 +14,4 @@ data class EventRemote(
     @SerializedName("userId")
     val userId: Int
 )
+fun Event.toEvent() = Event(id,body,title,userId)

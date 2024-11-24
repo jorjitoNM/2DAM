@@ -21,9 +21,9 @@ class SongsRemoteDataSource @Inject constructor(
         }
 
     suspend fun fetchSong(id: String,authorization : String): NetworkResult<Song?> =
-        safeApiCall { spotifyService.getSong(id,authorization) }.map { song -> song?.toSong() }
+        safeApiCall { spotifyService.getSong(id,authorization) }.map { song -> song.toSong() }
 
     suspend fun fetchToken (contentType: String, grant_type : String) : NetworkResult<String> =
-        safeApiCall { spotifyService.getToken(contentType,grant_type) }.map { token -> token?.getKey() ?: "" }
+        safeApiCall { spotifyService.getToken(contentType,grant_type) }.map { token -> token.getKey() }
 }
 

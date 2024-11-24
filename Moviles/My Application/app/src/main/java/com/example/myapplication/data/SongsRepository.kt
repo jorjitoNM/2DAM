@@ -18,7 +18,6 @@ class SongsRepository @Inject constructor(
     private val songsRemoteDataSource: SongsRemoteDataSource,
     ) {
 
-
     suspend fun fetchAlbum2(authorization : String): NetworkResult<List<Song>?> {
         return songsRemoteDataSource.fetchAlbum(authorization)
     }

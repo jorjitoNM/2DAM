@@ -1,15 +1,22 @@
 package com.example.apptareas.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.apptareas.R
 import com.example.apptareas.databinding.LoginBinding
+import com.example.apptareas.domain.model.User
+import com.example.apptareas.ui.main.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LogInActivity : AppCompatActivity() {
 
+    private val viewModel: LogInViewModel by viewModels ()
     private val binding : LoginBinding by lazy {
         LoginBinding.inflate(layoutInflater).apply { setContentView(root) }
     }
@@ -22,6 +29,21 @@ class LogInActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+        observarState()
+    }
+
+    private fun observarState() {
+        viewModel.uiState.observe(this@LogInActivity) { state ->
+            binding.submit.setOnClickListener{
+                    viewModel.handleEvent(LogInEvents.LogIn(
+                        User(1,binding.usernameText.text.toString(),binding.passwordText.text.toString(),"123")))
+            }
+            if (state.logged) {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra(R.string.user_id.toString(), state.user.id)
+                startActivity(intent)
+            }
         }
     }
 }
