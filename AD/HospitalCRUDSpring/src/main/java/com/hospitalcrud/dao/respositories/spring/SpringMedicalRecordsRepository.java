@@ -56,8 +56,9 @@ public class SpringMedicalRecordsRepository implements MedicalRecordsRepository 
                 .param("diagnosis",medicalRecord.getDiagnosis())
                 .param("admission_date",medicalRecord.getDate())
                 .update(keyHolder);
+        medicalRecord.setId(Objects.requireNonNull(keyHolder.getKey(), Constantes.ERROR_GENERATING_KEY).intValue());
         medicationsRepository.save(medicalRecord);
-        return Objects.requireNonNull(keyHolder.getKey(), Constantes.ERROR_GENERATING_KEY).intValue();
+        return medicalRecord.getId();
     }
 
     @Override

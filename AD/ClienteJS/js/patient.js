@@ -125,17 +125,14 @@ function addPatient(event) {
                 // Conflicto: Username duplicated
                 return response.text().then(eMessage => {
                     // Mostrar el mensaje de error al usuario
-                    let resp = alert(eMessage);
-                    //throw new Error('Username duplicated');
-                        
-                       
+                    alert(eMessage);
+                    throw new Error('Username duplicated');   
                     })} 
                     else {
                         // El usuario canceló, lanzar un error
                         throw new Error('User cancelled operation');
                     }
             }                
-        
         return response.json();
     })
         .then(data => {

@@ -60,6 +60,7 @@ function deleteApp(button) {
             if (response.ok) {
                 console.log('medRecord deleted successfully');
             } else{
+                
                 throw new Error('Network response was not ok');
             }
         })
