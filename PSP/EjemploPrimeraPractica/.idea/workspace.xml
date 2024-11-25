@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4209ba4a-e70b-49bb-afb3-0b281a350e4f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../Moviles/My Application/app/src/main/java/com/example/myapplication/ui/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Moviles/My Application/app/src/main/java/com/example/myapplication/ui/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Moviles/My Application/app/src/main/java/com/example/myapplication/ui/MainViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Moviles/My Application/app/src/main/java/com/example/myapplication/ui/MainViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Moviles/My Application/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Moviles/My Application/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../APPMensajesSecretos/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../APPMensajesSecretos/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../APPMensajesSecretos/data/grupos.json" beforeDir="false" afterPath="$PROJECT_DIR$/../APPMensajesSecretos/data/grupos.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../APPMensajesSecretos/data/mensajesGrupo.json" beforeDir="false" afterPath="$PROJECT_DIR$/../APPMensajesSecretos/data/mensajesGrupo.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../APPMensajesSecretos/src/main/java/org/example/appmensajessecretos/dao/DaoMessages.java" beforeDir="false" afterPath="$PROJECT_DIR$/../APPMensajesSecretos/src/main/java/org/example/appmensajessecretos/dao/DaoMessages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../APPMensajesSecretos/src/main/java/org/example/appmensajessecretos/domain/modelo/Grupo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../APPMensajesSecretos/src/main/java/org/example/appmensajessecretos/domain/modelo/Grupo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../APPMensajesSecretos/src/main/java/org/example/appmensajessecretos/domain/modelo/MensajeGrupo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../APPMensajesSecretos/src/main/java/org/example/appmensajessecretos/domain/modelo/MensajeGrupo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../APPMensajesSecretos/src/main/java/org/example/appmensajessecretos/ui/GroupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../APPMensajesSecretos/src/main/java/org/example/appmensajessecretos/ui/GroupController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;jorjitoNM&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/jorjitoNM/2DAM.git&quot;,
+    &quot;accountId&quot;: &quot;c4be70ac-9896-42e5-a54e-4dce48a8566e&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2mnSoit9nOTpF0Koi2ojMDkNTe5" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Usuario/Desktop/Jorge/GitHub2DAM/PSP/APPMensajesSecretos&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.19072.14" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.19072.14" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4209ba4a-e70b-49bb-afb3-0b281a350e4f" name="Changes" comment="" />
+      <created>1727711024145</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1727711024145</updated>
+      <workItem from="1727711025686" duration="1236000" />
+      <workItem from="1727714544010" duration="1946000" />
+      <workItem from="1727798544477" duration="21000" />
+      <workItem from="1727800186722" duration="1194000" />
+      <workItem from="1727899505026" duration="646000" />
+      <workItem from="1727970084783" duration="16000" />
+      <workItem from="1727970292574" duration="2121000" />
+      <workItem from="1728227544439" duration="3916000" />
+      <workItem from="1728576736418" duration="1478000" />
+      <workItem from="1728578232964" duration="596000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
