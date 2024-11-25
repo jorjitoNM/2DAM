@@ -1,4 +1,4 @@
-package com.example.apptareas.ui.eventsList
+package com.example.apptareas.ui.events_list
 
 import android.content.Context
 import android.view.LayoutInflater

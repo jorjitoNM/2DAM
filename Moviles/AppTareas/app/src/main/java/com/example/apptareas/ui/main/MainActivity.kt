@@ -10,12 +10,13 @@ import com.example.apptareas.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private val binding : ActivityMainBinding by lazy {
-        ActivityMainBinding.inflate(layoutInflater).apply { setContentView(root) }
-    }
+    private var userId : Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        intent.extras?.let {
+            userId = it.getInt("id")
+        }
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

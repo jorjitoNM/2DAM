@@ -13,4 +13,6 @@
     <string name="event_description">Event description</string>
     <string name="add">Add</string>
     <string name="image_provider">https://thispersondoesnotexist.com/</string>
+    <string name="home">Home</string>
+    <string name="events_list">My Events</string>
 </resources>

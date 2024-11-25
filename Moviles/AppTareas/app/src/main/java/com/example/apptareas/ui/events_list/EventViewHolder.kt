@@ -1,4 +1,4 @@
-package com.example.apptareas.ui.eventsList
+package com.example.apptareas.ui.events_list
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

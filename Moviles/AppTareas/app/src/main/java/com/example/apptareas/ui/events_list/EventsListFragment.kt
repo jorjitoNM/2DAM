@@ -1,4 +1,4 @@
-package com.example.apptareas.ui.eventsList
+package com.example.apptareas.ui.events_list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,6 +18,7 @@ class EventsListFragment : Fragment() {
     private var _binding: EventListFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: EventAdapter
+    private var userId :Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

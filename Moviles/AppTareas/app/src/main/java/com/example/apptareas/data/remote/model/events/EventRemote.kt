@@ -14,4 +14,4 @@ data class EventRemote(
     @SerializedName("userId")
     val userId: Int
 )
-fun Event.toEvent() = Event(id,body,title,userId)
+fun Event.toEvent() = Event(id,title,body,userId)

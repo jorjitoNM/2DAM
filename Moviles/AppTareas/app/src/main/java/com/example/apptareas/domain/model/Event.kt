@@ -3,9 +3,9 @@ package com.example.apptareas.domain.model
 import com.example.apptareas.R
 
 data class Event (
-    val id: Int,
-    val body: String,
-    val title: String,
-    val userId: Int,
+    val id: Int = -1,
+    val title: String = R.string.event_title.toString(),
+    val body: String = R.string.event_description.toString(),
+    val userId: Int = -1,
     val image : String = R.string.image_provider.toString(),
 )

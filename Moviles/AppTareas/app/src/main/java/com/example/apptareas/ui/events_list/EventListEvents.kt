@@ -1,6 +1,6 @@
-package com.example.apptareas.ui.eventsList
+package com.example.apptareas.ui.events_list
 
-interface EventListEvents {
+sealed interface EventListEvents {
     data class GetEvents (val userId : Int) : EventListEvents
     data object EventDone : EventListEvents
 }
