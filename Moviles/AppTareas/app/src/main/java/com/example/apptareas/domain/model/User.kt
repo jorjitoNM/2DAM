@@ -9,7 +9,8 @@ data class User(
     val username : String = "Galindo",
     val phone : String = "12345678"
 )
-fun User validateUser(user: User): NetworkResult<User> =
+
+fun User.validateUser(user: User): NetworkResult<User> =
     if (user.username.contains("a"))
         NetworkResult.Success(user)
     else

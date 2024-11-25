@@ -10,7 +10,7 @@ class EventsDataSource (
     private val eventsService : EventsService,
 ) : BaseApiResponse() {
     suspend fun getEvents (userId : Int) =
-        safeApiCall { eventsService.getEvents(userId) }.map { events -> NetworkResult.Success(events.map { e -> e.to }.toEvent()) }
+        safeApiCall { eventsService.getEvents(userId) }.map { events -> events.toEvent() }
 
     suspend fun updateEvent (event : EventRemote) =
         safeApiCall { eventsService.updateEvent(event.id,event) }.map { updatedEvent -> updatedEvent.toEvent()}
