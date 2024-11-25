@@ -9,6 +9,7 @@ import org.example.appmensajessecretos.domain.model.Grupo;
 import org.example.appmensajessecretos.domain.model.Usuario;
 import org.example.appmensajessecretos.domain.validator.ValidateUser;
 import org.example.appmensajessecretos.utilities.security.Asymmetric;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class UserService {
         this.asymmetric = asymmetric;
         this.userValidator = userValidator;
     }
+
 
     public CompletableFuture<Either<Error, Usuario>> logIn(Usuario user) {
         return CompletableFuture.completedFuture(userValidator.validateUser(user)

@@ -1,5 +1,6 @@
 package org.example.appmensajessecretos.ui;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.example.appmensajessecretos.domain.error.DataBaseError;
@@ -12,7 +13,10 @@ import org.example.appmensajessecretos.domain.service.GroupService;
 import org.example.appmensajessecretos.domain.service.MessageService;
 import org.example.appmensajessecretos.domain.service.UserService;
 import org.example.appmensajessecretos.utilities.Constantes;
+import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.CompletableFuture;
 
 @Component
 public class GroupController {
@@ -55,8 +59,6 @@ public class GroupController {
 
     @FXML
     private TextArea message;
-    @FXML
-    private TextField encryptPassword;
 
 
     @FXML
@@ -76,14 +78,20 @@ public class GroupController {
 
 
     public void logIn() {
-        userService.logIn(new Usuario(userName.getText(), userPassword.getText()))
-                .peek(ok -> {
-                    user = ok;
-                    updateUserInfo();
-                    showInfo(Constantes.LOGGED_IN);
-                    loadUsers();
-                })
-                .peekLeft(this::showError);
+        Platform.runLater(() -> {
+            userService.logIn(new Usuario(userName.getText(), userPassword.getText())).exceptionally(throwable -> showError(ServiceError.ERROR_COMPLITING_TASK))
+
+                    .peek(ok -> {
+                        user = ok;
+                        updateUserInfo();
+                        showInfo(Constantes.LOGGED_IN);
+                        loadUsers();
+                    })
+                    .peekLeft(this::showError);
+        })
+        });
+
+
     }
 
     private void createUser() {

@@ -26,56 +26,39 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class MessageService {
+public class
+MessageService {
     private final DaoMessages dao;
     private final Symmetric symmetric;
     private final ValidateMessage messageValidator;
     private final ValidateUser userValidator;
     private final ValidateGroup groupValidator;
     private final Asymmetric asymmetric;
-    private final DaoUsers daoUsers;
     private final DaoMessages daoMessages;
 
 
-    public MessageService(DaoMessages dao, Symmetric symmetric, ValidateMessage messageValidator, ValidateUser userValidator, ValidateGroup groupValidator, Asymmetric asymmetric, MessageSourceAutoConfiguration messageSourceAutoConfiguration, DaoUsers daoUsers, DaoMessages daoMessages) {
+    public MessageService(DaoMessages dao, Symmetric symmetric, ValidateMessage messageValidator, ValidateUser userValidator, ValidateGroup groupValidator, Asymmetric asymmetric, DaoMessages daoMessages) {
         this.dao = dao;
         this.symmetric = symmetric;
         this.messageValidator = messageValidator;
         this.userValidator = userValidator;
         this.groupValidator = groupValidator;
         this.asymmetric = asymmetric;
-        this.daoUsers = daoUsers;
         this.daoMessages = daoMessages;
     }
 
     public CompletableFuture<Either<Error, Void>> sendMessage(String text, Usuario user, Grupo group) {
-        return userValidator.validateUserIsLogged(user)
-                .flatMap(nada -> groupValidator.validateGroup(group))
-                .flatMap(nada -> {
-                    if (Boolean.TRUE.equals(group.getIsPrivate()))
-                        return messageValidator.validateMessage(new Mensaje(text, user.getName(), group.getName()))
-                                .flatMap(nada2 -> dao.sendMessage(text, user, group));
-                    else {
-                        return messageValidator.validateMessage(new Mensaje(text, user.getName(), group.getName()))
-                                .flatMap(nada2 -> cipherMessage(group, user))
-                                .flatMap(nada2 -> asymmetric.getPrivateKey(user))
-                                .flatMap(userPrivateKey -> symmetric.decipher(groupPassword, groupPassword))
-                                .flatMap(decipherGroupPassword ->)
-                                .flatMap(encryptedText ->
-                                        symmetric.cipher(user.getName(), secretKey)
-                                                .flatMap(encryptedUsername ->
-                                                        dao.sendMessage(encryptedText,
-                                                                new Usuario(encryptedUsername, user.getPassword()), group
-                                                        )));
-                    }
-                });
-    }
-
-    public CompletableFuture<Either<Error, Void>> sendPrivateMessage (String text, Usuario user, Grupo group) {
         return CompletableFuture.completedFuture(userValidator.validateUserIsLogged(user)
                 .flatMap(nada -> groupValidator.validateGroup(group))
-                .flatMap(nada -> cipherAsymmetricMessage(text, group, user))
-                .flatMap(daoMessages::sendMessage));
+                .flatMap(nada -> messageValidator.validateMessage(new Mensaje(text, user.getName(), group.getName())))
+                .flatMap(nada2 -> cipherSymmetric(text, user, group))
+                .flatMap(cipheredText -> dao.sendMessage(new Mensaje(cipheredText, user.getName(), group.getName()))));
+    }
+
+    private Either<Error, String> cipherSymmetric(String text, Usuario user, Grupo group) {
+        return asymmetric.getPrivateKey(user)
+                .flatMap(userPrivateKey -> asymmetric.decipher(user.getGroupPasswords().get(group.getName()), userPrivateKey))
+                .flatMap(groupPassword -> symmetric.cipher(text, groupPassword));
     }
 
     private Either<Error, MensajePrivado> cipherAsymmetricMessage(String text, Grupo group, Usuario user) {
@@ -96,15 +79,6 @@ public class MessageService {
         return Either.right(new MensajePrivado(text, LocalDateTime.now(), user.getName(), group.getName(), keys));
     }
 
-
-    public CompletableFuture<Either<Error, List<Mensaje>>> getMessages(Grupo group, Usuario user) {
-        return CompletableFuture.completedFuture(groupValidator.validateGroup(group)
-                .flatMap(nada -> asymmetric.getPrivateKey(user))
-                .flatMap(userPrivateKey -> asymmetric.decipher(user.getGroupPasswords().get(group.getName()), userPrivateKey))
-                .flatMap(groupPassword -> dao.loadMessages(group)
-                        .flatMap(messages -> decipherSymmetricMessages(messages, groupPassword)
-                        )));
-    }
 
     private Either<Error, List<Mensaje>> decipherSymmetricMessages(List<Mensaje> messages, String groupKey) {
         List<Mensaje> decipheredMessages = new ArrayList<>();
@@ -130,6 +104,15 @@ public class MessageService {
         return Either.right(decipheredMessages);
     }
 
+    public CompletableFuture<Either<Error, List<Mensaje>>> getMessages(Grupo group, Usuario user) {
+        return CompletableFuture.completedFuture(groupValidator.validateGroup(group)
+                .flatMap(nada -> asymmetric.getPrivateKey(user))
+                .flatMap(userPrivateKey -> asymmetric.decipher(user.getGroupPasswords().get(group.getName()), userPrivateKey))
+                .flatMap(groupPassword -> dao.loadMessages(group)
+                        .flatMap(messages -> decipherSymmetricMessages(messages, groupPassword)
+                        )));
+    }
+
 
     public CompletableFuture<Either<Error, List<Mensaje>>> getPrivateMessages(Usuario user, Grupo group) {
         return CompletableFuture.completedFuture(groupValidator.validateGroup(group)
@@ -137,5 +120,12 @@ public class MessageService {
                 .flatMap(userPrivateKey -> dao.loadMessages(group)
                         .flatMap(messages -> decipherAsymmetricMessages(messages, userPrivateKey)
                         )));
+    }
+
+    public CompletableFuture<Either<Error, Void>> sendPrivateMessage(String text, Usuario user, Grupo group) {
+        return CompletableFuture.completedFuture(userValidator.validateUserIsLogged(user)
+                .flatMap(nada -> groupValidator.validateGroup(group))
+                .flatMap(nada -> cipherAsymmetricMessage(text, group, user))
+                .flatMap(daoMessages::sendMessage));
     }
 }
