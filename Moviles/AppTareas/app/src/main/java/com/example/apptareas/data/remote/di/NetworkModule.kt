@@ -1,5 +1,6 @@
 package com.example.apptareas.data.remote.di
 
+import com.example.apptareas.BuildConfig
 import com.example.apptareas.data.remote.api_service.EventsService
 import com.example.apptareas.data.remote.api_service.NotesService
 import com.example.apptareas.data.remote.api_service.TodosService

@@ -18,5 +18,5 @@ interface EventsService {
     suspend fun deleteEvent(@Path("id") eventId : Int)
 
     @POST("post/{id}")
-    suspend fun updateEvent(@Path("id") eventId : Int, @Body() event : EventRemote) : Response<EventRemote>
+    suspend fun updateEvent(@Path("id") eventId : Int, @Body event : EventRemote) : Response<EventRemote>
 }

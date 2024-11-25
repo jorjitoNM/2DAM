@@ -71,6 +71,6 @@ class EventsListFragment : Fragment() {
     }
 
     private fun navigateToDetail(id: Int) {
-        findNavController().navigate(EventList.actionMainFragmentToDetailsFragment(id,userId));
+        findNavController().navigate(EventsListFragmentDirections.actionEventsListFragmentToEventDetailsFragment(id,userId));
     }
 }

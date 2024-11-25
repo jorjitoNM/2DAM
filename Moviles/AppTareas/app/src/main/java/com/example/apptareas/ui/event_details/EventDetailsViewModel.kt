@@ -23,7 +23,7 @@ class EventDetailsViewModel @Inject constructor(
     fun handleEvent (event : EventDetailsEvents) {
         when (event) {
             is EventDetailsEvents.UpdateEvent -> updateEvent(event.userEvent)
-            is EventDetailsEvents.EventDone -> _uiState.value = _uiState.value?.copy(event = null)
+            is EventDetailsEvents.EventDone -> _uiState.value = _uiState.value?.copy(appEvent = null)
         }
     }
 
@@ -32,7 +32,7 @@ class EventDetailsViewModel @Inject constructor(
             when (updateEventUseCase.invoke(userEvent)) {
                 is NetworkResult.Success -> TODO()
                 is NetworkResult.Loading -> TODO()
-                is NetworkResult.Error -> _uiState.value = _uiState.value?.copy(event = UiEvent.ShowSnackbar(
+                is NetworkResult.Error -> _uiState.value = _uiState.value?.copy(appEvent = UiEvent.ShowSnackbar(
                     R.string.error_updating_event.toString()))
             }
         }

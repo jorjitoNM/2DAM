@@ -25,4 +25,5 @@
     <string name="todos">Todos</string>
     <string name="error_updating_event">Could not update the event, try again</string>
     <string name="invalid_username">Username must contain an a</string>
+    <string name="i_will_come">I will come</string>
 </resources>

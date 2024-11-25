@@ -21,8 +21,8 @@ class EventListViewModel @Inject constructor(
 
     fun handleEvent(event: EventListEvents) {
         when (event) {
-            is EventListEvents.GetEvents -> getEvent(event.userId)
-            is EventListEvents.EventDone -> _uiState.value = _uiState.value?.copy(event = null)
+            is EventListEvents.GetEvents ->  getEvent(event.userId)
+            is EventListEvents.EventDone -> _uiState.value = _uiState.value?.copy(appEvent = null)
         }
     }
 
