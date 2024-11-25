@@ -25,5 +25,9 @@
             android:name="userId"
             android:defaultValue="-1"
             app:argType="integer" />
+        <argument
+            android:name="eventId"
+            android:defaultValue="-1"
+            app:argType="integer" />
     </fragment>
 </navigation>

@@ -15,4 +15,14 @@
     <string name="image_provider">https://thispersondoesnotexist.com/</string>
     <string name="home">Home</string>
     <string name="events_list">My Events</string>
+    <string name="user_id_argument">userId</string>
+    <string name="event_id_argument">eventId</string>
+    <string name="name">Name</string>
+    <string name="title">Title</string>
+    <string name="body">Body</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="todos">Todos</string>
+    <string name="error_updating_event">Could not update the event, try again</string>
+    <string name="invalid_username">Username must contain an a</string>
 </resources>

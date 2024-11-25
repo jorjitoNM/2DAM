@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.apptareas.domain.usecases.GetEventsUseCase
 import com.example.apptareas.ui.common.UiEvent
-import com.example.viewmodel.data.remote.NetworkResult
+import com.example.apptareas.data.remote.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

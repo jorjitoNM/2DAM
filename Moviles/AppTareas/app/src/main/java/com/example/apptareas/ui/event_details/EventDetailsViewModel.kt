@@ -4,15 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.apptareas.R
+import com.example.apptareas.data.remote.NetworkResult
 import com.example.apptareas.domain.model.Event
 import com.example.apptareas.domain.usecases.UpdateEventUseCase
+import com.example.apptareas.ui.common.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class EventDetailsViewModel @Inject constructor(
-    val updateEventUseCase : UpdateEventUseCase,
+    private val updateEventUseCase : UpdateEventUseCase,
 ) : ViewModel() {
     private val _uiState = MutableLiveData(EventDetailsState())
     val uiState: LiveData<EventDetailsState> get() = _uiState
@@ -26,8 +29,12 @@ class EventDetailsViewModel @Inject constructor(
 
     private fun updateEvent(userEvent: Event) {
         viewModelScope.launch {
-            when (updateEventUseCase)
+            when (updateEventUseCase.invoke(userEvent)) {
+                is NetworkResult.Success -> TODO()
+                is NetworkResult.Loading -> TODO()
+                is NetworkResult.Error -> _uiState.value = _uiState.value?.copy(event = UiEvent.ShowSnackbar(
+                    R.string.error_updating_event.toString()))
+            }
         }
     }
-
 }

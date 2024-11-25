@@ -2,16 +2,16 @@ package com.example.apptareas.data.remote.datasource
 
 import com.example.apptareas.R
 import com.example.apptareas.data.remote.api_service.EventsService
-import com.example.viewmodel.data.remote.NetworkResult
+import com.example.apptareas.data.remote.model.events.EventRemote
+import com.example.apptareas.domain.model.Event
+import com.example.apptareas.data.remote.NetworkResult
 
 class EventsDataSource (
     private val eventsService : EventsService,
 ) : BaseApiResponse() {
     suspend fun getEvents (userId : Int) =
-        safeApiCall { eventsService.getEvents(userId) }.then { events -> {
-            if (events.isNotEmpty())
-                events.map { e -> e.toEvent() }
-            else
-                NetworkResult.Error(R.string.get_events_failed.toString())
-        } }
+        safeApiCall { eventsService.getEvents(userId) }.map { events -> NetworkResult.Success(events.map { e -> e.to }.toEvent()) }
+
+    suspend fun updateEvent (event : EventRemote) =
+        safeApiCall { eventsService.updateEvent(event.id,event) }.map { updatedEvent -> updatedEvent.toEvent()}
 }

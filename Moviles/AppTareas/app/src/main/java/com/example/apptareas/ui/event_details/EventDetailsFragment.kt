@@ -6,10 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.apptareas.R
 import com.example.apptareas.databinding.EventListFragmentBinding
-import com.example.apptareas.domain.model.Event
-import com.example.apptareas.ui.events_list.EventAdapter
-import com.example.apptareas.ui.events_list.EventListEvents
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,11 +16,15 @@ class EventDetailsFragment : Fragment() {
     private val viewModel: EventDetailsViewModel by viewModels ()
     private var _binding: EventListFragmentBinding? = null
     private val binding get() = _binding!!
+    private var userId : Int = -1
+    private var eventId : Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        userId = arguments?.getInt(R.string.user_id_argument.toString()) ?: -1
+        eventId = arguments?.getInt(R.string.event_id_argument.toString()) ?: -1
         _binding = EventListFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,7 +36,15 @@ class EventDetailsFragment : Fragment() {
 
     private fun observarState() {
         viewModel.uiState.observe(viewLifecycleOwner) { state ->
-            adapter.submitList(state.events)
+            if (state.appEvent == null) {
+                with (binding) {
+                    songName.setText(state.song.name)
+                    songArtist.setText(parseArtists(state.song.artist))
+                    songDuration.setText(state.song.duration.toString())
+                    explicit.check(fillCheckButton(state.song.explicit))
+                    image.load(state.song.albumImage)
+                }
+            }
         }
     }
 }

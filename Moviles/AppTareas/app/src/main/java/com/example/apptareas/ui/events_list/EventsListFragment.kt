@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.apptareas.R
 import com.example.apptareas.databinding.EventListFragmentBinding
 import com.example.apptareas.domain.model.Event
+import com.example.apptareas.ui.common.MarginItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,6 +27,7 @@ class EventsListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        userId = arguments?.getInt("userId") ?: -1
         _binding = EventListFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -54,9 +58,9 @@ class EventsListFragment : Fragment() {
             },requireContext()
         )
         with (binding) {
-            songList.layoutManager = LinearLayoutManager(requireContext())
-            songList.adapter = adapter
-            songList.addItemDecoration(
+            eventsList.layoutManager = LinearLayoutManager(requireContext())
+            eventsList.adapter = adapter
+            eventsList.addItemDecoration(
                 MarginItemDecoration(
                     resources.getDimensionPixelSize(
                         R.dimen.margin
@@ -67,6 +71,6 @@ class EventsListFragment : Fragment() {
     }
 
     private fun navigateToDetail(id: Int) {
-        findNavController().navigate(MainFragmentDirections.actionMainFragmentToDetailsFragment(id,token));
+        findNavController().navigate(EventList.actionMainFragmentToDetailsFragment(id,userId));
     }
 }

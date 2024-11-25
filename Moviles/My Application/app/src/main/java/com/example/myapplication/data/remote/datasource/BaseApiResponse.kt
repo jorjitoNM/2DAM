@@ -2,6 +2,7 @@ package com.example.myapplication.data.remote.datasource
 
 import com.example.myapplication.data.remote.NetworkResult
 import retrofit2.Response
+import timber.log.Timber
 
 abstract class BaseApiResponse {
 
@@ -17,6 +18,7 @@ abstract class BaseApiResponse {
             }
             return error("${response.code()} ${response.message()}")
         } catch (e: Exception) {
+            Timber.e(e.message,e)
             return error(e.message ?: e.toString())
         }
     }
@@ -29,6 +31,7 @@ abstract class BaseApiResponse {
             }
             return error("${response.code()} ${response.message()}")
         } catch (e: Exception) {
+            Timber.e(e.message,e)
             return error(e.message ?: e.toString())
         }
     }

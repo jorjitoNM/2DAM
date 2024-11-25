@@ -8,7 +8,7 @@ import com.example.apptareas.R
 import com.example.apptareas.domain.model.User
 import com.example.apptareas.domain.usecases.LogInUseCase
 import com.example.apptareas.ui.common.UiEvent
-import com.example.viewmodel.data.remote.NetworkResult
+import com.example.apptareas.data.remote.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,6 +24,7 @@ class LogInViewModel  @Inject constructor (
     fun handleEvent(event: LogInEvents) {
         when (event) {
             is LogInEvents.LogIn -> logIn(event.user)
+            is LogInEvents.ShowEvent -> _uiState.value = _uiState.value?.copy(event = null)
         }
     }
 
@@ -31,8 +32,7 @@ class LogInViewModel  @Inject constructor (
         viewModelScope.launch {
             when (val userMatch = logInUseCase.invoke(user)) {
                 is NetworkResult.Success -> {
-                    _uiState.value = _uiState.value?.copy(user = userMatch.data)
-                    _uiState.value = _uiState.value?.copy(logged = true)
+                    _uiState.value = _uiState.value?.copy(user = userMatch.data, logged = true)
                 }
                 is NetworkResult.Error -> _uiState.value = _uiState.value?.copy(event =
                 UiEvent.ShowSnackbar(R.string.login_error.toString()))
