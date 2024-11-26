@@ -31,9 +31,7 @@ class LogInViewModel  @Inject constructor (
     private fun logIn(user: User) {
         viewModelScope.launch {
             when (val userMatch = logInUseCase.invoke(user)) {
-                is NetworkResult.Success -> {
-                    _uiState.value = _uiState.value?.copy(user = userMatch.data, logged = true)
-                }
+                is NetworkResult.Success -> _uiState.value = _uiState.value?.copy(user = userMatch.data.first(), logged = true)
                 is NetworkResult.Error -> _uiState.value = _uiState.value?.copy(event =
                 UiEvent.ShowSnackbar(R.string.login_error.toString()))
                 is NetworkResult.Loading -> TODO()

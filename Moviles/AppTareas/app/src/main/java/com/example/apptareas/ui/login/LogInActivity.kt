@@ -39,7 +39,7 @@ class LogInActivity : AppCompatActivity() {
         viewModel.uiState.observe(this@LogInActivity) { state ->
             binding.submit.setOnClickListener{
                     viewModel.handleEvent(LogInEvents.LogIn(
-                        User(1,binding.passwordText.text.toString(),binding.usernameText.text.toString(),"123")))
+                        User(1,binding.passwordText.text.toString(),binding.usernameText.text.toString(),"")))
             }
             if (state.logged) {
                 val intent = Intent(this, MainActivity::class.java)

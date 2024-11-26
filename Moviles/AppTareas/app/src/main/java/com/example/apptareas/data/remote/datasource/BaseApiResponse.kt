@@ -1,5 +1,6 @@
 package com.example.apptareas.data.remote.datasource
 
+import com.example.apptareas.R
 import com.example.apptareas.data.remote.NetworkResult
 import retrofit2.Response
 import timber.log.Timber
@@ -38,6 +39,6 @@ abstract class BaseApiResponse {
 
 
     private fun <T> error(errorMessage: String): NetworkResult<T> =
-        NetworkResult.Error("Api call failed $errorMessage")
+        NetworkResult.Error("${R.string.api_call} $errorMessage")
 
 }

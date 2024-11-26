@@ -31,4 +31,5 @@
     <string name="petition_returned_loading">Ha devuelto loading y volvemos a llamar a la funcion</string>
     <string name="event_deleted">Evento eliminado con exito</string>
     <string name="error_deleting_event">No se ha podido eliminar el evento</string>
+    <string name="api_call">Api call failed</string>
 </resources>

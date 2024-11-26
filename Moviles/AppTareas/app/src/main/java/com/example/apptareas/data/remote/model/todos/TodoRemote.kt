@@ -1,4 +1,4 @@
-package com.example.apptareas.data.remote.model
+package com.example.apptareas.data.remote.model.todos
 
 import com.example.apptareas.domain.model.Todo
 import com.google.gson.annotations.SerializedName
