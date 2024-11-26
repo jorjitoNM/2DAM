@@ -1,9 +1,8 @@
-package com.example.apptareas.data.remote.model.todos
-
+package com.example.apptareas.domain.model
 
 import com.google.gson.annotations.SerializedName
 
-data class TodoRemote(
+data class Todo (
     @SerializedName("completed")
     val completed: Boolean,
     @SerializedName("id")
