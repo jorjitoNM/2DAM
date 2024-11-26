@@ -9,12 +9,13 @@ sealed class NetworkResult<T> {
 
     class Loading<T> : NetworkResult<T>()
 
-    inline fun <R> map( transform :(data: T) -> R) : NetworkResult<R> =
+    inline fun <R> map ( transform :(data: T) -> R) : NetworkResult<R> =
         when(this){
             is Error -> Error(message)
             is Loading -> Loading()
             is Success -> Success(transform(data))
         }
+
     inline fun <R> then(transform: (data: T) -> NetworkResult<R>): NetworkResult<R> =
         when (this) {
             is Error -> Error(message)

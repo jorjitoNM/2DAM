@@ -13,4 +13,8 @@ class EventsRepository @Inject constructor (
 
     suspend fun update(event: EventRemote) =
         eventsDataSource.updateEvent(event)
+
+    suspend fun deleteEvent(event: EventRemote) {
+        eventsDataSource.deleteEvent(event)
+    }
 }

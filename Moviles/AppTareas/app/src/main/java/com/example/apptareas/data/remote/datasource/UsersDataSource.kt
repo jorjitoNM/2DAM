@@ -10,6 +10,9 @@ class UsersDataSource @Inject constructor (
     private val userService: UserService,
 ) : BaseApiResponse() {
 
-    suspend fun getUsers () : List<User> =
+    suspend fun getUsers () : NetworkResult<List<User>> =
         safeApiCall { userService.getUsers() }.map { response -> response.map { u -> u.toUser() } }
+
+    suspend fun getUser (userId : Int) : NetworkResult<User> =
+        safeApiCall { userService.getUser(userId) }.map { response -> response.toUser() }
 }

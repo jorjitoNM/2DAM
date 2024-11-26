@@ -7,6 +7,9 @@ import javax.inject.Inject
 class UserRepository @Inject constructor (
     private val usersDataSource: UsersDataSource,
 ) {
-    suspend fun getUsers () : List<User> =
+    suspend fun getUsers () : NetworkResult<List<User>> =
         usersDataSource.getUsers();
+
+    suspend fun getUser(userId: Int) : NetworkResult<User> =
+        usersDataSource.getUser(userId)
 }

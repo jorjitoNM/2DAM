@@ -28,4 +28,7 @@
     <string name="i_will_come">I will come</string>
     <string name="user_info">Profile</string>
     <string name="done">Done</string>
+    <string name="petition_returned_loading">Ha devuelto loading y volvemos a llamar a la funcion</string>
+    <string name="event_deleted">Evento eliminado con exito</string>
+    <string name="error_deleting_event">No se ha podido eliminar el evento</string>
 </resources>

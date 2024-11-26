@@ -11,7 +11,7 @@
         />
 
     <item
-        android:id="@+id/todos"
+        android:id="@+id/todo_list_fragment"
         android:title="@string/todos"
         android:icon="@drawable/checklist_24"
         android:contentDescription="@string/todos"
@@ -19,7 +19,7 @@
         />
 
     <item
-        android:id="@+id/userProfile"
+        android:id="@+id/user_profile_fragment"
         android:title="@string/user_info"
         android:icon="@drawable/profile_icon_24"
         android:contentDescription="@string/user_info"
