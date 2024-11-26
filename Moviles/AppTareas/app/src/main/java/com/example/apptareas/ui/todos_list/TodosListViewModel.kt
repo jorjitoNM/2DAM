@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.apptareas.domain.usecases.GetUserTodosUseCase
-import com.example.apptareas.ui.login.LogInState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
