@@ -1,15 +1,24 @@
 package com.example.apptareas.ui.todos_list
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.apptareas.R
+import com.example.apptareas.databinding.TodoListFragmentBinding
+import com.example.apptareas.ui.common.MarginItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class TodosListFragment : Fragment() {
 
-    private val viewModel: EventListViewModel by viewModels()
-    private var _binding: EventListFragmentBinding? = null
+    private val viewModel: TodosListViewModel by viewModels()
+    private var _binding: TodoListFragmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter: EventAdapter
+    private lateinit var adapter: TodoAdapter
     private var userId: Int = -1
 
     override fun onCreateView(
@@ -17,7 +26,7 @@ class TodosListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         userId = arguments?.getInt("userId") ?: -1
-        _binding = EventListFragmentBinding.inflate(inflater, container, false)
+        _binding = TodoListFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -29,27 +38,21 @@ class TodosListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.handleEvent(EventListEvents.GetEvents(userId))
+        viewModel.handleEvent(TodosListEvents.GetTodos(userId))
     }
 
     private fun observarState() {
         viewModel.uiState.observe(viewLifecycleOwner) { state ->
-            adapter.submitList(state.events)
+            adapter.submitList(state.todos)
         }
     }
 
     private fun configureRecyclerView() {
-        adapter = EventAdapter(
-            actions = object : EventAdapter.SongActions {
-                override fun onItemClick(event: Event) {
-                    navigateToDetail((event.id))
-                }
-            }, requireContext()
-        )
+        adapter = TodoAdapter()
         with(binding) {
-            eventsList.layoutManager = LinearLayoutManager(requireContext())
-            eventsList.adapter = adapter
-            eventsList.addItemDecoration(
+            todosList.layoutManager = LinearLayoutManager(requireContext())
+            todosList.adapter = adapter
+            todosList.addItemDecoration(
                 MarginItemDecoration(
                     resources.getDimensionPixelSize(
                         R.dimen.margin
@@ -57,14 +60,5 @@ class TodosListFragment : Fragment() {
                 )
             )
         }
-    }
-
-    private fun navigateToDetail(id: Int) {
-        findNavController().navigate(
-            EventsListFragmentDirections.actionEventsListFragmentToEventDetailsFragment(
-                id,
-                userId
-            )
-        );
     }
 }

@@ -7,7 +7,7 @@ import com.example.apptareas.R
 import com.example.apptareas.databinding.EventViewBinding
 import com.example.apptareas.domain.model.Event
 
-class EventViewHolder(itemView: View, val actions: EventAdapter.SongActions) : RecyclerView.ViewHolder(itemView) {
+class EventViewHolder(itemView: View, val actions: EventAdapter.EventActions) : RecyclerView.ViewHolder(itemView) {
 
     private val binding = EventViewBinding.bind(itemView)
 

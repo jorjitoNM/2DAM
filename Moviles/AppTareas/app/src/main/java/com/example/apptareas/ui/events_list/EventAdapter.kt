@@ -9,7 +9,7 @@ import com.example.apptareas.R
 import com.example.apptareas.domain.model.Event
 
 class EventAdapter(
-    val actions: SongActions,
+    val actions: EventActions,
     val context: Context,
 ) : ListAdapter<Event, EventViewHolder>(DiffCallback()) {
 
@@ -37,7 +37,7 @@ class EventAdapter(
         }
     }
 
-    interface SongActions {
+    interface EventActions {
         fun onItemClick(event : Event)
     }
 }

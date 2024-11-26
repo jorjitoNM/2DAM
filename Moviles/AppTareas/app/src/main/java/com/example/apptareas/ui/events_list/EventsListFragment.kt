@@ -51,7 +51,7 @@ class EventsListFragment : Fragment() {
 
     private fun configureRecyclerView() {
         adapter = EventAdapter(
-            actions = object : EventAdapter.SongActions {
+            actions = object : EventAdapter.EventActions {
                 override fun onItemClick(event : Event) {
                     navigateToDetail((event.id))
                 }

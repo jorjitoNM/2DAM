@@ -27,4 +27,5 @@
     <string name="invalid_username">Username must contain an a</string>
     <string name="i_will_come">I will come</string>
     <string name="user_info">Profile</string>
+    <string name="done">Done</string>
 </resources>

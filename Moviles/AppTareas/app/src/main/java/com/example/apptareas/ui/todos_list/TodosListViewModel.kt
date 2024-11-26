@@ -14,4 +14,15 @@ class TodosListViewModel @Inject constructor (
 
     private val _uiState = MutableLiveData(TodosListState())
     val uiState: LiveData<TodosListState> get() = _uiState
+
+    fun handleEvent (event : TodosListEvents) {
+        when (event) {
+            is TodosListEvents.GetTodos -> getTodos(event.userId)
+            is TodosListEvents.EventDone -> _uiState.value = _uiState.value?.copy(appEvent = null)
+        }
+    }
+
+    private fun getTodos(userId: Int) {
+
+    }
 }
