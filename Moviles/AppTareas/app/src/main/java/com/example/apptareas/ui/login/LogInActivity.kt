@@ -10,7 +10,9 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.apptareas.R
 import com.example.apptareas.databinding.LoginBinding
 import com.example.apptareas.domain.model.User
+import com.example.apptareas.ui.common.UiEvent
 import com.example.apptareas.ui.main.MainActivity
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,12 +39,18 @@ class LogInActivity : AppCompatActivity() {
         viewModel.uiState.observe(this@LogInActivity) { state ->
             binding.submit.setOnClickListener{
                     viewModel.handleEvent(LogInEvents.LogIn(
-                        User(1,binding.usernameText.text.toString(),binding.passwordText.text.toString(),"123")))
+                        User(1,binding.passwordText.text.toString(),binding.usernameText.text.toString(),"123")))
             }
             if (state.logged) {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra(R.string.user_id.toString(), state.user.id)
                 startActivity(intent)
+            }
+            state.event?.let { event ->
+               if (event is UiEvent.ShowSnackbar) {
+                    Snackbar.make(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
+                }
+                viewModel.handleEvent(LogInEvents.ShowEvent)
             }
         }
     }
