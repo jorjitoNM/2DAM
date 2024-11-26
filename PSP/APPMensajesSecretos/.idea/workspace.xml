@@ -41,6 +41,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "git-widget-placeholder": "AD",
@@ -51,6 +55,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\cnovi\OneDrive\Escritorio\Jorge\GitHub2DAM\PSP\APPMensajesSecretos\keyStore" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="SpringjavafxApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="APPMensajesSecretos" />
@@ -122,6 +131,7 @@
     <MESSAGE value="cambios clase (entendido el CompletableFuture) 21/11/2024" />
     <MESSAGE value="cambios tarde (arregaldos metodo de UserService&#10;) 22/11/2024" />
     <MESSAGE value="cambios clase (ya hay un CompletableFuture bien hecho) 26/11/2024" />
-    <option name="LAST_COMMIT_MESSAGE" value="cambios clase (ya hay un CompletableFuture bien hecho) 26/11/2024" />
+    <MESSAGE value="cambios clase (ya compila, pero no encuentra la clave del server) 26/11/2024" />
+    <option name="LAST_COMMIT_MESSAGE" value="cambios clase (ya compila, pero no encuentra la clave del server) 26/11/2024" />
   </component>
 </project>
