@@ -13,5 +13,5 @@ public enum ServiceError implements Error{
     ERROR_DECRYPTING,
     ALREADY_IN_GROUP,
     ERROR_GENERATING_KEYS,
-    ERROR_COMPLITING_TASK,
+    ERROR_COMPLETING_TASK,
 }

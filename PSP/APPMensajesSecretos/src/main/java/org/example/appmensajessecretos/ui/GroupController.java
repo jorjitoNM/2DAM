@@ -78,20 +78,18 @@ public class GroupController {
 
 
     public void logIn() {
-        Platform.runLater(() -> {
-            userService.logIn(new Usuario(userName.getText(), userPassword.getText())).exceptionally(throwable -> showError(ServiceError.ERROR_COMPLITING_TASK))
-
-                    .peek(ok -> {
-                        user = ok;
-                        updateUserInfo();
-                        showInfo(Constantes.LOGGED_IN);
-                        loadUsers();
-                    })
-                    .peekLeft(this::showError);
-        })
-        });
-
-
+        userService.logIn(new Usuario(userName.getText(), userPassword.getText()))
+                .thenAccept(result -> {
+                    result.peek(ok -> {
+                                user = ok;
+                                Platform.runLater(() -> {
+                                    updateUserInfo();
+                                    showInfo(Constantes.LOGGED_IN);
+                                    loadUsers();
+                                });
+                            })
+                            .peekLeft(error -> Platform.runLater(() -> showError(error)));
+                });
     }
 
     private void createUser() {
@@ -136,6 +134,7 @@ public class GroupController {
                     case ERROR_ENCRYPTING -> errorMessage = Constantes.ERROR_ENCRYPTING;
                     case ERROR_DECRYPTING -> errorMessage = Constantes.ERROR_DECRYPTING;
                     case ALREADY_IN_GROUP -> errorMessage = Constantes.ALREADY_IN_GROUP;
+                    case ERROR_COMPLETING_TASK -> errorMessage = Constantes.ERROR_COMPLETING_TASK;
                 }
             }
             case DataInputError e -> {

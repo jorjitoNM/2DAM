@@ -27,6 +27,7 @@ public class Constantes {
     public static final String INFO = "Information";
     public static final String ACTION_COMPLETED = "Accion completada:";
     public static final String ALREADY_IN_GROUP = "No se puede unir 2 veces al mismo grupo";
+    public static final String ERROR_COMPLETING_TASK = "No se ha podido completar su peticion, intentlo de nuevo";
 
 
 
