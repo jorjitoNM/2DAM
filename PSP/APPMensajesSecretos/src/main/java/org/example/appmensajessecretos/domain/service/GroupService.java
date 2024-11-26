@@ -9,12 +9,11 @@ import org.example.appmensajessecretos.domain.model.Grupo;
 import org.example.appmensajessecretos.domain.model.Usuario;
 import org.example.appmensajessecretos.domain.validator.ValidateGroup;
 import org.example.appmensajessecretos.domain.validator.ValidateUser;
-import org.example.appmensajessecretos.utilities.security.Asymmetric;
-import org.example.appmensajessecretos.utilities.security.Symmetric;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class GroupService {
@@ -30,8 +29,8 @@ public class GroupService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Either<Error, List<Grupo>> getGroups(Usuario user) {
-        return userValidator.validateUser(user)
+    public CompletableFuture<Either<Error, List<Grupo>>> getGroups(Usuario user) {
+        return CompletableFuture.completedFuture(userValidator.validateUser(user)
                 .flatMap(nada ->
                         dao.getGroups(user))
                 .flatMap(groups -> {
@@ -39,12 +38,12 @@ public class GroupService {
                         return Either.left(ServiceError.NOT_IN_GROUPS);
                     else
                         return Either.right(groups);
-                });
+                }));
     }
 
 
-    public Either<Error, Void> joinGroup(Usuario user, Grupo group) {
-        return userValidator.validateUserIsLogged(user)
+    public CompletableFuture<Either<Error, Void>> joinGroup(Usuario user, Grupo group) {
+        return CompletableFuture.completedFuture(userValidator.validateUserIsLogged(user)
                 .flatMap(nada -> userValidator.validateUser(user))
                 .flatMap(nada -> groupValidator.validateGroup(group))
                 .flatMap(nada -> {
@@ -58,30 +57,30 @@ public class GroupService {
                     else
                         return Either.left(DataInputError.INCORRECT_PASSWORD);
                 })
-                .flatMap(grupo -> dao.joinGroup(user, group));
+                .flatMap(grupo -> dao.joinGroup(user, group)));
     }
 
-    public Either<Error, Void> createGroup(Grupo group, Usuario user) {
-        return userValidator.validateUserIsLogged(user)
+    public CompletableFuture<Either<Error, Void>> createGroup(Grupo group, Usuario user) {
+        return CompletableFuture.completedFuture(userValidator.validateUserIsLogged(user)
                 .flatMap(nada -> userValidator.validateUser(user))
                 .flatMap(nada -> groupValidator.validateGroup(group))
-                .flatMap(nada -> dao.createGroup(new Grupo(group.getName(), passwordEncoder.encode(group.getPassword()), group.getIsPrivate()), user));
+                .flatMap(nada -> dao.createGroup(new Grupo(group.getName(), passwordEncoder.encode(group.getPassword()), group.getIsPrivate()), user)));
     }
 
-    public Either<Error, Void> deleteMember(String userName, String groupName, Usuario user) {
-        return userValidator.validateUserIsLogged(user)
+    public CompletableFuture<Either<Error, Void>> deleteMember(String userName, String groupName, Usuario user) {
+        return CompletableFuture.completedFuture(userValidator.validateUserIsLogged(user)
                 .flatMap(nada -> {
                     if (userName.trim().isEmpty() || groupName.trim().isEmpty()) {
                         return Either.left(DataInputError.EMPTY_FIELDS);
                     } else {
                         return dao.deleteMember(userName, groupName);
                     }
-                });
+                }));
 
     }
 
-    public Either<Error, Void> inviteUser(Grupo group, List<Usuario> users, Usuario user) {
-        return userValidator.validateUserIsLogged(user)
+    public CompletableFuture<Either<Error, Void>> inviteUser(Grupo group, List<Usuario> users, Usuario user) {
+        return CompletableFuture.completedFuture(userValidator.validateUserIsLogged(user)
                 .flatMap(nada -> userValidator.validateUserList(users))
                 .flatMap(nada -> groupValidator.validateGroup(group))
                 .flatMap(nada -> {
@@ -89,6 +88,6 @@ public class GroupService {
                         return Either.left(DataInputError.GROUP_IS_PRIVATE);
                     else
                         return dao.inviteUser(group, users);
-                });
+                }));
     }
 }

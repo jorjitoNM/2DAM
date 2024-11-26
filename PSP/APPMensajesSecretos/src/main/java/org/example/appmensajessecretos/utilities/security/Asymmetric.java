@@ -20,7 +20,9 @@ import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.example.appmensajessecretos.config.ConfigurationFicheros;
+import org.example.appmensajessecretos.domain.error.DataBaseError;
 import org.example.appmensajessecretos.domain.error.Error;
+import org.example.appmensajessecretos.domain.error.ServiceError;
 import org.example.appmensajessecretos.domain.model.Usuario;
 import org.example.appmensajessecretos.utilities.Constantes;
 import org.springframework.stereotype.Component;
@@ -89,26 +91,12 @@ public class Asymmetric {
             X509Certificate certificate = generateCertificate(publicKeyJava, serverPrivateKey);
 
             keyStore.setKeyEntry(user.getName(), privateKeyJava, user.getPassword().toCharArray(), new Certificate[]{certificate});
-
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (UnrecoverableEntryException e) {
-            throw new RuntimeException(e);
-        } catch (KeyStoreException e) {
-            throw new RuntimeException(e);
-        } catch (CertificateException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchProviderException e) {
-            throw new RuntimeException(e);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidKeySpecException e) {
-            throw new RuntimeException(e);
-        } catch (OperatorCreationException e) {
-            throw new RuntimeException(e);
+            return Either.left(DataBaseError.ERROR_READING_FILE);
+        } catch (Exception e) {
+            return Either.left(ServiceError.ERROR_GENERATING_KEYS);
         }
+        return null;
     }
 
     private X509Certificate generateCertificate(PublicKey userPublicKey, PrivateKey serverPrivateKey) throws OperatorCreationException, CertificateException {
@@ -144,16 +132,10 @@ public class Asymmetric {
             char[] keyStorePassword = configuration.getServerKey().toCharArray();
             keyStore.load(fis, keyStorePassword);
             return Either.right(keyStore.getCertificate(user.getName()).getPublicKey());
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (CertificateException e) {
-            throw new RuntimeException(e);
-        } catch (KeyStoreException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+            return Either.left(DataBaseError.ERROR_READING_FILE);
+        } catch (Exception e) {
+            return Either.left(ServiceError.ERROR_ENCRYPTING);
         }
     }
 
@@ -164,18 +146,10 @@ public class Asymmetric {
             char[] keyStorePassword = configuration.getServerKey().toCharArray();
             keyStore.load(fis, keyStorePassword);
             return Either.right((PrivateKey) keyStore.getKey(user.getName(), user.getPassword().toCharArray()));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (CertificateException e) {
-            throw new RuntimeException(e);
-        } catch (KeyStoreException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (UnrecoverableKeyException e) {
-            throw new RuntimeException(e);
+            return Either.left(DataBaseError.ERROR_READING_FILE);
+        } catch (Exception e) {
+            return Either.left(ServiceError.ERROR_ENCRYPTING);
         }
     }
 
@@ -194,18 +168,8 @@ public class Asymmetric {
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
             byte[] byteText = text.getBytes(StandardCharsets.UTF_8);
             return Either.right(new String(cipher.doFinal(byteText), StandardCharsets.UTF_8));
-        } catch (NoSuchPaddingException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchProviderException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidKeyException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalBlockSizeException e) {
-            throw new RuntimeException(e);
-        } catch (BadPaddingException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            return Either.left(ServiceError.ERROR_ENCRYPTING);
         }
     }
 
@@ -215,19 +179,8 @@ public class Asymmetric {
             cipher.init(Cipher.ENCRYPT_MODE, privateKey);
             byte[] byteText = text.getBytes(StandardCharsets.UTF_8);
             return Either.right(new String(cipher.doFinal(byteText), StandardCharsets.UTF_8));
-        } catch (NoSuchPaddingException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchProviderException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidKeyException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalBlockSizeException e) {
-            throw new RuntimeException(e);
-        } catch (BadPaddingException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            return Either.left(ServiceError.ERROR_ENCRYPTING);
         }
     }
-
 }

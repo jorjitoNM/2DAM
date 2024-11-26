@@ -39,7 +39,7 @@ public class DaoGroups {
                     if (Boolean.TRUE.equals(group.getIsPrivate()))
                         return Either.left(DataInputError.GROUP_IS_PRIVATE);
                     else {
-                        foundGroup.getMembers().add(user.getName());
+                        foundGroup.getMembers().add(user);
                         return dataBase.saveGroups(gruposEither.get());
                     }
                 });
@@ -56,7 +56,7 @@ public class DaoGroups {
                 })
                 .flatMap(grupos -> {
                     if (Boolean.TRUE.equals(group.getIsPrivate()))
-                        group.getMembers().add(user.getName());
+                        group.getMembers().add(user);
                     grupos.add(group);
                     return dataBase.saveGroups(grupos);
                 });
@@ -90,7 +90,7 @@ public Either<Error, Void> inviteUser(Grupo group, List<Usuario> users) {
                 .orElseGet(() -> Either.left(ServiceError.GROUP_NOT_FOUND));
 
         return gruposEither.flatMap(grupo -> {
-            users.forEach(u -> grupo.getMembers().add(u.getName()));
+            users.forEach(u -> grupo.getMembers().add(u));
             return dataBase.saveGroups(grupos);
         });
     });

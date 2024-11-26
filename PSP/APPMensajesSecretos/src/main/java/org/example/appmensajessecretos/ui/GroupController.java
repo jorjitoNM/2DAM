@@ -2,6 +2,7 @@ package org.example.appmensajessecretos.ui;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import org.example.appmensajessecretos.domain.error.DataBaseError;
 import org.example.appmensajessecretos.domain.error.DataInputError;
@@ -78,25 +79,25 @@ public class GroupController {
 
 
     public void logIn() {
+        userName.setCursor(Cursor.WAIT);
         userService.logIn(new Usuario(userName.getText(), userPassword.getText()))
-                .thenAccept(result -> {
-                    result.peek(ok -> {
-                                user = ok;
-                                Platform.runLater(() -> {
-                                    updateUserInfo();
-                                    showInfo(Constantes.LOGGED_IN);
-                                    loadUsers();
-                                });
-                            })
-                            .peekLeft(error -> Platform.runLater(() -> showError(error)));
-                });
+                .thenAccept(result -> result.peek(ok -> {
+                            user = ok;
+                            updateUserInfo();
+                            loadUsers();
+                            Platform.runLater(() -> showInfo(Constantes.LOGGED_IN));
+                        })
+                        .peekLeft(error -> Platform.runLater(() -> showError(error))));
+        userName.setCursor(Cursor.DEFAULT);
     }
 
     private void createUser() {
         if (confirmationAlert(Constantes.USUARIO_MISSING)) {
+            userName.setCursor(Cursor.WAIT);
             userService.addUser(new Usuario(userName.getText(), userPassword.getText()))
-                    .peek(ok -> logIn())
-                    .peekLeft(this::showError);
+                    .thenAccept(result -> result.peek(ok -> logIn())
+                            .peekLeft(error -> Platform.runLater(() -> showError(error))));
+            userName.setCursor(Cursor.DEFAULT);
         }
     }
 
@@ -111,15 +112,16 @@ public class GroupController {
 
     private void showError(Error error) {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-        errorAlert.setTitle("Error");
-        errorAlert.setHeaderText("Error");
+        errorAlert.setTitle(Constantes.ERROR);
+        errorAlert.setHeaderText(Constantes.ERROR);
         String errorMessage = "";
         switch (error) {
             case DataBaseError e -> {
-                if (e == DataBaseError.ACTION_FAILED)
-                    errorMessage = Constantes.DATABASE_FAILED;
-                else
-                    errorMessage = Constantes.DATABASE_CONECCTION_FAILED;
+                switch (e) {
+                    case DataBaseError.ACTION_FAILED -> errorMessage = Constantes.DATABASE_FAILED;
+                    case DataBaseError.ERROR_IN_FETCH -> errorMessage = Constantes.DATABASE_CONECCTION_FAILED;
+                    case DataBaseError.ERROR_READING_FILE -> errorMessage = Constantes.ERROR_READING_FILE;
+                }
             }
             case ServiceError e -> {
                 switch (e) {
@@ -134,6 +136,7 @@ public class GroupController {
                     case ERROR_ENCRYPTING -> errorMessage = Constantes.ERROR_ENCRYPTING;
                     case ERROR_DECRYPTING -> errorMessage = Constantes.ERROR_DECRYPTING;
                     case ALREADY_IN_GROUP -> errorMessage = Constantes.ALREADY_IN_GROUP;
+                    case ERROR_GENERATING_KEYS -> errorMessage = Constantes.ERROR_GENERATING_KEYS;
                     case ERROR_COMPLETING_TASK -> errorMessage = Constantes.ERROR_COMPLETING_TASK;
                 }
             }
@@ -154,74 +157,102 @@ public class GroupController {
 
     public void createGroup() {
         Grupo grupo = new Grupo(createGroupName.getText(), createGroupPassword.getText(), isPrivate.isSelected());
+        userName.setCursor(Cursor.WAIT);
         groupService.createGroup(grupo, user)
-                .peek(ok -> {
-                    showInfo(Constantes.GROUP_CREATED);
+                .thenAccept(result -> result.peek(ok -> {
                     updateUserInfo();
-                })
-                .peekLeft(this::showError);
+                    Platform.runLater(() -> showInfo(Constantes.GROUP_CREATED));
+                }).peekLeft(error -> Platform.runLater(() -> showError(error))));
+        userName.setCursor(Cursor.DEFAULT);
     }
 
 
     public void joinGroup() {
         Grupo grupo = new Grupo(groupName.getText(), groupPassword.getText(), isPrivate.isSelected());
-        groupService.joinGroup(user, grupo).peek(ok -> {
-            userService.saveGroupPassword(user, grupo).thenAcceptAsync(() ->);
-            showInfo(Constantes.JOINED_GROUP);
-            updateUserInfo();
-        }).peekLeft(this::showError);
+        userName.setCursor(Cursor.WAIT);
+        groupService.joinGroup(user, grupo)
+                .thenAccept(result -> result.peek(ok -> {
+                    userService.saveGroupPassword(user, grupo)
+                            .thenAccept(result2 ->
+                                    result2.peek(dbUser -> user = dbUser)
+                                            .peekLeft(error -> Platform.runLater(() -> showError(error))));
+                    updateUserInfo();
+                    Platform.runLater(() -> showInfo(Constantes.JOINED_GROUP));
+                }).peekLeft(error -> Platform.runLater(() -> showError(error))));
+        userName.setCursor(Cursor.DEFAULT);
     }
 
 
     public void confirmDelete() {
         if (confirmationAlert(Constantes.MENSAJE_ELIMINAR_USUARIO)) {
+            userName.setCursor(Cursor.WAIT);
             groupService.deleteMember(userNameDelete.getText(), groupNameDelete.getText(), user)
-                    .peek(ok -> {
-                        showInfo(Constantes.MEMBER_DELETED);
-                        updateUserInfo();
-                    })
-                    .peekLeft(this::showError);
+                    .thenAccept(result ->
+                            result.peek(ok -> {
+                                        updateUserInfo();
+                                        Platform.runLater(() -> showInfo(Constantes.MEMBER_DELETED));
+                                    })
+                                    .peekLeft(error -> Platform.runLater(() -> showError(error))));
+            userName.setCursor(Cursor.DEFAULT);
         }
     }
 
 
     public void sendMessage() {
         Grupo g = myChats.getSelectionModel().getSelectedItem();
-        if (g.getIsPrivate())
-            messageService.sendPrivateMessage(message.getText(), user, g);
+        userName.setCursor(Cursor.WAIT);
+        if (Boolean.TRUE.equals(g.getIsPrivate()))
+            messageService.sendPrivateMessage(message.getText(), user, g)
+                    .thenAccept(result -> result.peek(ok -> Platform.runLater(() -> {
+                                loadChatMessages();
+                                showInfo(Constantes.MESSAGE_SENT);
+                            }))
+                            .peekLeft(error -> Platform.runLater(() -> showError(error))));
         else
             messageService.sendMessage(message.getText(), user, g)
-                    .peek(ok -> {
-                        loadChatMessages();
-                        showInfo(Constantes.MESSAGE_SENT);
-                    })
-                    .peekLeft(this::showError);
+                    .thenAccept(result -> result.peek(ok -> Platform.runLater(() -> {
+                                loadChatMessages();
+                                showInfo(Constantes.MESSAGE_SENT);
+                            }))
+                            .peekLeft(error -> Platform.runLater(() -> showError(error))));
+        userName.setCursor(Cursor.DEFAULT);
     }
 
 
     public void inviteUser() {
+        userName.setCursor(Cursor.WAIT);
         groupService.inviteUser(myChats.getSelectionModel().getSelectedItem(), usuarios.getSelectionModel().getSelectedItems(), user)
-                .peek(ok -> showInfo(Constantes.USER_INVITED))
-                .peekLeft(this::showError);
+                .thenAccept(result ->
+                        result.peek(ok -> Platform.runLater(() -> showInfo(Constantes.USER_INVITED)))
+                                .peekLeft(error -> Platform.runLater(() -> showError(error))));
+        userName.setCursor(Cursor.DEFAULT);
     }
 
 
     private void updateUserInfo() {
         myChats.getItems().clear();
         chat.getItems().clear();
-        groupService.getGroups(user).peek(ok -> {
-            myChats.getItems().addAll(ok);
-            loadGroups();
-        }).peekLeft(this::showError);
+        userName.setCursor(Cursor.WAIT);
+        groupService.getGroups(user)
+                .thenAccept(result ->
+                        result.peek(ok -> {
+                                    loadGroups();
+                                    Platform.runLater(() -> myChats.getItems().addAll(ok));
+                                })
+                                .peekLeft(error -> Platform.runLater(() -> showError(error))));
+        userName.setCursor(Cursor.DEFAULT);
     }
 
 
     public void loadUsers() {
         usuarios.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         usuarios.getItems().clear();
-        userService.loadUsers(user).peek(ok ->
-                        usuarios.getItems().addAll(ok))
-                .peekLeft(this::showError);
+        userName.setCursor(Cursor.WAIT);
+        userService.loadUsers(user)
+                .thenAccept(result ->
+                        result.peek(ok -> Platform.runLater(() -> usuarios.getItems().addAll(ok)))
+                                .peekLeft(error -> Platform.runLater(() -> showError(error))));
+        userName.setCursor(Cursor.DEFAULT);
     }
 
 
@@ -243,11 +274,19 @@ public class GroupController {
 
     public void loadChatMessages() {
         Grupo g = myChats.getSelectionModel().getSelectedItem();
-        if (g.getIsPrivate())
-            messageService.getPrivateMessages(user, g);
+        userName.setCursor(Cursor.WAIT);
+        if (Boolean.TRUE.equals(g.getIsPrivate()))
+            messageService.getPrivateMessages(user, g)
+                    .thenAccept(result ->
+                            result.peek(ok ->
+                                    Platform.runLater(() -> ok.forEach(m -> chat.getItems().add(m.toString()))
+                                    )).peekLeft(error -> Platform.runLater(() -> showError(error))));
         else
-            messageService.getMessages(myChats.getSelectionModel().getSelectedItem(), user).peek(ok -> ok.forEach(m ->
-                    chat.getItems().add(m.toString())
-            )).peekLeft(this::showError);
+            messageService.getMessages(myChats.getSelectionModel().getSelectedItem(), user)
+                    .thenAccept(result ->
+                            result.peek(ok ->
+                                    Platform.runLater(() -> ok.forEach(m -> chat.getItems().add(m.toString()))
+                                    )).peekLeft(error -> Platform.runLater(() -> showError(error))));
+        userName.setCursor(Cursor.DEFAULT);
     }
 }

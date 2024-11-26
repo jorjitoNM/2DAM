@@ -9,6 +9,8 @@ import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
+import org.example.appmensajessecretos.Configuration;
+import org.example.appmensajessecretos.utilities.Constantes;
 
 import java.io.FileOutputStream;
 import java.math.BigInteger;
@@ -26,6 +28,7 @@ public class Temporal {
     }
 
     public static void main(String[] args) {
+
         try {
             // Generar un par de claves usando ECDSA
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("EC", "BC");

@@ -1,5 +1,7 @@
 package org.example.appmensajessecretos.utilities;
 
+import org.example.appmensajessecretos.domain.error.Error;
+
 public class Constantes {
     public static final String RELLENE_CAMPOS = "Complete los campos";
     public static final String USUARIO_MISSING = "El usuario introducido no existe, ¿desea crearlo?";
@@ -28,7 +30,8 @@ public class Constantes {
     public static final String ACTION_COMPLETED = "Accion completada:";
     public static final String ALREADY_IN_GROUP = "No se puede unir 2 veces al mismo grupo";
     public static final String ERROR_COMPLETING_TASK = "No se ha podido completar su peticion, intentlo de nuevo";
-
+    public static final String ERROR_READING_FILE = "No se ha podido acceder a los archivos, compruebe sus permisos e intente de nuevo";
+    public static final String ERROR_GENERATING_KEYS = "Ha surgido un error al generar las claves del usuario, intentelo de nuevo";
 
 
     //Symmetric
@@ -43,7 +46,7 @@ public class Constantes {
     //Asymmetric
     public static final String SERVER_PRIVATE_KEY = "keyStorePassword";
     public static final String KEY_STORE_PATH = "keyStorePath";
-    public static final String SERVER = "server";
+    public static final String SERVER = "servidor";
     public static final String KEY_STORE_TYPE = "JKS";
     public static final String GENERATING_CERTIFICATE_COMMON_NAME = "CN=Test Certificate";
 
@@ -53,6 +56,7 @@ public class Constantes {
     public static final String PATH_USUARIOS = "pathUsuarios";
     public static final String PATH_GRUPOS = "pathGrupos";
     public static final String PATH_MENSAJES = "pathMensajes";
+    public static final String ERROR = "Error";
 
     private Constantes () {}
 }
