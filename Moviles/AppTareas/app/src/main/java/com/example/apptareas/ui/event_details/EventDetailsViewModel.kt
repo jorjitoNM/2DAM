@@ -9,6 +9,7 @@ import com.example.apptareas.data.remote.NetworkResult
 import com.example.apptareas.domain.model.Event
 import com.example.apptareas.domain.usecases.UpdateEventUseCase
 import com.example.apptareas.ui.common.UiEvent
+import com.example.apptareas.utilities.Constantes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,7 +34,7 @@ class EventDetailsViewModel @Inject constructor(
                 is NetworkResult.Success -> TODO()
                 is NetworkResult.Loading -> TODO()
                 is NetworkResult.Error -> _uiState.value = _uiState.value?.copy(appEvent = UiEvent.ShowSnackbar(
-                    R.string.error_updating_event.toString()))
+                    Constantes.ERROR_UPDATING_EVENT))
             }
         }
     }

@@ -5,6 +5,7 @@ import com.example.apptareas.data.remote.UserRepository
 import com.example.apptareas.domain.model.User
 import com.example.apptareas.data.remote.NetworkResult
 import com.example.apptareas.domain.model.validateUser
+import com.example.apptareas.utilities.Constantes
 import javax.inject.Inject
 
 class LogInUseCase @Inject constructor(private val userRepository: UserRepository) {
@@ -12,7 +13,7 @@ class LogInUseCase @Inject constructor(private val userRepository: UserRepositor
         user.validateUser(user).then {_ ->
             when (val result = userRepository.getUsers()) {
                 is NetworkResult.Success -> return NetworkResult.Success(result.data)
-                is NetworkResult.Error -> NetworkResult.Error(R.string.login_error.toString())
+                    is NetworkResult.Error -> NetworkResult.Error(Constantes.LOGIN_ERROR)
                 is NetworkResult.Loading -> NetworkResult.Loading()
             }
         }

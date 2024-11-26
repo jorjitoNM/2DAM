@@ -21,13 +21,13 @@ class EventsListFragment : Fragment() {
     private var _binding: EventListFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: EventAdapter
-    private var userId :Int = -1
+    private var userId :Int = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        userId = arguments?.getInt("userId") ?: -1
+        userId = arguments?.getInt("userId") ?: 1
         _binding = EventListFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }

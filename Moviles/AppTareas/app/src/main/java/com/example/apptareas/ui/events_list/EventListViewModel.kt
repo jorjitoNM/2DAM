@@ -10,6 +10,7 @@ import com.example.apptareas.ui.common.UiEvent
 import com.example.apptareas.data.remote.NetworkResult
 import com.example.apptareas.domain.model.Event
 import com.example.apptareas.domain.usecases.DeleteEventUseCase
+import com.example.apptareas.utilities.Constantes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,9 +35,9 @@ class EventListViewModel @Inject constructor(
     private fun deleteEvent(event: Event) {
         viewModelScope.launch {
             if (deleteEventUseCase.invoke(event))
-                _uiState.value = _uiState.value?.copy(appEvent = UiEvent.ShowSnackbar(R.string.event_deleted.toString()))
+                _uiState.value = _uiState.value?.copy(appEvent = UiEvent.ShowSnackbar(Constantes.EVENT_DELETED))
             else
-                _uiState.value = _uiState.value?.copy(appEvent = UiEvent.ShowSnackbar(R.string.error_deleting_event.toString()))
+                _uiState.value = _uiState.value?.copy(appEvent = UiEvent.ShowSnackbar(Constantes.ERROR_DELETING_EVENT))
         }
     }
 

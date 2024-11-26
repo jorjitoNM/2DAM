@@ -8,6 +8,7 @@ import com.example.apptareas.R
 import com.example.apptareas.data.remote.NetworkResult
 import com.example.apptareas.domain.usecases.GetUserUseCase
 import com.example.apptareas.ui.common.UiEvent
+import com.example.apptareas.utilities.Constantes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -32,7 +33,7 @@ class ProfileFragmentViewModel @Inject constructor (
                 is NetworkResult.Success -> _uiState.value = _uiState.value?.copy(user = user.data)
                 is NetworkResult.Error -> _uiState.value = _uiState.value?.copy(appEvent = UiEvent.ShowSnackbar(user.message))
                 is NetworkResult.Loading ->  {
-                    Timber.i(R.string.petition_returned_loading.toString())
+                    Timber.i(Constantes.PETITION_RETURNED_LOADING)
                     getUser(userId)
                 }
             }

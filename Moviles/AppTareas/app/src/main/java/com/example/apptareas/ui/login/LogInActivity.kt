@@ -12,6 +12,7 @@ import com.example.apptareas.databinding.LoginBinding
 import com.example.apptareas.domain.model.User
 import com.example.apptareas.ui.common.UiEvent
 import com.example.apptareas.ui.main.MainActivity
+import com.example.apptareas.utilities.Constantes
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -43,7 +44,7 @@ class LogInActivity : AppCompatActivity() {
             }
             if (state.logged) {
                 val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra(R.string.user_id.toString(), state.user.id)
+                intent.putExtra(Constantes.USER_ID, state.user.id)
                 startActivity(intent)
             }
             state.event?.let { event ->

@@ -2,7 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation"
-    app:startDestination="@id/eventsListFragment">
+    app:startDestination="@id/eventsListFragment"
+    >
 
     <fragment
         android:id="@+id/eventsListFragment"
@@ -13,7 +14,7 @@
             app:destination="@id/eventDetailsFragment" />
         <argument
             android:name="userId"
-            android:defaultValue="-1"
+            android:defaultValue="1"
             app:argType="integer" />
 
     </fragment>
@@ -23,11 +24,11 @@
         android:label="EventDetailsFragment">
         <argument
             android:name="userId"
-            android:defaultValue="-1"
+            android:defaultValue="1"
             app:argType="integer" />
         <argument
             android:name="eventId"
-            android:defaultValue="-1"
+            android:defaultValue="1"
             app:argType="integer" />
     </fragment>
 </navigation>

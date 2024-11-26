@@ -10,6 +10,7 @@ import coil.load
 import com.example.apptareas.R
 import com.example.apptareas.databinding.UserProfileBinding
 import com.example.apptareas.ui.todos_list.TodoAdapter
+import com.example.apptareas.utilities.Constantes
 
 class ProfileFragment : Fragment() {
 
@@ -41,7 +42,7 @@ class ProfileFragment : Fragment() {
                     username.setText(state.user.username)
                     name.setText(state.user.name)
                     userId.setText(state.user.id)
-                    image.load(R.string.image_provider.toString())
+                    image.load(Constantes.IMAGE_PROVIDER)
                 }
             }
         }

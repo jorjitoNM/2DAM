@@ -3,16 +3,13 @@
     <string name="username">Username (ex. Juanjo123)</string>
     <string name="password">Password</string>
     <string name="submit">Submit</string>
-    <string name="login_error">Login failed, please check the fields and try again</string>
     <string name="user">user</string>
     <string name="user_id">user_id</string>
-    <string name="get_events_failed">An error occured when getting your events, please, try again</string>
     <string name="image">An image</string>
     <string name="event_title">Event title</string>
     <string name="event_id">1</string>
     <string name="event_description">Event description</string>
     <string name="add">Add</string>
-    <string name="image_provider">https://thispersondoesnotexist.com/</string>
     <string name="home">Home</string>
     <string name="events_list">My Events</string>
     <string name="user_id_argument">userId</string>
@@ -23,13 +20,8 @@
     <string name="update">Update</string>
     <string name="delete">Delete</string>
     <string name="todos">Todos</string>
-    <string name="error_updating_event">Could not update the event, try again</string>
-    <string name="invalid_username">Username must contain an a</string>
     <string name="i_will_come">I will come</string>
     <string name="user_info">Profile</string>
     <string name="done">Done</string>
-    <string name="petition_returned_loading">Ha devuelto loading y volvemos a llamar a la funcion</string>
-    <string name="event_deleted">Evento eliminado con exito</string>
-    <string name="error_deleting_event">No se ha podido eliminar el evento</string>
     <string name="api_call">Api call failed</string>
 </resources>
