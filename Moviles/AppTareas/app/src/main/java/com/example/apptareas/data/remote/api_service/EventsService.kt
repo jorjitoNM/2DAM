@@ -11,11 +11,11 @@ import retrofit2.http.Path
 interface EventsService {
 
     @GET("posts/{id}")
-    suspend fun getEvents (@Path("id") userId : Int) : Response<List<EventRemote>>
+    suspend fun getEvents (@Path("id") userId : Int) : Response<EventRemote>
 
     @DELETE("posts/{id}")
     suspend fun deleteEvent(@Path("id") eventId : Int) : Response<Void>
 
-    @POST("post/{id}")
+    @POST("posts/{id}")
     suspend fun updateEvent(@Path("id") eventId : Int, @Body event : EventRemote) : Response<EventRemote>
 }

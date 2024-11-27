@@ -4,12 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.apptareas.R
-import com.example.apptareas.domain.usecases.GetEventsUseCase
-import com.example.apptareas.ui.common.UiEvent
 import com.example.apptareas.data.remote.NetworkResult
 import com.example.apptareas.domain.model.Event
 import com.example.apptareas.domain.usecases.DeleteEventUseCase
+import com.example.apptareas.domain.usecases.GetEventsUseCase
+import com.example.apptareas.ui.common.UiEvent
 import com.example.apptareas.utilities.Constantes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -45,7 +44,9 @@ class EventListViewModel @Inject constructor(
         viewModelScope.launch {
             when (val userEvents = getEventsUseCaseUserCase.invoke(userId)) {
                 is NetworkResult.Success -> {
-                    _uiState.value = _uiState.value?.copy(events = userEvents.data)
+                    val eventos : MutableList<Event> = ArrayList()
+                    eventos.add(userEvents.data)
+                    _uiState.value = _uiState.value?.copy(events = eventos.toList())
                 }
 
                 is NetworkResult.Error -> _uiState.value = _uiState.value?.copy(
