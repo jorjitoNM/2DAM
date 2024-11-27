@@ -1,15 +1,13 @@
 package com.hospitalcrud.dao.respositories.spring;
 
+import com.hospitalcrud.common.Constantes;
 import com.hospitalcrud.dao.mappers.spring_mappers.MapSpringPatients;
 import com.hospitalcrud.dao.model.MedicalRecord;
 import com.hospitalcrud.dao.model.Patient;
 import com.hospitalcrud.dao.respositories.*;
-import com.hospitalcrud.common.Constantes;
-import com.hospitalcrud.dao.utilities.SQLQueries;
 import com.hospitalcrud.dao.utilities.SQLQueriesSpring;
 import com.hospitalcrud.domain.error.DUPLICATED_USERNAME;
 import com.hospitalcrud.domain.error.FOREIGN_KEY_ERROR;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.simple.JdbcClient;
@@ -51,18 +49,18 @@ public class SpringPatientsRepository implements PatientRepository {
     @Transactional
     public int save(Patient patient) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcClient.sql(SQLQueriesSpring.INSERT_PATIENT)
+                .param("name", patient.getName())
+                .param("date_of_birth", patient.getBirthDate())
+                .param("phone", patient.getPhone())
+                .update(keyHolder);
+        int newId = Objects.requireNonNull(keyHolder.getKey(), Constantes.ERROR_GENERATING_KEY).intValue();
+        patient.setId(newId);
         try {
-            jdbcClient.sql(SQLQueriesSpring.INSERT_PATIENT)
-                    .param("name", patient.getName())
-                    .param("date_of_birth", patient.getBirthDate())
-                    .param("phone", patient.getPhone())
-                    .update(keyHolder);
+            credentialRepository.save(patient);
         } catch (DataIntegrityViolationException e) {
             throw new DUPLICATED_USERNAME();
         }
-        int newId = Objects.requireNonNull(keyHolder.getKey(), Constantes.ERROR_GENERATING_KEY).intValue();
-        patient.getCredential().setPatientId(newId);
-        credentialRepository.save(patient);
         return newId;
     }
 
@@ -70,9 +68,9 @@ public class SpringPatientsRepository implements PatientRepository {
     public void update(Patient patient) {
         jdbcClient.sql(SQLQueriesSpring.UPDATE_PATIENT)
                 .param("name", patient.getName())
-                .param("date_of_birth",patient.getBirthDate())
-                .param("phone",patient.getPhone())
-                .param("patient_id",patient.getId())
+                .param("date_of_birth", patient.getBirthDate())
+                .param("phone", patient.getPhone())
+                .param("patient_id", patient.getId())
                 .update();
     }
 
@@ -82,7 +80,7 @@ public class SpringPatientsRepository implements PatientRepository {
         if (confirmation) {
             medicationsRepository.deletePatientMedications(patientId);
             medicalRecordsRepository.delete(new MedicalRecord(
-                    -1,patientId,-1,null,null));
+                    -1, patientId, -1, null, null));
         }
         appointmentsRepository.delete(patientId);
         credentialRepository.delete(patientId);

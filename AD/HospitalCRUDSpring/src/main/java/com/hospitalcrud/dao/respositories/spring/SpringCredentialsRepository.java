@@ -5,7 +5,6 @@ import com.hospitalcrud.dao.model.Credential;
 import com.hospitalcrud.dao.model.Patient;
 import com.hospitalcrud.dao.respositories.CredentialRepository;
 import com.hospitalcrud.dao.utilities.SQLQueriesSpring;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
@@ -31,7 +30,7 @@ public class SpringCredentialsRepository implements CredentialRepository {
 
     @Override
     public boolean delete(int patientId) {
-        jdbcClient.sql(SQLQueriesSpring.DELETE_CREDENTIAL).param("id",patientId).query();
+        jdbcClient.sql(SQLQueriesSpring.DELETE_CREDENTIAL).param("id",patientId).update();
         return false;
     }
 
@@ -40,9 +39,9 @@ public class SpringCredentialsRepository implements CredentialRepository {
         jdbcClient.sql(SQLQueriesSpring.INSERT_CREDENTIAL)
                 .param("username",patient.getCredential().getUserName())
                 .param("password",patient.getCredential().getPassword())
-                .param("patientId",patient.getId())
+                .param("patient_id",patient.getId())
                 .param("doctor_id",null)
-                .query();
+                .update();
     }
 
     @Override

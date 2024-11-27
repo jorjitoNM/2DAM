@@ -38,7 +38,7 @@ public class SpringMedicationsRepository implements MedicationsRepository {
     @Override
     public void deletePatientMedications(int patientId) {
         jdbcClient.sql(SQLQueriesSpring.DELETE_PATIENT_PRESCRIBED_MEDICATIONS)
-                .param(1,patientId).query();
+                .param(1,patientId).update();
     }
 
     @Override

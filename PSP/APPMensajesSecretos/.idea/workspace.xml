@@ -39,22 +39,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "AD",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/cnovi/OneDrive/Escritorio/Jorge/GitHub2DAM/AD/HospitalCRUD-JDBC",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;AD&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/cnovi/OneDrive/Escritorio/Jorge/GitHub2DAM/AD/HospitalCRUD-JDBC&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\cnovi\OneDrive\Escritorio\Jorge\GitHub2DAM\PSP\APPMensajesSecretos\keyStore" />
@@ -132,6 +132,7 @@
     <MESSAGE value="cambios tarde (arregaldos metodo de UserService&#10;) 22/11/2024" />
     <MESSAGE value="cambios clase (ya hay un CompletableFuture bien hecho) 26/11/2024" />
     <MESSAGE value="cambios clase (ya compila, pero no encuentra la clave del server) 26/11/2024" />
-    <option name="LAST_COMMIT_MESSAGE" value="cambios clase (ya compila, pero no encuentra la clave del server) 26/11/2024" />
+    <MESSAGE value="cambios clase (arreglado el problema de las claves, ahora falla al denecriptar los mensajes) 27/11/2024" />
+    <option name="LAST_COMMIT_MESSAGE" value="cambios clase (arreglado el problema de las claves, ahora falla al denecriptar los mensajes) 27/11/2024" />
   </component>
 </project>
