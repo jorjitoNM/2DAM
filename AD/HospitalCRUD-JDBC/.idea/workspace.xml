@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="abd58484-9b07-422a-bcfc-0c00d898c67d" name="Changes" comment="cambios tarde (añadida y arreglada parte de JDBC) 25/11/2024">
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/src/main/java/configuration/Configuration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/src/main/java/data/utilities/DBConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/src/main/java/data/utilities/DBConnectionPool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/src/main/java/data/utilities/SQLQueries.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/src/main/java/data/utilities/SQLQueriesSpring.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/src/main/java/ui/Ex1.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/src/main/java/ui/Ex10.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/src/main/java/ui/Ex2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/src/main/java/ui/Ex3.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/src/main/java/ui/Ex4.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/src/main/java/ui/Ex5.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/src/main/java/ui/Ex6.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/src/main/java/ui/Ex7.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/src/main/java/ui/Ex8.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/src/main/java/ui/Ex9.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/src/main/resources/properties.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/data/Factions.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/src/main/java/Configuration/Configuration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/src/main/java/ui/Ex1.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/src/main/java/ui/Ex10.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/src/main/java/ui/Ex2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/src/main/java/ui/Ex3.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/src/main/java/ui/Ex4.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/src/main/java/ui/Ex5.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/src/main/java/ui/Ex6.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/src/main/java/ui/Ex7.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/src/main/java/ui/Ex8.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/src/main/java/ui/Ex9.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PracticaExamenAD1EVA/src/main/resources/properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PSP/APPMensajesSecretos/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_11_2024_19_02__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../PSP/APPMensajesSecretos/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_11_2024_19_02__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PSP/APPMensajesSecretos/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_11_2024_19_02__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../PSP/APPMensajesSecretos/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_11_2024_19_02__Changes_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PSP/APPMensajesSecretos/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../PSP/APPMensajesSecretos/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/../.." value="AD" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;jorjitoNM&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/jorjitoNM/2DAM.git&quot;,
+    &quot;accountId&quot;: &quot;8a378f4a-2147-47a7-8eb1-64e66706b89c&quot;
+  }
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2pLDubp6W0umJveNjsl4PB76KbO" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "Spring Boot.HospitalCrudApplication.executor": "Run",
+    "git-widget-placeholder": "AD",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/cnovi/OneDrive/Escritorio/Jorge/GitHub2DAM/AD/HospitalCRUDSpring",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="HospitalCrudApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="HospitalCRUD" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.hospitalcrud.HospitalCrudApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.19072.14" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.19072.14" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="abd58484-9b07-422a-bcfc-0c00d898c67d" name="Changes" comment="" />
+      <created>1732536686174</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1732536686174</updated>
+      <workItem from="1732536687490" duration="1630000" />
+      <workItem from="1732542573993" duration="4226000" />
+      <workItem from="1732609315260" duration="48000" />
+      <workItem from="1732610368441" duration="213000" />
+      <workItem from="1732619222885" duration="3467000" />
+    </task>
+    <task id="LOCAL-00001" summary="cambios tarde (añadida y arreglada parte de JDBC) 25/11/2024">
+      <option name="closed" value="true" />
+      <created>1732551587255</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1732551587256</updated>
+    </task>
+    <task id="LOCAL-00002" summary="cambios tarde (añadida y arreglada parte de JDBC) 25/11/2024">
+      <option name="closed" value="true" />
+      <created>1732551885303</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1732551885303</updated>
+    </task>
+    <task id="LOCAL-00003" summary="cambios tarde (añadida y arreglada parte de JDBC) 25/11/2024">
+      <option name="closed" value="true" />
+      <created>1732610519198</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1732610519198</updated>
+    </task>
+    <task id="LOCAL-00004" summary="cambios tarde (añadida y arreglada parte de JDBC) 25/11/2024">
+      <option name="closed" value="true" />
+      <created>1732610545284</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1732610545285</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="cambios tarde (añadida y arreglada parte de JDBC) 25/11/2024" />
+    <option name="LAST_COMMIT_MESSAGE" value="cambios tarde (añadida y arreglada parte de JDBC) 25/11/2024" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/hospitalcrud/dao/respositories/spring/SpringPatientsRepository.java</url>
+          <line>82</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
