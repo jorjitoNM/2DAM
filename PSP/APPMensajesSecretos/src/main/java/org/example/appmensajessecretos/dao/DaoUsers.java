@@ -1,8 +1,8 @@
 package org.example.appmensajessecretos.dao;
 
 import io.vavr.control.Either;
+import org.example.appmensajessecretos.dao.model.UserRemote;
 import org.example.appmensajessecretos.domain.error.Error;
-import org.example.appmensajessecretos.domain.model.Usuario;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,19 +15,19 @@ public class DaoUsers {
         this.dataBase = dataBase;
     }
 
-    public Either<Error, List<Usuario>> loadUsers(Usuario user) {
+    public Either<Error, List<UserRemote>> loadUsers(UserRemote user) {
         return dataBase.loadUsers().flatMap(usuarios -> Either.right(usuarios.stream()
                 .filter(u -> !u.getName().equals(user.getName())).toList()));
     }
 
-    public Either<Error, Void> addUser(Usuario finalUser) {
+    public Either<Error, Void> addUser(UserRemote finalUser) {
         return dataBase.loadUsers().flatMap(usuarios -> {
             usuarios.add(finalUser);
             return dataBase.saveUsers(usuarios);
         });
     }
 
-    public Either<Error, Usuario> getUser(Usuario user) {
+    public Either<Error, UserRemote> getUser(UserRemote user) {
         return dataBase.loadUsers().flatMap(usuarios -> Either.right(usuarios.stream()
                 .filter(u -> u.getName().equals(user.getName()))
                 .findFirst().orElse(null)));

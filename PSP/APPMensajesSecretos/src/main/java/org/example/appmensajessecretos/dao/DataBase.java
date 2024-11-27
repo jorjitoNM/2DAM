@@ -6,6 +6,8 @@ import com.google.gson.reflect.TypeToken;
 import io.vavr.control.Either;
 import lombok.extern.log4j.Log4j2;
 import org.example.appmensajessecretos.config.ConfigurationFicheros;
+import org.example.appmensajessecretos.dao.model.GroupRemote;
+import org.example.appmensajessecretos.dao.model.UserRemote;
 import org.example.appmensajessecretos.domain.error.DataBaseError;
 import org.example.appmensajessecretos.domain.error.Error;
 import org.example.appmensajessecretos.domain.model.Grupo;
@@ -34,9 +36,9 @@ public class DataBase {
        this.configuration = configuration;
    }
 
-   public Either<Error,List<Usuario>> loadUsers () {
-        Type userListType = new TypeToken<ArrayList<Usuario>> () {}.getType();
-        List<Usuario> users = null;
+   public Either<Error,List<UserRemote>> loadUsers () {
+        Type userListType = new TypeToken<ArrayList<UserRemote>> () {}.getType();
+        List<UserRemote> users = null;
         try {
             users = gson.fromJson(
                     new FileReader(configuration.getPathUsuarios()),userListType
@@ -49,7 +51,7 @@ public class DataBase {
         }
        return Either.right(users);
    }
-   public Either<Error,Void> saveUsers (List<Usuario> users) {
+   public Either<Error,Void> saveUsers (List<UserRemote> users) {
        try (FileWriter fw = new FileWriter(configuration.getPathUsuarios())) {
            gson.toJson(users, fw);
        } catch (IOException e) {
@@ -87,9 +89,9 @@ public class DataBase {
     }
 
 
-    public Either<Error,List<Grupo>> loadGroups() {
-        Type groupListType = new TypeToken<ArrayList<Grupo>> () {}.getType();
-        List<Grupo> groups = null;
+    public Either<Error,List<GroupRemote>> loadGroups() {
+        Type groupListType = new TypeToken<ArrayList<GroupRemote>> () {}.getType();
+        List<GroupRemote> groups = null;
         try {
             groups = gson.fromJson(
                     new FileReader(configuration.getPathGrupos()), groupListType
@@ -102,7 +104,7 @@ public class DataBase {
         }
         return Either.right(groups);
     }
-    public Either<Error,Void> saveGroups(List<Grupo> groups) {
+    public Either<Error,Void> saveGroups(List<GroupRemote> groups) {
         try (FileWriter fw = new FileWriter(configuration.getPathGrupos())) {
             gson.toJson(groups,fw);
         } catch (IOException e) {

@@ -1,6 +1,8 @@
 package org.example.appmensajessecretos.dao;
 
 import io.vavr.control.Either;
+import org.example.appmensajessecretos.dao.model.GroupRemote;
+import org.example.appmensajessecretos.dao.model.UserRemote;
 import org.example.appmensajessecretos.domain.error.DataInputError;
 import org.example.appmensajessecretos.domain.error.Error;
 import org.example.appmensajessecretos.domain.error.ServiceError;
@@ -19,20 +21,21 @@ public class DaoGroups {
         this.dataBase = dataBase;
     }
 
-    public Either<Error, List<Grupo>> getGroups(Usuario user) {
+    public Either<Error, List<GroupRemote>> getGroups(Usuario user) {
         return dataBase.loadGroups().flatMap(grupos ->
                 Either.right(grupos.stream()
-                        .filter(grupo -> grupo.getMembers().contains(user.getName()))
+                        .filter(grupo -> grupo.getMembers().stream().map(UserRemote::getName).toList()
+                                .contains(user.getName()))
                         .toList()));
     }
 
-    public Either<Error, Void> joinGroup(Usuario user, Grupo group) {
-        Either<Error,List<Grupo>> gruposEither = dataBase.loadGroups();
+    public Either<Error, Void> joinGroup(UserRemote user, GroupRemote group) {
+        Either<Error,List<GroupRemote>> gruposEither = dataBase.loadGroups();
         return gruposEither
                 .flatMap(grupos -> grupos.stream()
                         .filter(g -> g.getName().equals(group.getName()))
                         .findFirst()
-                        .map(Either::<Error, Grupo>right)
+                        .map(Either::<Error, GroupRemote>right)
                         .orElseGet(() -> Either.left(ServiceError.GROUP_NOT_FOUND))
                 )
                 .flatMap(foundGroup -> {
@@ -45,7 +48,7 @@ public class DaoGroups {
                 });
     }
 
-    public Either<Error, Void> createGroup(Grupo group, Usuario user) {
+    public Either<Error, Void> createGroup(GroupRemote group, UserRemote user) {
         return dataBase.loadGroups()
                 .flatMap(grupos -> {
                     if (grupos.stream().anyMatch(g -> g.getName().equals(group.getName()))) {
@@ -63,30 +66,30 @@ public class DaoGroups {
     }
 
     public Either<Error, Void> deleteMember(String userName, String groupName) {
-        Either<Error,List<Grupo>> gruposEither = dataBase.loadGroups();
+        Either<Error,List<GroupRemote>> gruposEither = dataBase.loadGroups();
         return gruposEither
                 .flatMap(grupos -> grupos.stream()
                         .filter(g -> g.getName().equals(groupName))
                         .findFirst()
-                        .map(Either::<Error, Grupo>right)
+                        .map(Either::<Error, GroupRemote>right)
                         .orElseGet(() -> Either.left(ServiceError.GROUP_NOT_FOUND))
                 )
                 .flatMap(grupo -> {
-                    if (grupo.getMembers().stream().anyMatch(u -> u.equals(userName)))
+                    if (grupo.getMembers().stream().map(UserRemote::getName).anyMatch(u -> u.equals(userName)))
                         return Either.left(ServiceError.NOT_IN_GROUP);
                     else {
-                        grupo.getMembers().removeIf(u -> u.equals(userName));
+                        grupo.getMembers().removeIf(u -> u.getName().equals(userName));
                         return dataBase.saveGroups(gruposEither.get());
                     }
                 });
 }
 
-public Either<Error, Void> inviteUser(Grupo group, List<Usuario> users) {
+public Either<Error, Void> inviteUser(GroupRemote group, List<UserRemote> users) {
     return dataBase.loadGroups().flatMap(grupos -> {
-        Either<Error, Grupo> gruposEither = grupos.stream()
+        Either<Error, GroupRemote> gruposEither = grupos.stream()
                 .filter(g -> g.getName().equals(group.getName()))
                 .findFirst()
-                .map(Either::<Error, Grupo>right)
+                .map(Either::<Error, GroupRemote>right)
                 .orElseGet(() -> Either.left(ServiceError.GROUP_NOT_FOUND));
 
         return gruposEither.flatMap(grupo -> {
@@ -96,7 +99,7 @@ public Either<Error, Void> inviteUser(Grupo group, List<Usuario> users) {
     });
 }
 
-    public Either<Error,Grupo> getGroup(Grupo group) {
+    public Either<Error,GroupRemote> getGroup(GroupRemote group) {
         return dataBase.loadGroups()
                 .flatMap(grupos ->
                         Either.right(grupos.stream().filter(g -> g.getName().equals(group.getName())).findFirst().orElse(null))

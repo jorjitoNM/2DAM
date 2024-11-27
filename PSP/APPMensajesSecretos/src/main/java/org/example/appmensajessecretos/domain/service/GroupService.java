@@ -2,6 +2,8 @@ package org.example.appmensajessecretos.domain.service;
 
 import io.vavr.control.Either;
 import org.example.appmensajessecretos.dao.DaoGroups;
+import org.example.appmensajessecretos.dao.model.GroupRemote;
+import org.example.appmensajessecretos.dao.model.UserRemote;
 import org.example.appmensajessecretos.domain.error.DataInputError;
 import org.example.appmensajessecretos.domain.error.Error;
 import org.example.appmensajessecretos.domain.error.ServiceError;
@@ -37,7 +39,7 @@ public class GroupService {
                     if (groups.isEmpty())
                         return Either.left(ServiceError.NOT_IN_GROUPS);
                     else
-                        return Either.right(groups);
+                        return Either.right(groups.stream().map(GroupRemote::toGroup).toList());
                 }));
     }
 
@@ -47,24 +49,25 @@ public class GroupService {
                 .flatMap(nada -> userValidator.validateUser(user))
                 .flatMap(nada -> groupValidator.validateGroup(group))
                 .flatMap(nada -> {
-                    Grupo g = dao.getGroup(group).get();
+                    Grupo g = dao.getGroup(new GroupRemote(group)).get().toGroup();
                     if (g == null)
                         return Either.left(ServiceError.GROUP_NOT_FOUND);
-                    else if (g.getMembers().contains(user.getName()))
+                    else if (g.getMembers().stream().map(Usuario::getName).toList().contains(user.getName()))
                         return Either.left(ServiceError.ALREADY_IN_GROUP);
                     else if (passwordEncoder.matches(group.getPassword(), g.getPassword()))
                         return Either.right(g);
                     else
                         return Either.left(DataInputError.INCORRECT_PASSWORD);
                 })
-                .flatMap(grupo -> dao.joinGroup(user, group)));
+                .flatMap(grupo -> dao.joinGroup(new UserRemote(user), new GroupRemote(group))));
     }
 
     public CompletableFuture<Either<Error, Void>> createGroup(Grupo group, Usuario user) {
         return CompletableFuture.completedFuture(userValidator.validateUserIsLogged(user)
                 .flatMap(nada -> userValidator.validateUser(user))
                 .flatMap(nada -> groupValidator.validateGroup(group))
-                .flatMap(nada -> dao.createGroup(new Grupo(group.getName(), passwordEncoder.encode(group.getPassword()), group.getIsPrivate()), user)));
+                .flatMap(nada -> dao.createGroup(new GroupRemote(group.getName(), passwordEncoder.encode(group.getPassword()), group.getIsPrivate())
+                        , new UserRemote(user))));
     }
 
     public CompletableFuture<Either<Error, Void>> deleteMember(String userName, String groupName, Usuario user) {
@@ -87,7 +90,7 @@ public class GroupService {
                     if (Boolean.FALSE.equals(group.getIsPrivate()))
                         return Either.left(DataInputError.GROUP_IS_PRIVATE);
                     else
-                        return dao.inviteUser(group, users);
+                        return dao.inviteUser(new GroupRemote(group), users.stream().map(Usuario::toUserRemote).toList());
                 }));
     }
 }

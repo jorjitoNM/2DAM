@@ -1,11 +1,13 @@
 package org.example.appmensajessecretos.domain.model;
 
-import io.vavr.control.Either;
 import lombok.Data;
+import org.example.appmensajessecretos.dao.model.UserRemote;
 import org.example.appmensajessecretos.utilities.Constantes;
+import org.springframework.security.core.userdetails.User;
 
-import javax.print.attribute.HashAttributeSet;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 @Data
 public class Usuario {
@@ -16,6 +18,12 @@ public class Usuario {
     public Usuario() {
         name = Constantes.CONTRASEÑA_INCORRECTA;
         password = "";
+    }
+
+    public Usuario (UserRemote user) {
+        this.name = user.getName();
+        this.password = Constantes.CONTRASEÑA_INCORRECTA;
+        this.groupPasswords.putAll(user.getGroupPasswords());
     }
 
     public Usuario(String name, String password) {
@@ -43,5 +51,9 @@ public class Usuario {
 
     public void addGroupPassword (String groupName, String password) {
         groupPasswords.put(groupName,password);
+    }
+
+    public UserRemote toUserRemote() {
+        return new UserRemote(this);
     }
 }

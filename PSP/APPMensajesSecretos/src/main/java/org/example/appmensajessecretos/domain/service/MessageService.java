@@ -109,7 +109,12 @@ MessageService {
                 .flatMap(nada -> asymmetric.getPrivateKey(user))
                 .flatMap(userPrivateKey -> asymmetric.decipher(user.getGroupPasswords().get(group.getName()), userPrivateKey))
                 .flatMap(groupPassword -> dao.loadMessages(group)
-                        .flatMap(messages -> decipherSymmetricMessages(messages, groupPassword)
+                        .flatMap(messages -> {
+                                    if (messages.isEmpty())
+                                        return Either.left(ServiceError.GROUP_HAS_NO_MESSAGES);
+                                    else
+                                        return decipherSymmetricMessages(messages, groupPassword);
+                                }
                         )));
     }
 
@@ -118,7 +123,12 @@ MessageService {
         return CompletableFuture.completedFuture(groupValidator.validateGroup(group)
                 .flatMap(nada -> asymmetric.getPrivateKey(user))
                 .flatMap(userPrivateKey -> dao.loadMessages(group)
-                        .flatMap(messages -> decipherAsymmetricMessages(messages, userPrivateKey)
+                        .flatMap(messages -> {
+                                    if (messages.isEmpty())
+                                        return Either.left(ServiceError.GROUP_HAS_NO_MESSAGES);
+                                    else
+                                        return decipherAsymmetricMessages(messages, userPrivateKey);
+                                }
                         )));
     }
 

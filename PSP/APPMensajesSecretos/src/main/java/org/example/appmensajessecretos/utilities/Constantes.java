@@ -1,7 +1,5 @@
 package org.example.appmensajessecretos.utilities;
 
-import org.example.appmensajessecretos.domain.error.Error;
-
 public class Constantes {
     public static final String RELLENE_CAMPOS = "Complete los campos";
     public static final String USUARIO_MISSING = "El usuario introducido no existe, ¿desea crearlo?";
@@ -32,6 +30,9 @@ public class Constantes {
     public static final String ERROR_COMPLETING_TASK = "No se ha podido completar su peticion, intentlo de nuevo";
     public static final String ERROR_READING_FILE = "No se ha podido acceder a los archivos, compruebe sus permisos e intente de nuevo";
     public static final String ERROR_GENERATING_KEYS = "Ha surgido un error al generar las claves del usuario, intentelo de nuevo";
+    public static final String GROUP_HAS_NO_MESSAGES = "El grupo no tiene ningun mensaje todavia";
+    public static final String ERROR_GETTING_PUBLIC_KEY = "No se ha podido recuperar la clave publica del usuario";
+    public static final String ERROR_GETTING_PRIVATE_KEY = "No se ha podido recuperar la clave privada del usuario";
 
 
     //Symmetric
