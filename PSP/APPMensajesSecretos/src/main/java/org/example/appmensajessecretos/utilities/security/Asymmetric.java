@@ -82,7 +82,7 @@ public class Asymmetric {
             byte[] privateKeyBytes = privateKey.getD().toByteArray();
             byte[] publicKeyBytes = publicKey.getQ().getEncoded(false);
 
-            KeyFactory keyFactory = KeyFactory.getInstance("EC", "BC");
+            KeyFactory keyFactory = KeyFactory.getInstance("EC","BC");
             X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(publicKeyBytes);
             PublicKey publicKeyJava = keyFactory.generatePublic(publicKeySpec);
             PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(privateKeyBytes);
