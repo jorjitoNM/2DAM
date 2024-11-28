@@ -74,10 +74,7 @@ public class UserService {
     public CompletableFuture<Either<Error, Usuario>> saveGroupPassword(Usuario user, Grupo group) {
         return CompletableFuture.completedFuture(asymmetric.getPublicKey(user)
                 .flatMap(userPublicKey -> asymmetric.cipher(group.getPassword(), userPublicKey))
-                .flatMap(password -> dao.getUser(new UserRemote(user))
-                        .flatMap(foundUser -> {
-                            foundUser.addGroupPassword(group.getName(), password);
-                            return Either.right(new Usuario(foundUser));
-                        })));
+                .flatMap(password -> dao.addGroupPassword(new UserRemote(user),password, group)
+                        .flatMap(dbUser -> Either.right(dbUser.toUser()))));
     }
 }

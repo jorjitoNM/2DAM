@@ -61,6 +61,16 @@ public class DataBase {
        return Either.right(null);
    }
 
+    public Either<Error,UserRemote> saveUser(UserRemote userRemote) {
+        try (FileWriter fw = new FileWriter(configuration.getPathUsuarios())) {
+            gson.toJson(userRemote, fw);
+        } catch (IOException e) {
+            log.error(e.getMessage(),e);
+            return Either.left(DataBaseError.ACTION_FAILED);
+        }
+        return Either.right(userRemote);
+    }
+
 
     public Either<Error,List<Mensaje>> loadMessages() {
         Type messageListType = new TypeToken<ArrayList<Mensaje>> () {}.getType();

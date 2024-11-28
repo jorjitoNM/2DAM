@@ -3,6 +3,7 @@ package org.example.appmensajessecretos.dao;
 import io.vavr.control.Either;
 import org.example.appmensajessecretos.dao.model.UserRemote;
 import org.example.appmensajessecretos.domain.error.Error;
+import org.example.appmensajessecretos.domain.model.Grupo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,5 +32,14 @@ public class DaoUsers {
         return dataBase.loadUsers().flatMap(usuarios -> Either.right(usuarios.stream()
                 .filter(u -> u.getName().equals(user.getName()))
                 .findFirst().orElse(null)));
+    }
+
+    public Either<Error, UserRemote> addGroupPassword(UserRemote userRemote, String password, Grupo group) {
+        return getUser(userRemote)
+                .flatMap(user -> {
+                    user.addGroupPassword(group.getName(),password);
+                    return dataBase.saveUser(userRemote);
+                });
+
     }
 }

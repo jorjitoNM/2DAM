@@ -17,6 +17,7 @@ import org.bouncycastle.crypto.params.ECKeyGenerationParameters;
 import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
 import org.bouncycastle.crypto.params.ECPublicKeyParameters;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.jce.spec.IESParameterSpec;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
@@ -178,8 +179,8 @@ public class Asymmetric {
 
     public Either<Error, String> cipher(String text, PublicKey publicKey) {
         try {
-            Cipher cipher = Cipher.getInstance("RSA", "BC");
-            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+            Cipher cipher = Cipher.getInstance("ECIES", "BC");
+            cipher.init(Cipher.ENCRYPT_MODE, publicKey, provideParams());
             byte[] byteText = text.getBytes(StandardCharsets.UTF_8);
             return Either.right(new String(cipher.doFinal(byteText), StandardCharsets.UTF_8));
         } catch (Exception e) {
@@ -188,10 +189,18 @@ public class Asymmetric {
         }
     }
 
+    private IESParameterSpec provideParams() {
+        byte[] derivation = new byte[16];
+        byte[] encoding = new byte[16];
+        new SecureRandom().nextBytes(derivation);
+        new SecureRandom().nextBytes(encoding);
+        return new IESParameterSpec(derivation, encoding, 128, 128, null);
+    }
+
     public Either<Error, String> decipher(String text, PrivateKey privateKey) {
         try {
             Cipher cipher = Cipher.getInstance("ECIES", "BC");
-            cipher.init(Cipher.ENCRYPT_MODE, privateKey);
+            cipher.init(Cipher.ENCRYPT_MODE, privateKey,provideParams());
             byte[] byteText = text.getBytes(StandardCharsets.UTF_8);
             return Either.right(new String(cipher.doFinal(byteText), StandardCharsets.UTF_8));
         } catch (Exception e) {
