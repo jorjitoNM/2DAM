@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="431833f6-67ed-4576-bfcf-46a046d16740" name="Changes" comment="liada que no entiendo" />
+    <list default="true" id="431833f6-67ed-4576-bfcf-46a046d16740" name="Changes" comment="liada que no entiendo">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_11_2024_19_02__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_11_2024_19_02__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_11_2024_19_02__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_11_2024_19_02__Changes_1.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,7 +52,8 @@
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "git-widget-placeholder": "AD",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/cnovi/OneDrive/Escritorio/Jorge/GitHub2DAM/AD/PracticaExamenAD1EVA",
+    "last_opened_file_path": "C:/Users/Usuario/Desktop/Jorge/GitHub2DAM/AD/PracticaExamenAD1EVA",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
     "vue.rearranger.settings.migration": "true"
@@ -134,6 +138,7 @@
     <MESSAGE value="cambios clase (ya hay un CompletableFuture bien hecho) 26/11/2024" />
     <MESSAGE value="cambios clase (ya compila, pero no encuentra la clave del server) 26/11/2024" />
     <MESSAGE value="cambios clase (arreglado el problema de las claves, ahora falla al denecriptar los mensajes) 27/11/2024" />
-    <option name="LAST_COMMIT_MESSAGE" value="cambios clase (arreglado el problema de las claves, ahora falla al denecriptar los mensajes) 27/11/2024" />
+    <MESSAGE value="cambios tarde 28/11/2024" />
+    <option name="LAST_COMMIT_MESSAGE" value="cambios tarde 28/11/2024" />
   </component>
 </project>

@@ -1,7 +1,7 @@
 package data;
 
 import configuration.Configuration;
-import domain.error.Error;
+import domain.error.ErrorApp;
 import domain.model.Faction;
 import domain.model.Factions;
 import io.vavr.control.Either;
@@ -23,7 +23,7 @@ public class FactionsRepository {
         this.configuration = configuration;
     }
 
-    public Either<Error,List<Faction>> loadXML() {
+    public Either<ErrorApp,List<Faction>> loadXML() {
         try {
             JAXBContext context = JAXBContext.newInstance(Factions.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
@@ -31,7 +31,7 @@ public class FactionsRepository {
             return Either.right(xmlFactions.getFactions());
         } catch (JAXBException | IOException e) {
             log.error(e.getMessage(),e);
-            return Either.left(new Error("Ha habido un error cargando el XML"));
+            return Either.left(new ErrorApp("Ha habido un error cargando el XML"));
         }
     }
 }

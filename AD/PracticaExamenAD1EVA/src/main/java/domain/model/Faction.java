@@ -28,4 +28,13 @@ public class Faction {
     @XmlElementWrapper(name="weapons")
     @XmlElement(name = "weapon")
     private List<Weapon> weapons = new ArrayList<>();
+
+    public Faction(String name, String contact, String planet, int numberCS, LocalDate dateLastPurchase, List<Weapon> weapons) {
+        this.name = name;
+        this.contact = contact;
+        this.planet = planet;
+        this.numberCS = numberCS;
+        this.dateLastPurchase = dateLastPurchase;
+        this.weapons = weapons;
+    }
 }

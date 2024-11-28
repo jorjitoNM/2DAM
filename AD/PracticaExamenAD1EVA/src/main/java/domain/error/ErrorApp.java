@@ -1,6 +1,6 @@
 package domain.error;
 
-public record Error(
+public record ErrorApp(
         String message
 ) {
 
