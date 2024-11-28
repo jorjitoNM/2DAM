@@ -18,4 +18,7 @@ class EventsRepository @Inject constructor (
     suspend fun deleteEvent(event: EventRemote) {
         eventsDataSource.deleteEvent(event)
     }
+
+    suspend fun getEvent(eventId: Int) =
+        eventsDataSource.getEvent(eventId)
 }

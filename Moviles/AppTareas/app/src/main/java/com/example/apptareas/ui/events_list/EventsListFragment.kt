@@ -12,6 +12,9 @@ import com.example.apptareas.R
 import com.example.apptareas.databinding.EventListFragmentBinding
 import com.example.apptareas.domain.model.Event
 import com.example.apptareas.ui.common.MarginItemDecoration
+import com.example.apptareas.ui.common.UiEvent
+import com.example.apptareas.utilities.Constantes
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,7 +30,7 @@ class EventsListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        userId = arguments?.getInt("userId") ?: 1
+        userId = arguments?.getInt(Constantes.USER_ID) ?: 1
         _binding = EventListFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -45,9 +48,16 @@ class EventsListFragment : Fragment() {
 
     private fun observarState() {
         viewModel.uiState.observe(viewLifecycleOwner) { state ->
-            if (state.appEvent != null)
-                viewModel.handleEvent(EventListEvents.EventDone)
             adapter.submitList(state.events)
+
+            state.appEvent?.let { appEvent ->
+                if (appEvent is UiEvent.PopBackStack) {
+                    findNavController().navigateUp()
+                } else if (appEvent is UiEvent.ShowSnackbar) {
+                    Snackbar.make(binding.root, appEvent.message, Snackbar.LENGTH_SHORT).show()
+                }
+                viewModel.handleEvent(EventListEvents.EventDone)
+            }
         }
     }
 
@@ -67,7 +77,7 @@ class EventsListFragment : Fragment() {
         )
         with (binding) {
             add.setOnClickListener {
-                navigateToDetail(1)
+                navigateToDetail(0)
             }
             eventsList.layoutManager = LinearLayoutManager(requireContext())
             eventsList.adapter = adapter

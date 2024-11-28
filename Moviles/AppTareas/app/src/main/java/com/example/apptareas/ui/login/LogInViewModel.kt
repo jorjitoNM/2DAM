@@ -4,11 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.apptareas.R
+import com.example.apptareas.data.remote.NetworkResult
 import com.example.apptareas.domain.model.User
 import com.example.apptareas.domain.usecases.LogInUseCase
 import com.example.apptareas.ui.common.UiEvent
-import com.example.apptareas.data.remote.NetworkResult
 import com.example.apptareas.utilities.Constantes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

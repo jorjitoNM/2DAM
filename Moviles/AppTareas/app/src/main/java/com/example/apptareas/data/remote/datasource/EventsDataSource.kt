@@ -19,4 +19,7 @@ class EventsDataSource @Inject constructor (
 
     suspend fun deleteEvent (event : EventRemote) =
         safeApiCall { eventsService.deleteEvent(event.id) }
+
+    suspend fun getEvent(eventId: Int) =
+        safeApiCall { eventsService.getEvent(eventId) }.map { event -> event.toEvent() }
 }

@@ -9,7 +9,7 @@ import javax.inject.Inject
 class TodosDataSource @Inject constructor (
     private val todosService: TodosService,
 ) : BaseApiResponse() {
-    suspend fun getUserTodos (userId : Int) : NetworkResult<List<Todo>> {
-        return safeApiCall { todosService.getTodos(userId) }.map { todo -> todo.map { t -> t.toTodo() } }
+    suspend fun getUserTodos () : NetworkResult<List<Todo>> {
+        return safeApiCall { todosService.getTodos() }.map { todo -> todo.map { t -> t.toTodo() } }
     }
 }

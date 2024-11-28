@@ -21,14 +21,14 @@ class TodosListViewModel @Inject constructor (
 
     fun handleEvent (event : TodosListEvents) {
         when (event) {
-            is TodosListEvents.GetTodos -> getTodos(event.userId)
+            is TodosListEvents.GetTodos -> getTodos()
             is TodosListEvents.EventDone -> _uiState.value = _uiState.value?.copy(appEvent = null)
         }
     }
 
-    private fun getTodos(userId: Int) {
+    private fun getTodos() {
         viewModelScope.launch {
-            when (val todos = getUserTodos.invoke(userId)) {
+            when (val todos = getUserTodos.invoke()) {
                 is NetworkResult.Success -> {
                     _uiState.value = _uiState.value?.copy(todos = todos.data)
                 }
@@ -39,6 +39,7 @@ class TodosListViewModel @Inject constructor (
                         UiEvent.ShowSnackbar(todos.message)
                     )
                 }
+
                 is NetworkResult.Loading -> TODO()
             }
         }

@@ -7,7 +7,7 @@ import javax.inject.Inject
 class TodosRepository @Inject constructor(
     private val todosDataSource: TodosDataSource,
 ) {
-    suspend fun getUserTodos (userId : Int) : NetworkResult<List<Todo>> {
-        return todosDataSource.getUserTodos(userId)
+    suspend fun getUserTodos () : NetworkResult<List<Todo>> {
+        return todosDataSource.getUserTodos()
     }
 }

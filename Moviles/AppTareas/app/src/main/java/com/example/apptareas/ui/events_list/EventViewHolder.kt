@@ -15,7 +15,10 @@ class EventViewHolder(itemView: View, val actions: EventAdapter.EventActions) : 
         with(binding) {
             eventTitle.text = event.title
             eventId.text = event.id.toString()
-            eventImage.load(event.image)
+            eventDescription.text = event.body
+            eventImage.load(event.image) {
+                size(300,500)
+            }
 
             itemView.setBackgroundResource(R.color.md_theme_primary)
 
@@ -24,6 +27,10 @@ class EventViewHolder(itemView: View, val actions: EventAdapter.EventActions) : 
             }
             itemView.setOnClickListener {
                 actions.onItemClick(event)
+            }
+
+            update.setOnClickListener {
+                actions.updateEvent(event)
             }
         }
     }

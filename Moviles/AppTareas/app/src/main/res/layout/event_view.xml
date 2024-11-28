@@ -7,14 +7,12 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="-16dp"
-        android:layout_marginTop="36dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16dp"
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -25,7 +23,7 @@
 
             <ImageView
                 android:id="@+id/event_image"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/image"
                 android:scaleType="centerCrop" />
@@ -34,7 +32,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="@dimen/_16dp"
+                >
 
                 <TextView
                     android:id="@+id/event_title"
@@ -47,7 +46,7 @@
                     android:id="@+id/event_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/_16dp"
                     android:text="@string/event_id"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="?android:attr/textColorSecondary" />
@@ -56,7 +55,7 @@
                     android:id="@+id/event_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="@dimen/_16dp"
                     android:text="@string/event_description"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="?android:attr/textColorSecondary" />
@@ -64,28 +63,23 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:orientation="horizontal">
+                android:layout_margin="@dimen/_16dp"
+                android:orientation="horizontal"
+                >
 
                 <com.google.android.material.button.MaterialButton
-                    style="?attr/borderlessButtonStyle"
+                    style="?attr/selectableItemBackgroundBorderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/update" />
-
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.AppCompat.Button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/delete" />
+                    android:layout_marginEnd="@dimen/_16dp"
+                    android:text="@string/update"
+                    android:id="@+id/update"
+                    />
             </LinearLayout>
 
         </LinearLayout>
-
-
     </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

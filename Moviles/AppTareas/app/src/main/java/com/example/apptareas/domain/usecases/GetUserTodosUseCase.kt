@@ -6,7 +6,7 @@ import com.example.apptareas.domain.model.Todo
 import javax.inject.Inject
 
 class GetUserTodosUseCase @Inject constructor(private val todosRepository: TodosRepository) {
-    suspend operator fun invoke (userId : Int) : NetworkResult<List<Todo>> {
-        return todosRepository.getUserTodos(userId)
+    suspend operator fun invoke () : NetworkResult<List<Todo>> {
+        return todosRepository.getUserTodos()
     }
 }

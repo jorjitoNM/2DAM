@@ -25,6 +25,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.85"
+        style="@style/TextAppearance.AppCompat.Widget.Button.Inverse"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

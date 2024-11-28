@@ -9,8 +9,7 @@
         android:id="@+id/event_list_fragment"
         android:name="com.example.apptareas.ui.events_list.EventsListFragment"
         android:label="Events List"
-        tools:layout="@layout/event_list_fragment"
-        >
+        tools:layout="@layout/event_list_fragment">
         <action
             android:id="@+id/action_eventsListFragment_to_eventDetailsFragment"
             app:destination="@id/event_details" />
@@ -24,8 +23,7 @@
         android:id="@+id/event_details"
         android:name="com.example.apptareas.ui.event_details.EventDetailsFragment"
         android:label="Event Details"
-        tools:layout="@layout/event_details"
-        >
+        tools:layout="@layout/event_details">
         <argument
             android:name="userId"
             android:defaultValue="1"
@@ -39,12 +37,15 @@
         android:id="@+id/user_profile_fragment"
         android:name="com.example.apptareas.ui.user_profile.ProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/user_profile"
-        />
+        tools:layout="@layout/user_profile">
+        <argument
+            android:name="userId"
+            android:defaultValue="1"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/todo_list_fragment"
         android:name="com.example.apptareas.ui.todos_list.TodosListFragment"
         android:label="Todos List"
-        tools:layout="@layout/todo_list_fragment"
-        />
+        tools:layout="@layout/todo_list_fragment" />
 </navigation>

@@ -18,4 +18,7 @@ interface EventsService {
 
     @POST("posts/{id}")
     suspend fun updateEvent(@Path("id") eventId : Int, @Body event : EventRemote) : Response<EventRemote>
+
+    @GET("posts/{id}")
+    suspend fun getEvent(@Path("id") eventId: Int) : Response<EventRemote>
 }

@@ -1,6 +1,9 @@
 package com.example.apptareas.utilities
 
 object Constantes {
+    const val EVENT_ID: String = "eventId"
+    const val EVENT_UPDATED: String = "Event updated successfully"
+    const val ERROR__GETTING_EVENT: String = "Could not get the specified event"
     const val LOGIN_ERROR = "Login failed, please check the fields and try again"
     const val GET_EVENTS_FAILED = "An error occurred when getting your events, please, try again"
     const val IMAGE_PROVIDER = "https://thispersondoesnotexist.com/"

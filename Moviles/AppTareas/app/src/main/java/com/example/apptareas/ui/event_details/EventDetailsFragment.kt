@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import coil.load
-import com.example.apptareas.R
 import com.example.apptareas.databinding.EventDetailsBinding
 import com.example.apptareas.domain.model.Event
+import com.example.apptareas.ui.common.UiEvent
+import com.example.apptareas.utilities.Constantes
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,8 +28,8 @@ class EventDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        userId = arguments?.getInt(R.string.user_id_argument.toString()) ?: 1
-        eventId = arguments?.getInt(R.string.event_id_argument.toString()) ?: 1
+        userId = arguments?.getInt(Constantes.USER_ID) ?: 1
+        eventId = arguments?.getInt(Constantes.EVENT_ID) ?: 1
         _binding = EventDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -43,7 +46,8 @@ class EventDetailsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.handleEvent(EventDetailsEvents.GetEvent(eventId))
+        if (userId != 0)
+            viewModel.handleEvent(EventDetailsEvents.GetEvent(eventId))
     }
 
     private fun observarState() {
@@ -52,8 +56,19 @@ class EventDetailsFragment : Fragment() {
                 with (binding) {
                     eventTitle.setText(state.event.title)
                     eventBody.setText(state.event.body)
-                    image.load(state.event.image)
+                    image.load(state.event.image) {
+                        size(300,500)
+                    }
                 }
+            }
+
+            state.appEvent?.let { appEvent ->
+                if (appEvent is UiEvent.PopBackStack) {
+                    findNavController().navigateUp()
+                } else if (appEvent is UiEvent.ShowSnackbar) {
+                    Snackbar.make(binding.root, appEvent.message, Snackbar.LENGTH_SHORT).show()
+                }
+                viewModel.handleEvent(EventDetailsEvents.EventDone)
             }
         }
     }

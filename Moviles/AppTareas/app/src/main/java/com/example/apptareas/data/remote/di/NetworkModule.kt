@@ -2,7 +2,6 @@ package com.example.apptareas.data.remote.di
 
 import com.example.apptareas.BuildConfig
 import com.example.apptareas.data.remote.api_service.EventsService
-import com.example.apptareas.data.remote.api_service.NotesService
 import com.example.apptareas.data.remote.api_service.TodosService
 import com.example.apptareas.data.remote.api_service.UserService
 import dagger.Module
@@ -46,11 +45,6 @@ object NetworkModule {
     @Provides
     fun provideEventService (retrofit: Retrofit): EventsService {
         return retrofit.create(EventsService::class.java);
-    }
-
-    @Provides
-    fun provideNotesService (retrofit: Retrofit): NotesService {
-        return retrofit.create(NotesService::class.java);
     }
 
     @Provides

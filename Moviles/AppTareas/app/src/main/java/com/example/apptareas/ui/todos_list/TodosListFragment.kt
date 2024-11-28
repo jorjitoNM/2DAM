@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apptareas.R
 import com.example.apptareas.databinding.TodoListFragmentBinding
 import com.example.apptareas.ui.common.MarginItemDecoration
+import com.example.apptareas.ui.common.UiEvent
+import com.example.apptareas.utilities.Constantes
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,7 +28,7 @@ class TodosListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        userId = arguments?.getInt("userId") ?: 1
+        userId = arguments?.getInt(Constantes.USER_ID) ?: 1
         _binding = TodoListFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -38,14 +41,19 @@ class TodosListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.handleEvent(TodosListEvents.GetTodos(userId))
+        viewModel.handleEvent(TodosListEvents.GetTodos)
     }
 
     private fun observarState() {
         viewModel.uiState.observe(viewLifecycleOwner) { state ->
-            if (state.appEvent != null)
-                viewModel.handleEvent(TodosListEvents.EventDone)
             adapter.submitList(state.todos)
+
+            state.appEvent?.let { appEvent ->
+                if (appEvent is UiEvent.ShowSnackbar) {
+                    Snackbar.make(binding.root, appEvent.message, Snackbar.LENGTH_SHORT).show()
+                }
+                viewModel.handleEvent(TodosListEvents.EventDone)
+            }
         }
     }
 
