@@ -25,7 +25,7 @@ public class FactionsRepository {
 
     public Either<Error,List<Faction>> loadXML() {
         try {
-            JAXBContext context = JAXBContext.newInstance(Faction.class);
+            JAXBContext context = JAXBContext.newInstance(Factions.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             Factions xmlFactions = (Factions) unmarshaller.unmarshal(Files.newInputStream(configuration.getPathFactionsXML()));
             return Either.right(xmlFactions.getFactions());

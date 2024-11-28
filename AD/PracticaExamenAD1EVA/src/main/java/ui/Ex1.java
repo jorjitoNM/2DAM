@@ -10,6 +10,9 @@ public class Ex1 {
         final SeContainer container = initializer.initialize();
         Service service = container.select(Service.class).get();
 
+        service.loadXml().peek(ok -> System.out.println("XMl cargados con exito en base de datos"))
+                .peekLeft(error -> System.out.println(error.message()));
+
 
     }
 }
