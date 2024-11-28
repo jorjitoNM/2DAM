@@ -23,6 +23,7 @@ class MainViewModel @Inject constructor (
     fun handleEvent (event : MainEvents) {
         when (event) {
             is MainEvents.GetSongs -> getSongs(event.token)
+            is MainEvents.EventDone -> _uiState.value = _uiState.value?.copy(appEvent = null)
         }
     }
 

@@ -45,6 +45,8 @@ class EventsListFragment : Fragment() {
 
     private fun observarState() {
         viewModel.uiState.observe(viewLifecycleOwner) { state ->
+            if (state.appEvent != null)
+                viewModel.handleEvent(EventListEvents.EventDone)
             adapter.submitList(state.events)
         }
     }
@@ -58,6 +60,9 @@ class EventsListFragment : Fragment() {
             },requireContext()
         )
         with (binding) {
+            add.setOnClickListener {
+
+            }
             eventsList.layoutManager = LinearLayoutManager(requireContext())
             eventsList.adapter = adapter
             eventsList.addItemDecoration(

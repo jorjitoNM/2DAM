@@ -46,8 +46,9 @@ class MainFragment : Fragment() {
 
     private fun observarState() {
         viewModel.uiState.observe(viewLifecycleOwner) { state ->
+            if (state.appEvent != null)
+                viewModel.handleEvent(MainEvents.EventDone)
             adapter.submitList(state.songs)
-            //comprobar si hay error y limpiarlo despues
         }
     }
 
