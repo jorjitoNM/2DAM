@@ -38,7 +38,7 @@ public class DaoUsers {
         return getUser(userRemote)
                 .flatMap(user -> {
                     user.addGroupPassword(group.getName(),password);
-                    return dataBase.saveUser(userRemote);
+                    return dataBase.saveUser(user);
                 });
 
     }
