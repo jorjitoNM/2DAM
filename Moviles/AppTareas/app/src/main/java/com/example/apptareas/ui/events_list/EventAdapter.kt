@@ -39,5 +39,7 @@ class EventAdapter(
 
     interface EventActions {
         fun onItemClick(event : Event)
+        fun updateEvent(event : Event)
+        fun deleteEvent(event : Event)
     }
 }

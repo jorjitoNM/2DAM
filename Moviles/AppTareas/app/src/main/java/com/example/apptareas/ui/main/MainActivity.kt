@@ -20,36 +20,28 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private var userId : Int = 1
     private val binding: ActivityMainBinding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
+        ActivityMainBinding.inflate(layoutInflater).apply { setContentView(root) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         userId = intent.extras?.getInt(Constantes.USER_ID) ?: 1
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
-
         with(binding) {
             val navHost =
                 supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
             navController = navHost.navController
-
-            bottomNavigationView.setupWithNavController(navController)
-
-
+            binding.bottomNavigationView.setupWithNavController(navController)
             setSupportActionBar(topAppBar)
-
             topAppBar.setNavigationOnClickListener {
                 navController.navigateUp()
             }
-
             setupActionBarWithNavController(navController)
         }
-
     }
 }

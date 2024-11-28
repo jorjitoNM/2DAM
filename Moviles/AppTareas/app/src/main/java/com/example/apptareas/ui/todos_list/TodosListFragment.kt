@@ -19,13 +19,13 @@ class TodosListFragment : Fragment() {
     private var _binding: TodoListFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: TodoAdapter
-    private var userId: Int = -1
+    private var userId: Int = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        userId = arguments?.getInt("userId") ?: -1
+        userId = arguments?.getInt("userId") ?: 1
         _binding = TodoListFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -43,6 +43,8 @@ class TodosListFragment : Fragment() {
 
     private fun observarState() {
         viewModel.uiState.observe(viewLifecycleOwner) { state ->
+            if (state.appEvent != null)
+                viewModel.handleEvent(TodosListEvents.EventDone)
             adapter.submitList(state.todos)
         }
     }

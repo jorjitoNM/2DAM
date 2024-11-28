@@ -40,7 +40,7 @@ class EventsListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.handleEvent(EventListEvents.GetEvents(userId))
+        viewModel.handleEvent(EventListEvents.GetEvents)
     }
 
     private fun observarState() {
@@ -57,11 +57,17 @@ class EventsListFragment : Fragment() {
                 override fun onItemClick(event : Event) {
                     navigateToDetail((event.id))
                 }
+                override fun updateEvent(event: Event) {
+                    navigateToDetail(event.id)
+                }
+                override fun deleteEvent(event: Event) {
+                    viewModel.handleEvent(EventListEvents.DeleteEvent(event))
+                }
             },requireContext()
         )
         with (binding) {
             add.setOnClickListener {
-
+                navigateToDetail(1)
             }
             eventsList.layoutManager = LinearLayoutManager(requireContext())
             eventsList.adapter = adapter

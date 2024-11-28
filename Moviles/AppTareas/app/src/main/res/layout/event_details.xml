@@ -56,19 +56,33 @@
         app:layout_constraintTop_toBottomOf="@id/event_body_input"
         app:layout_constraintStart_toStartOf="@id/event_body_input"
         app:layout_constraintEnd_toEndOf="@id/event_body_input"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/willCome"
         style="@style/Widget.AppCompat.ImageButton"
         />
 
     <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/willCome"
         app:layout_constraintStart_toStartOf="@id/image"
         app:layout_constraintEnd_toEndOf="@id/image"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/update"
         app:layout_constraintTop_toBottomOf="@id/image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/Widget.Material3.CompoundButton.MaterialSwitch"
         android:checked="true"
-        android:text="@string/i_will_come"/>
+        android:text="@string/i_will_come"
+
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/update"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/willCome"
+        app:layout_constraintTop_toBottomOf="@id/willCome"
+        app:layout_constraintEnd_toEndOf="@id/willCome"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

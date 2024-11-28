@@ -6,7 +6,7 @@ import com.example.apptareas.domain.model.Event
 import javax.inject.Inject
 
 class GetEventsUseCase @Inject constructor(private val eventsRepository: EventsRepository) {
-    suspend operator fun invoke (userId : Int) : NetworkResult<Event> {
-        return eventsRepository.getEvents(userId)
+    suspend operator fun invoke () : NetworkResult<List<Event>> {
+        return eventsRepository.getEvents()
     }
 }

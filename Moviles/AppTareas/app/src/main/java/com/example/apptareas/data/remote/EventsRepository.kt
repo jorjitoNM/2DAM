@@ -8,8 +8,8 @@ import javax.inject.Inject
 class EventsRepository @Inject constructor (
     private val eventsDataSource: EventsDataSource,
 ) {
-    suspend fun getEvents(userId: Int) : NetworkResult<Event> {
-        return eventsDataSource.getEvents(userId)
+    suspend fun getEvents() : NetworkResult<List<Event>> {
+        return eventsDataSource.getEvents()
     }
 
     suspend fun update(event: EventRemote) =

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.apptareas.R
 import com.example.apptareas.data.remote.NetworkResult
 import com.example.apptareas.domain.model.Event
 import com.example.apptareas.domain.usecases.UpdateEventUseCase
@@ -23,14 +22,14 @@ class EventDetailsViewModel @Inject constructor(
 
     fun handleEvent (event : EventDetailsEvents) {
         when (event) {
-            is EventDetailsEvents.UpdateEvent -> updateEvent(event.userEvent)
+            is EventDetailsEvents.GetEvent -> updateEvent(event.eventId)
             is EventDetailsEvents.EventDone -> _uiState.value = _uiState.value?.copy(appEvent = null)
         }
     }
 
-    private fun updateEvent(userEvent: Event) {
+    private fun updateEvent(eventId: Int) {
         viewModelScope.launch {
-            when (updateEventUseCase.invoke(userEvent)) {
+            when (updateEventUseCase.invoke(eventId)) {
                 is NetworkResult.Success -> TODO()
                 is NetworkResult.Loading -> TODO()
                 is NetworkResult.Error -> _uiState.value = _uiState.value?.copy(appEvent = UiEvent.ShowSnackbar(

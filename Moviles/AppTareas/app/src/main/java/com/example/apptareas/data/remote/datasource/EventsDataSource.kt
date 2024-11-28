@@ -10,8 +10,8 @@ import javax.inject.Inject
 class EventsDataSource @Inject constructor (
     private val eventsService : EventsService,
 ) : BaseApiResponse() {
-    suspend fun getEvents (userId : Int) : NetworkResult<Event> {
-        return safeApiCall { eventsService.getEvents(userId) }.map { event -> event.toEvent() }
+    suspend fun getEvents () : NetworkResult<List<Event>> {
+        return safeApiCall { eventsService.getEvents() }.map { event -> event.map { e -> e.toEvent() } }
     }
 
     suspend fun updateEvent (event : EventRemote) =

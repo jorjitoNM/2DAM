@@ -25,7 +25,7 @@ class EventListViewModel @Inject constructor(
 
     fun handleEvent(event: EventListEvents) {
         when (event) {
-            is EventListEvents.GetEvents ->  getEvent(event.userId)
+            is EventListEvents.GetEvents ->  getEvents()
             is EventListEvents.DeleteEvent -> deleteEvent(event.event)
             is EventListEvents.EventDone -> _uiState.value = _uiState.value?.copy(appEvent = null)
         }
@@ -40,14 +40,10 @@ class EventListViewModel @Inject constructor(
         }
     }
 
-    private fun getEvent(userId: Int) {
+    private fun getEvents() {
         viewModelScope.launch {
-            when (val userEvents = getEventsUseCaseUserCase.invoke(userId)) {
-                is NetworkResult.Success -> {
-                    val eventos : MutableList<Event> = ArrayList()
-                    eventos.add(userEvents.data)
-                    _uiState.value = _uiState.value?.copy(events = eventos.toList())
-                }
+            when (val userEvents = getEventsUseCaseUserCase.invoke()) {
+                is NetworkResult.Success -> _uiState.value = _uiState.value?.copy(events = userEvents.data)
 
                 is NetworkResult.Error -> _uiState.value = _uiState.value?.copy(
                     appEvent =

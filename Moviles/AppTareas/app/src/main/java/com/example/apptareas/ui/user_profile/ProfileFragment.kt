@@ -11,20 +11,22 @@ import com.example.apptareas.R
 import com.example.apptareas.databinding.UserProfileBinding
 import com.example.apptareas.ui.todos_list.TodoAdapter
 import com.example.apptareas.utilities.Constantes
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     private val viewModel: ProfileFragmentViewModel by viewModels()
     private var _binding: UserProfileBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: TodoAdapter
-    private var userId: Int = -1
+    private var userId: Int = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        userId = arguments?.getInt(R.string.user_id_argument.toString()) ?: -1
+        userId = arguments?.getInt(R.string.user_id_argument.toString()) ?: 1
         _binding = UserProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
