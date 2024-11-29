@@ -1,6 +1,8 @@
 package data.remote;
 
 import data.mappers.BattleMapper;
+import data.mappers.FactionMapper;
+import data.mappers.WeaponMapper;
 import data.remote.utilities.DBConnectionPool;
 import data.remote.utilities.SQLQueries;
 import domain.error.ErrorApp;
@@ -19,11 +21,15 @@ import java.util.List;
 public class FactionsJDBCRepository {
     private final DBConnectionPool pool;
     private final BattleMapper battleMapper;
+    private final FactionMapper factionMapper;
+    private final WeaponMapper weaponMapper;
 
     @Inject
-    public FactionsJDBCRepository(DBConnectionPool pool, BattleMapper battleMapper) {
+    public FactionsJDBCRepository(DBConnectionPool pool, BattleMapper battleMapper, FactionMapper factionMapper, WeaponMapper weaponMapper) {
         this.pool = pool;
         this.battleMapper = battleMapper;
+        this.factionMapper = factionMapper;
+        this.weaponMapper = weaponMapper;
     }
 
     public Either<ErrorApp, Void> saveFactions(List<Faction> factions) {
@@ -102,8 +108,10 @@ public class FactionsJDBCRepository {
     }
 
     public Either<ErrorApp, Integer> countRebelsWeapons(List<Weapon> weapons) {
+        Faction f = new Faction();
         try (Connection conn = pool.getConnection();
              PreparedStatement insertWeapon = conn.prepareStatement(SQLQueries.INSERT_WEAPON);
+             PreparedStatement insertWeaponsWF = conn.prepareStatement(SQLQueries.INSERT_WEAPON_WF);
              PreparedStatement deleteAllWeapons = conn.prepareStatement(SQLQueries.DELETE_ALL_WEAPONS);
         ) {
             for (Weapon w : weapons) {
@@ -111,6 +119,8 @@ public class FactionsJDBCRepository {
                 insertWeapon.setInt(2, w.getPrice());
                 if (insertWeapon.executeUpdate() != 1)
                     return Either.left(new ErrorApp("Failed to add the elements into weapons table"));
+                insertWeaponsWF.setString(1,f.getName());
+                insertWeaponsWF.setInt(2,w.getId());
             }
             return Either.right(deleteAllWeapons.executeUpdate());
         } catch (SQLException e) {
@@ -159,6 +169,36 @@ public class FactionsJDBCRepository {
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
             return Either.left(new ErrorApp(e.getMessage()));
+        }
+    }
+
+    public Either<ErrorApp,List<Faction>> getAllFactions() {
+        try (Connection conn = pool.getConnection();
+        Statement getALlFactions = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        PreparedStatement getAllWeapons = conn.prepareStatement(SQLQueries.GET_ALL_FACTION_WEAPONS);
+        )
+        {
+            List<Faction> factions = new ArrayList<>();
+            ResultSet rs = getALlFactions.executeQuery(SQLQueries.GET_ALL_FACTIONS);
+            while (rs.next()) {
+                getAllWeapons.setString(1,rs.getString("fname"));
+                ResultSet weaponsRs = getAllWeapons.executeQuery();
+                List<Weapon> weapons = new ArrayList<>();
+                while (weaponsRs.next()) {
+                    if (weaponMapper.mapWeapon(weaponsRs).isRight())
+                        weapons.add(weaponMapper.mapWeapon(weaponsRs).get());
+                    else
+                        return Either.left(new ErrorApp("Could not get the faction weapons"));
+                }
+                if (factionMapper.mapFaction(rs,weapons).isRight())
+                    factions.add(factionMapper.mapFaction(rs,weapons).get());
+                else
+                    return Either.left(new ErrorApp("Could not add the faction"));
+            }
+            return Either.right(factions);
+        } catch (SQLException e) {
+            log.error(e.getMessage(),e);
+            return Either.left(new ErrorApp("Could not get all factions"));
         }
     }
 }

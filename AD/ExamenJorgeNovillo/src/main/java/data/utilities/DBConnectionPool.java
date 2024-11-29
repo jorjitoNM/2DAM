@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class DBConnectionPool {
 
-    private final Configuration configuration;
+    private Configuration configuration;
 
     private DataSource hikariDataSource;
 
@@ -24,9 +24,9 @@ public class DBConnectionPool {
     private DataSource getHikariPool() {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(configuration.getDbUrl());
-        hikariConfig.setUsername(configuration.getUser_name());
+        hikariConfig.setUsername(configuration.getUserName());
         hikariConfig.setPassword(configuration.getPassword());
-        hikariConfig.setDriverClassName(configuration.getDriver());
+        hikariConfig.setDriverClassName(configuration.getDbDriver());
         hikariConfig.setMaximumPoolSize(4);
 
         hikariConfig.addDataSourceProperty("cachePrepStmts", true);
