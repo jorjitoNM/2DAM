@@ -49,12 +49,13 @@ public class GroupService {
                 .flatMap(nada -> userValidator.validateUser(user))
                 .flatMap(nada -> groupValidator.validateGroup(group))
                 .flatMap(nada -> {
-                    Grupo g = dao.getGroup(new GroupRemote(group)).get().toGroup();
-                    if (g == null)
+                    Either<Error,GroupRemote> either = dao.getGroup(new GroupRemote(group));
+                    if (either.get() == null)
                         return Either.left(ServiceError.GROUP_NOT_FOUND);
-                    else if (g.getMembers().stream().map(Usuario::getName).toList().contains(user.getName()))
+                    Grupo g = either.get().toGroup();
+                    if (g.getMembers().stream().map(Usuario::getName).toList().contains(user.getName()))
                         return Either.left(ServiceError.ALREADY_IN_GROUP);
-                    else if (passwordEncoder.matches(group.getPassword(), g.getPassword()))
+                    if (passwordEncoder.matches(group.getPassword(), g.getPassword()))
                         return Either.right(g);
                     else
                         return Either.left(DataInputError.INCORRECT_PASSWORD);

@@ -36,10 +36,8 @@ public class UserService {
                             if (u == null)
                                 return Either.left(ServiceError.USER_NOT_FOUND);
                             else {
-                                if (asymmetric.getPrivateKey(user).isRight())
-                                    return Either.right(user);
-                                else
-                                    return Either.left(DataInputError.INCORRECT_PASSWORD);
+                                return asymmetric.getPrivateKey(user)
+                                        .flatMap(pk -> Either.right(u.toUser(user.getPassword())));
                             }
                         })
                 ));
@@ -48,10 +46,10 @@ public class UserService {
     public CompletableFuture<Either<Error, List<Usuario>>> loadUsers(Usuario user) {
         return CompletableFuture.completedFuture(userValidator.validateUser(user)
                 .flatMap(nada -> dao.loadUsers(new UserRemote(user))
-                                .flatMap(users ->  Either.right(parseUsers(users)))));
+                        .flatMap(users -> Either.right(parseUsers(users)))));
     }
 
-    private List<Usuario> parseUsers (List<UserRemote> users) {
+    private List<Usuario> parseUsers(List<UserRemote> users) {
         List<Usuario> parsedUsers = new ArrayList<>();
         users.forEach(u -> parsedUsers.add(new Usuario(u)));
         return parsedUsers;
@@ -74,7 +72,7 @@ public class UserService {
     public CompletableFuture<Either<Error, Usuario>> saveGroupPassword(Usuario user, Grupo group) {
         return CompletableFuture.completedFuture(asymmetric.getPublicKey(user)
                 .flatMap(userPublicKey -> asymmetric.cipher(group.getPassword(), userPublicKey))
-                .flatMap(password -> dao.addGroupPassword(new UserRemote(user),password, group)
-                        .flatMap(dbUser -> Either.right(dbUser.toUser()))));
+                .flatMap(password -> dao.addGroupPassword(new UserRemote(user), password, group)
+                        .flatMap(dbUser -> Either.right(dbUser.toUser(user.getPassword())))));
     }
 }

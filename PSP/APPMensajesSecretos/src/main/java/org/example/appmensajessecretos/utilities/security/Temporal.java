@@ -9,12 +9,13 @@ import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
-import org.example.appmensajessecretos.Configuration;
-import org.example.appmensajessecretos.utilities.Constantes;
 
 import java.io.FileOutputStream;
 import java.math.BigInteger;
-import java.security.*;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.KeyStore;
+import java.security.Security;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.security.spec.ECGenParameterSpec;
@@ -23,12 +24,11 @@ import java.util.Date;
 public class Temporal {
 
     static {
-        // Registrar BouncyCastle como proveedor de seguridad
         Security.addProvider(new BouncyCastleProvider());
     }
 
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
         try {
             // Generar un par de claves usando ECDSA
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("EC", "BC");
@@ -44,7 +44,7 @@ public class Temporal {
             keyStore.load(null, password);
 
             // Guardar la clave privada y el certificado en el keystore
-            keyStore.setKeyEntry("servidor", keyPair.getPrivate(), password, new Certificate[]{certificate});
+            keyStore.setKeyEntry("server", keyPair.getPrivate(), password, new Certificate[]{certificate});
 
             // Guardar el keystore en un archivo
             try (FileOutputStream fos = new FileOutputStream("keystore.jks")) {

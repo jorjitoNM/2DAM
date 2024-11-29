@@ -39,17 +39,22 @@ public class Constantes {
     public static final String CIPHER_ALGORITHM = "PBKDF2WithHmacSHA256";
     public static final String CIPHER_TRANSFORMATION = "AES/GCM/noPadding";
     public static final String AES = "AES";
-    public static final String ERROR_ENCRYPTING = "No se han podido encriptar sus mensajes, asegurese de que la contraseña que ha introducido la que desea e intentelo de nuevo";
+    public static final String ERROR_ENCRYPTING = "No se han podido encriptar sus mensajes, asegurese de que la contraseña que ha introducido es correcta e intentelo de nuevo";
     public static final String ERROR_DECRYPTING = "No se han podido desencriptar sus mensajes, asegurese de que la contraseña introducida es su contraseña de encriptacion";
     public static final int ITERATIONS = 65536;
     public static final int CIPHER_KEY_LENGTH = 256;
 
     //Asymmetric
-    public static final String SERVER_PRIVATE_KEY = "keyStorePassword";
+    public static final String KEY_STORE_PASSWORD = "keyStorePassword";
     public static final String KEY_STORE_PATH = "keyStorePath";
-    public static final String SERVER = "servidor";
+    public static final String SERVER = "server";
     public static final String KEY_STORE_TYPE = "JKS";
     public static final String GENERATING_CERTIFICATE_COMMON_NAME = "CN=Test Certificate";
+    public static final String BC = "BC";
+    public static final String ECIES = "ECIES";
+    public static final String EC = "EC";
+    public static String SHA256withECDSA = "SHA256withECDSA";
+    public static String secp521r1 = "secp521r1";
 
 
     //Ficheros

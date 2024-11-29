@@ -46,4 +46,5 @@ public class UserRemote {
     public Usuario toUser() {
         return new Usuario(this);
     }
+    public Usuario toUser(String password) {return new Usuario(this,password);}
 }

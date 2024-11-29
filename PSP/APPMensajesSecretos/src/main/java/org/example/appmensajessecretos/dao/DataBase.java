@@ -38,7 +38,7 @@ public class DataBase {
 
    public Either<Error,List<UserRemote>> loadUsers () {
         Type userListType = new TypeToken<ArrayList<UserRemote>> () {}.getType();
-        List<UserRemote> users = null;
+        List<UserRemote> users;
         try {
             users = gson.fromJson(
                     new FileReader(configuration.getPathUsuarios()),userListType

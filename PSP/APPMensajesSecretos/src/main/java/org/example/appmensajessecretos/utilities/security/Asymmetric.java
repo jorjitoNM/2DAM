@@ -23,6 +23,7 @@ import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.example.appmensajessecretos.config.ConfigurationFicheros;
 import org.example.appmensajessecretos.domain.error.DataBaseError;
+import org.example.appmensajessecretos.domain.error.DataInputError;
 import org.example.appmensajessecretos.domain.error.Error;
 import org.example.appmensajessecretos.domain.error.ServiceError;
 import org.example.appmensajessecretos.domain.model.Usuario;
@@ -62,36 +63,14 @@ public class Asymmetric {
         try {
             FileInputStream fis = new FileInputStream(configuration.getPathKeyStore());
             KeyStore keyStore = KeyStore.getInstance(Constantes.KEY_STORE_TYPE);
-            char[] keyStorePassword = configuration.getServerKey().toCharArray();
+            char[] keyStorePassword = configuration.getKeyStorePassword().toCharArray();
             keyStore.load(fis, keyStorePassword);
             KeyStore.ProtectionParameter entryPassword = new KeyStore.PasswordProtection(keyStorePassword);
             KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(Constantes.SERVER, entryPassword);
             PrivateKey serverPrivateKey = privateKeyEntry.getPrivateKey();
 
-            /*X9ECParameters ecp = SECNamedCurves.getByName("secp256r1");
-            ECDomainParameters domainParams = new ECDomainParameters(ecp.getCurve(),
-                    ecp.getG(), ecp.getN(), ecp.getH(),
-                    ecp.getSeed());
-
-            AsymmetricCipherKeyPair keyPair;
-            ECKeyGenerationParameters keyGenParams = new ECKeyGenerationParameters(domainParams, new SecureRandom());
-            ECKeyPairGenerator generator = new ECKeyPairGenerator();
-            generator.init(keyGenParams);
-            keyPair = generator.generateKeyPair();
-
-            ECPrivateKeyParameters privateKey = (ECPrivateKeyParameters) keyPair.getPrivate();
-            ECPublicKeyParameters publicKey = (ECPublicKeyParameters) keyPair.getPublic();
-            byte[] privateKeyBytes = privateKey.getD().toByteArray();
-            byte[] publicKeyBytes = publicKey.getQ().getEncoded(false);
-
-            KeyFactory keyFactory = KeyFactory.getInstance("EC","BC");
-            X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(publicKeyBytes);
-            PublicKey publicKeyJava = keyFactory.generatePublic(publicKeySpec);
-            PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(privateKeyBytes);
-            PrivateKey privateKeyJava = keyFactory.generatePrivate(privateKeySpec);*/
-
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("EC", "BC");
-            keyPairGenerator.initialize(new ECGenParameterSpec("secp521r1"));
+            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(Constantes.EC, Constantes.BC);
+            keyPairGenerator.initialize(new ECGenParameterSpec(Constantes.secp521r1));
             KeyPair keyPair = keyPairGenerator.generateKeyPair();
 
             X509Certificate certificate = generateCertificate(keyPair.getPublic(), serverPrivateKey);
@@ -99,7 +78,7 @@ public class Asymmetric {
             keyStore.setKeyEntry(user.getName(), keyPair.getPrivate(), user.getPassword().toCharArray(), new Certificate[]{certificate});
 
             FileOutputStream fos = new FileOutputStream(configuration.getPathKeyStore());
-            keyStore.store(fos,configuration.getServerKey().toCharArray());
+            keyStore.store(fos,configuration.getKeyStorePassword().toCharArray());
         } catch (IOException e) {
             log.error(e.getMessage(),e);
             return Either.left(DataBaseError.ERROR_READING_FILE);
@@ -125,22 +104,21 @@ public class Asymmetric {
                 issuer, serialNumber, notBefore, notAfter, subject, subjectPublicKeyInfo
         );
 
-        ContentSigner contentSigner = new JcaContentSignerBuilder("SHA256withECDSA")
-                .setProvider("BC")
+        ContentSigner contentSigner = new JcaContentSignerBuilder(Constantes.SHA256withECDSA)
+                .setProvider(Constantes.BC)
                 .build(serverPrivateKey);
 
         X509CertificateHolder certificateHolder = certificateBuilder.build(contentSigner);
 
         return new JcaX509CertificateConverter()
-                .setProvider("BC")
+                .setProvider(Constantes.BC)
                 .getCertificate(certificateHolder);
     }
 
     public Either<Error, PublicKey> getPublicKey(Usuario user) {
-        try {
-            FileInputStream fis = new FileInputStream(configuration.getPathKeyStore());
+        try (FileInputStream fis = new FileInputStream(configuration.getPathKeyStore())) {
             KeyStore keyStore = KeyStore.getInstance(Constantes.KEY_STORE_TYPE);
-            char[] keyStorePassword = configuration.getServerKey().toCharArray();
+            char[] keyStorePassword = configuration.getKeyStorePassword().toCharArray();
             keyStore.load(fis, keyStorePassword);
             return Either.right(keyStore.getCertificate(user.getName()).getPublicKey());
         } catch (IOException e) {
@@ -153,12 +131,16 @@ public class Asymmetric {
     }
 
     public Either<Error, PrivateKey> getPrivateKey(Usuario user) {
-        try {
-            FileInputStream fis = new FileInputStream(configuration.getPathKeyStore());
+        try (FileInputStream fis = new FileInputStream(configuration.getPathKeyStore())) {
             KeyStore keyStore = KeyStore.getInstance(Constantes.KEY_STORE_TYPE);
-            char[] keyStorePassword = configuration.getServerKey().toCharArray();
+            char[] keyStorePassword = configuration.getKeyStorePassword().toCharArray();
             keyStore.load(fis, keyStorePassword);
-            return Either.right((PrivateKey) keyStore.getKey(user.getName(), user.getPassword().toCharArray()));
+            KeyStore.PrivateKeyEntry pkEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(
+                    user.getName(), new KeyStore.PasswordProtection(user.getPassword().toCharArray()));
+            return Either.right(pkEntry.getPrivateKey());
+        } catch (UnrecoverableKeyException e) {
+            log.error(e.getMessage(),e);
+            return Either.left(DataInputError.INCORRECT_PASSWORD);
         } catch (IOException e) {
             log.error(e.getMessage(),e);
             return Either.left(DataBaseError.ERROR_READING_FILE);
@@ -179,7 +161,7 @@ public class Asymmetric {
 
     public Either<Error, String> cipher(String text, PublicKey publicKey) {
         try {
-            Cipher cipher = Cipher.getInstance("ECIES", "BC");
+            Cipher cipher = Cipher.getInstance(Constantes.ECIES, Constantes.BC);
             cipher.init(Cipher.ENCRYPT_MODE, publicKey, provideParams());
             byte[] byteText = text.getBytes(StandardCharsets.UTF_8);
             return Either.right(new String(cipher.doFinal(byteText), StandardCharsets.UTF_8));
@@ -199,8 +181,8 @@ public class Asymmetric {
 
     public Either<Error, String> decipher(String text, PrivateKey privateKey) {
         try {
-            Cipher cipher = Cipher.getInstance("ECIES", "BC");
-            cipher.init(Cipher.ENCRYPT_MODE, privateKey,provideParams());
+            Cipher cipher = Cipher.getInstance(Constantes.ECIES,Constantes.BC);
+            cipher.init(Cipher.DECRYPT_MODE, privateKey,provideParams());
             byte[] byteText = text.getBytes(StandardCharsets.UTF_8);
             return Either.right(new String(cipher.doFinal(byteText), StandardCharsets.UTF_8));
         } catch (Exception e) {

@@ -25,6 +25,11 @@ public class Usuario {
         this.password = Constantes.CONTRASEÑA_INCORRECTA;
         this.groupPasswords.putAll(user.getGroupPasswords());
     }
+    public Usuario (UserRemote user,String password) {
+        this.name = user.getName();
+        this.password = password;
+        this.groupPasswords.putAll(user.getGroupPasswords());
+    }
 
     public Usuario(String name, String password) {
         this.name = name;

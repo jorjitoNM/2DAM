@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
+import javafx.scene.layout.Region;
 import org.example.appmensajessecretos.domain.error.DataBaseError;
 import org.example.appmensajessecretos.domain.error.DataInputError;
 import org.example.appmensajessecretos.domain.error.Error;
@@ -106,6 +107,7 @@ public class GroupController {
         infoAlert.setTitle(Constantes.INFO);
         infoAlert.setHeaderText(Constantes.ACTION_COMPLETED);
         infoAlert.setContentText(info);
+        infoAlert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         infoAlert.showAndWait();
     }
 
@@ -114,6 +116,7 @@ public class GroupController {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setTitle(Constantes.ERROR);
         errorAlert.setHeaderText(Constantes.ERROR);
+        errorAlert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         String errorMessage = "";
         switch (error) {
             case DataBaseError e -> {
