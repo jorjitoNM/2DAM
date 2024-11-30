@@ -162,7 +162,7 @@ public class Asymmetric {
     public Either<Error, String> cipher(String text, PublicKey publicKey) {
         try {
             Cipher cipher = Cipher.getInstance(Constantes.ECIES, Constantes.BC);
-            cipher.init(Cipher.ENCRYPT_MODE, publicKey, provideParams());
+            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
             byte[] byteText = text.getBytes(StandardCharsets.UTF_8);
             return Either.right(Base64.getEncoder().encodeToString(cipher.doFinal(byteText)));
         } catch (Exception e) {
@@ -182,7 +182,7 @@ public class Asymmetric {
     public Either<Error, String> decipher(String text, PrivateKey privateKey) {
         try {
             Cipher cipher = Cipher.getInstance(Constantes.ECIES,Constantes.BC);
-            cipher.init(Cipher.DECRYPT_MODE, privateKey,provideParams());
+            cipher.init(Cipher.DECRYPT_MODE, privateKey);
             byte[] byteText = Base64.getDecoder().decode(text);
             return Either.right(new String(cipher.doFinal(byteText), StandardCharsets.UTF_8));
         } catch (Exception e) {
