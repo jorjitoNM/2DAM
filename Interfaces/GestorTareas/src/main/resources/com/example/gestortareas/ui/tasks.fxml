@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.gestortareas.ui.TaskFormController" spacing="10" alignment="CENTER">
+    <padding>
+        <Insets top="20" bottom="20" left="20" right="20"/>
+    </padding>
+    <Label text="Tarea" style="-fx-font-size: 20px;"/>
+    <TextField fx:id="nameField" promptText="Nombre"/>
+    <TextArea fx:id="des" promptText="Descripción" prefRowCount="3"/>
+    <HBox spacing="10">
+        <Label text="Porcentaje de completado:"/>
+        <Slider fx:id="completionSlider" min="0" max="100" showTickMarks="true" showTickLabels="true"/>
+    </HBox>
+    <TextField fx:id="locationField" promptText="Ubicación (Opcional)"/>
+    <TextField fx:id="responsibleField" promptText="Responsable"/>
+    <Button text="Guardar" onAction="#handleSave"/>
+</VBox>
+

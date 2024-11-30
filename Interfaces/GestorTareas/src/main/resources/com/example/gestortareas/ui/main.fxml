@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.gestortareas.ui.MainController">
+    <center>
+        <TableView fx:id="taskTable">
+            <columns>
+                <TableColumn text="Nombre" fx:id="nameColumn"/>
+                <TableColumn text="Descripción" fx:id="descriptionColumn"/>
+                <TableColumn text="Porcentaje" fx:id="percentageColumn"/>
+                <TableColumn text="Ubicación" fx:id="locationColumn"/>
+                <TableColumn text="Responsable" fx:id="responsibleColumn"/>
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+        <HBox spacing="10" alignment="CENTER" padding="10">
+            <Button text="Nueva Tarea" onAction="#handleCreateTask"/>
+            <Button text="Editar Tarea" onAction="#handleEditTask"/>
+            <Button text="Estadísticas" onAction="#handleStats"/>
+        </HBox>
+    </bottom>
+</BorderPane>

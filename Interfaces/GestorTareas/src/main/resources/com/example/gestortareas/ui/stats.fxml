@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.gestortareas.ui.StatsController" spacing="10" alignment="CENTER">
+    <padding>
+        <Insets top="20" bottom="20" left="20" right="20"/>
+    </padding>
+    <Label text="Estadísticas" style="-fx-font-size: 20px;"/>
+    <HBox spacing="20" alignment="CENTER">
+        <VBox spacing="10">
+            <Label text="Totales:"/>
+            <Label fx:id="totalTasksLabel"/>
+        </VBox>
+        <VBox spacing="10">
+            <Label text="Iniciadas:"/>
+            <Label fx:id="startedTasksLabel"/>
+        </VBox>
+        <VBox spacing="10">
+            <Label text="Terminadas:"/>
+            <Label fx:id="completedTasksLabel"/>
+        </VBox>
+        <VBox spacing="10">
+            <Label text="En ejecución:"/>
+            <Label fx:id="inProgressTasksLabel"/>
+        </VBox>
+    </HBox>
+    <PieChart fx:id="statsChart" prefHeight="300" prefWidth="400"/>
+</VBox>
+

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.gestortareas.ui.TaskFormController"
+      spacing="10" alignment="CENTER" prefWidth="400">
+    <Label text="Edit Task" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    <TextField fx:id="nameField" promptText="Task Name" />
+    <TextArea fx:id="description" promptText="Description" prefHeight="100" />
+    <HBox spacing="10">
+        <Label text="Completion:" />
+        <Slider fx:id="completionSlider" min="0" max="100" />
+    </HBox>
+    <TextField fx:id="locationField" promptText="Location (Optional)" />
+    <TextField fx:id="responsibleField" promptText="Responsible" />
+    <Button text="Save" onAction="#handleSaveTask" />
+</VBox>
+
