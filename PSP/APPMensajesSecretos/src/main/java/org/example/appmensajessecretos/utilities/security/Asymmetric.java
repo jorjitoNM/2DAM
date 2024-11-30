@@ -164,7 +164,7 @@ public class Asymmetric {
             Cipher cipher = Cipher.getInstance(Constantes.ECIES, Constantes.BC);
             cipher.init(Cipher.ENCRYPT_MODE, publicKey, provideParams());
             byte[] byteText = text.getBytes(StandardCharsets.UTF_8);
-            return Either.right(new String(cipher.doFinal(byteText), StandardCharsets.UTF_8));
+            return Either.right(Base64.getEncoder().encodeToString(cipher.doFinal(byteText)));
         } catch (Exception e) {
             log.error(e.getMessage(),e);
             return Either.left(ServiceError.ERROR_ENCRYPTING);
@@ -183,7 +183,7 @@ public class Asymmetric {
         try {
             Cipher cipher = Cipher.getInstance(Constantes.ECIES,Constantes.BC);
             cipher.init(Cipher.DECRYPT_MODE, privateKey,provideParams());
-            byte[] byteText = text.getBytes(StandardCharsets.UTF_8);
+            byte[] byteText = Base64.getDecoder().decode(text);
             return Either.right(new String(cipher.doFinal(byteText), StandardCharsets.UTF_8));
         } catch (Exception e) {
             log.error(e.getMessage(),e);
