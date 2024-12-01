@@ -1,6 +1,9 @@
-[{
-  "name": "juan",
-  "groupPasswords": {
+[
+  {
+    "name": "juan",
+    "groupPasswords": {
+      "jjj": "BAFzPcQyDNPiiFZJVXs2BSeiEAsaqhLnEKk+OrFsELL8427P+EQz/e6ufWeOg4pyFM1A7GQiJVk+Q5pEQLzyCkXeAwF5ma+ybolmmUXzdZBCEynyVckpXAy6evRWLK1yAPc9d8GbXtI10pKzVxtPzpeAuw9V7m0mUCnwFMnS0lVgcrdY6DDDuqU9qAeJqdX9Jr8xgl8Q8gkLZjwp",
+      "b": "S9j5UaU5CUCZXioVRVzEpCKvSbplmh1qHNqMsz_XyDYEAChtWYHeUDd1CHz7YjtJ771qoT4BW65zKHhBHUvIZDwvSPPWC_hrYf1GuPfgoAnsj3StygOhOgihnob0Q5qHumdmAXSv1u8ob2C0VSkZXoASnk94Y5jzUydlMQMOj_gQWFY45vETK72e6WZwSgTszGFDZuycPFZ5f_Knjo1Cje0W9RmqMG3QbDb621SFZTdV00qndqVerf8C"
+    }
   }
-}
 ]
