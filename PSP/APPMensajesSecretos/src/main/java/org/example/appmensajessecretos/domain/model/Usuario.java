@@ -3,7 +3,6 @@ package org.example.appmensajessecretos.domain.model;
 import lombok.Data;
 import org.example.appmensajessecretos.dao.model.UserRemote;
 import org.example.appmensajessecretos.utilities.Constantes;
-import org.springframework.security.core.userdetails.User;
 
 import java.util.HashMap;
 import java.util.Map;
