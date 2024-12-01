@@ -1,1 +1,36 @@
-[{"name":"Grupo1","password":"$2a$10$fjbjDcGB6Clw45aqTrUe5OnA9zC69EBS5Jh8FP6rnN.jg3L.0vhya","members":[{"name":"juan","groupPasswords":{}},{"name":"pedro","groupPasswords":{}}],"isPrivate":false},{"name":"Grupo2","password":"$2a$10$pLhVeXrM0CNmGz3uOetto.w1apncrSYGwv3IfUo3yOi3qCZuRjS2W","members":[{"name":"juan","groupPasswords":{"Grupo1":"rgW0ZIDooCXVoaxunkYXK7a04c2hFKPMlMMSkyj3JoEEAO8FXNAzRqfsnn5CZFJ-KLFgxrMS-NoM1rs7KgPhk587pyRpvbOQdAxY8RGDyphyjNJRnztxmIeefdHzN1zQXpV5AAYMzHaSkEhL47VNeHjKwy_vzK3gj7O3DWRqL08kcaWXNx9rGPIpuLbC0ChllJ2k_wXc2x1dzHDyqyoIEQ8mJbUrvyid65ouGwelWCg6yLyO9h39lLe53OCo"}},{"name":"pedro","groupPasswords":{"Grupo1":"ZcQAYftkaE_sTERj1AoE8TRUgZedy10oC250bzggYb0EAK7TUO9eG3QBewwjnNRUsAWQDOOBM6LiPWOnyAMqOAGw-dqotZd6bYxvZKEjHt16HWqvCWFKMSLeKaKrGP9G7LarAI54HrXWlSjoGnOxeELMzgJNtWLuOQ6gxBy4dQPYftAFYN8SI61rneHDHzJ3bWOMDoXoUTPCsAtJkZe8EAdZLJ-PhKttaq3WZbZN9y7gX4aR71UOUzFKJS4_"}}],"isPrivate":true}]
+[
+  {
+    "name": "Grupo1",
+    "password": "$2a$10$fjbjDcGB6Clw45aqTrUe5OnA9zC69EBS5Jh8FP6rnN.jg3L.0vhya",
+    "members": [
+      {
+        "name": "juan",
+        "groupPasswords": {}
+      },
+      {
+        "name": "pedro",
+        "groupPasswords": {}
+      }
+    ],
+    "isPrivate": false
+  },
+  {
+    "name": "Grupo2",
+    "password": "$2a$10$pLhVeXrM0CNmGz3uOetto.w1apncrSYGwv3IfUo3yOi3qCZuRjS2W",
+    "members": [
+      {
+        "name": "juan",
+        "groupPasswords": {
+          "Grupo1": "rgW0ZIDooCXVoaxunkYXK7a04c2hFKPMlMMSkyj3JoEEAO8FXNAzRqfsnn5CZFJ-KLFgxrMS-NoM1rs7KgPhk587pyRpvbOQdAxY8RGDyphyjNJRnztxmIeefdHzN1zQXpV5AAYMzHaSkEhL47VNeHjKwy_vzK3gj7O3DWRqL08kcaWXNx9rGPIpuLbC0ChllJ2k_wXc2x1dzHDyqyoIEQ8mJbUrvyid65ouGwelWCg6yLyO9h39lLe53OCo"
+        }
+      },
+      {
+        "name": "pedro",
+        "groupPasswords": {
+          "Grupo1": "ZcQAYftkaE_sTERj1AoE8TRUgZedy10oC250bzggYb0EAK7TUO9eG3QBewwjnNRUsAWQDOOBM6LiPWOnyAMqOAGw-dqotZd6bYxvZKEjHt16HWqvCWFKMSLeKaKrGP9G7LarAI54HrXWlSjoGnOxeELMzgJNtWLuOQ6gxBy4dQPYftAFYN8SI61rneHDHzJ3bWOMDoXoUTPCsAtJkZe8EAdZLJ-PhKttaq3WZbZN9y7gX4aR71UOUzFKJS4_"
+        }
+      }
+    ],
+    "isPrivate": true
+  }
+]

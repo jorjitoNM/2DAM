@@ -53,6 +53,13 @@ MessageService {
                 .flatMap(cipheredText -> dao.sendMessage(new Mensaje(cipheredText, user.getName(), group.getName()))));
     }
 
+    public CompletableFuture<Either<Error, Void>> sendPrivateMessage(String text, Usuario user, Grupo group) {
+        return CompletableFuture.completedFuture(userValidator.validateUserIsLogged(user)
+                .flatMap(nada -> groupValidator.validateGroup(group))
+                .flatMap(nada -> cipherAsymmetricMessage(text, group, user))
+                .flatMap(daoMessages::sendPrivateMessage));
+    }
+
     private Either<Error, String> cipherSymmetric(String text, Usuario user, Grupo group) {
         return asymmetric.getPrivateKey(user)
                 .flatMap(userPrivateKey -> asymmetric.decipher(user.getGroupPasswords().get(group.getName()), userPrivateKey))
@@ -61,20 +68,23 @@ MessageService {
 
     private Either<Error, MensajePrivado> cipherAsymmetricMessage(String text, Grupo group, Usuario user) {
         String randomKey = asymmetric.getRandomKey();
-        List<String> cipheredPasswords = new ArrayList<>();
-        for (Usuario member : group.getMembers()) {
-            Either<Error, String> cipheredPassword = asymmetric.getPublicKey(user)
-                    .flatMap(userPrivateKey -> asymmetric.cipher(randomKey, userPrivateKey));
-            if (cipheredPassword.isLeft())
-                return Either.left(ServiceError.ERROR_ENCRYPTING);
-            else
-                cipheredPasswords.add(cipheredPassword.get());
-        }
-        Map<String, String> keys = new HashMap<>();
-        for (int i = 0; i < group.getMembers().size(); i++) {
-            keys.put(group.getMembers().get(i).getName(), cipheredPasswords.get(i));
-        }
-        return Either.right(new MensajePrivado(text, LocalDateTime.now(), user.getName(), group.getName(), keys));
+        return symmetric.cipher(text,randomKey)
+                .flatMap(cipheredText -> {
+                    List<String> cipheredPasswords = new ArrayList<>();
+                    for (Usuario member : group.getMembers()) {
+                        Either<Error, String> cipheredPassword = asymmetric.getPublicKey(member)
+                                .flatMap(userPublicKey -> asymmetric.cipher(randomKey, userPublicKey));
+                        if (cipheredPassword.isLeft())
+                            return Either.left(ServiceError.ERROR_ENCRYPTING);
+                        else
+                            cipheredPasswords.add(cipheredPassword.get());
+                    }
+                    Map<String, String> keys = new HashMap<>();
+                    for (int i = 0; i < group.getMembers().size(); i++) {
+                        keys.put(group.getMembers().get(i).getName(), cipheredPasswords.get(i));
+                    }
+                    return Either.right(new MensajePrivado(cipheredText, LocalDateTime.now(), user.getName(), group.getName(), keys));
+                });
     }
 
 
@@ -90,11 +100,11 @@ MessageService {
         return Either.right(decipheredMessages);
     }
 
-    private Either<Error, List<Mensaje>> decipherAsymmetricMessages(List<Mensaje> messages, PrivateKey userPrivateKey) {
-
+    private Either<Error, List<Mensaje>> decipherAsymmetricMessages(List<MensajePrivado> messages, PrivateKey userPrivateKey, Usuario user) {
         List<Mensaje> decipheredMessages = new ArrayList<>();
-        for (Mensaje message : messages) {
-            Either<Error, String> either = asymmetric.decipher(message.getContent(), userPrivateKey);
+        for (MensajePrivado message : messages) {
+            Either<Error, String> either = asymmetric.decipher(message.getKeys().get(user.getName()), userPrivateKey)
+                    .flatMap(messageKey -> symmetric.decipher(message.getContent(), messageKey));
             if (either.isLeft())
                 return Either.left(ServiceError.ERROR_DECRYPTING);
             else
@@ -121,20 +131,13 @@ MessageService {
     public CompletableFuture<Either<Error, List<Mensaje>>> getPrivateMessages(Usuario user, Grupo group) {
         return CompletableFuture.completedFuture(groupValidator.validateGroup(group)
                 .flatMap(nada -> asymmetric.getPrivateKey(user))
-                .flatMap(userPrivateKey -> dao.loadMessages(group)
+                .flatMap(userPrivateKey -> dao.loadPrivateMessages(group)
                         .flatMap(messages -> {
                                     if (messages.isEmpty())
                                         return Either.left(ServiceError.GROUP_HAS_NO_MESSAGES);
                                     else
-                                        return decipherAsymmetricMessages(messages, userPrivateKey);
+                                        return decipherAsymmetricMessages(messages, userPrivateKey,user);
                                 }
                         )));
-    }
-
-    public CompletableFuture<Either<Error, Void>> sendPrivateMessage(String text, Usuario user, Grupo group) {
-        return CompletableFuture.completedFuture(userValidator.validateUserIsLogged(user)
-                .flatMap(nada -> groupValidator.validateGroup(group))
-                .flatMap(nada -> cipherAsymmetricMessage(text, group, user))
-                .flatMap(daoMessages::sendMessage));
     }
 }

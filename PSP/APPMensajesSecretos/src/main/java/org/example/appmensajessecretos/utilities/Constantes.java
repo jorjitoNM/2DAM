@@ -53,8 +53,8 @@ public class Constantes {
     public static final String BC = "BC";
     public static final String ECIES = "ECIES";
     public static final String EC = "EC";
-    public static String SHA256withECDSA = "SHA256withECDSA";
-    public static String secp521r1 = "secp521r1";
+    public static final String SHA256withECDSA = "SHA256withECDSA";
+    public static final String secp521r1 = "secp521r1";
 
 
     //Ficheros
@@ -62,6 +62,7 @@ public class Constantes {
     public static final String PATH_USUARIOS = "pathUsuarios";
     public static final String PATH_GRUPOS = "pathGrupos";
     public static final String PATH_MENSAJES = "pathMensajes";
+    public static final String PATH_MENSAJES_PRIVADOS = "pathMensajesPrivados";
     public static final String ERROR = "Error";
 
     private Constantes () {}

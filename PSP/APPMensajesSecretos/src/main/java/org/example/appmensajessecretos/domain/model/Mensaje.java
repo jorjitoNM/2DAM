@@ -1,14 +1,14 @@
 package org.example.appmensajessecretos.domain.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
 @Data
+@NoArgsConstructor(force = true)
 public class Mensaje {
     private final String content;
     private final LocalDateTime date;
@@ -21,6 +21,13 @@ public class Mensaje {
         this.author = author;
         this.grupo = grupo;
         date = LocalDateTime.now();
+    }
+
+    public Mensaje(String content, LocalDateTime date, String author, String grupo) {
+        this.content = content;
+        this.date = date;
+        this.author = author;
+        this.grupo = grupo;
     }
 
     @Override

@@ -20,6 +20,7 @@ public class ConfigurationFicheros {
     private String pathMensajes;
     private String pathKeyStore;
     private String keyStorePassword;
+    private String pathMensajesPrivados;
 
 
     public ConfigurationFicheros(Configuration configuration) {
@@ -32,6 +33,7 @@ public class ConfigurationFicheros {
             this.pathMensajes = p.getProperty(Constantes.PATH_MENSAJES);
             this.pathKeyStore = p.getProperty(Constantes.KEY_STORE_PATH);
             this.keyStorePassword = p.getProperty(Constantes.KEY_STORE_PASSWORD);
+            this.pathMensajesPrivados = p.getProperty(Constantes.PATH_MENSAJES_PRIVADOS);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }

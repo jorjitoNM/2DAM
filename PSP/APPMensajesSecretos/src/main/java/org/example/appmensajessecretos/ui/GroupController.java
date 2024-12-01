@@ -15,10 +15,7 @@ import org.example.appmensajessecretos.domain.service.GroupService;
 import org.example.appmensajessecretos.domain.service.MessageService;
 import org.example.appmensajessecretos.domain.service.UserService;
 import org.example.appmensajessecretos.utilities.Constantes;
-import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.CompletableFuture;
 
 @Component
 public class GroupController {

@@ -12,6 +12,7 @@ import org.example.appmensajessecretos.domain.error.DataBaseError;
 import org.example.appmensajessecretos.domain.error.Error;
 import org.example.appmensajessecretos.domain.model.Grupo;
 import org.example.appmensajessecretos.domain.model.Mensaje;
+import org.example.appmensajessecretos.domain.model.MensajePrivado;
 import org.example.appmensajessecretos.domain.model.Usuario;
 import org.springframework.stereotype.Component;
 
@@ -61,16 +62,6 @@ public class DataBase {
        return Either.right(null);
    }
 
-    public Either<Error,UserRemote> saveUser(UserRemote userRemote) {
-        try (FileWriter fw = new FileWriter(configuration.getPathUsuarios())) {
-            gson.toJson(userRemote, fw);
-        } catch (IOException e) {
-            log.error(e.getMessage(),e);
-            return Either.left(DataBaseError.ACTION_FAILED);
-        }
-        return Either.right(userRemote);
-    }
-
 
     public Either<Error,List<Mensaje>> loadMessages() {
         Type messageListType = new TypeToken<ArrayList<Mensaje>> () {}.getType();
@@ -90,6 +81,32 @@ public class DataBase {
 
     public Either<Error,Void> saveMessages(List<Mensaje> mensajes) {
         try (FileWriter fw = new FileWriter(configuration.getPathMensajes())) {
+            gson.toJson(mensajes,fw);
+            return Either.right(null);
+        } catch (IOException e) {
+            log.error(e.getMessage(),e);
+            return Either.left(DataBaseError.ACTION_FAILED);
+        }
+    }
+
+    public Either<Error,List<MensajePrivado>> loadPrivateMessages() {
+        Type messageListType = new TypeToken<ArrayList<MensajePrivado>> () {}.getType();
+        List<MensajePrivado> messages;
+        try {
+            messages = gson.fromJson(
+                    new FileReader(configuration.getPathMensajesPrivados()), messageListType
+            );
+            if (messages == null)
+                messages = new ArrayList<>();
+        } catch (FileNotFoundException e) {
+            log.error(e.getMessage(),e);
+            return Either.left(DataBaseError.ERROR_IN_FETCH);
+        }
+        return Either.right(messages);
+    }
+
+    public Either<Error,Void> savePrivateMessages(List<MensajePrivado> mensajes) {
+        try (FileWriter fw = new FileWriter(configuration.getPathMensajesPrivados())) {
             gson.toJson(mensajes,fw);
             return Either.right(null);
         } catch (IOException e) {
@@ -123,4 +140,6 @@ public class DataBase {
         }
         return Either.right(null);
     }
+
+
 }
