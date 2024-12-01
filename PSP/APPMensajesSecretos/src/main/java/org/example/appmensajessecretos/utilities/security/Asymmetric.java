@@ -80,12 +80,12 @@ public class Asymmetric {
             keyStore.setKeyEntry(user.getName(), keyPair.getPrivate(), user.getPassword().toCharArray(), new Certificate[]{certificate});
 
             FileOutputStream fos = new FileOutputStream(configuration.getPathKeyStore());
-            keyStore.store(fos,configuration.getKeyStorePassword().toCharArray());
+            keyStore.store(fos, configuration.getKeyStorePassword().toCharArray());
         } catch (IOException e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             return Either.left(DataBaseError.ERROR_READING_FILE);
         } catch (Exception e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             return Either.left(ServiceError.ERROR_GENERATING_KEYS);
         }
         return Either.right(null);
@@ -124,10 +124,10 @@ public class Asymmetric {
             keyStore.load(fis, keyStorePassword);
             return Either.right(keyStore.getCertificate(user.getName()).getPublicKey());
         } catch (IOException e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             return Either.left(DataBaseError.ERROR_READING_FILE);
         } catch (Exception e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             return Either.left(ServiceError.ERROR_GETTING_PUBLIC_KEY);
         }
     }
@@ -141,13 +141,13 @@ public class Asymmetric {
                     user.getName(), new KeyStore.PasswordProtection(user.getPassword().toCharArray()));
             return Either.right(pkEntry.getPrivateKey());
         } catch (UnrecoverableKeyException e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             return Either.left(DataInputError.INCORRECT_PASSWORD);
         } catch (IOException e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             return Either.left(DataBaseError.ERROR_READING_FILE);
         } catch (Exception e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             return Either.left(ServiceError.ERROR_GETTING_PRIVATE_KEY);
         }
     }
@@ -163,56 +163,38 @@ public class Asymmetric {
 
     public Either<Error, String> cipher(String text, PublicKey publicKey) {
         try {
+            Cipher cipher = Cipher.getInstance(Constantes.ECIES, Constantes.BC);
+
             byte[] derivation = new byte[16];
             byte[] encoding = new byte[16];
-        new SecureRandom().nextBytes(derivation);
-        new SecureRandom().nextBytes(encoding);
+            new SecureRandom().nextBytes(derivation);
+            new SecureRandom().nextBytes(encoding);
             IESParameterSpec params = new IESParameterSpec(derivation, encoding, 128, 128, null);
 
-           Cipher cipher = Cipher.getInstance(Constantes.ECIES, Constantes.BC);
-//            Cipher cipher = Cipher.getInstance("RSA");
-            cipher.init(Cipher.ENCRYPT_MODE, publicKey,params);
+            cipher.init(Cipher.ENCRYPT_MODE, publicKey, params);
             byte[] byteText = text.getBytes(StandardCharsets.UTF_8);
-            return Either.right(Base64.getUrlEncoder().encodeToString(Bytes.concat(derivation,encoding,cipher.doFinal(byteText))));
+            return Either.right(Base64.getUrlEncoder().encodeToString(Bytes.concat(derivation, encoding, cipher.doFinal(byteText))));
         } catch (Exception e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             return Either.left(ServiceError.ERROR_ENCRYPTING);
         }
     }
 
-    public static byte[] derivation = new byte[16];
-    public static byte[] encoding = new byte[16];
-    static {
-        new SecureRandom().nextBytes(derivation);
-        new SecureRandom().nextBytes(encoding);
-    }
-
-    private IESParameterSpec provideParams() {
-        //byte[] derivation = new byte[16];
-        //byte[] encoding = new byte[16];
-//        new SecureRandom().nextBytes(derivation);
-//        new SecureRandom().nextBytes(encoding);
-        return new IESParameterSpec(derivation, encoding, 128, 128, null);
-    }
-
     public Either<Error, String> decipher(String text, PrivateKey privateKey) {
         try {
+            Cipher cipher = Cipher.getInstance(Constantes.ECIES, Constantes.BC);
+
             byte[] decoded = Base64.getUrlDecoder().decode(text);
             byte[] derivation = Arrays.copyOf(decoded, 16);
-            byte[] encoding = Arrays.copyOfRange(decoded, 16,32);
-
-
-
-            Cipher cipher = Cipher.getInstance(Constantes.ECIES,Constantes.BC);
-//            Cipher cipher = Cipher.getInstance("RSA");
+            byte[] encoding = Arrays.copyOfRange(decoded, 16, 32);
 
             IESParameterSpec params = new IESParameterSpec(derivation, encoding, 128, 128, null);
 
-            cipher.init(Cipher.DECRYPT_MODE, privateKey,params);
-            byte[] byteText =Arrays.copyOfRange(decoded, 32, decoded.length);
+            cipher.init(Cipher.DECRYPT_MODE, privateKey, params);
+            byte[] byteText = Arrays.copyOfRange(decoded, 32, decoded.length);
             return Either.right(new String(cipher.doFinal(byteText), StandardCharsets.UTF_8));
         } catch (Exception e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             return Either.left(ServiceError.ERROR_ENCRYPTING);
         }
     }
