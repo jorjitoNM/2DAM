@@ -2,27 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/event_list_fragment"
-        android:icon="@drawable/home_icon"
-        android:title="@string/home"
-        android:contentDescription="@string/events_list"
-        app:showAsAction="ifRoom"
-        />
+        <item
+            android:id="@+id/event_list_fragment"
+            android:icon="@drawable/home_icon"
+            android:title="@string/home"
+            android:contentDescription="@string/events_list"
+            app:showAsAction="ifRoom"
+            />
 
-    <item
-        android:id="@+id/todo_list_fragment"
-        android:title="@string/todos"
-        android:icon="@drawable/checklist_24"
-        android:contentDescription="@string/todos"
-        app:showAsAction="always"
-        />
+        <item
+            android:id="@+id/todo_list_fragment"
+            android:title="@string/todos"
+            android:icon="@drawable/checklist_24"
+            android:contentDescription="@string/todos"
+            app:showAsAction="always"
+            />
 
-    <item
-        android:id="@+id/user_profile_fragment"
-        android:title="@string/user_info"
-        android:icon="@drawable/profile_icon_24"
-        android:contentDescription="@string/user_info"
-        app:showAsAction="always"
-        />
+        <item
+            android:id="@+id/user_profile_fragment"
+            android:title="@string/user_info"
+            android:icon="@drawable/profile_icon_24"
+            android:contentDescription="@string/user_info"
+            app:showAsAction="always"
+            />
 </menu>
