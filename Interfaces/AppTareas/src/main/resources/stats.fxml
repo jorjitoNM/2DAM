@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.apptareas.controllers.StatsController">
+    <children>
+        <PieChart fx:id="statsChart" layoutX="20" layoutY="20" prefHeight="400" prefWidth="400" />
+    </children>
+</AnchorPane>

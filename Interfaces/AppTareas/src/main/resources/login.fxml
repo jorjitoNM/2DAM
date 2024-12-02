@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.apptareas.controllers.LoginController">
+    <children>
+        <Label text="Usuario" layoutX="50" layoutY="40" />
+        <TextField fx:id="usernameField" layoutX="150" layoutY="40" promptText="Ingresa tu usuario" />
+
+        <Label text="Contraseña" layoutX="50" layoutY="90" />
+        <PasswordField fx:id="passwordField" layoutX="150" layoutY="90" promptText="Ingresa tu contraseña" />
+
+        <Button text="Iniciar Sesión" layoutX="150" layoutY="140" onAction="#login" />
+    </children>
+</AnchorPane>

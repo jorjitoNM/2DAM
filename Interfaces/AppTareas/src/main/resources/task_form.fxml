@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.apptareas.controllers.TaskController">
+    <children>
+        <Label text="Nombre" layoutX="20" layoutY="20" />
+        <TextField fx:id="nameField" layoutX="150" layoutY="20" promptText="Nombre de la tarea" />
+
+        <Label text="Descripción" layoutX="20" layoutY="60" />
+        <TextArea fx:id="descriptionField" layoutX="150" layoutY="60" prefHeight="100" prefWidth="200" />
+
+        <Label text="Ubicación (opcional)" layoutX="20" layoutY="180" />
+        <TextField fx:id="locationField" layoutX="150" layoutY="180" promptText="Ubicación" />
+
+        <Label text="Responsable" layoutX="20" layoutY="220" />
+        <TextField fx:id="responsibleField" layoutX="150" layoutY="220" promptText="Nombre del responsable" />
+
+        <Label text="Progreso (%)" layoutX="20" layoutY="260" />
+        <Slider fx:id="progressSlider" layoutX="150" layoutY="260" max="100" value="0" />
+
+        <Button text="Guardar" layoutX="150" layoutY="300" onAction="#saveTask" />
+    </children>
+</AnchorPane>
