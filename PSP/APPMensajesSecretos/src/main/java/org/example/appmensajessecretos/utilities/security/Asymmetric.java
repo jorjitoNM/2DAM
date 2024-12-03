@@ -19,11 +19,14 @@ import org.example.appmensajessecretos.domain.error.DataBaseError;
 import org.example.appmensajessecretos.domain.error.DataInputError;
 import org.example.appmensajessecretos.domain.error.Error;
 import org.example.appmensajessecretos.domain.error.ServiceError;
+import org.example.appmensajessecretos.domain.model.Mensaje;
 import org.example.appmensajessecretos.domain.model.Usuario;
 import org.example.appmensajessecretos.utilities.Constantes;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -38,6 +41,8 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
 
+import static java.awt.SystemColor.text;
+
 @Log4j2
 @Component
 public class Asymmetric {
@@ -46,9 +51,11 @@ public class Asymmetric {
     }
 
     private final ConfigurationFicheros configuration;
+    private final PasswordEncoder passwordEncoder;
 
-    public Asymmetric(ConfigurationFicheros configuration) {
+    public Asymmetric(ConfigurationFicheros configuration, PasswordEncoder passwordEncoder) {
         this.configuration = configuration;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Either<Error, Void> saveUserKeys(Usuario user) {
@@ -187,5 +194,54 @@ public class Asymmetric {
             log.error(e.getMessage(), e);
             return Either.left(ServiceError.ERROR_ENCRYPTING);
         }
+    }
+
+
+    public Either<Error, Mensaje> signMessage(Mensaje message, Usuario user) {
+        return getPrivateKey(user)
+                .flatMap(userPrivateKey -> {
+                    try {
+                        Cipher cipher = Cipher.getInstance(Constantes.ECIES, Constantes.BC);
+
+                        byte[] derivation = new byte[16];
+                        byte[] encoding = new byte[16];
+                        new SecureRandom().nextBytes(derivation);
+                        new SecureRandom().nextBytes(encoding);
+                        IESParameterSpec params = new IESParameterSpec(derivation, encoding, 128, 128, null);
+
+                        cipher.init(Cipher.DECRYPT_MODE, userPrivateKey, params);
+                        byte[] byteText = passwordEncoder.encode(message.getContent()).getBytes(StandardCharsets.UTF_8);
+                        return Either.right(new Mensaje(message.getContent(), message.getDate()
+                                , message.getAuthor(), Base64.getUrlEncoder().encodeToString(Bytes.concat(derivation, encoding, cipher.doFinal(byteText)))));
+                    } catch (Exception e) {
+                        log.error(e.getMessage(), e);
+                        return Either.left(ServiceError.ERROR_ENCRYPTING);
+                    }
+                });
+    }
+
+    public Either<Error, Void> checkMessageSign (Mensaje message) {
+        return getPublicKey(new Usuario(message.getAuthor(), null))
+                .flatMap(authorPublicKey -> {
+                    try {
+                        Cipher cipher = Cipher.getInstance(Constantes.ECIES, Constantes.BC);
+
+                        byte[] decoded = Base64.getUrlDecoder().decode(message.getSign());
+                        byte[] derivation = Arrays.copyOf(decoded, 16);
+                        byte[] encoding = Arrays.copyOfRange(decoded, 16, 32);
+
+                        IESParameterSpec params = new IESParameterSpec(derivation, encoding, 128, 128, null);
+
+                        cipher.init(Cipher.DECRYPT_MODE, authorPublicKey, params);
+                        byte[] byteText = Arrays.copyOfRange(decoded, 32, decoded.length);
+                        if (passwordEncoder.matches(message.getContent(), new String(cipher.doFinal(byteText), StandardCharsets.UTF_8)))
+                            return Either.right(null);
+                        else
+                            return Either.left(ServiceError.MESSAGE_NOT_SIGNED);
+                    } catch (Exception e) {
+                        log.error(e.getMessage(), e);
+                        return Either.left(ServiceError.ERROR_ENCRYPTING);
+                    }
+                });
     }
 }
