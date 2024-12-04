@@ -51,11 +51,9 @@ public class Asymmetric {
     }
 
     private final ConfigurationFicheros configuration;
-    private final PasswordEncoder passwordEncoder;
 
-    public Asymmetric(ConfigurationFicheros configuration, PasswordEncoder passwordEncoder) {
+    public Asymmetric(ConfigurationFicheros configuration) {
         this.configuration = configuration;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public Either<Error, Void> saveUserKeys(Usuario user) {
@@ -201,7 +199,7 @@ public class Asymmetric {
         return getPrivateKey(user)
                 .flatMap(privateKey -> {
                     try {
-                        Signature signature = Signature.getInstance(Constantes.SHA256withECDSA);
+                        Signature signature = Signature.getInstance(Constantes.SHA256withECDSA,Constantes.BC);
                         signature.initSign(privateKey);
                         signature.update(message.getContent().getBytes(StandardCharsets.UTF_8));
 
@@ -220,11 +218,11 @@ public class Asymmetric {
                 });
     }
 
-    public Either<Error, Void> checkMessageSign(Mensaje message) {
+    public Either<Error, Void> checkMessageSign (Mensaje message) {
         return getPublicKey(new Usuario(message.getAuthor(), null))
                 .flatMap(publicKey -> {
                     try {
-                        Signature signature = Signature.getInstance("SHA256withECDSA");
+                        Signature signature = Signature.getInstance(Constantes.SHA256withECDSA,Constantes.BC);
                         signature.initVerify(publicKey);
                         signature.update(message.getContent().getBytes(StandardCharsets.UTF_8));
 
