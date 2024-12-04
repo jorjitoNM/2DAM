@@ -141,6 +141,9 @@ public class GroupController {
                     case GROUP_HAS_NO_MESSAGES -> errorMessage = Constantes.GROUP_HAS_NO_MESSAGES;
                     case ERROR_GETTING_PUBLIC_KEY -> errorMessage = Constantes.ERROR_GETTING_PUBLIC_KEY;
                     case ERROR_GETTING_PRIVATE_KEY -> errorMessage = Constantes.ERROR_GETTING_PRIVATE_KEY;
+                    case MESSAGE_NOT_SIGNED -> errorMessage = Constantes.MESSAGE_NOT_SIGNED;
+                    case ERROR_SIGNING -> errorMessage = Constantes.ERROR_SIGNING;
+                    case ERROR_VERIFYING -> errorMessage = Constantes.ERROR_VERIFIYING;
                 }
             }
             case DataInputError e -> {

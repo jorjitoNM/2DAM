@@ -33,6 +33,10 @@ public class Constantes {
     public static final String GROUP_HAS_NO_MESSAGES = "El grupo no tiene ningun mensaje todavia";
     public static final String ERROR_GETTING_PUBLIC_KEY = "No se ha podido recuperar la clave publica del usuario";
     public static final String ERROR_GETTING_PRIVATE_KEY = "No se ha podido recuperar la clave privada del usuario";
+    public static final String MESSAGE_NOT_SIGNED = "Este mensaje no ha sido firmado, no podemos certificar que el autor sea la persona que usted cree";
+    public static final String ERROR_SIGNING = "No se ha podido verificar su mensaje";
+    public static final String ERROR_VERIFIYING = "No se ha podido comprobar la firma de este mensaje";
+
 
 
     //Symmetric
@@ -64,6 +68,7 @@ public class Constantes {
     public static final String PATH_MENSAJES = "pathMensajes";
     public static final String PATH_MENSAJES_PRIVADOS = "pathMensajesPrivados";
     public static final String ERROR = "Error";
+
 
     private Constantes () {}
 }
