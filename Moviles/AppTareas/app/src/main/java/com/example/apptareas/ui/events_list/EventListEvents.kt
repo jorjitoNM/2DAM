@@ -6,4 +6,5 @@ sealed interface EventListEvents {
     data object GetEvents : EventListEvents
     data class DeleteEvent (val event : Event) : EventListEvents
     data object EventDone : EventListEvents
+    data class FilterEvents (val eventName : String) : EventListEvents
 }

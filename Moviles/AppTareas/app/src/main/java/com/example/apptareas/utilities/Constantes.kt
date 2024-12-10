@@ -1,6 +1,7 @@
 package com.example.apptareas.utilities
 
 object Constantes {
+    const val LOADING: String = "We are processing your operation"
     const val EVENT_ID: String = "eventId"
     const val EVENT_UPDATED: String = "Event updated successfully"
     const val ERROR__GETTING_EVENT: String = "Could not get the specified event"

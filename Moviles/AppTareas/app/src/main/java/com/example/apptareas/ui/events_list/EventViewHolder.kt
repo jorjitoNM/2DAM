@@ -22,9 +22,6 @@ class EventViewHolder(itemView: View, val actions: EventAdapter.EventActions) : 
 
             itemView.setBackgroundResource(R.color.md_theme_primary)
 
-            itemView.setOnLongClickListener{
-                true
-            }
             itemView.setOnClickListener {
                 actions.onItemClick(event)
             }

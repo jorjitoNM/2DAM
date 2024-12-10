@@ -16,10 +16,6 @@ class TodoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             done.isChecked = todo.completed
 
             itemView.setBackgroundResource(R.color.md_theme_primary)
-
-            itemView.setOnLongClickListener{
-                true
-            }
         }
     }
 }

@@ -37,8 +37,8 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
             navController = navHost.navController
             binding.bottomNavigationView.setupWithNavController(navController)
-            setSupportActionBar(topAppBar)
-            topAppBar.setNavigationOnClickListener {
+            setSupportActionBar(backArrow)
+            backArrow.setNavigationOnClickListener {
                 navController.navigateUp()
             }
             setupActionBarWithNavController(navController)

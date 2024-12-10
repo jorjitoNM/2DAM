@@ -16,7 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:liftOnScroll="true">
+            app:liftOnScroll="true"
+            android:id="@+id/topAppBar"
+            >
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/backArrow"
@@ -24,14 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:navigationIcon="@drawable/white_arrow_back_24" />
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/search"
-                style="@style/Widget.MaterialComponents.Toolbar.Primary"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:menu="@menu/menu_appbar_search"
-                />
 
         </com.google.android.material.appbar.AppBarLayout>
 

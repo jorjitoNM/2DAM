@@ -1,11 +1,19 @@
 package com.example.apptareas.ui.events_list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apptareas.R
@@ -16,9 +24,10 @@ import com.example.apptareas.ui.common.UiEvent
 import com.example.apptareas.utilities.Constantes
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
-class EventsListFragment : Fragment() {
+class EventsListFragment : Fragment(), MenuProvider {
 
     private val viewModel: EventListViewModel by viewModels ()
     private var _binding: EventListFragmentBinding? = null
@@ -39,6 +48,7 @@ class EventsListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         configureRecyclerView()
         observarState()
+        configAppBar()
     }
 
     override fun onResume() {
@@ -93,5 +103,44 @@ class EventsListFragment : Fragment() {
 
     private fun navigateToDetail(id: Int) {
         findNavController().navigate(EventsListFragmentDirections.actionEventsListFragmentToEventDetailsFragment(id,userId));
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.menu_appbar_search, menu)
+        val actionSearch = menu.findItem(R.id.search).actionView as SearchView
+
+        actionSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                p0?.let {
+                    viewModel.handleEvent(EventListEvents.FilterEvents(p0))
+                    Timber.tag("::TAG::").d("submit %s", p0)
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    viewModel.handleEvent(EventListEvents.FilterEvents(newText))
+                    Timber.tag("::TAG::").d("Search %s", newText)
+                }
+                return false
+            }
+        })
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return when (menuItem.itemId)
+        {
+            R.id.search-> {
+                Timber.tag("::TAG::").d("clickado en home")
+                true
+            }
+            else -> false
+        }
+    }
+
+    private fun configAppBar() {
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 }

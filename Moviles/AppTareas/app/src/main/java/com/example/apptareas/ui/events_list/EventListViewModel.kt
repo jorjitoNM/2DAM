@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.apptareas.data.remote.NetworkResult
 import com.example.apptareas.domain.model.Event
 import com.example.apptareas.domain.usecases.DeleteEventUseCase
+import com.example.apptareas.domain.usecases.FilterEventsUseCase
 import com.example.apptareas.domain.usecases.GetEventsUseCase
 import com.example.apptareas.ui.common.UiEvent
 import com.example.apptareas.utilities.Constantes
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class EventListViewModel @Inject constructor(
     private val getEventsUseCaseUserCase: GetEventsUseCase,
     private val deleteEventUseCase : DeleteEventUseCase,
+    private val filterEventsUseCase: FilterEventsUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData(EventListState())
@@ -28,6 +30,17 @@ class EventListViewModel @Inject constructor(
             is EventListEvents.GetEvents ->  getEvents()
             is EventListEvents.DeleteEvent -> deleteEvent(event.event)
             is EventListEvents.EventDone -> _uiState.value = _uiState.value?.copy(appEvent = null)
+            is EventListEvents.FilterEvents -> filterEvents(event.eventName)
+        }
+    }
+
+    private fun filterEvents(eventName: String) {
+        viewModelScope.launch {
+            when (val events = filterEventsUseCase(eventName)) {
+                is NetworkResult.Success -> _uiState.value = _uiState.value?.copy(events = events.data)
+                is NetworkResult.Error -> _uiState.value = _uiState.value?.copy(appEvent = UiEvent.ShowSnackbar(events.message))
+                is NetworkResult.Loading -> _uiState.value = _uiState.value?.copy(appEvent = UiEvent.ShowSnackbar(Constantes.LOADING))
+            }
         }
     }
 
