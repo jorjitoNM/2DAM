@@ -19,11 +19,19 @@
             app:liftOnScroll="true">
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/topAppBar"
+                android:id="@+id/backArrow"
                 style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:navigationIcon="@drawable/white_arrow_back_24" />
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/search"
+                style="@style/Widget.MaterialComponents.Toolbar.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:menu="@menu/menu_appbar_search"
+                />
 
         </com.google.android.material.appbar.AppBarLayout>
 
