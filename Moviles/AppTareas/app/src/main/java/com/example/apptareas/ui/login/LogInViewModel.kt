@@ -1,7 +1,5 @@
 package com.example.apptareas.ui.login
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.apptareas.data.remote.NetworkResult
@@ -10,6 +8,9 @@ import com.example.apptareas.domain.usecases.LogInUseCase
 import com.example.apptareas.ui.common.UiEvent
 import com.example.apptareas.utilities.Constantes
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,22 +19,21 @@ class LogInViewModel  @Inject constructor (
     private val logInUseCase: LogInUseCase,
 ) : ViewModel() {
 
-    private val _uiState = MutableLiveData(LogInState())
-    val uiState: LiveData<LogInState> get() = _uiState
+    private val _uiState = MutableStateFlow(LogInState())
+    val uiState = _uiState.asStateFlow()
 
     fun handleEvent(event: LogInEvents) {
         when (event) {
             is LogInEvents.LogIn -> logIn(event.user)
-            is LogInEvents.ShowEvent -> _uiState.value = _uiState.value?.copy(event = null)
+            is LogInEvents.ShowEvent -> _uiState.update{ it.copy(event = null) }
         }
     }
 
     private fun logIn(user: User) {
         viewModelScope.launch {
             when (val userMatch = logInUseCase.invoke(user)) {
-                is NetworkResult.Success -> _uiState.value = _uiState.value?.copy(user = userMatch.data.first(), logged = true)
-                is NetworkResult.Error -> _uiState.value = _uiState.value?.copy(event =
-                UiEvent.ShowSnackbar(Constantes.LOGIN_ERROR))
+                is NetworkResult.Success -> _uiState.update{ it.copy(user = userMatch.data.first(), logged = true) }
+                is NetworkResult.Error -> _uiState.update{ it.copy(event = UiEvent.ShowSnackbar(Constantes.LOGIN_ERROR)) }
                 is NetworkResult.Loading -> TODO()
             }
         }

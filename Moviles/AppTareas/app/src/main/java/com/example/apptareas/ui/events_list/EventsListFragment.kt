@@ -1,7 +1,6 @@
 package com.example.apptareas.ui.events_list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -14,6 +13,8 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apptareas.R
@@ -24,6 +25,7 @@ import com.example.apptareas.ui.common.UiEvent
 import com.example.apptareas.utilities.Constantes
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -57,16 +59,20 @@ class EventsListFragment : Fragment(), MenuProvider {
     }
 
     private fun observarState() {
-        viewModel.uiState.observe(viewLifecycleOwner) { state ->
-            adapter.submitList(state.events)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    adapter.submitList(state.events)
 
-            state.appEvent?.let { appEvent ->
-                if (appEvent is UiEvent.PopBackStack) {
-                    findNavController().navigateUp()
-                } else if (appEvent is UiEvent.ShowSnackbar) {
-                    Snackbar.make(binding.root, appEvent.message, Snackbar.LENGTH_SHORT).show()
+                    state.appEvent?.let { appEvent ->
+                        if (appEvent is UiEvent.PopBackStack) {
+                            findNavController().navigateUp()
+                        } else if (appEvent is UiEvent.ShowSnackbar) {
+                            Snackbar.make(binding.root, appEvent.message, Snackbar.LENGTH_SHORT).show()
+                        }
+                        viewModel.handleEvent(EventListEvents.EventDone)
+                    }
                 }
-                viewModel.handleEvent(EventListEvents.EventDone)
             }
         }
     }
@@ -132,7 +138,7 @@ class EventsListFragment : Fragment(), MenuProvider {
         return when (menuItem.itemId)
         {
             R.id.search-> {
-                Timber.tag("::TAG::").d("clickado en home")
+                Timber.tag("::TAG::").d("clickado en search")
                 true
             }
             else -> false

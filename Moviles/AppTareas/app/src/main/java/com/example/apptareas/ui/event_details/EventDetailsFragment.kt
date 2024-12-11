@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.apptareas.databinding.EventDetailsBinding
@@ -14,6 +17,7 @@ import com.example.apptareas.ui.common.UiEvent
 import com.example.apptareas.utilities.Constantes
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class EventDetailsFragment : Fragment() {
@@ -51,24 +55,29 @@ class EventDetailsFragment : Fragment() {
     }
 
     private fun observarState() {
-        viewModel.uiState.observe(viewLifecycleOwner) { state ->
-            if (state.appEvent == null) {
-                with (binding) {
-                    eventTitle.setText(state.event.title)
-                    eventBody.setText(state.event.body)
-                    image.load(state.event.image) {
-                        size(300,500)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    if (state.appEvent == null) {
+                        with(binding) {
+                            eventTitle.setText(state.event.title)
+                            eventBody.setText(state.event.body)
+                            image.load(state.event.image) {
+                                size(300, 500)
+                            }
+                        }
+                    }
+
+                    state.appEvent?.let { appEvent ->
+                        if (appEvent is UiEvent.PopBackStack) {
+                            findNavController().navigateUp()
+                        } else if (appEvent is UiEvent.ShowSnackbar) {
+                            Snackbar.make(binding.root, appEvent.message, Snackbar.LENGTH_SHORT)
+                                .show()
+                        }
+                        viewModel.handleEvent(EventDetailsEvents.EventDone)
                     }
                 }
-            }
-
-            state.appEvent?.let { appEvent ->
-                if (appEvent is UiEvent.PopBackStack) {
-                    findNavController().navigateUp()
-                } else if (appEvent is UiEvent.ShowSnackbar) {
-                    Snackbar.make(binding.root, appEvent.message, Snackbar.LENGTH_SHORT).show()
-                }
-                viewModel.handleEvent(EventDetailsEvents.EventDone)
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.example.apptareas.domain.model
 
-import com.example.apptareas.R
 import com.example.apptareas.data.remote.NetworkResult
 import com.example.apptareas.utilities.Constantes
 

@@ -7,6 +7,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.apptareas.databinding.LoginBinding
 import com.example.apptareas.domain.model.User
 import com.example.apptareas.ui.common.UiEvent
@@ -14,6 +17,7 @@ import com.example.apptareas.ui.main.MainActivity
 import com.example.apptareas.utilities.Constantes
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LogInActivity : AppCompatActivity() {
@@ -39,17 +43,21 @@ class LogInActivity : AppCompatActivity() {
     }
 
     private fun observarState() {
-        viewModel.uiState.observe(this@LogInActivity) { state ->
-            if (state.logged) {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra(Constantes.USER_ID, state.user.id)
-                startActivity(intent)
-            }
-            state.event?.let { event ->
-               if (event is UiEvent.ShowSnackbar) {
-                    Snackbar.make(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    if (state.logged) {
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.putExtra(Constantes.USER_ID, state.user.id)
+                        startActivity(intent)
+                    }
+                    state.event?.let { event ->
+                        if (event is UiEvent.ShowSnackbar) {
+                            Snackbar.make(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
+                        }
+                        viewModel.handleEvent(LogInEvents.ShowEvent)
+                    }
                 }
-                viewModel.handleEvent(LogInEvents.ShowEvent)
             }
         }
     }
