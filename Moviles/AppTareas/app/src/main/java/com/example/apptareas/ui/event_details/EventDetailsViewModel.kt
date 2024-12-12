@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.apptareas.data.remote.NetworkResult
 import com.example.apptareas.domain.model.Event
-import com.example.apptareas.domain.usecases.GetEventUseCase
-import com.example.apptareas.domain.usecases.UpdateEventUseCase
+import com.example.apptareas.domain.usecases.events_usercases.GetEventUseCase
+import com.example.apptareas.domain.usecases.events_usercases.UpdateEventUseCase
 import com.example.apptareas.ui.common.UiEvent
 import com.example.apptareas.utilities.Constantes
 import dagger.hilt.android.lifecycle.HiltViewModel

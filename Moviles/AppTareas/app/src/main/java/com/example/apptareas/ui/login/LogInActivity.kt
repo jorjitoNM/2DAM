@@ -47,7 +47,7 @@ class LogInActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { state ->
                     if (state.logged) {
-                        val intent = Intent(this, MainActivity::class.java)
+                        val intent = Intent(this@LogInActivity, MainActivity::class.java)
                         intent.putExtra(Constantes.USER_ID, state.user.id)
                         startActivity(intent)
                     }

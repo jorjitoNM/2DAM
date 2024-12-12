@@ -3,7 +3,7 @@ package com.example.apptareas.ui.user_profile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.apptareas.data.remote.NetworkResult
-import com.example.apptareas.domain.usecases.GetUserUseCase
+import com.example.apptareas.domain.usecases.user_usercases.GetUserUseCase
 import com.example.apptareas.ui.common.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

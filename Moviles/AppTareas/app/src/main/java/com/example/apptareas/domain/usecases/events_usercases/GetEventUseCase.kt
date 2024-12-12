@@ -1,4 +1,4 @@
-package com.example.apptareas.domain.usecases
+package com.example.apptareas.domain.usecases.events_usercases
 
 import com.example.apptareas.data.remote.EventsRepository
 import javax.inject.Inject

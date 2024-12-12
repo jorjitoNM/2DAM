@@ -5,5 +5,7 @@ import com.example.apptareas.ui.common.UiEvent
 
 data class TodosListState (
     val todos : List<Todo> = emptyList(),
+    val filteredTodos : List<Todo> = emptyList(),
+    val filtered : Boolean = false,
     val appEvent : UiEvent? = null,
 )

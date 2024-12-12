@@ -1,4 +1,4 @@
-package com.example.apptareas.domain.usecases
+package com.example.apptareas.domain.usecases.todo_usercases
 
 import com.example.apptareas.data.remote.NetworkResult
 import com.example.apptareas.data.remote.TodosRepository

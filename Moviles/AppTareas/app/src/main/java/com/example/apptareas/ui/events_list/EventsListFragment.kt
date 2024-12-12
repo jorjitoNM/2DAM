@@ -26,7 +26,6 @@ import com.example.apptareas.utilities.Constantes
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @AndroidEntryPoint
 class EventsListFragment : Fragment(), MenuProvider {
@@ -62,8 +61,10 @@ class EventsListFragment : Fragment(), MenuProvider {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { state ->
-                    adapter.submitList(state.events)
-
+                    if (state.filtered)
+                        adapter.submitList(state.filteredEvents)
+                    else
+                        adapter.submitList(state.events)
                     state.appEvent?.let { appEvent ->
                         if (appEvent is UiEvent.PopBackStack) {
                             findNavController().navigateUp()
@@ -119,7 +120,6 @@ class EventsListFragment : Fragment(), MenuProvider {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 p0?.let {
                     viewModel.handleEvent(EventListEvents.FilterEvents(p0))
-                    Timber.tag("::TAG::").d("submit %s", p0)
                 }
                 return false
             }
@@ -127,7 +127,6 @@ class EventsListFragment : Fragment(), MenuProvider {
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText?.let {
                     viewModel.handleEvent(EventListEvents.FilterEvents(newText))
-                    Timber.tag("::TAG::").d("Search %s", newText)
                 }
                 return false
             }
@@ -135,14 +134,7 @@ class EventsListFragment : Fragment(), MenuProvider {
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        return when (menuItem.itemId)
-        {
-            R.id.search-> {
-                Timber.tag("::TAG::").d("clickado en search")
-                true
-            }
-            else -> false
-        }
+        return true
     }
 
     private fun configAppBar() {

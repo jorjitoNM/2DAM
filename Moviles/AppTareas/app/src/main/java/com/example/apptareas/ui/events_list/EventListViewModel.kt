@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.apptareas.data.remote.NetworkResult
 import com.example.apptareas.domain.model.Event
-import com.example.apptareas.domain.usecases.DeleteEventUseCase
-import com.example.apptareas.domain.usecases.FilterEventsUseCase
-import com.example.apptareas.domain.usecases.GetEventsUseCase
+import com.example.apptareas.domain.usecases.events_usercases.DeleteEventUseCase
+import com.example.apptareas.domain.usecases.events_usercases.FilterEventsUseCase
+import com.example.apptareas.domain.usecases.events_usercases.GetEventsUseCase
 import com.example.apptareas.ui.common.UiEvent
 import com.example.apptareas.utilities.Constantes
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EventListViewModel @Inject constructor(
     private val getEventsUseCaseUserCase: GetEventsUseCase,
-    private val deleteEventUseCase : DeleteEventUseCase,
+    private val deleteEventUseCase: DeleteEventUseCase,
     private val filterEventsUseCase: FilterEventsUseCase,
 ) : ViewModel() {
 
@@ -28,7 +28,7 @@ class EventListViewModel @Inject constructor(
 
     fun handleEvent(event: EventListEvents) {
         when (event) {
-            is EventListEvents.GetEvents ->  getEvents()
+            is EventListEvents.GetEvents -> getEvents()
             is EventListEvents.DeleteEvent -> deleteEvent(event.event)
             is EventListEvents.EventDone -> _uiState.update { it.copy(appEvent = null) }
             is EventListEvents.FilterEvents -> filterEvents(event.eventName)
@@ -36,13 +36,8 @@ class EventListViewModel @Inject constructor(
     }
 
     private fun filterEvents(eventName: String) {
-        viewModelScope.launch {
-            when (val events = filterEventsUseCase(eventName)) {
-                is NetworkResult.Success -> _uiState.update { it.copy(events = events.data) }
-                is NetworkResult.Error -> _uiState.update { it.copy(appEvent = UiEvent.ShowSnackbar(events.message))}
-                is NetworkResult.Loading -> _uiState.update { it.copy(appEvent = UiEvent.ShowSnackbar(Constantes.LOADING)) }
-            }
-        }
+        val events = filterEventsUseCase(eventName, _uiState.value.events)
+        _uiState.update { it.copy(filteredEvents = events, filtered = true) }
     }
 
     private fun deleteEvent(event: Event) {
@@ -57,12 +52,14 @@ class EventListViewModel @Inject constructor(
     private fun getEvents() {
         viewModelScope.launch {
             when (val userEvents = getEventsUseCaseUserCase.invoke()) {
-                is NetworkResult.Success -> _uiState.update{ it.copy(events = userEvents.data) }
+                is NetworkResult.Success -> _uiState.update { it.copy(events = userEvents.data, filtered = false) }
 
-                is NetworkResult.Error -> _uiState.update{ it.copy(
-                    appEvent =
-                    UiEvent.ShowSnackbar(userEvents.message)
-                ) }
+                is NetworkResult.Error -> _uiState.update {
+                    it.copy(filtered = false,
+                        appEvent =
+                        UiEvent.ShowSnackbar(userEvents.message)
+                    )
+                }
 
                 is NetworkResult.Loading -> TODO()
             }

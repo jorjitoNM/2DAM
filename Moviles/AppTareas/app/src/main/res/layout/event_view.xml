@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/event_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/md_theme_background">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -12,6 +13,9 @@
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
+        app:cardBackgroundColor="@color/cardview_dark_background"
+        app:cardCornerRadius="@dimen/_16dp"
+        app:cardElevation="@dimen/_4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,8 +27,9 @@
 
             <ImageView
                 android:id="@+id/event_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="@dimen/_8dp"
                 android:contentDescription="@string/image"
                 android:scaleType="centerCrop" />
 
@@ -32,32 +37,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/_16dp"
-                >
+                android:padding="@dimen/_16dp">
 
                 <TextView
                     android:id="@+id/event_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/event_title"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:textColor="@color/md_theme_primary" />
 
                 <TextView
                     android:id="@+id/event_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16dp"
+                    android:layout_marginTop="@dimen/_8dp"
                     android:text="@string/event_id"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
                     android:textColor="?android:attr/textColorSecondary" />
 
                 <TextView
                     android:id="@+id/event_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16dp"
+                    android:layout_marginTop="@dimen/_8dp"
                     android:text="@string/event_description"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
                     android:textColor="?android:attr/textColorSecondary" />
 
             </LinearLayout>
@@ -66,17 +71,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_16dp"
-                android:orientation="horizontal"
-                >
+                android:gravity="end"
+                android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/update"
                     style="?attr/selectableItemBackgroundBorderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_16dp"
+                    android:layout_marginEnd="@dimen/_8dp"
                     android:text="@string/update"
-                    android:id="@+id/update"
-                    />
+                    android:textColor="@color/md_theme_primary"
+                    app:backgroundTint="@color/md_theme_onPrimary" />
+
             </LinearLayout>
 
         </LinearLayout>
