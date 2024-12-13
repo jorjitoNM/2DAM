@@ -1,4 +1,4 @@
-package com.hospital_jpa.dao.respositories.jpa;
+package com.hospital_jpa.dao.respositories;
 
 import com.hospital_jpa.common.Constantes;
 import jakarta.persistence.EntityManager;

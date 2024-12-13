@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fb99451a-27eb-4750-b65f-fbdea712761a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/HospitalJpaApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/common/Constantes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/configuration/FilesConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/configuration/XMLConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/mappers/files_mappers/DoctorRowMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/mappers/files_mappers/LocalDateAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/mappers/files_mappers/PatientRowMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/mappers/jdbc_mappers/MapDoctors.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/mappers/jdbc_mappers/MapMedicalRecords.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/mappers/jdbc_mappers/MapMedications.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/mappers/jdbc_mappers/MapPatients.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/mappers/jdbc_mappers/MapPayments.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/mappers/spring_mappers/MapSpringCredential.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/mappers/spring_mappers/MapSpringMedicalRecords.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/mappers/spring_mappers/MapSpringMedications.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/mappers/spring_mappers/MapSpringPatients.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/mappers/spring_mappers/MapSpringPayments.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/model/Credential.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/model/Doctor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/model/MedicalRecord.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/model/Medication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/model/Patient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/model/Payment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/AppointmentsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/CredentialRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/DoctorsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/MedicalRecordsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/MedicationsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/PatientRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/PaymentsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/files/txt/TxtDoctorRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/files/txt/TxtPatientRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/files/xml/XmlMedicalRecordRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/jdbc/JDBCCredentialRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/jdbc/JDBCDoctorsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/jdbc/JDBCMedicalRecordsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/jdbc/JDBCMedicationsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/jdbc/JDBCPatientsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/jdbc/JDBCPaymentsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/spring/SpringAppointmentsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/spring/SpringCredentialsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/spring/SpringDoctorsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/spring/SpringMedicalRecordsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/spring/SpringMedicationsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/spring/SpringPatientsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/spring/SpringPaymentsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/statiC/StaticCredentialRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/statiC/StaticDoctorRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/statiC/StaticMedicalRecordsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/statiC/StaticMedicationsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/respositories/statiC/StaticPatientRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/utilities/DBConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/utilities/DBConnectionPool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/utilities/SQLQueries.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/dao/utilities/SQLQueriesSpring.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/domain/error/DUPLICATED_USERNAME.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/domain/error/DataBaseError.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/domain/error/FOREIGN_KEY_ERROR.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/domain/model/CredentialUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/domain/model/DoctorUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/domain/model/MedicalRecordUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/domain/model/PatientUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/domain/service/CredentialService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/domain/service/DoctorService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/domain/service/MedicalRecordService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/domain/service/MedicationsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/domain/service/PatientService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/ui/RestCredential.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/ui/RestDoctor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/ui/RestMedicalRecord.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/ui/RestMedication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/ui/RestPatient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/java/org/example/hospitaljpa/ui/error/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../AD/HospitalJPA/src/test/java/org/example/hospitaljpa/HospitalJpaApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Temporal/.idea/.gitignore" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;jorjitoNM&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/jorjitoNM/2DAM.git&quot;,
+    &quot;accountId&quot;: &quot;8a378f4a-2147-47a7-8eb1-64e66706b89c&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2q6ubu2SpEG0sQLyK797v5Njlpv" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;PSP&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/cnovi/OneDrive/Escritorio/Jorge/GitHub2DAM/PSP/PrimerServidor&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.19072.14" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.19072.14" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fb99451a-27eb-4750-b65f-fbdea712761a" name="Changes" comment="" />
+      <created>1733995420931</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1733995420931</updated>
+      <workItem from="1733995422345" duration="247000" />
+      <workItem from="1733995694184" duration="59000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
