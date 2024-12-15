@@ -23,7 +23,8 @@ class EventListViewModel @Inject constructor(
     private val filterEventsUseCase: FilterEventsUseCase,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(EventListState())
+    private val _uiState : MutableStateFlow<EventListState> by lazy {
+        MutableStateFlow(EventListState()) }
     val uiState = _uiState.asStateFlow()
 
     fun handleEvent(event: EventListEvents) {

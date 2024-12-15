@@ -16,7 +16,8 @@ import javax.inject.Inject
 class ProfileFragmentViewModel @Inject constructor (
     private val getUserUseCase : GetUserUseCase
 ) :ViewModel() {
-    private val _uiState = MutableStateFlow(ProfileFragmentState())
+    private val _uiState : MutableStateFlow<ProfileFragmentState> by lazy {
+        MutableStateFlow(ProfileFragmentState()) }
     val uiState = _uiState.asStateFlow()
 
     fun handleEvent (event : ProfileFragmentEvents) {

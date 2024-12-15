@@ -29,6 +29,10 @@ class EventViewHolder(itemView: View, val actions: EventAdapter.EventActions) : 
             update.setOnClickListener {
                 actions.updateEvent(event)
             }
+
+            delete.setOnClickListener {
+                actions.deleteEvent(event)
+            }
         }
     }
 }
