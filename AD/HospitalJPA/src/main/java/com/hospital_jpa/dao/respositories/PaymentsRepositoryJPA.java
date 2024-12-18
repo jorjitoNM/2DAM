@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class PaymentsRepository implements com.hospital_jpa.dao.interfaces.PaymentsRepository {
+public class PaymentsRepositoryJPA implements com.hospital_jpa.dao.interfaces.PaymentsRepository {
     @Override
     public List<Payment> getAll() {
         return List.of();

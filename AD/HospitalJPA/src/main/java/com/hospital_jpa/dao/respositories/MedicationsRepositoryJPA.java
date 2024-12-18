@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class MedicationsRepository implements com.hospital_jpa.dao.interfaces.MedicationsRepository {
+public class MedicationsRepositoryJPA implements com.hospital_jpa.dao.interfaces.MedicationsRepository {
     @Override
     public List<Medication> getPrescribedMedications(int medicalRecordId) {
         return List.of();

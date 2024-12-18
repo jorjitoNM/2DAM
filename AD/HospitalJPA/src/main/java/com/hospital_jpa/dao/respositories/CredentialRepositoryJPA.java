@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class CredentialRepository implements com.hospital_jpa.dao.interfaces.CredentialRepository {
+public class CredentialRepositoryJPA implements com.hospital_jpa.dao.interfaces.CredentialRepository {
     @Override
     public List<Credential> getAll() {
         return List.of();

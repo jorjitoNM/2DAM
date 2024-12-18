@@ -1,0 +1,83 @@
+package com.hospital_jpa.dao.respositories;
+
+import com.hospital_jpa.dao.model.Patient;
+import com.hospital_jpa.dao.utilities.JPAQueries;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.PersistenceException;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Repository
+@Log4j2
+public class PatientRepositoryJPA implements com.hospital_jpa.dao.interfaces.PatientRepository {
+    private final JPAUtil jpaUtil;
+
+    public PatientRepositoryJPA(JPAUtil jpaUtil) {
+        this.jpaUtil = jpaUtil;
+    }
+
+    @Override
+    public List<Patient> getAll() {
+        List<Patient> patients = new ArrayList<>();
+
+        try (EntityManager em = jpaUtil.getEntityManager()) {
+            patients = em.createNamedQuery(JPAQueries.GET_ALL_PATIENTS, Patient.class).getResultList();
+        } catch (PersistenceException e) {
+            log.error(e.getMessage(), e);
+        }
+        return patients;
+    }
+
+    @Override
+    public int save(Patient patient) {
+        EntityTransaction tx = null;
+        try (EntityManager em = jpaUtil.getEntityManager()) {
+            tx = em.getTransaction();
+            tx.begin();
+            em.persist(patient);
+            tx.commit();
+        } catch (Exception e) {
+            assert tx != null;
+            if (tx.isActive()) tx.rollback();
+            log.error(e.getMessage(), e);
+        }
+        return patient.getId();
+    }
+
+    @Override
+    public void update(Patient patient) {
+        EntityTransaction tx = null;
+        try (EntityManager em = jpaUtil.getEntityManager()) {
+            tx = em.getTransaction();
+            tx.begin();
+            em.merge(patient);
+            tx.commit();
+        } catch (Exception e) {
+            assert tx != null;
+            if (tx.isActive()) tx.rollback();
+            log.error(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public boolean delete(int patientId, boolean confirmation) {
+        EntityTransaction tx = null;
+        try (EntityManager em = jpaUtil.getEntityManager()) {
+            tx = em.getTransaction();
+            tx.begin();
+            em.remove(em.merge(patientId));
+            tx.commit();
+            return true;
+        }
+        catch (Exception e) {
+            assert tx != null;
+            if (tx.isActive()) tx.rollback();
+            log.error(e.getMessage(), e);
+            return false;
+        }
+    }
+}

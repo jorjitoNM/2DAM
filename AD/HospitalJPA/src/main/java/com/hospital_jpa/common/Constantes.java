@@ -7,6 +7,5 @@ public class Constantes {
     public static final String ERROR_GENERATING_KEY = "Key was not generated";
     public static final String PERSISTANCE_UNIT = "hibernate";
 
-    private Constantes() {
-    }
+    private Constantes() {}
 }

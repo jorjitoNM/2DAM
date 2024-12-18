@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table(name = "patients")
+@NamedQuery(name = "getAllPatients", query = "from Patient")
 public class Patient {
     @Id
     @GeneratedValue
@@ -17,10 +18,9 @@ public class Patient {
     private int id;
     @Column(name = "name")
     private String name;
-    @Temporal(TemporalType.DATE)
     @Column(name = "date_of_birth")
     private LocalDate birthDate;
-    @Column(name = "")
+    @Column(name = "phone")
     private String phone;
     @Transient
     private Credential credential;
