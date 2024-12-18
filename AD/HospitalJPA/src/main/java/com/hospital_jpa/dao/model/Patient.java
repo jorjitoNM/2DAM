@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @NamedQuery(name = JPAQueries.GET_ALL_PATIENTS, query = "from Patient")
 public class Patient {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "patient_id")
     private int id;
     @Column(name = "name")
