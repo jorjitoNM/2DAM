@@ -33,6 +33,7 @@ class EventListViewModel @Inject constructor(
             is EventListEvents.DeleteEvent -> deleteEvent(event.event)
             is EventListEvents.EventDone -> _uiState.update { it.copy(appEvent = null) }
             is EventListEvents.FilterEvents -> filterEvents(event.eventName)
+            is EventListEvents.UndoDelete -> _uiState.update { it.copy(appEvent = UiEvent.ShowSnackbar(Constantes.MESSAGE_RECOVERED)) }
         }
     }
 

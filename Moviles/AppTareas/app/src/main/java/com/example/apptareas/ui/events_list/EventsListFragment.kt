@@ -30,11 +30,11 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class EventsListFragment : Fragment(), MenuProvider {
 
-    private val viewModel: EventListViewModel by viewModels ()
+    private val viewModel: EventListViewModel by viewModels()
     private var _binding: EventListFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: EventAdapter
-    private var userId :Int = 1
+    private var userId: Int = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,7 +69,16 @@ class EventsListFragment : Fragment(), MenuProvider {
                         if (appEvent is UiEvent.PopBackStack) {
                             findNavController().navigateUp()
                         } else if (appEvent is UiEvent.ShowSnackbar) {
-                            Snackbar.make(binding.root, appEvent.message, Snackbar.LENGTH_SHORT).show()
+                            val message =
+                                Snackbar.make(binding.root, appEvent.message, Snackbar.LENGTH_SHORT)
+                            if (appEvent.message.equals(Constantes.EVENT_DELETED))
+                                message.setAction(Constantes.UNDO) {
+                                    viewModel.handleEvent(EventListEvents.UndoDelete)
+                                }
+                                    .show()
+                            else
+                                message.show()
+
                         }
                         viewModel.handleEvent(EventListEvents.EventDone)
                     }
@@ -81,18 +90,20 @@ class EventsListFragment : Fragment(), MenuProvider {
     private fun configureRecyclerView() {
         adapter = EventAdapter(
             actions = object : EventAdapter.EventActions {
-                override fun onItemClick(event : Event) {
+                override fun onItemClick(event: Event) {
                     navigateToDetail((event.id))
                 }
+
                 override fun updateEvent(event: Event) {
                     navigateToDetail(event.id)
                 }
+
                 override fun deleteEvent(event: Event) {
                     viewModel.handleEvent(EventListEvents.DeleteEvent(event))
                 }
-            },requireContext()
+            }, requireContext()
         )
-        with (binding) {
+        with(binding) {
             add.setOnClickListener {
                 navigateToDetail(0)
             }
@@ -109,7 +120,12 @@ class EventsListFragment : Fragment(), MenuProvider {
     }
 
     private fun navigateToDetail(id: Int) {
-        findNavController().navigate(EventsListFragmentDirections.actionEventsListFragmentToEventDetailsFragment(id,userId));
+        findNavController().navigate(
+            EventsListFragmentDirections.actionEventsListFragmentToEventDetailsFragment(
+                id,
+                userId
+            )
+        );
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
