@@ -1,15 +1,30 @@
 package com.hospital_jpa.dao.model;
 
+import com.hospital_jpa.dao.utilities.JPAQueries;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "user_login")
+@NamedQuery(name = JPAQueries.GET_CREDENTIAL, query = "from Credential where userName = :username")
 public class Credential {
+    @Id
+    @GeneratedValue
+    @Column(name = "user_id")
+    private int userId;
+    @Column(name = "username")
     private String userName;
+    @Column(name = "password")
     private String password;
-    private int patientId;
-    private int doctorId;
+    @Column(name = "patient_id")
+    private Integer patientId;
+    @Column(name = "doctor_id")
+    private Integer doctorId;
 
     public Credential(String userName, String password) {
         this.userName = userName;

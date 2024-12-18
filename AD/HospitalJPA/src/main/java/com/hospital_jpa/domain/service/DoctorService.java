@@ -16,7 +16,7 @@ public class DoctorService {
     }
     public List<DoctorUI> getAll() {
         List<DoctorUI> doctors = new ArrayList<>();
-        doctorsRepository.getAll().forEach(d -> doctors.add(new DoctorUI(d.getDoctor_id(),d.getName())));
+        doctorsRepository.getAll().forEach(d -> doctors.add(new DoctorUI(d.getDoctorId(),d.getName())));
         return doctors;
     }
 }
