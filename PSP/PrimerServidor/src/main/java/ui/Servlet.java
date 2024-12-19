@@ -27,7 +27,6 @@ public class Servlet extends HttpServlet {
 
         if (intento == null) {
             intento = 1;
-            random
         }
 
     }
