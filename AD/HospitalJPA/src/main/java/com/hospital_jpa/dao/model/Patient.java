@@ -1,6 +1,5 @@
 package com.hospital_jpa.dao.model;
 
-import com.hospital_jpa.dao.utilities.JPAQueries;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table(name = "patients")
-@NamedQuery(name = JPAQueries.GET_ALL_PATIENTS, query = "from Patient")
+@NamedQuery(name = "getAllPatients", query = "from Patient")
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,5 +38,9 @@ public class Patient {
         this.birthDate = birthDate;
         this.phone = phone;
         this.credential = credential;
+    }
+
+    public Patient(int id) {
+        this.id = id;
     }
 }

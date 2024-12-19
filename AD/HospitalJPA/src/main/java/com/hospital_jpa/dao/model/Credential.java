@@ -1,6 +1,5 @@
 package com.hospital_jpa.dao.model;
 
-import com.hospital_jpa.dao.utilities.JPAQueries;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "user_login")
-@NamedQuery(name = JPAQueries.GET_CREDENTIAL, query = "from Credential where userName = :username")
+@NamedQuery(name = "GET_CREDENTIAL", query = "from Credential where userName = :username")
 public class Credential {
     @Id
     @GeneratedValue

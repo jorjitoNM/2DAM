@@ -2,8 +2,6 @@ package com.hospital_jpa.dao.respositories;
 
 import com.hospital_jpa.dao.interfaces.DoctorsRepository;
 import com.hospital_jpa.dao.model.Doctor;
-import com.hospital_jpa.dao.model.Patient;
-import com.hospital_jpa.dao.utilities.JPAQueries;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import lombok.extern.log4j.Log4j2;
@@ -27,7 +25,7 @@ public class DoctorRepositoryJPA implements DoctorsRepository {
         List<Doctor> doctors = new ArrayList<>();
 
         try (EntityManager em = jpaUtil.getEntityManager()) {
-            doctors = em.createNamedQuery(JPAQueries.GET_ALL_DOCTORS, Doctor.class).getResultList();
+            doctors = em.createNamedQuery("GET_ALL_DOCTORS", Doctor.class).getResultList();
         } catch (PersistenceException e) {
             log.error(e.getMessage(), e);
         }

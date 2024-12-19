@@ -1,10 +1,10 @@
 package com.hospital_jpa.domain.service;
 
 
-import com.hospital_jpa.dao.model.MedicalRecord;
-import com.hospital_jpa.dao.model.Medication;
 import com.hospital_jpa.dao.interfaces.MedicalRecordsRepository;
 import com.hospital_jpa.dao.interfaces.MedicationsRepository;
+import com.hospital_jpa.dao.model.MedicalRecord;
+import com.hospital_jpa.dao.model.Medication;
 import com.hospital_jpa.domain.model.MedicalRecordUI;
 import org.springframework.stereotype.Service;
 

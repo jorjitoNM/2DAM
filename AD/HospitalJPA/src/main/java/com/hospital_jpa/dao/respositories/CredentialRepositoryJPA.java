@@ -2,7 +2,6 @@ package com.hospital_jpa.dao.respositories;
 
 import com.hospital_jpa.dao.model.Credential;
 import com.hospital_jpa.dao.model.Patient;
-import com.hospital_jpa.dao.utilities.JPAQueries;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import lombok.extern.log4j.Log4j2;
@@ -44,7 +43,7 @@ public class CredentialRepositoryJPA implements com.hospital_jpa.dao.interfaces.
     public Credential get(String username) {
         Credential c = null;
         try (EntityManager em = jpaUtil.getEntityManager()) {
-            c = em.createNamedQuery(JPAQueries.GET_CREDENTIAL,Credential.class)
+            c = em.createNamedQuery("GET_CREDENTIAL",Credential.class)
                     .setParameter("username", username)
                     .getSingleResult();
         } catch (PersistenceException e) {

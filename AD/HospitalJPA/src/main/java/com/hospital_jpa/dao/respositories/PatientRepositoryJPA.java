@@ -1,7 +1,7 @@
 package com.hospital_jpa.dao.respositories;
 
 import com.hospital_jpa.dao.model.Patient;
-import com.hospital_jpa.dao.utilities.JPAQueries;
+import com.hospital_jpa.domain.error.FOREIGN_KEY_ERROR;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
@@ -25,7 +25,7 @@ public class PatientRepositoryJPA implements com.hospital_jpa.dao.interfaces.Pat
         List<Patient> patients = new ArrayList<>();
 
         try (EntityManager em = jpaUtil.getEntityManager()) {
-            patients = em.createNamedQuery(JPAQueries.GET_ALL_PATIENTS, Patient.class).getResultList();
+            patients = em.createNamedQuery("getAllPatients", Patient.class).getResultList();
         } catch (PersistenceException e) {
             log.error(e.getMessage(), e);
         }
@@ -64,20 +64,19 @@ public class PatientRepositoryJPA implements com.hospital_jpa.dao.interfaces.Pat
     }
 
     @Override
-    public boolean delete(int patientId, boolean confirmation) {
+    public void delete(int patientId, boolean confirmation) {
         EntityTransaction tx = null;
         try (EntityManager em = jpaUtil.getEntityManager()) {
             tx = em.getTransaction();
             tx.begin();
-            em.remove(em.merge(patientId));
+            em.remove(em.merge(new Patient(patientId)));
             tx.commit();
-            return true;
         }
         catch (Exception e) {
             assert tx != null;
             if (tx.isActive()) tx.rollback();
             log.error(e.getMessage(), e);
-            return false;
+            throw new FOREIGN_KEY_ERROR();
         }
     }
 }

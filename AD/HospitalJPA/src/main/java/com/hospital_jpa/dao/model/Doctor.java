@@ -1,6 +1,5 @@
 package com.hospital_jpa.dao.model;
 
-import com.hospital_jpa.dao.utilities.JPAQueries;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Table(name = "doctors")
-@NamedQuery(name = JPAQueries.GET_ALL_DOCTORS, query = "from Doctor")
+@NamedQuery(name = "GET_ALL_DOCTORS", query = "from Doctor")
 public class Doctor {
     @Id
     @GeneratedValue

@@ -1,11 +1,11 @@
 package com.hospital_jpa.domain.service;
 
 
+import com.hospital_jpa.dao.interfaces.PatientRepository;
+import com.hospital_jpa.dao.interfaces.PaymentsRepository;
 import com.hospital_jpa.dao.model.Credential;
 import com.hospital_jpa.dao.model.Patient;
 import com.hospital_jpa.dao.model.Payment;
-import com.hospital_jpa.dao.interfaces.PatientRepository;
-import com.hospital_jpa.dao.interfaces.PaymentsRepository;
 import com.hospital_jpa.domain.model.PatientUI;
 import org.springframework.stereotype.Service;
 
