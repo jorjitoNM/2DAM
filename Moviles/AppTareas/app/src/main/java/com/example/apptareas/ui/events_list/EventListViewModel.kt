@@ -3,6 +3,7 @@ package com.example.apptareas.ui.events_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.apptareas.data.remote.NetworkResult
+import com.example.apptareas.di.IoDispatcher
 import com.example.apptareas.domain.model.Event
 import com.example.apptareas.domain.usecases.events_usercases.DeleteEventUseCase
 import com.example.apptareas.domain.usecases.events_usercases.FilterEventsUseCase
@@ -10,6 +11,7 @@ import com.example.apptareas.domain.usecases.events_usercases.GetEventsUseCase
 import com.example.apptareas.ui.common.UiEvent
 import com.example.apptareas.utilities.Constantes
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -21,6 +23,7 @@ class EventListViewModel @Inject constructor(
     private val getEventsUseCaseUserCase: GetEventsUseCase,
     private val deleteEventUseCase: DeleteEventUseCase,
     private val filterEventsUseCase: FilterEventsUseCase,
+    @IoDispatcher val dispatcher : CoroutineDispatcher,
 ) : ViewModel() {
 
     private val _uiState : MutableStateFlow<EventListState> by lazy {
@@ -43,7 +46,7 @@ class EventListViewModel @Inject constructor(
     }
 
     private fun deleteEvent(event: Event) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             if (deleteEventUseCase.invoke(event))
                 _uiState.update { it.copy(appEvent = UiEvent.ShowSnackbar(Constantes.EVENT_DELETED)) }
             else
@@ -52,7 +55,7 @@ class EventListViewModel @Inject constructor(
     }
 
     private fun getEvents() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             when (val userEvents = getEventsUseCaseUserCase.invoke()) {
                 is NetworkResult.Success -> _uiState.update { it.copy(events = userEvents.data, filtered = false) }
 

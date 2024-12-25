@@ -1,6 +1,7 @@
 package com.example.apptareas.utilities
 
 object Constantes {
+    const val DATA_BASE_ERROR: String = "An unexpected error occurred"
     const val MESSAGE_RECOVERED: String = "Message recovered"
     const val UNDO: String = "Undo delete"
     const val LOADING: String = "We are processing your operation"

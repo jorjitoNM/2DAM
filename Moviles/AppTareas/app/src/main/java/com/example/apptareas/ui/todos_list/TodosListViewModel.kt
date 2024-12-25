@@ -3,10 +3,12 @@ package com.example.apptareas.ui.todos_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.apptareas.data.remote.NetworkResult
+import com.example.apptareas.di.IoDispatcher
 import com.example.apptareas.domain.usecases.todo_usercases.FilterTodosUseCase
 import com.example.apptareas.domain.usecases.todo_usercases.GetUserTodosUseCase
 import com.example.apptareas.ui.common.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -17,6 +19,7 @@ import javax.inject.Inject
 class TodosListViewModel @Inject constructor (
     private val getUserTodos : GetUserTodosUseCase,
     private val filterTodosUseCase: FilterTodosUseCase,
+    @IoDispatcher val dispatcher : CoroutineDispatcher,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TodosListState())
@@ -36,7 +39,7 @@ class TodosListViewModel @Inject constructor (
     }
 
     private fun getTodos() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             when (val todos = getUserTodos.invoke()) {
                 is NetworkResult.Success -> _uiState.update{ it.copy(todos = todos.data, filtered = false) }
                 is NetworkResult.Error -> _uiState.update { it.copy(filtered = false, appEvent = UiEvent.ShowSnackbar(todos.message)) }
