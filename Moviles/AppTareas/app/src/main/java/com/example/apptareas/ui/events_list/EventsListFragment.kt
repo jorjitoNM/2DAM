@@ -17,12 +17,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.apptareas.R
-import com.example.apptareas.databinding.EventListFragmentBinding
+
 import com.example.apptareas.domain.model.Event
 import com.example.apptareas.ui.common.MarginItemDecoration
 import com.example.apptareas.ui.common.UiEvent
 import com.example.apptareas.utilities.Constantes
+import com.example.primerxmlmvvm.R
+import com.example.primerxmlmvvm.databinding.EventListFragmentBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

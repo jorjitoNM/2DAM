@@ -2,7 +2,7 @@ package com.example.apptareas.ui.events_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.apptareas.data.remote.NetworkResult
+import com.example.apptareas.data.NetworkResult
 import com.example.apptareas.di.IoDispatcher
 import com.example.apptareas.domain.model.Event
 import com.example.apptareas.domain.usecases.events_usercases.DeleteEventUseCase
@@ -56,17 +56,18 @@ class EventListViewModel @Inject constructor(
 
     private fun getEvents() {
         viewModelScope.launch(dispatcher) {
-            when (val userEvents = getEventsUseCaseUserCase.invoke()) {
-                is NetworkResult.Success -> _uiState.update { it.copy(events = userEvents.data, filtered = false) }
+            getEventsUseCaseUserCase.invoke().collect { result ->
+                when (result) {
+                    is NetworkResult.Success -> _uiState.update { it.copy(events = result.data, filtered = false) }
 
-                is NetworkResult.Error -> _uiState.update {
-                    it.copy(filtered = false,
-                        appEvent =
-                        UiEvent.ShowSnackbar(userEvents.message)
-                    )
+                    is NetworkResult.Error -> _uiState.update {
+                        it.copy(filtered = false,
+                            appEvent =
+                            UiEvent.ShowSnackbar(result.message)
+                        )
+                    }
+                    is NetworkResult.Loading -> TODO()
                 }
-
-                is NetworkResult.Loading -> TODO()
             }
         }
     }

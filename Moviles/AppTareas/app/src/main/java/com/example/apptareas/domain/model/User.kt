@@ -1,6 +1,6 @@
 package com.example.apptareas.domain.model
 
-import com.example.apptareas.data.remote.NetworkResult
+import com.example.apptareas.data.NetworkResult
 import com.example.apptareas.utilities.Constantes
 
 data class User(

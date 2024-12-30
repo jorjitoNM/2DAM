@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.example.apptareas.R
+
 import com.example.apptareas.domain.model.Event
+import com.example.primerxmlmvvm.R
 
 class EventAdapter(
     val actions: EventActions,

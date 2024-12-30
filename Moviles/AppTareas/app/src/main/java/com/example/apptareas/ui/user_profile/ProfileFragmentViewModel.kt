@@ -2,7 +2,7 @@ package com.example.apptareas.ui.user_profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.apptareas.data.remote.NetworkResult
+import com.example.apptareas.data.NetworkResult
 import com.example.apptareas.di.IoDispatcher
 import com.example.apptareas.domain.usecases.user_usercases.GetUserUseCase
 import com.example.apptareas.ui.common.UiEvent
@@ -31,10 +31,18 @@ class ProfileFragmentViewModel @Inject constructor (
 
     private fun getUser(userId: Int) {
         viewModelScope.launch(dispatcher) {
-            when (val user = getUserUseCase.invoke(userId)) {
-                is NetworkResult.Success -> _uiState.update { it.copy(user = user.data) }
-                is NetworkResult.Error -> _uiState.update{ it.copy(appEvent = UiEvent.ShowSnackbar(user.message)) }
-                is NetworkResult.Loading ->  TODO()
+            getUserUseCase.invoke(userId).collect { result ->
+                when (result) {
+                    is NetworkResult.Success -> _uiState.update { it.copy(user = result.data) }
+                    is NetworkResult.Error -> _uiState.update {
+                        it.copy(
+                            appEvent = UiEvent.ShowSnackbar(
+                                result.message
+                            )
+                        )
+                    }
+                    is NetworkResult.Loading -> TODO()
+                }
             }
         }
     }

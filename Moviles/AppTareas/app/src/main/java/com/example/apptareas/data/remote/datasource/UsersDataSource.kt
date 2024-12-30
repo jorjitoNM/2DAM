@@ -1,6 +1,6 @@
 package com.example.apptareas.data.remote.datasource
 
-import com.example.apptareas.data.remote.NetworkResult
+import com.example.apptareas.data.NetworkResult
 import com.example.apptareas.data.remote.api_service.UserService
 import com.example.apptareas.data.remote.model.user.toUser
 import com.example.apptareas.domain.model.User

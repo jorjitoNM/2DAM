@@ -4,8 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.example.apptareas.R
+
 import com.example.apptareas.domain.model.Todo
+import com.example.primerxmlmvvm.R
 
 class TodoAdapter() : ListAdapter<Todo, TodoViewHolder>(DiffCallback()) {
 

@@ -1,4 +1,4 @@
-package com.example.apptareas.data.remote
+package com.example.apptareas.data
 
 import com.example.apptareas.data.remote.datasource.TodosDataSource
 import com.example.apptareas.di.IoDispatcher

@@ -1,4 +1,4 @@
-package com.example.apptareas.data.remote
+package com.example.apptareas.data
 
 
 sealed class NetworkResult<T> {

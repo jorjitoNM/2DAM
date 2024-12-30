@@ -3,9 +3,12 @@ package com.example.apptareas.ui.events_list
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.apptareas.R
-import com.example.apptareas.databinding.EventViewBinding
+
+
+
 import com.example.apptareas.domain.model.Event
+import com.example.primerxmlmvvm.R
+import com.example.primerxmlmvvm.databinding.EventViewBinding
 
 class EventViewHolder(itemView: View, val actions: EventAdapter.EventActions) : RecyclerView.ViewHolder(itemView) {
 

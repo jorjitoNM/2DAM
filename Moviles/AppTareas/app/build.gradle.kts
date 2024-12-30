@@ -1,25 +1,39 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.util.Properties
+
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.kapt)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.room)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.navigation.safeargs.kotlin)
 }
 
+
 android {
-    namespace = "com.example.apptareas"
+    namespace = "com.example.primerxmlmvvm"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.apptareas"
-        minSdk = 24
+        applicationId = "com.example.primerxmlmvvm"
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
+        //load the values from .properties file
+//        val keystoreFile = project.rootProject.file("apikey.properties")
+//        val properties = Properties()
+//        properties.load(keystoreFile.inputStream())
+//
+//        //return empty key in case something goes wrong
+//        val apiKey = properties.getProperty("API_KEY") ?: ""
+//        buildConfigField("String", "API_KEY", "\"$apiKey\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "API_URL", "\"https://jsonplaceholder.typicode.com/\"")
     }
+
 
     buildTypes {
         release {
@@ -30,10 +44,7 @@ android {
             )
         }
     }
-    buildFeatures{
-        viewBinding=true
-        buildConfig=true
-    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -41,49 +52,63 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+
+    }
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
 }
 
 dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.material)
+    // para el decortator al hacer swipe
+    implementation(libs.recyclerview.swipedecorator)
 
-    // Lifecycle libraries
-    // by ViewModels delegation extensions for activity
-    implementation(libs.androidx.activity.ktx)
+
+    // Fragments
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
+    implementation(libs.bundles.viewmodel)
+
+
+
+    implementation(libs.timber)
+
+    //retrofit
+
+    //Retrofit
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation (libs.converter.scalars)
+    implementation (libs.logging.interceptor)
+
+    implementation(libs.coil)
 
 
     // Hilt
     implementation(libs.hilt.core)
-    ksp(libs.hilt.compiler)
+    kapt(libs.hilt.compiler)
 
+    //Room
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    // To use Kotlin Symbol Processing (KSP)
+    ksp(libs.androidx.room.compiler)
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation(libs.androidx.room.ktx)
 
-    //Logs
-    implementation(libs.timber)
-
-
-    //librerias del viewmodel
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-
-
-    //Fragments
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
-
-    //Swipe
-    implementation(libs.recyclerview.swipedecorator)
-
-    //retrofit
-    implementation(libs.bundles.retrofit)
-
-    //coil
-    implementation(libs.coil)
+    // testing
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }

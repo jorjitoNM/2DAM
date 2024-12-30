@@ -1,4 +1,4 @@
-package com.example.apptareas.data.remote
+package com.example.apptareas.data
 
 import com.example.apptareas.data.remote.datasource.EventsDataSource
 import com.example.apptareas.data.remote.model.events.EventRemote

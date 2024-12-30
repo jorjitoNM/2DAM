@@ -9,9 +9,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.apptareas.R
-import com.example.apptareas.databinding.ActivityMainBinding
+
 import com.example.apptareas.utilities.Constantes
+import com.example.primerxmlmvvm.R
+import com.example.primerxmlmvvm.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

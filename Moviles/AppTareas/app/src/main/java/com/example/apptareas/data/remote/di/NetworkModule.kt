@@ -1,9 +1,10 @@
 package com.example.apptareas.data.remote.di
 
-import com.example.apptareas.BuildConfig
+
 import com.example.apptareas.data.remote.api_service.EventsService
 import com.example.apptareas.data.remote.api_service.TodosService
 import com.example.apptareas.data.remote.api_service.UserService
+import com.example.primerxmlmvvm.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

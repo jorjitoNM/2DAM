@@ -2,7 +2,7 @@ package com.example.apptareas.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.apptareas.data.remote.NetworkResult
+import com.example.apptareas.data.NetworkResult
 import com.example.apptareas.domain.model.User
 import com.example.apptareas.domain.usecases.user_usercases.LogInUseCase
 import com.example.apptareas.ui.common.UiEvent
@@ -31,8 +31,8 @@ class LogInViewModel  @Inject constructor (
 
     private fun logIn(user: User) {
         viewModelScope.launch {
-            when (val userMatch = logInUseCase.invoke(user)) {
-                is NetworkResult.Success -> _uiState.update{ it.copy(user = userMatch.data.first(), logged = true) }
+            when (logInUseCase.invoke(user)) {
+                is NetworkResult.Success -> _uiState.update{ it.copy(logged = true) }
                 is NetworkResult.Error -> _uiState.update{ it.copy(event = UiEvent.ShowSnackbar(Constantes.LOGIN_ERROR)) }
                 is NetworkResult.Loading -> TODO()
             }

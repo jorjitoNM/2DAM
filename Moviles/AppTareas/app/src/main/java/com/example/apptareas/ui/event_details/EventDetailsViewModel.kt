@@ -2,7 +2,7 @@ package com.example.apptareas.ui.event_details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.apptareas.data.remote.NetworkResult
+import com.example.apptareas.data.NetworkResult
 import com.example.apptareas.di.IoDispatcher
 import com.example.apptareas.domain.model.Event
 import com.example.apptareas.domain.usecases.events_usercases.GetEventUseCase
@@ -36,20 +36,43 @@ class EventDetailsViewModel @Inject constructor(
 
     private fun updateEvent(event: Event) {
         viewModelScope.launch(dispatcher) {
-            when (updateEventUseCase.invoke(event)) {
-                is NetworkResult.Success -> _uiState.update{ it.copy(appEvent = UiEvent.ShowSnackbar(Constantes.EVENT_UPDATED)) }
-                is NetworkResult.Loading -> TODO()
-                is NetworkResult.Error -> _uiState.update{ it.copy(appEvent = UiEvent.ShowSnackbar(Constantes.ERROR_UPDATING_EVENT)) }
+            updateEventUseCase.invoke(event).collect { result ->
+                when (result) {
+                    is NetworkResult.Success -> _uiState.update {
+                        it.copy(
+                            appEvent = UiEvent.ShowSnackbar(
+                                Constantes.EVENT_UPDATED
+                            )
+                        )
+                    }
+
+                    is NetworkResult.Loading -> TODO()
+                    is NetworkResult.Error -> _uiState.update {
+                        it.copy(
+                            appEvent = UiEvent.ShowSnackbar(
+                                Constantes.ERROR_UPDATING_EVENT
+                            )
+                        )
+                    }
+                }
             }
         }
     }
 
     private fun getEvent(eventId: Int) {
         viewModelScope.launch(dispatcher) {
-            when (val result = getEventUseCase.invoke(eventId)) {
-                is NetworkResult.Success -> _uiState.update{ it.copy(event = result.data) }
-                is NetworkResult.Loading -> TODO()
-                is NetworkResult.Error -> _uiState.update{ it.copy(appEvent = UiEvent.ShowSnackbar(Constantes.ERROR__GETTING_EVENT)) }
+            getEventUseCase.invoke(eventId).collect { result ->
+                when (result) {
+                    is NetworkResult.Success -> _uiState.update { it.copy(event = result.data) }
+                    is NetworkResult.Loading -> TODO()
+                    is NetworkResult.Error -> _uiState.update {
+                        it.copy(
+                            appEvent = UiEvent.ShowSnackbar(
+                                Constantes.ERROR__GETTING_EVENT
+                            )
+                        )
+                    }
+                }
             }
         }
     }

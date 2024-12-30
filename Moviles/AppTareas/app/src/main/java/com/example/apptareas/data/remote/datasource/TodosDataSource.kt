@@ -1,6 +1,6 @@
 package com.example.apptareas.data.remote.datasource
 
-import com.example.apptareas.data.remote.NetworkResult
+import com.example.apptareas.data.NetworkResult
 import com.example.apptareas.data.remote.api_service.TodosService
 import com.example.apptareas.data.remote.model.todos.toTodo
 import com.example.apptareas.domain.model.Todo

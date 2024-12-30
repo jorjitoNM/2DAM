@@ -2,7 +2,7 @@ package com.example.apptareas.ui.todos_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.apptareas.data.remote.NetworkResult
+import com.example.apptareas.data.NetworkResult
 import com.example.apptareas.di.IoDispatcher
 import com.example.apptareas.domain.usecases.todo_usercases.FilterTodosUseCase
 import com.example.apptareas.domain.usecases.todo_usercases.GetUserTodosUseCase
@@ -40,10 +40,24 @@ class TodosListViewModel @Inject constructor (
 
     private fun getTodos() {
         viewModelScope.launch(dispatcher) {
-            when (val todos = getUserTodos.invoke()) {
-                is NetworkResult.Success -> _uiState.update{ it.copy(todos = todos.data, filtered = false) }
-                is NetworkResult.Error -> _uiState.update { it.copy(filtered = false, appEvent = UiEvent.ShowSnackbar(todos.message)) }
-                is NetworkResult.Loading -> TODO()
+            getUserTodos.invoke().collect { result ->
+                when (result) {
+                    is NetworkResult.Success -> _uiState.update {
+                        it.copy(
+                            todos = result.data,
+                            filtered = false
+                        )
+                    }
+
+                    is NetworkResult.Error -> _uiState.update {
+                        it.copy(
+                            filtered = false,
+                            appEvent = UiEvent.ShowSnackbar(result.message)
+                        )
+                    }
+
+                    is NetworkResult.Loading -> TODO()
+                }
             }
         }
     }

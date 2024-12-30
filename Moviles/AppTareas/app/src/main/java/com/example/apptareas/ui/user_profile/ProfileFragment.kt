@@ -10,9 +10,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import coil.load
-import com.example.apptareas.databinding.UserProfileBinding
 import com.example.apptareas.ui.common.UiEvent
 import com.example.apptareas.utilities.Constantes
+import com.example.primerxmlmvvm.databinding.UserProfileBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

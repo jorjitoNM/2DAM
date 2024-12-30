@@ -10,11 +10,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.apptareas.databinding.LoginBinding
+
 import com.example.apptareas.domain.model.User
 import com.example.apptareas.ui.common.UiEvent
 import com.example.apptareas.ui.main.MainActivity
 import com.example.apptareas.utilities.Constantes
+import com.example.primerxmlmvvm.databinding.LoginBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

@@ -1,7 +1,8 @@
 package com.example.apptareas.data.remote.datasource
 
-import com.example.apptareas.R
-import com.example.apptareas.data.remote.NetworkResult
+
+import com.example.apptareas.data.NetworkResult
+import com.example.primerxmlmvvm.R
 import retrofit2.Response
 import timber.log.Timber
 

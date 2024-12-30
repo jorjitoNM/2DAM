@@ -1,8 +1,9 @@
 package com.example.apptareas.domain.model
 
-import com.example.apptareas.R
+
 import com.example.apptareas.data.remote.model.events.EventRemote
 import com.example.apptareas.utilities.Constantes
+import com.example.primerxmlmvvm.R
 
 data class Event (
     val id: Int = -1,
