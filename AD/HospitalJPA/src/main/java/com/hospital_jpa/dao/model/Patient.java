@@ -22,7 +22,7 @@ public class Patient {
     private LocalDate birthDate;
     @Column(name = "phone")
     private String phone;
-    @Transient
+    @OneToOne(mappedBy = "patient", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
     private Credential credential;
 
     public Patient(int id, String name, LocalDate birthDate, String phone) {

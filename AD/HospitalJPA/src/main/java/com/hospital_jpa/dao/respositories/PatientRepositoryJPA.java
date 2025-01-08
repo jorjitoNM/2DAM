@@ -1,5 +1,6 @@
 package com.hospital_jpa.dao.respositories;
 
+import com.hospital_jpa.dao.model.Credential;
 import com.hospital_jpa.dao.model.Patient;
 import com.hospital_jpa.domain.error.FOREIGN_KEY_ERROR;
 import jakarta.persistence.EntityManager;
@@ -34,6 +35,10 @@ public class PatientRepositoryJPA implements com.hospital_jpa.dao.interfaces.Pat
 
     @Override
     public int save(Patient patient) {
+
+        Credential credential = patient.getCredential();
+        credential.setPatient(patient);
+
         EntityTransaction tx = null;
         try (EntityManager em = jpaUtil.getEntityManager()) {
             tx = em.getTransaction();
@@ -69,7 +74,7 @@ public class PatientRepositoryJPA implements com.hospital_jpa.dao.interfaces.Pat
         try (EntityManager em = jpaUtil.getEntityManager()) {
             tx = em.getTransaction();
             tx.begin();
-            em.remove(em.merge(new Patient(patientId)));
+            em.remove(em.find(Patient.class, patientId));
             tx.commit();
         }
         catch (Exception e) {

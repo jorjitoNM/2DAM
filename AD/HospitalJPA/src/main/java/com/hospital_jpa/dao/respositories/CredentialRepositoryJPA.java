@@ -30,11 +30,6 @@ public class CredentialRepositoryJPA implements com.hospital_jpa.dao.interfaces.
     }
 
     @Override
-    public void save(Patient patient) {
-
-    }
-
-    @Override
     public void update(Credential credential) {
 
     }

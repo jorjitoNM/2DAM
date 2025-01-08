@@ -9,7 +9,6 @@ public interface CredentialRepository {
 
     List<Credential> getAll();
     boolean delete(int patient_id);
-    void save(Patient patient);
     void update(Credential credential);
     Credential get(String username);
 }

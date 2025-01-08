@@ -13,20 +13,22 @@ import lombok.NoArgsConstructor;
 @NamedQuery(name = "GET_CREDENTIAL", query = "from Credential where userName = :username")
 public class Credential {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int userId;
     @Column(name = "username")
     private String userName;
     @Column(name = "password")
     private String password;
-    @Column(name = "patient_id")
-    private Integer patientId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
     @Column(name = "doctor_id")
     private Integer doctorId;
 
     public Credential(String userName, String password) {
         this.userName = userName;
         this.password = password;
+        doctorId = null;
     }
 }
