@@ -1,23 +1,25 @@
 package com.hospital_jpa.dao.model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.xml.bind.annotation.*;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlRootElement(name = "medication")
-@XmlAccessorType(XmlAccessType.NONE)
+@Entity
+@Table(name = "prescribed_medications")
 public class Medication {
-    @XmlTransient
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "prescription_id")
     private int id;
-    @XmlValue
+    @Column(name = "medication_name")
     private String medicationName;
-    @XmlTransient
-    private int medRecordId;
+    @Column(name = "record_id")
+    private Integer medRecordId;
+    @Column
     private String dosage;
 
 

@@ -7,17 +7,17 @@ import java.time.LocalDate;
 
 @Data
 @Entity
-@Table(name = "patient_payments")
-public class Payment {
+@Table(name = "appointments")
+public class Appointment {
     @Id
+    @Column(name = "appointment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "payment_id")
-    private int id;
-    @Column
-    private int amount;
-    @Column(name = "payment_date")
-    private LocalDate date;
+    private int appointmentId;
+    @Column(name = "doctor_id")
+    private int doctorId;
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
+    @Column(name = "appointment_date")
+    private LocalDate appointmentDate;
 }
