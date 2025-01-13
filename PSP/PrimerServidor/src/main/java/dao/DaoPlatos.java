@@ -7,15 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DaoPlatos {
-    private List<Plato> platos;
+    private final List<Plato> platos;
     private final Faker faker;
-    private int id = 0;
 
     public DaoPlatos() {
         platos = new ArrayList<>();
         faker = new Faker();
+        int id = 0;
         while (id <= 10) {
-            platos.add(new Plato(faker.food().dish(),fillIngredients(),id));
+            platos.add(new Plato(faker.food().dish(),fillIngredients(), id));
             id++;
         }
     }

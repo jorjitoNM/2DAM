@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name = "login" ,value = "/index")
+@WebServlet(name = "login" ,value = "/login")
 public class LoginServlet extends HttpServlet {
 
     public static final String EMAIL = "email";
@@ -21,12 +21,12 @@ public class LoginServlet extends HttpServlet {
         if (email == null || password == null) {
             req.getSession().setAttribute(EMAIL,email);
             req.getSession().setAttribute(PASSWORD,password);
-            resp.sendRedirect("/PrivateOS/home");
+            resp.sendRedirect("/index");
         }
         else if (!(req.getAttribute(EMAIL).equals(email) && req.getAttribute(PASSWORD).equals(password))) {
             resp.sendError(401,"Inicie sesion primero");
         } else {
-            resp.sendRedirect("/PrivateOS/home");
+            resp.sendRedirect("/index");
         }
     }
 }

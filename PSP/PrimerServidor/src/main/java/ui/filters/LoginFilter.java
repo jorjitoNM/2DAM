@@ -11,17 +11,16 @@ import ui.servlets.LoginServlet;
 import java.io.IOException;
 
 
-@WebFilter(filterName = "FilterRoleUser",urlPatterns = {"/PrivateOS/*"})
+@WebFilter(filterName = "FilterRoleUser",urlPatterns = {"/index"})
 public class LoginFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        // filter login
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpRequest.getSession(false);
 
         if (session == null || session.getAttribute(LoginServlet.PASSWORD) == null) {
-            ((HttpServletResponse)servletResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED,"QUE TE DEN");
+            ((HttpServletResponse)servletResponse).sendRedirect(((HttpServletRequest) servletRequest).getContextPath() + "/login.html");
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }

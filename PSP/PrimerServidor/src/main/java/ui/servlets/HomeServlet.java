@@ -14,7 +14,7 @@ import ui.listeners.ThymeLeafListener;
 
 import java.io.IOException;
 
-@WebServlet("/PrivateOS/home")
+@WebServlet(name = "index", value = "/index.html")
 public class HomeServlet extends HttpServlet {
 
     private final FoodService foodService;
