@@ -20,7 +20,7 @@ public class DaoPlatos {
         }
     }
 
-    public List<Plato> getPlatos() {
+    public List<Plato> getDishes() {
         return platos;
     }
 

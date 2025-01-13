@@ -8,11 +8,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name = "login" ,value = "/")
+@WebServlet(name = "login" ,value = "/index")
 public class LoginServlet extends HttpServlet {
 
-    private final String EMAIL = "email";
-    private final String PASSWORD = "password";
+    public static final String EMAIL = "email";
+    public static final String PASSWORD = "password";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -21,12 +21,12 @@ public class LoginServlet extends HttpServlet {
         if (email == null || password == null) {
             req.getSession().setAttribute(EMAIL,email);
             req.getSession().setAttribute(PASSWORD,password);
-            resp.sendRedirect("/home");
+            resp.sendRedirect("/PrivateOS/home");
         }
         else if (!(req.getAttribute(EMAIL).equals(email) && req.getAttribute(PASSWORD).equals(password))) {
-            resp.sendRedirect("/error");
+            resp.sendError(401,"Inicie sesion primero");
         } else {
-
+            resp.sendRedirect("/PrivateOS/home");
         }
     }
 }

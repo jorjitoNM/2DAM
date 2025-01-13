@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .form-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Dishes and Ingredients</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Dish Name</th>
+        <th>Ingredients</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${dishes.isEmpty()}">
+        <td colspan="2"> No Dishes Available </td>
+    </tr>
+    <tr th:each="dish : ${dishes}">
+        <td><span th:text="${dish.nombre()}"> Name </span></td>
+        <td th:each="ingredient : ${dish.ingredientes()}"><span th:text="${ingredient}"> Ingredients </span></td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="form-container">
+    <form action="/submit" method="POST">
+        <label for="dishName">Dish Name (optional):</label>
+        <input type="text" id="dishName" name="dishName" placeholder="Enter dish name">
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>

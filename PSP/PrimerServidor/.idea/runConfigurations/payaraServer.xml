@@ -1,0 +1,50 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="payaraServer" type="GlassfishConfiguration" factoryName="Remote" APPLICATION_SERVER_NAME="GlassFish 6.22.0" ALTERNATIVE_JRE_ENABLED="false">
+    <option name="LOCAL" value="false" />
+    <option name="UPDATING_POLICY" value="hot-swap-classes" />
+    <deployment>
+      <artifact name="PrimerServidor:war">
+        <settings />
+      </artifact>
+    </deployment>
+    <server-settings>
+      <data>
+        <option name="adminServerHost" value="" />
+        <option name="clusterName" value="" />
+        <option name="credentialAlias" value="f9abdd8b-937d-4b08-9bd1-37c400894977" />
+        <option name="secured" value="true" />
+        <option name="stagingRemotePath" value="" />
+        <option name="transportHostId" />
+        <option name="transportStagingTarget">
+          <TransportTarget>
+            <option name="id" value="ae093fe1-0b20-41d3-a1d2-a80c2f9a57bb" />
+            <id>ae093fe1-0b20-41d3-a1d2-a80c2f9a57bb</id>
+          </TransportTarget>
+        </option>
+        <credential-alias>f9abdd8b-937d-4b08-9bd1-37c400894977</credential-alias>
+        <secured>true</secured>
+        <admin-server-host />
+        <cluster-name />
+        <transport-target>
+          <TransportTarget>
+            <option name="id" value="ae093fe1-0b20-41d3-a1d2-a80c2f9a57bb" />
+            <id>ae093fe1-0b20-41d3-a1d2-a80c2f9a57bb</id>
+          </TransportTarget>
+        </transport-target>
+        <staging-path />
+        <host-id />
+      </data>
+    </server-settings>
+    <predefined_log_file enabled="true" id="GlassFish" />
+    <RunnerSettings RunnerId="Debug">
+      <option name="DEBUG_PORT" value="9009" />
+      <option name="LOCAL" value="false" />
+    </RunnerSettings>
+    <method v="2">
+      <option name="Make" enabled="true" />
+      <option name="BuildArtifacts" enabled="true">
+        <artifact name="PrimerServidor:war" />
+      </option>
+    </method>
+  </configuration>
+</component>
