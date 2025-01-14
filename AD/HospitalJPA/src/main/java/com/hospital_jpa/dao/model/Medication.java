@@ -17,22 +17,21 @@ public class Medication {
     private int id;
     @Column(name = "medication_name")
     private String medicationName;
-    @Column(name = "record_id")
-    private Integer medRecordId;
+    @ManyToOne
+    @JoinColumn(name = "record_id")
+    private MedicalRecord medicalRecord;
     @Column
     private String dosage;
 
 
-    public Medication(int id, String medicationName, int medRecordId) {
+    public Medication(int id, String medicationName) {
         this.id = id;
         this.medicationName = medicationName;
-        this.medRecordId = medRecordId;
         this.dosage = "";
     }
-    public Medication(String medicationName, int medRecordId, String dosage) {
+    public Medication(String medicationName, String dosage) {
         this.id = 0;
         this.medicationName = medicationName;
-        this.medRecordId = medRecordId;
-        this.dosage = "";
+        this.dosage = dosage;
     }
 }

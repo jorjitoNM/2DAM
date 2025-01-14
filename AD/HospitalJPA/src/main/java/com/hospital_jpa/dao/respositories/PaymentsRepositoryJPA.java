@@ -2,12 +2,15 @@ package com.hospital_jpa.dao.respositories;
 
 import com.hospital_jpa.dao.model.Payment;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Log4j2
 public class PaymentsRepositoryJPA implements com.hospital_jpa.dao.interfaces.PaymentsRepository {
 
     private final JPAUtil jpaUtil;
@@ -41,13 +44,10 @@ public class PaymentsRepositoryJPA implements com.hospital_jpa.dao.interfaces.Pa
         List<Payment> payments = new ArrayList<>();
 
         try (EntityManager em = jpaUtil.getEntityManager()) {
-            payments = em.createQuery("SELECT p FROM Payment p group by patient.id").getResultList();
+            payments = em.createNamedQuery("getPaymentsByPatient", Payment.class).getResultList();
+        } catch (PersistenceException e) {
+            log.error(e.getMessage(), e);
         }
-        return List.of();
-    }
-
-    @Override
-    public void deletePatientPayments(int patientId) {
-
+        return payments;
     }
 }

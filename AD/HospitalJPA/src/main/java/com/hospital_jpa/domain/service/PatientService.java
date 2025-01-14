@@ -29,7 +29,7 @@ public class PatientService {
         patients.forEach(p -> patientsUI.add(new PatientUI(p)));
         List<Payment> payments = paymentsRepository.getPaymentsByPatient();
         payments.forEach(p -> patientsUI.stream()
-                .filter(patient -> patient.getId() == p.getPatientId())
+                .filter(patient -> patient.getId() == p.getPatient().getId())
                 .findAny()
                 .ifPresent(found -> found.setPaid(p.getAmount())));
         return patientsUI;

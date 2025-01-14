@@ -5,6 +5,7 @@ import com.hospital_jpa.dao.interfaces.MedicalRecordsRepository;
 import com.hospital_jpa.dao.interfaces.MedicationsRepository;
 import com.hospital_jpa.dao.model.MedicalRecord;
 import com.hospital_jpa.dao.model.Medication;
+import com.hospital_jpa.dao.model.Patient;
 import com.hospital_jpa.domain.model.MedicalRecordUI;
 import org.springframework.stereotype.Service;
 
@@ -24,14 +25,14 @@ public class MedicalRecordService {
 
     public int addMedicalRecord(MedicalRecordUI medicalRecordUI) {
         return medicalRecordsRepository.save(new MedicalRecord(medicalRecordUI.getId(),
-                medicalRecordUI.getIdPatient(), medicalRecordUI.getIdDoctor(),
+                new Patient(medicalRecordUI.getIdPatient()), medicalRecordUI.getIdDoctor(),
                 medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),parseMedications(medicalRecordUI.getMedications(),medicalRecordUI.getId())));
 
     }
 
     private List<Medication> parseMedications(List<String> medications, int medicalRecordId) {
         List<Medication> medicationList = new ArrayList<>();
-        medications.forEach(medication -> medicationList.add(new Medication(1,medication,medicalRecordId,"every 8 hours")));
+        medications.forEach(medication -> medicationList.add(new Medication(1,medication,new MedicalRecord(medicalRecordId),"every 8 hours")));
         return medicationList;
     }
 
@@ -40,7 +41,7 @@ public class MedicalRecordService {
         medicalRecordsRepository.getAll(idPatient).forEach(mr ->
                 medicalRecordsUI.add(new MedicalRecordUI(mr.getId(), mr.getDiagnosis(),
                         mr.getDate().toString(),
-                        mr.getIdPatient(), mr.getIdDoctor(),
+                        mr.getId(), mr.getIdDoctor(),
                         parseStringMedications(medicationsRepository.getPrescribedMedications(mr.getId())))));
         return medicalRecordsUI;
     }
@@ -52,12 +53,11 @@ public class MedicalRecordService {
     }
 
     public void deleteMedicalRecord(int id) {
-        medicalRecordsRepository.delete(new MedicalRecord(
-                id,-1,-1,null,null));
+        medicalRecordsRepository.delete(new MedicalRecord());
     }
 
     public void updateMedicalRecord(MedicalRecordUI medicalRecordUI) {
-        medicalRecordsRepository.update(new MedicalRecord(medicalRecordUI.getId(), medicalRecordUI.getIdPatient(),
+        medicalRecordsRepository.update(new MedicalRecord(medicalRecordUI.getId(), new Patient(medicalRecordUI.getIdPatient()),
                 medicalRecordUI.getIdDoctor(), medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),
                 parseMedications(medicalRecordUI.getMedications(),medicalRecordUI.getId())));
     }

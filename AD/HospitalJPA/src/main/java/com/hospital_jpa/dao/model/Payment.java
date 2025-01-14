@@ -8,6 +8,7 @@ import java.time.LocalDate;
 @Data
 @Entity
 @Table(name = "patient_payments")
+@NamedQuery(name = "getPaymentsByPatient", query = "select sum(Payment.amount),Payment.patient.id from Payment group by Payment.patient.id")
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
