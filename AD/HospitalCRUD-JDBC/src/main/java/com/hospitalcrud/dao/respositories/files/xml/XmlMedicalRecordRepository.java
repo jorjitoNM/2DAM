@@ -69,7 +69,7 @@ public class XmlMedicalRecordRepository implements MedicalRecordsRepository {
             MedicalRecords medicalRecords = (MedicalRecords)unmarshaller.unmarshal(Files.newInputStream(configuration.getPathMedicalRecords()));
             return medicalRecords.getMedicalRecords();
         } catch (JAXBException | IOException e) {
-            //log.error(e.getMessage(),e);
+            log.error(e.getMessage(),e);
             throw new RuntimeException(e);
         }
     }
@@ -81,7 +81,7 @@ public class XmlMedicalRecordRepository implements MedicalRecordsRepository {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             marshaller.marshal(new MedicalRecords(medicalRecords),Files.newOutputStream(configuration.getPathMedicalRecords()));
         } catch (JAXBException | IOException e) {
-            //log.error(e.getMessage(),e);
+            log.error(e.getMessage(),e);
             throw new RuntimeException(e);
         }
     }
