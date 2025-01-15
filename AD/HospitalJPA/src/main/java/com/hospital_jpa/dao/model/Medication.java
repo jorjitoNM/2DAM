@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "prescribed_medications")
+@NamedQuery(name = "getAll", query = "select t1 from Medication t1 join (select t2.medicationName as medicationName, min(t2.id) as firstId from Medication t2 group by t2.medicationName) subquery on t1.medicationName = subquery.medicationName and t1.id = subquery.firstId")
 public class Medication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +31,6 @@ public class Medication {
         this.dosage = "";
     }
     public Medication(String medicationName, String dosage) {
-        this.id = 0;
         this.medicationName = medicationName;
         this.dosage = dosage;
     }

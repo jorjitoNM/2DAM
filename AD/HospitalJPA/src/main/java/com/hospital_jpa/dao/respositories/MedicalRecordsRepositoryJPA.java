@@ -1,7 +1,9 @@
 package com.hospital_jpa.dao.respositories;
 
 import com.hospital_jpa.dao.model.MedicalRecord;
+import com.hospital_jpa.dao.model.Medication;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
@@ -27,6 +29,9 @@ public class MedicalRecordsRepositoryJPA implements com.hospital_jpa.dao.interfa
             medicalRecords = em.createNamedQuery("getPatientMedicalRecords",MedicalRecord.class)
                     .setParameter("id", idPatient)
                     .getResultList();
+            for (MedicalRecord medicalRecord :  medicalRecords) {
+                medicalRecord.getMedications().size();
+            }
         } catch (PersistenceException e) {
             log.error(e.getMessage(), e);
         }
@@ -36,15 +41,50 @@ public class MedicalRecordsRepositoryJPA implements com.hospital_jpa.dao.interfa
     @Override
     public void delete(MedicalRecord medicalRecord) {
 
+        EntityTransaction tx = null;
+        try (EntityManager em = jpaUtil.getEntityManager()) {
+            tx = em.getTransaction();
+            tx.begin();
+            em.remove(em.merge(medicalRecord));
+            tx.commit();
+        }
+        catch (Exception e) {
+            assert tx != null;
+            if (tx.isActive()) tx.rollback();
+            log.error(e.getMessage(), e);
+        }
     }
 
     @Override
     public int save(MedicalRecord medicalRecord) {
-        return 0;
+        EntityManager em = jpaUtil.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        List<Medication> medications = medicalRecord.getMedications();
+        medications.forEach(m -> m.setMedicalRecord(medicalRecord));
+        try {
+            tx.begin();
+            em.persist(medicalRecord);
+            tx.commit();
+        } catch (PersistenceException e) {
+            assert tx != null;
+            if (tx.isActive()) tx.rollback();
+            log.error(e.getMessage(), e);
+        }
+        return medicalRecord.getId();
     }
 
     @Override
     public void update(MedicalRecord medicalRecord) {
-
+        EntityTransaction tx = null;
+        try (EntityManager em = jpaUtil.getEntityManager()) {
+            tx = em.getTransaction();
+            tx.begin();
+            em.merge(medicalRecord);
+            tx.commit();
+        } catch (Exception e) {
+            assert tx != null;
+            if (tx.isActive()) tx.rollback();
+            log.error(e.getMessage(), e);
+        }
     }
 }

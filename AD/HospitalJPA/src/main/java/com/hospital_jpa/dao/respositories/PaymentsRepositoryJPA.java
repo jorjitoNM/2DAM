@@ -42,9 +42,8 @@ public class PaymentsRepositoryJPA implements com.hospital_jpa.dao.interfaces.Pa
     @Override
     public List<Payment> getPaymentsByPatient() {
         List<Payment> payments = new ArrayList<>();
-
         try (EntityManager em = jpaUtil.getEntityManager()) {
-            payments = em.createNamedQuery("getPaymentsByPatient", Payment.class).getResultList();
+            payments = em.createNamedQuery("getPaymentsByPatient",Payment.class).getResultList();
         } catch (PersistenceException e) {
             log.error(e.getMessage(), e);
         }

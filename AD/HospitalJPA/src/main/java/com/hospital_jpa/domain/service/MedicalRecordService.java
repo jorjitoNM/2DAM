@@ -24,15 +24,14 @@ public class MedicalRecordService {
     }
 
     public int addMedicalRecord(MedicalRecordUI medicalRecordUI) {
-        return medicalRecordsRepository.save(new MedicalRecord(medicalRecordUI.getId(),
-                new Patient(medicalRecordUI.getIdPatient()), medicalRecordUI.getIdDoctor(),
-                medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),parseMedications(medicalRecordUI.getMedications(),medicalRecordUI.getId())));
+        return medicalRecordsRepository.save(new MedicalRecord(new Patient(medicalRecordUI.getIdPatient()), medicalRecordUI.getIdDoctor(),
+                medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),parseMedications(medicalRecordUI.getMedications())));
 
     }
 
-    private List<Medication> parseMedications(List<String> medications, int medicalRecordId) {
+    private List<Medication> parseMedications(List<String> medications) {
         List<Medication> medicationList = new ArrayList<>();
-        medications.forEach(medication -> medicationList.add(new Medication(1,medication,new MedicalRecord(medicalRecordId),"every 8 hours")));
+        medications.forEach(medication -> medicationList.add(new Medication(medication,"every 8 hours")));
         return medicationList;
     }
 
@@ -42,7 +41,7 @@ public class MedicalRecordService {
                 medicalRecordsUI.add(new MedicalRecordUI(mr.getId(), mr.getDiagnosis(),
                         mr.getDate().toString(),
                         mr.getId(), mr.getIdDoctor(),
-                        parseStringMedications(medicationsRepository.getPrescribedMedications(mr.getId())))));
+                        parseStringMedications(mr.getMedications()))));
         return medicalRecordsUI;
     }
 
@@ -59,6 +58,6 @@ public class MedicalRecordService {
     public void updateMedicalRecord(MedicalRecordUI medicalRecordUI) {
         medicalRecordsRepository.update(new MedicalRecord(medicalRecordUI.getId(), new Patient(medicalRecordUI.getIdPatient()),
                 medicalRecordUI.getIdDoctor(), medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),
-                parseMedications(medicalRecordUI.getMedications(),medicalRecordUI.getId())));
+                parseMedications(medicalRecordUI.getMedications())));
     }
 }

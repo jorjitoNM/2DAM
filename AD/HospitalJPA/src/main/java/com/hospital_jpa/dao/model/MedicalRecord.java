@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "medical_records")
-@NamedQuery(name = "getPatientMedicalRecords", query = "from MedicalRecord where MedicalRecord.patient.id = :id")
+@NamedQuery(name = "getPatientMedicalRecords", query = "from MedicalRecord m where m.patient.id = :id")
 public class MedicalRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,14 +28,15 @@ public class MedicalRecord {
     private String diagnosis;
     @Column(name = "admission_date")
     private LocalDate date;
-    @OneToMany(mappedBy = "medicalRecord")
+    @OneToMany(mappedBy = "medicalRecord", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Medication> medications;
 
-    public MedicalRecord(int id, int idDoctor, String diagnosis, LocalDate date) {
-        this.id = id;
+    public MedicalRecord(Patient patient, int idDoctor, String diagnosis, LocalDate date, List<Medication> medications) {
+        this.patient = patient;
         this.idDoctor = idDoctor;
         this.diagnosis = diagnosis;
         this.date = date;
+        this.medications = medications;
     }
 
     public MedicalRecord (int id) {

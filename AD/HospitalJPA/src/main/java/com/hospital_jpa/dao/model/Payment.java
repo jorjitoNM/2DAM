@@ -2,13 +2,15 @@ package com.hospital_jpa.dao.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "patient_payments")
-@NamedQuery(name = "getPaymentsByPatient", query = "select sum(Payment.amount),Payment.patient.id from Payment group by Payment.patient.id")
+@NamedQuery(name = "getPaymentsByPatient", query = "select new Payment(p.patient.id,sum(p.amount)) from Payment p group by p.patient.id")
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +23,9 @@ public class Payment {
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
+
+    public Payment(int id, long amount) {
+        this.patient = new Patient(id);
+        this.amount = (int) amount;
+    }
 }

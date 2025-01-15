@@ -24,7 +24,6 @@ public class PatientRepositoryJPA implements com.hospital_jpa.dao.interfaces.Pat
     @Override
     public List<Patient> getAll() {
         List<Patient> patients = new ArrayList<>();
-
         try (EntityManager em = jpaUtil.getEntityManager()) {
             patients = em.createNamedQuery("getAllPatients", Patient.class).getResultList();
         } catch (PersistenceException e) {
