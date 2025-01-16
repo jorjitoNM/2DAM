@@ -21,7 +21,7 @@ public class LoginServlet extends HttpServlet {
         if (email == null || password == null) {
             req.getSession().setAttribute(EMAIL,email);
             req.getSession().setAttribute(PASSWORD,password);
-            resp.sendRedirect("/index");
+            resp.sendRedirect("index");
         }
         else if (!(req.getAttribute(EMAIL).equals(email) && req.getAttribute(PASSWORD).equals(password))) {
             resp.sendError(401,"Inicie sesion primero");

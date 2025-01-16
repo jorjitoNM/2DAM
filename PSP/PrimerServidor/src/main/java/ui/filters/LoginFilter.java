@@ -11,7 +11,7 @@ import ui.servlets.LoginServlet;
 import java.io.IOException;
 
 
-@WebFilter(filterName = "FilterRoleUser",urlPatterns = {"/index"})
+@WebFilter(filterName = "FilterRoleUser",urlPatterns = {"/home"})
 public class LoginFilter implements Filter {
 
     @Override
@@ -20,7 +20,7 @@ public class LoginFilter implements Filter {
         HttpSession session = httpRequest.getSession(false);
 
         if (session == null || session.getAttribute(LoginServlet.PASSWORD) == null) {
-            ((HttpServletResponse)servletResponse).sendRedirect(((HttpServletRequest) servletRequest).getContextPath() + "/login.html");
+            ((HttpServletResponse)servletResponse).sendRedirect(((HttpServletRequest) servletRequest).getContextPath() + "/home.html");
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }

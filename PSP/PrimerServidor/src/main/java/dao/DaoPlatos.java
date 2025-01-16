@@ -1,6 +1,7 @@
 package dao;
 
 import domain.model.Plato;
+import jakarta.inject.Inject;
 import net.datafaker.Faker;
 
 import java.util.ArrayList;
@@ -10,9 +11,10 @@ public class DaoPlatos {
     private final List<Plato> platos;
     private final Faker faker;
 
-    public DaoPlatos() {
+    @Inject
+    public DaoPlatos(Faker faker) {
         platos = new ArrayList<>();
-        faker = new Faker();
+        this.faker = faker;
         int id = 0;
         while (id <= 10) {
             platos.add(new Plato(faker.food().dish(),fillIngredients(), id));
@@ -39,3 +41,4 @@ public class DaoPlatos {
         return ingredients;
     }
 }
+

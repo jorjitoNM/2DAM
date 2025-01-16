@@ -1,6 +1,7 @@
 package ui.servlets;
 
 import domain.services.FoodService;
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,13 +15,14 @@ import ui.listeners.ThymeLeafListener;
 
 import java.io.IOException;
 
-@WebServlet(name = "index", value = "/index.html")
+@WebServlet(name = "index", value = "/home")
 public class HomeServlet extends HttpServlet {
 
     private final FoodService foodService;
 
-    public HomeServlet() {
-        foodService = new FoodService();
+    @Inject
+    public HomeServlet(FoodService foodService) {
+        this.foodService = foodService;
     }
 
     @Override
@@ -41,6 +43,6 @@ public class HomeServlet extends HttpServlet {
         WebContext context = new WebContext(webExchange);
         context.setVariable("dishes",foodService.getDishes());
 
-        templateEngine.process("template", context, response.getWriter());
+        templateEngine.process("index", context, response.getWriter());
     }
 }
