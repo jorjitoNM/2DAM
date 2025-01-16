@@ -1,6 +1,7 @@
 package com.hospital_jpa.dao.respositories;
 
 import com.hospital_jpa.dao.model.Credential;
+import com.hospital_jpa.dao.model.MedicalRecord;
 import com.hospital_jpa.dao.model.Patient;
 import com.hospital_jpa.domain.error.FOREIGN_KEY_ERROR;
 import jakarta.persistence.EntityManager;
@@ -76,9 +77,13 @@ public class PatientRepositoryJPA implements com.hospital_jpa.dao.interfaces.Pat
             tx = em.getTransaction();
             tx.begin();
             if (confirmation) {
-                em.createQuery("delete from MedicalRecord m where m.patient.id = :patient_id")
-                        .setParameter(PATIENT_ID,patientId)
-                        .executeUpdate();
+                List<MedicalRecord> records = em.createQuery(
+                                "SELECT m FROM MedicalRecord m WHERE m.patient.id = :patient_id", MedicalRecord.class)
+                        .setParameter(PATIENT_ID, patientId)
+                        .getResultList();
+                for (MedicalRecord r : records) {
+                    em.remove(r);
+                }
                 em.createQuery("delete from Appointment app where app.patient.id = :patient_id")
                         .setParameter(PATIENT_ID, patientId)
                         .executeUpdate();

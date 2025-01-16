@@ -1,7 +1,6 @@
 package com.hospital_jpa.dao.interfaces;
 
 import com.hospital_jpa.dao.model.Credential;
-import com.hospital_jpa.dao.model.Patient;
 
 import java.util.List;
 
