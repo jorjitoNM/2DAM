@@ -10,7 +10,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table(name = "patients")
-@NamedQuery(name = "getAllPatients", query = "from Patient")
+@NamedQueries({
+        @NamedQuery(name = "getAllPatients", query = "from Patient"),
+        @NamedQuery(name = "deletePatientMedicalRecords", query = "delete from MedicalRecord m where m.patient.id = :patient_id"),
+        @NamedQuery(name = "deletePatientPrescribedMedications", query = "delete from Medication pm where pm.medicalRecord.id in (select mr.id from MedicalRecord mr where mr.patient.id = :patient_id)")
+})
+
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

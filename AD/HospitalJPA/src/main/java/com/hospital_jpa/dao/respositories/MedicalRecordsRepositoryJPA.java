@@ -40,11 +40,13 @@ public class MedicalRecordsRepositoryJPA implements com.hospital_jpa.dao.interfa
 
     @Override
     public void delete(MedicalRecord medicalRecord) {
-
         EntityTransaction tx = null;
         try (EntityManager em = jpaUtil.getEntityManager()) {
             tx = em.getTransaction();
             tx.begin();
+//            em.createNamedQuery("deletePrescribedMedications")
+//                    .setParameter("record_id", medicalRecord.getId())
+//                    .executeUpdate();
             em.remove(em.merge(medicalRecord));
             tx.commit();
         }
@@ -57,11 +59,10 @@ public class MedicalRecordsRepositoryJPA implements com.hospital_jpa.dao.interfa
 
     @Override
     public int save(MedicalRecord medicalRecord) {
-        EntityManager em = jpaUtil.getEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        List<Medication> medications = medicalRecord.getMedications();
-        medications.forEach(m -> m.setMedicalRecord(medicalRecord));
-        try {
+        EntityTransaction tx = null;
+        medicalRecord.getMedications().forEach(m -> m.setMedicalRecord(medicalRecord));
+        try (EntityManager em = jpaUtil.getEntityManager()) {
+            tx = em.getTransaction();
             tx.begin();
             em.persist(medicalRecord);
             tx.commit();
@@ -76,6 +77,7 @@ public class MedicalRecordsRepositoryJPA implements com.hospital_jpa.dao.interfa
     @Override
     public void update(MedicalRecord medicalRecord) {
         EntityTransaction tx = null;
+        medicalRecord.getMedications().forEach(m -> m.setMedicalRecord(medicalRecord));
         try (EntityManager em = jpaUtil.getEntityManager()) {
             tx = em.getTransaction();
             tx.begin();

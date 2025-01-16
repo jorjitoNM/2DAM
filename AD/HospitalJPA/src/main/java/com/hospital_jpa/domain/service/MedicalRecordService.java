@@ -52,12 +52,11 @@ public class MedicalRecordService {
     }
 
     public void deleteMedicalRecord(int id) {
-        medicalRecordsRepository.delete(new MedicalRecord());
+        medicalRecordsRepository.delete(new MedicalRecord(id));
     }
 
     public void updateMedicalRecord(MedicalRecordUI medicalRecordUI) {
-        medicalRecordsRepository.update(new MedicalRecord(medicalRecordUI.getId(), new Patient(medicalRecordUI.getIdPatient()),
-                medicalRecordUI.getIdDoctor(), medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),
-                parseMedications(medicalRecordUI.getMedications())));
+        medicalRecordsRepository.update(new MedicalRecord(new Patient(medicalRecordUI.getIdPatient()), medicalRecordUI.getIdDoctor(),
+                medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),parseMedications(medicalRecordUI.getMedications())));
     }
 }

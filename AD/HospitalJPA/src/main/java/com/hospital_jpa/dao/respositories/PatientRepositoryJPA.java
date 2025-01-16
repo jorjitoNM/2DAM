@@ -6,6 +6,7 @@ import com.hospital_jpa.domain.error.FOREIGN_KEY_ERROR;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
+import jakarta.persistence.RollbackException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
 
@@ -73,14 +74,22 @@ public class PatientRepositoryJPA implements com.hospital_jpa.dao.interfaces.Pat
         try (EntityManager em = jpaUtil.getEntityManager()) {
             tx = em.getTransaction();
             tx.begin();
+            if (confirmation) {
+                em.createNamedQuery("deletePatientPrescribedMedications")
+                        .setParameter("patient_id", patientId)
+                        .executeUpdate();
+                em.createNamedQuery("deletePatientMedicalRecords")
+                        .setParameter("patient_id",patientId)
+                        .executeUpdate();
+            }
             em.remove(em.find(Patient.class, patientId));
             tx.commit();
-        }
-        catch (Exception e) {
+        } catch (RollbackException e) {
+            throw new FOREIGN_KEY_ERROR();
+        } catch (Exception e) {
             assert tx != null;
             if (tx.isActive()) tx.rollback();
             log.error(e.getMessage(), e);
-            throw new FOREIGN_KEY_ERROR();
         }
     }
 }

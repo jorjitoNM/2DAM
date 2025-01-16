@@ -13,7 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "medical_records")
-@NamedQuery(name = "getPatientMedicalRecords", query = "from MedicalRecord m where m.patient.id = :id")
+@NamedQueries({
+        @NamedQuery(name = "getPatientMedicalRecords", query = "from MedicalRecord m where m.patient.id = :id"),
+})
 public class MedicalRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
