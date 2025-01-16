@@ -15,6 +15,7 @@ import java.util.List;
 @Table(name = "medical_records")
 @NamedQueries({
         @NamedQuery(name = "getPatientMedicalRecords", query = "from MedicalRecord m where m.patient.id = :id"),
+        @NamedQuery(name = "deletePrescribedMedications", query = "delete from Medication m where m.medicalRecord.id = :record_id")
 })
 public class MedicalRecord {
     @Id

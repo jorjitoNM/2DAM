@@ -34,4 +34,9 @@ public class Medication {
         this.medicationName = medicationName;
         this.dosage = dosage;
     }
+    public Medication(MedicalRecord medicalRecord, String medicationName, String dosage) {
+        this.medicalRecord = medicalRecord;
+        this.medicationName = medicationName;
+        this.dosage = dosage;
+    }
 }

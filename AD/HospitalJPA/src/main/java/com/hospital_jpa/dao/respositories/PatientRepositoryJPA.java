@@ -70,16 +70,20 @@ public class PatientRepositoryJPA implements com.hospital_jpa.dao.interfaces.Pat
 
     @Override
     public void delete(int patientId, boolean confirmation) {
+        final String PATIENT_ID = "patient_id";
         EntityTransaction tx = null;
         try (EntityManager em = jpaUtil.getEntityManager()) {
             tx = em.getTransaction();
             tx.begin();
             if (confirmation) {
-                em.createNamedQuery("deletePatientPrescribedMedications")
-                        .setParameter("patient_id", patientId)
+                em.createQuery("delete from MedicalRecord m where m.patient.id = :patient_id")
+                        .setParameter(PATIENT_ID,patientId)
                         .executeUpdate();
-                em.createNamedQuery("deletePatientMedicalRecords")
-                        .setParameter("patient_id",patientId)
+                em.createQuery("delete from Appointment app where app.patient.id = :patient_id")
+                        .setParameter(PATIENT_ID, patientId)
+                        .executeUpdate();
+                em.createQuery("delete from Payment pay where pay.patient.id = :patient_id")
+                        .setParameter(PATIENT_ID, patientId)
                         .executeUpdate();
             }
             em.remove(em.find(Patient.class, patientId));

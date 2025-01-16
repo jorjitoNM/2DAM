@@ -56,7 +56,13 @@ public class MedicalRecordService {
     }
 
     public void updateMedicalRecord(MedicalRecordUI medicalRecordUI) {
-        medicalRecordsRepository.update(new MedicalRecord(new Patient(medicalRecordUI.getIdPatient()), medicalRecordUI.getIdDoctor(),
-                medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),parseMedications(medicalRecordUI.getMedications())));
+        medicalRecordsRepository.update(new MedicalRecord(medicalRecordUI.getId(),new Patient(medicalRecordUI.getIdPatient()), medicalRecordUI.getIdDoctor(),
+                medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),parseMedicationsWithRecordId(medicalRecordUI,medicalRecordUI.getMedications())));
+    }
+
+    private List<Medication> parseMedicationsWithRecordId(MedicalRecordUI medicalRecordUI, List<String> medications) {
+        List<Medication> medicationList = new ArrayList<>();
+        medications.forEach(medication -> medicationList.add(new Medication(new MedicalRecord(medicalRecordUI.getId()),medication,"every 8 hours")));
+        return medicationList;
     }
 }
