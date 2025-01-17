@@ -16,6 +16,16 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        dispatchRequest(req,resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        dispatchRequest(req,resp);
+    }
+
+
+    protected void dispatchRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter(EMAIL);
         String password = req.getParameter(PASSWORD);
         if (email == null || password == null) {
