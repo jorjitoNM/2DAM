@@ -23,6 +23,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,8 +37,6 @@ import androidx.compose.ui.unit.sp
 import com.example.pantallaexamen.ui.theme.PantallaExamenTheme
 
 class MainActivity : ComponentActivity() {
-    var puntosA : Int = 34
-    var puntosB : Int = 18
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -48,6 +50,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreenPortrait(modifier: Modifier = Modifier) {
+    var puntosA by remember { mutableIntStateOf(34) }
+    var puntosB by remember { mutableIntStateOf(18) }
     Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
         Column(modifier = Modifier
             .padding(padding)
@@ -99,13 +103,13 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                     modifier = Modifier.weight(0.2f),
                 ) {
                     Row {
-                        PlusButton(plusTeamA(),"+1", Modifier.clip(CircleShape))
+                        PlusButton({ puntosA++ },"+1", Modifier.clip(CircleShape))
                     }
                     Row {
-                        PlusButton(plusTeamA(),"+2", Modifier.clip(CircleShape))
+                        PlusButton({puntosA+=2},"+2", Modifier.clip(CircleShape))
                     }
                     Row {
-                        PlusButton(plusTeamA(),"+3", Modifier.clip(CircleShape))
+                        PlusButton({puntosA+=3},"+3", Modifier.clip(CircleShape))
                     }
                 }
                 Column(
@@ -113,13 +117,13 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                 ) {
                     TeamBox(
                         "Equipo 1",
-                        ,
-                        //Modifier.align(Alignment.Center),
+                        puntosA,
+                        Modifier.align(Alignment.Center),
                     )
                 }
             }
             Row(
-                modifier = Modifier.weight(0.1f),
+                modifier = Modifier.weight(0.1f).fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
             ) {
                 Column(
@@ -141,13 +145,13 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                     modifier = Modifier.weight(0.2f)
                 ) {
                     Row {
-                        PlusButton(plusTeamB(),"+1", Modifier.clip(CircleShape))
+                        PlusButton({puntosB += 1},"+1", Modifier.clip(CircleShape))
                     }
                     Row {
-                        PlusButton(plusTeamB(),"+2", Modifier.clip(CircleShape))
+                        PlusButton({puntosB += 2},"+2", Modifier.clip(CircleShape))
                     }
                     Row {
-                        PlusButton(plusTeamB(),"+3", Modifier.clip(CircleShape))
+                        PlusButton({puntosB += 3},"+3", Modifier.clip(CircleShape))
                     }
                 }
                 Column(
@@ -155,8 +159,8 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                 ) {
                     TeamBox(
                         "Equipo 2",
-                        18,
-                        //Modifier.align(Alignment.Center),
+                        puntosB,
+                        Modifier.align(Alignment.Center),
                     )
                 }
             }
@@ -191,24 +195,12 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                     }
                 }
                 Row {
-                    BottomButtons(onEdit(),"Editar")
+                    BottomButtons({},"Editar")
                     BottomButtons({},"Compartir")
                 }
             }
         }
     }
-}
-
-fun plusTeamB(): () -> Unit {
-    TODO()
-}
-
-fun onEdit(): () -> Unit {
-    TODO()
-}
-
-fun plusTeamA(value : String) : () -> Unit {
-
 }
 
 @Composable
@@ -223,9 +215,9 @@ fun BottomButtons (onClick: () -> Unit = {}, text: String = "", modifier: Modifi
 }
 
 @Composable
-fun PlusButton(onClick: (valor : String) -> Unit, text: String = "0", modifier: Modifier = Modifier) {
+fun PlusButton(onClick: () -> Unit, text: String = "0", modifier: Modifier = Modifier) {
     Button(
-        onClick = { onClick(text) },
+        onClick = onClick,
         modifier = modifier,
         colors = ButtonColors(Color.White, Color.Black, Color.Black, Color.White),
     ) {
