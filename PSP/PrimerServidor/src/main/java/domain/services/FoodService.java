@@ -19,4 +19,16 @@ public class FoodService {
     public List<Plato> getDishes () {
         return dao.getDishes();
     }
+
+    public void delete(String p) {
+        dao.deletePlato(Integer.parseInt(p));
+    }
+
+    public Plato updateDish (Plato p) {
+        return dao.updateDish(p);
+    }
+
+    public Plato getDish(String parameter) {
+        return dao.getDish(Integer.parseInt(parameter));
+    }
 }

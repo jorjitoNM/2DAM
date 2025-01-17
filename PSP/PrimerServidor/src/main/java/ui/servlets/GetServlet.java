@@ -15,13 +15,15 @@ import ui.listeners.ThymeLeafListener;
 
 import java.io.IOException;
 
-@WebServlet(name = "home", value = "/home")
-public class HomeServlet extends HttpServlet {
+@WebServlet(name = "get", value = "/getDish")
+public class GetServlet extends HttpServlet {
+
+    private final String DISH_ID = "dish_id";
 
     private final FoodService foodService;
 
     @Inject
-    public HomeServlet(FoodService foodService) {
+    public GetServlet(FoodService foodService) {
         this.foodService = foodService;
     }
 
@@ -35,13 +37,15 @@ public class HomeServlet extends HttpServlet {
         dispatchRequest(req,resp);
     }
 
-    private void dispatchRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void dispatchRequest (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         TemplateEngine templateEngine = (TemplateEngine) getServletContext().getAttribute(
                 ThymeLeafListener.TEMPLATE_ENGINE_ATTR);
         IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext())
                 .buildExchange(request, response);
         WebContext context = new WebContext(webExchange);
-        context.setVariable("dishes",foodService.getDishes());
-        templateEngine.process("home", context, response.getWriter());
+        if (request.getParameter(DISH_ID) != null) {
+            context.setVariable("dish", foodService.getDish(request.getParameter(DISH_ID)));
+            templateEngine.process("update", context, response.getWriter());
+        }
     }
 }

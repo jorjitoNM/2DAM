@@ -8,17 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DaoPlatos {
-    private final List<Plato> platos;
+    private static final List<Plato> platos  = new ArrayList<>();
     private final Faker faker;
 
     @Inject
     public DaoPlatos(Faker faker) {
-        platos = new ArrayList<>();
         this.faker = faker;
-        int id = 0;
-        while (id <= 10) {
-            platos.add(new Plato(faker.food().dish(),fillIngredients(), id));
-            id++;
+        if (platos.isEmpty()) {
+            int id = 0;
+            while (id <= 10) {
+                platos.add(new Plato(faker.food().dish(),fillIngredients(), id));
+                id++;
+            }
         }
     }
 
@@ -27,7 +28,7 @@ public class DaoPlatos {
     }
 
     public void deletePlato(int id) {
-        platos.remove(id);
+        platos.removeIf(p -> p.id()==id);
     }
 
     private List<String> fillIngredients () {
@@ -39,6 +40,14 @@ public class DaoPlatos {
             i++;
         }
         return ingredients;
+    }
+
+    public Plato updateDish(Plato p) {
+        return platos.set(p.id(),p);
+    }
+
+    public Plato getDish(int i) {
+        return platos.get(i);
     }
 }
 

@@ -28,15 +28,15 @@ public class LoginServlet extends HttpServlet {
     protected void dispatchRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter(EMAIL);
         String password = req.getParameter(PASSWORD);
-        if (email == null || password == null) {
+        if (req.getAttribute(EMAIL) == null || req.getAttribute(PASSWORD) == null) {
             req.getSession().setAttribute(EMAIL,email);
             req.getSession().setAttribute(PASSWORD,password);
-            resp.sendRedirect("index");
+            resp.sendRedirect("home");
         }
-        else if (!(req.getAttribute(EMAIL).equals(email) && req.getAttribute(PASSWORD).equals(password))) {
+        else if (!(req.getParameter(EMAIL).equals(email) && req.getParameter(PASSWORD).equals(password))) {
             resp.sendError(401,"Inicie sesion primero");
         } else {
-            resp.sendRedirect("/index");
+            resp.sendRedirect("home");
         }
     }
 }
