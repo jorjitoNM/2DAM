@@ -132,7 +132,7 @@
     <h1>Update Plato</h1>
     <form action="update" method="POST">
         <!-- Hidden ID Field -->
-        <input type="hidden" id="id" name="id" th:value="${dish.id}">
+        <input type="hidden" id="id" name="dish_id" th:value="${dish.id}">
 
         <!-- Nombre Field -->
         <label for="nombre">Dish Name:</label>
@@ -143,7 +143,7 @@
         <div class="ingredients-container" id="ingredients-container">
             <!-- Example ingredient rows -->
             <div class="ingredient-item" th:each="ingredient : ${dish.ingredientes()}">
-                <input type="text" name="ingredientes[]" placeholder="Enter ingredient" th:value="${ingredient}">
+                <input type="text" name="ingredientes" placeholder="Enter ingredient" th:value="${ingredient}">
                 <button type="button" onclick="removeIngredient(this)">Remove</button>
             </div>
         </div>
@@ -162,7 +162,7 @@
         div.className = 'ingredient-item';
 
         div.innerHTML = `
-            <input type="text" name="ingredientes[]" placeholder="Enter ingredient">
+            <input type="text" name="ingredientes" placeholder="Enter ingredient">
             <button type="button" onclick="removeIngredient(this)">Remove</button>
         `;
 

@@ -1,5 +1,6 @@
 package ui.servlets;
 
+import common.Constantes;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,9 +11,6 @@ import java.io.IOException;
 
 @WebServlet(name = "login" ,value = "/login")
 public class LoginServlet extends HttpServlet {
-
-    public static final String EMAIL = "email";
-    public static final String PASSWORD = "password";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,17 +24,17 @@ public class LoginServlet extends HttpServlet {
 
 
     protected void dispatchRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String email = req.getParameter(EMAIL);
-        String password = req.getParameter(PASSWORD);
-        if (req.getAttribute(EMAIL) == null || req.getAttribute(PASSWORD) == null) {
-            req.getSession().setAttribute(EMAIL,email);
-            req.getSession().setAttribute(PASSWORD,password);
-            resp.sendRedirect("home");
+        String email = req.getParameter(Constantes.EMAIL);
+        String password = req.getParameter(Constantes.PASSWORD);
+        if (req.getAttribute(Constantes.EMAIL) == null || req.getAttribute(Constantes.PASSWORD) == null) {
+            req.getSession().setAttribute(Constantes.EMAIL,email);
+            req.getSession().setAttribute(Constantes.PASSWORD,password);
+            resp.sendRedirect(Constantes.HOME);
         }
-        else if (!(req.getParameter(EMAIL).equals(email) && req.getParameter(PASSWORD).equals(password))) {
+        else if (!(req.getParameter(Constantes.EMAIL).equals(email) && req.getParameter(Constantes.PASSWORD).equals(password))) {
             resp.sendError(401,"Inicie sesion primero");
         } else {
-            resp.sendRedirect("home");
+            resp.sendRedirect(Constantes.HOME);
         }
     }
 }

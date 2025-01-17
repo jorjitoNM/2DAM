@@ -1,5 +1,6 @@
 package ui.servlets;
 
+import common.Constantes;
 import domain.model.Plato;
 import domain.services.FoodService;
 import jakarta.inject.Inject;
@@ -15,13 +16,10 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import ui.listeners.ThymeLeafListener;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collections;
 
 @WebServlet(name = "update", value = "/update")
 public class UpdateServlet extends HttpServlet {
-
-    private final String DISH_ID = "id";
-    private final String NAME = "nombre";
 
     private final FoodService foodService;
 
@@ -46,10 +44,15 @@ public class UpdateServlet extends HttpServlet {
         IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext())
                 .buildExchange(request, response);
         WebContext context = new WebContext(webExchange);
-        if (request.getParameter(DISH_ID) != null) {
-            foodService.updateDish(new Plato(request.getParameter(NAME),new ArrayList<>(),Integer.parseInt(request.getParameter(DISH_ID))));
+        if (request.getParameter(Constantes.DISH_ID) != null &&
+                request.getParameter(Constantes.NAME) != null &&
+                request.getParameter(Constantes.INGREDIENTES) != null) {
+            foodService.updateDish(new Plato(request.getParameter(Constantes.NAME),
+                    Collections.singletonList(request.getParameter(Constantes.INGREDIENTES)),
+                    Integer.parseInt(request.getParameter(Constantes.DISH_ID))));
         }
         context.setVariable("dishes",foodService.getDishes());
-        templateEngine.process("home", context, response.getWriter());
+        templateEngine.process(Constantes.HOME, context, response.getWriter());
+        response.sendRedirect(Constantes.HOME);
     }
 }

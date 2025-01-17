@@ -1,5 +1,7 @@
 package ui.servlets;
 
+import common.Constantes;
+import domain.model.Plato;
 import domain.services.FoodService;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
@@ -18,8 +20,6 @@ import java.io.IOException;
 @WebServlet(name = "get", value = "/getDish")
 public class GetServlet extends HttpServlet {
 
-    private final String DISH_ID = "dish_id";
-
     private final FoodService foodService;
 
     @Inject
@@ -29,23 +29,26 @@ public class GetServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        dispatchRequest(req,resp);
+        dispatchRequest(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        dispatchRequest(req,resp);
+        dispatchRequest(req, resp);
     }
 
-    private void dispatchRequest (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void dispatchRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         TemplateEngine templateEngine = (TemplateEngine) getServletContext().getAttribute(
                 ThymeLeafListener.TEMPLATE_ENGINE_ATTR);
         IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext())
                 .buildExchange(request, response);
         WebContext context = new WebContext(webExchange);
-        if (request.getParameter(DISH_ID) != null) {
-            context.setVariable("dish", foodService.getDish(request.getParameter(DISH_ID)));
-            templateEngine.process("update", context, response.getWriter());
+        if (request.getParameter(Constantes.DISH_ID) != null) {
+            Plato p = foodService.getDish(request.getParameter(Constantes.DISH_ID));
+            if (p != null) {
+                context.setVariable("dish", p);
+                templateEngine.process(Constantes.UPDATE, context, response.getWriter());
+            }
         }
     }
 }

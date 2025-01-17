@@ -43,11 +43,16 @@ public class DaoPlatos {
     }
 
     public Plato updateDish(Plato p) {
-        return platos.set(p.id(),p);
+        for (int i = 0; i < platos.size(); i++) {
+            if (platos.get(i).id() == p.id()) {
+                return platos.set(i, p);
+            }
+        }
+        return null;
     }
 
     public Plato getDish(int i) {
-        return platos.get(i);
+        return platos.stream().filter(p -> p.id()==i).findFirst().orElse(null);
     }
 }
 
