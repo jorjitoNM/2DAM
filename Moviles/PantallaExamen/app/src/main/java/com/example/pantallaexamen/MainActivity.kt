@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -118,7 +119,6 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                     TeamBox(
                         "Equipo 1",
                         puntosA,
-                        Modifier.align(Alignment.Center),
                     )
                 }
             }
@@ -127,8 +127,8 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                 horizontalArrangement = Arrangement.Center,
             ) {
                 Column(
+                    modifier = Modifier.fillMaxHeight(),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
                 ) {
                     Text(
                         text = "x",
@@ -160,7 +160,6 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                     TeamBox(
                         "Equipo 2",
                         puntosB,
-                        Modifier.align(Alignment.Center),
                     )
                 }
             }
@@ -241,7 +240,7 @@ fun TeamBox(teamName: String = "Equipo", score: Int = 0, modifier: Modifier = Mo
         )
         Text(
             text = score.toString(),
-            modifier = Modifier.align(Alignment.TopCenter),
+            modifier = Modifier.align(Alignment.Center),
             fontSize = 90.sp,
             color = Color.Green,
         )
