@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PantallaExamen</string>
+    <string name="play">Play</string>
+    <string name="equipo">Equipo</string>
+    <string name="faltas">Faltas</string>
+    <string name="editar">Editar</string>
+    <string name="compartir">Compartir</string>
 </resources>
