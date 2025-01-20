@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -34,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -88,7 +90,7 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                         colors = ButtonColors(Color.Black, Color.White, Color.White, Color.Black),
                         border = BorderStroke(5.dp, Color.White),
                     ) {
-                        Icon(Icons.Default.PlayArrow, R.string.play.toString())
+                        Icon(Icons.Default.PlayArrow, stringResource(R.string.play))
                     }
                 }
                 Column(
@@ -118,10 +120,19 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(
-                    modifier = Modifier.weight(0.25f),
+                    modifier = Modifier.weight(0.25f).fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    Row {
+                    Row (
+                        modifier = Modifier.weight(0.33f).fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
                         PlusButton(
+                            Modifier
+                                .clip(CircleShape)
+                                .padding(4.dp, 0.dp),
                             {
                                 if (isEdit) {
                                     puntosA -= 1
@@ -130,13 +141,17 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                                 }
                             },
                             sign + "1",
-                            Modifier
-                                .clip(CircleShape)
-                                .padding(4.dp, 0.dp)
                         )
                     }
-                    Row {
+                    Row (
+                        modifier = Modifier.weight(0.33f).fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
                         PlusButton(
+                            Modifier
+                                .clip(CircleShape)
+                                .padding(4.dp, 0.dp),
                             {
                                 if (isEdit) {
                                     puntosA -= 2
@@ -145,13 +160,17 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                                 }
                             },
                             sign + "2",
-                            Modifier
-                                .clip(CircleShape)
-                                .padding(4.dp, 0.dp)
                         )
                     }
-                    Row {
+                    Row (
+                        modifier = Modifier.weight(0.33f).fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
                         PlusButton(
+                            Modifier
+                                .clip(CircleShape)
+                                .padding(4.dp, 0.dp),
                             {
                                 if (isEdit) {
                                     puntosA -= 3
@@ -160,9 +179,6 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                                 }
                             },
                             sign + "3",
-                            Modifier
-                                .clip(CircleShape)
-                                .padding(4.dp, 0.dp)
                         )
                     }
                 }
@@ -170,20 +186,21 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                     modifier = Modifier.weight(0.75f)
                 ) {
                     TeamBox(
-                        R.string.equipo.toString() + " 1",
+                        stringResource(R.string.equipo) + " 1",
                         puntosA,
                     )
                 }
             }
             Row(
                 modifier = Modifier
-                    .weight(0.1f)
+                    .weight(0.05f)
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
             ) {
                 Column(
                     modifier = Modifier.fillMaxHeight(),
                     horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
                 ) {
                     Text(
                         text = "x",
@@ -197,24 +214,38 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(
-                    modifier = Modifier.weight(0.25f)
+                    modifier = Modifier.weight(0.25f).fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Row {
+                    Row (
+                        modifier = Modifier.weight(0.33f).fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
                         PlusButton(
+                            Modifier
+                                .clip(CircleShape)
+                                .padding(4.dp, 0.dp),
                             {
                                 if (isEdit) {
                                     puntosB -= 1
                                 } else {
                                     puntosB += 1
                                 }
-                            }, sign + "1",
-                            Modifier
-                                .clip(CircleShape)
-                                .padding(4.dp, 0.dp)
+                            },
+                            sign + "1",
                         )
                     }
-                    Row {
+                    Row (
+                        modifier = Modifier.weight(0.33f).fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
                         PlusButton(
+                            Modifier
+                                .clip(CircleShape)
+                                .padding(4.dp, 0.dp),
                             {
                                 if (isEdit) {
                                     puntosB -= 2
@@ -223,13 +254,17 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                                 }
                             },
                             sign + "2",
-                            Modifier
-                                .clip(CircleShape)
-                                .padding(4.dp, 0.dp)
                         )
                     }
-                    Row {
+                    Row (
+                        modifier = Modifier.weight(0.33f).fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
                         PlusButton(
+                            Modifier
+                                .clip(CircleShape)
+                                .padding(4.dp, 0.dp),
                             {
                                 if (isEdit) {
                                     puntosB -= 3
@@ -238,9 +273,6 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                                 }
                             },
                             sign + "3",
-                            Modifier
-                                .clip(CircleShape)
-                                .padding(4.dp, 0.dp)
                         )
                     }
                 }
@@ -248,34 +280,34 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                     modifier = Modifier.weight(0.75f)
                 ) {
                     TeamBox(
-                        R.string.equipo.toString() + " 2",
+                        stringResource(R.string.equipo) + " 2",
                         puntosB,
                     )
                 }
             }
             Column(
                 modifier = Modifier
-                    .weight(0.15f)
+                    .weight(0.2f)
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.weight(0.2f).fillMaxSize(),
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     Column(
                         modifier = Modifier.align(Alignment.CenterVertically)
                     ) {
                         Text(
-                            text = R.string.faltas.toString(),
+                            text = stringResource(R.string.faltas),
                             color = Color.White,
                             fontSize = 25.sp,
                         )
                     }
                 }
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.weight(0.4f).fillMaxSize(),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -332,19 +364,20 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
                     }
                 }
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier = Modifier.weight(0.4f).fillMaxSize(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    BottomButtons({
+                    BottomButtons(
+                        Modifier.padding(16.dp, 0.dp),
+                        {
                         isEdit = !isEdit
                         if (sign == "+")
                             sign = "-"
                         else
                             sign = "+"
-                    }, R.string.editar.toString(), Modifier.padding(16.dp, 0.dp))
-                    BottomButtons({}, R.string.compartir.toString(), Modifier.padding(16.dp, 0.dp))
+                    }, stringResource(R.string.editar))
+                    BottomButtons(Modifier.padding(16.dp, 0.dp),{}, stringResource(R.string.compartir))
                 }
             }
         }
@@ -352,7 +385,7 @@ fun MainScreenPortrait(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun BottomButtons(onClick: () -> Unit = {}, text: String = "", modifier: Modifier = Modifier) {
+fun BottomButtons(modifier: Modifier = Modifier, onClick: () -> Unit = {}, text: String = "") {
     Column {
         Button(
             onClick = onClick,
@@ -365,7 +398,7 @@ fun BottomButtons(onClick: () -> Unit = {}, text: String = "", modifier: Modifie
 }
 
 @Composable
-fun PlusButton(onClick: () -> Unit, text: String = "0", modifier: Modifier = Modifier) {
+fun PlusButton(modifier: Modifier = Modifier, onClick: () -> Unit, text: String = "0") {
     Button(
         onClick = onClick,
         modifier = modifier,
@@ -379,7 +412,7 @@ fun PlusButton(onClick: () -> Unit, text: String = "0", modifier: Modifier = Mod
 }
 
 @Composable
-fun TeamBox(teamName: String = R.string.equipo.toString(), score: Int = 0, modifier: Modifier = Modifier) {
+fun TeamBox(teamName: String = R.string.equipo.toString(), score: Int = 0) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -428,19 +461,19 @@ fun MainScreenLandscape(modifier: Modifier = Modifier) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 PlusButton(
+                    Modifier.clip(CircleShape).padding(4.dp),
                     { puntosA = if (isEdit) puntosA - 1 else puntosA + 1 },
                     sign + "1",
-                    Modifier.clip(CircleShape).padding(4.dp)
                 )
                 PlusButton(
+                    Modifier.clip(CircleShape).padding(4.dp),
                     { puntosA = if (isEdit) puntosA - 2 else puntosA + 2 },
                     sign + "2",
-                    Modifier.clip(CircleShape).padding(4.dp)
                 )
                 PlusButton(
+                    Modifier.clip(CircleShape).padding(4.dp),
                     { puntosA = if (isEdit) puntosA - 3 else puntosA + 3 },
                     sign + "3",
-                    Modifier.clip(CircleShape).padding(4.dp)
                 )
             }
             Column(
@@ -540,19 +573,19 @@ fun MainScreenLandscape(modifier: Modifier = Modifier) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 PlusButton(
+                    Modifier.clip(CircleShape).padding(4.dp),
                     { puntosB = if (isEdit) puntosB - 1 else puntosB + 1 },
                     sign + "1",
-                    Modifier.clip(CircleShape).padding(4.dp)
                 )
                 PlusButton(
+                    Modifier.clip(CircleShape).padding(4.dp),
                     { puntosB = if (isEdit) puntosB - 2 else puntosB + 2 },
                     sign + "2",
-                    Modifier.clip(CircleShape).padding(4.dp)
                 )
                 PlusButton(
+                    Modifier.clip(CircleShape).padding(4.dp),
                     { puntosB = if (isEdit) puntosB - 3 else puntosB + 3 },
                     sign + "3",
-                    Modifier.clip(CircleShape).padding(4.dp)
                 )
             }
         }
