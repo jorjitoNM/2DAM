@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -32,5 +33,13 @@ public class MedicalRecord {
 
     public MedicalRecord (int id) {
         this.id = id;
+    }
+
+    public MedicalRecord(Patient patient, int idDoctor, String description, LocalDate date) {
+        this.patient = patient;
+        this.idDoctor = idDoctor;
+        this.diagnosis = description;
+        this.date = date;
+        this.medications = new ArrayList<>();
     }
 }

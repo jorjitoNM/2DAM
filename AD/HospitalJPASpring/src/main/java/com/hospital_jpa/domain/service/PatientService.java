@@ -4,23 +4,35 @@ package com.hospital_jpa.domain.service;
 import com.hospital_jpa.dao.model.Credential;
 import com.hospital_jpa.dao.model.Patient;
 import com.hospital_jpa.dao.model.Payment;
+import com.hospital_jpa.dao.repository.AppointmentsRepository;
+import com.hospital_jpa.dao.repository.MedicalRecordsRepository;
 import com.hospital_jpa.dao.repository.PatientRepository;
 import com.hospital_jpa.dao.repository.PaymentsRepository;
+import com.hospital_jpa.domain.error.FOREIGN_KEY_ERROR;
 import com.hospital_jpa.domain.model.PatientUI;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Log4j2
 public class PatientService {
 
     private final PatientRepository patientRepository;
     private final PaymentsRepository paymentsRepository;
+    private final AppointmentsRepository appointmentsRepository;
+    private final MedicalRecordsRepository medicalRecordsRepository;
 
-    public PatientService(PatientRepository patientRepository, PaymentsRepository paymentsRepository) {
+    public PatientService(PatientRepository patientRepository, PaymentsRepository paymentsRepository, AppointmentsRepository appointmentsRepository, MedicalRecordsRepository medicalRecordsRepository, MedicalRecordsRepository medicalRecordsRepository1) {
         this.patientRepository = patientRepository;
         this.paymentsRepository = paymentsRepository;
+        this.appointmentsRepository = appointmentsRepository;
+        this.medicalRecordsRepository = medicalRecordsRepository1;
     }
 
     public List<PatientUI> getPatients() {
@@ -46,7 +58,24 @@ public class PatientService {
         patientRepository.save(patient);
     }
 
-    public void deletePatient(int patientId) {
-        patientRepository.deleteById(patientId);
+
+    public void deletePatient(int patientId, boolean confirmation) {
+        try {
+            if (confirmation) {
+               deletePatientInfo(patientId);
+            }
+            patientRepository.deleteById(patientId);
+        } catch (DataIntegrityViolationException e) {
+            throw new FOREIGN_KEY_ERROR();
+        } catch (Exception e) {
+            log.error(e.getMessage(),e);
+        }
+    }
+
+    @Transactional
+    public void deletePatientInfo(int patientId) {
+        appointmentsRepository.deleteAllByPatient_Id(patientId);
+        paymentsRepository.deleteAllByPatient_Id(patientId);
+        medicalRecordsRepository.deleteAllByPatient_Id(patientId);
     }
 }

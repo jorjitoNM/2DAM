@@ -37,6 +37,6 @@ public class RestPatient {
     @DeleteMapping("/patients/{patientId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePatient(@PathVariable int patientId, @RequestParam(required = false) boolean confirm) {
-        patientService.deletePatient(patientId);
+        patientService.deletePatient(patientId,confirm);
     }
 }

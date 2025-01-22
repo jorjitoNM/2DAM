@@ -11,4 +11,5 @@ import java.util.List;
 public interface PaymentsRepository extends JpaRepository<Payment, Integer> {
     @Query(value = "select new Payment(p.patient.id,sum(p.amount)) from Payment p group by p.patient.id")
     List<Payment> getPaymentsByPatient();
+    void deleteAllByPatient_Id(int patientId);
 }

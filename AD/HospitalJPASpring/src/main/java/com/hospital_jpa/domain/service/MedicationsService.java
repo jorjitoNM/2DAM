@@ -16,8 +16,6 @@ public class MedicationsService {
     }
 
     public List<String> getAll() {
-        List<String> medications = new ArrayList<>();
-        medicationsRepository.findAll().forEach(m -> medications.add(m.getMedicationName()));
-        return medications;
+        return medicationsRepository.findAllDistinctNames();
     }
 }
