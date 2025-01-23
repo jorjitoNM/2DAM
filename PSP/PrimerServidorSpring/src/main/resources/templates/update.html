@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Plato</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Form Container */
+        .form-container {
+            background-color: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4caf50;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        /* Form Styles */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .ingredients-container {
+            margin-bottom: 15px;
+        }
+
+        .ingredient-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .ingredient-item input {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+
+        .ingredient-item button {
+            background-color: #ff4d4d;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .ingredient-item button:hover {
+            background-color: #e60000;
+        }
+
+        .add-ingredient {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .add-ingredient:hover {
+            background-color: #45a049;
+        }
+
+        button[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        button[type="button"] {
+            background-color: #ccc;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button[type="button"]:hover {
+            background-color: #bbb;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h1>Update Plato</h1>
+    <form action="update" method="POST">
+        <!-- Hidden ID Field -->
+        <input type="hidden" id="id" name="dish_id" th:value="${dish.id}">
+
+        <!-- Nombre Field -->
+        <label for="nombre">Dish Name:</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Enter dish name" th:value="${dish.nombre}" required>
+
+        <!-- Ingredients Section -->
+        <label for="ingredients-container">Ingredients:</label>
+        <div class="ingredients-container" id="ingredients-container">
+            <!-- Example ingredient rows -->
+            <div class="ingredient-item" th:each="ingredient : ${dish.ingredientes()}">
+                <input type="text" name="ingredientes" placeholder="Enter ingredient" th:value="${ingredient}">
+                <button type="button" onclick="removeIngredient(this)">Remove</button>
+            </div>
+        </div>
+        <button type="button" class="add-ingredient" onclick="addIngredient()">Add Ingredient</button>
+
+        <!-- Submit Button -->
+        <button type="submit">Update Plato</button>
+    </form>
+</div>
+
+<script>
+    // JavaScript to dynamically add/remove ingredients
+    function addIngredient() {
+        const container = document.getElementById('ingredients-container');
+        const div = document.createElement('div');
+        div.className = 'ingredient-item';
+
+        div.innerHTML = `
+            <input type="text" name="ingredientes" placeholder="Enter ingredient">
+            <button type="button" onclick="removeIngredient(this)">Remove</button>
+        `;
+
+        container.appendChild(div);
+    }
+
+    function removeIngredient(button) {
+        button.parentElement.remove();
+    }
+</script>
+
+</body>
+</html>

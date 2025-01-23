@@ -4,6 +4,7 @@ import org.primerservidorspring.common.Constantes;
 import org.primerservidorspring.domain.model.Plato;
 import org.primerservidorspring.domain.services.FoodService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -21,14 +22,8 @@ public class FoodController {
     }
 
     @GetMapping("/home")
-    public void getAll () {
-        TemplateEngine templateEngine = (TemplateEngine) getServletContext().getAttribute(
-                ThymeLeafListener.TEMPLATE_ENGINE_ATTR);
-        IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext())
-                .buildExchange(request, response);
-        WebContext context = new WebContext(webExchange);
-        context.setVariable("dishes",foodService.getDishes());
-        templateEngine.process("home", context, response.getWriter());
+    public String getAll (Model model) {
+       re
     }
 
     @GetMapping("/getDish")
