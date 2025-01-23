@@ -28,11 +28,11 @@ fun LoginContent() {
 
     ) {
         Row {
-            TextField(
-                value = "",
-                onValueChange = ,
-                placeholder = "Username (ej. juanElOne)",
-            )
+//            TextField(
+//                value = "",
+//                onValueChange = ,
+//                placeholder = "Username (ej. juanElOne)",
+//            )
         }
     }
 }
