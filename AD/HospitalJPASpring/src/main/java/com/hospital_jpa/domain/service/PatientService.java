@@ -13,6 +13,7 @@ import com.hospital_jpa.domain.model.PatientUI;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -62,20 +63,15 @@ public class PatientService {
     public void deletePatient(int patientId, boolean confirmation) {
         try {
             if (confirmation) {
-               deletePatientInfo(patientId);
+                appointmentsRepository.deleteAllByPatient_Id(patientId);
+                paymentsRepository.deleteAllByPatient_Id(patientId);
+                medicalRecordsRepository.deleteAllByPatient_Id(patientId);
             }
             patientRepository.deleteById(patientId);
         } catch (DataIntegrityViolationException e) {
             throw new FOREIGN_KEY_ERROR();
         } catch (Exception e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
         }
-    }
-
-    @Transactional
-    public void deletePatientInfo(int patientId) {
-        appointmentsRepository.deleteAllByPatient_Id(patientId);
-        paymentsRepository.deleteAllByPatient_Id(patientId);
-        medicalRecordsRepository.deleteAllByPatient_Id(patientId);
     }
 }
