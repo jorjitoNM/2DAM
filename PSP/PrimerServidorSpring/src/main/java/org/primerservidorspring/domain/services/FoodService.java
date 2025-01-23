@@ -21,15 +21,15 @@ public class FoodService {
         return dao.getDishes();
     }
 
-    public void delete(String p) {
-        dao.deletePlato(Integer.parseInt(p));
+    public void delete(Integer dishId) {
+        dao.deletePlato(dishId);
     }
 
     public Plato updateDish (Plato p) {
         return dao.updateDish(p);
     }
 
-    public Plato getDish(String parameter) {
-        return dao.getDish(Integer.parseInt(parameter));
+    public Plato getDish(Integer dishId) {
+        return dao.getDish(dishId);
     }
 }

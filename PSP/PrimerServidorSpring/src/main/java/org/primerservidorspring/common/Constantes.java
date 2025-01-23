@@ -9,6 +9,9 @@ public class Constantes {
     public static final String PASSWORD = "password";
     public static final String HOME = "home";
     public static final String LOGGED = "logged";
+    public static final String DISHES = "dishes";
+    public static final String DISH = "dish";
+    public static final String ERROR = "error";
 
     private Constantes () {}
 }

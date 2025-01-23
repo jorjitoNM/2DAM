@@ -14,10 +14,16 @@ import java.io.IOException;
 public class LoginFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getSession().getAttribute(Constantes.LOGGED) != null) {
+        if (request.getSession().getAttribute(Constantes.LOGGED) == null) {
             response.sendRedirect("/login");
             return;
         }
         filterChain.doFilter(request, response);
     }
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+        return "/login".equals(path);
+    }
+
 }
