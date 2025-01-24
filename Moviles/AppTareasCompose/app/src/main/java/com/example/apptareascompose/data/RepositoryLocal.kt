@@ -1,31 +1,37 @@
 package com.example.apptareascompose.data
 
+import com.example.apptareascompose.common.NetworkResult
 import com.example.apptareascompose.data.local.UserDao
 import com.example.apptareascompose.data.local.modelo.UserEntity
+import com.example.apptareascompose.data.local.modelo.toUser
+import com.example.apptareascompose.data.utils.Constantes
+import com.example.apptareascompose.domain.model.User
+import com.example.primeraapp.di.IoDispatcher
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class RepositoryLocal @Inject constructor(
-    private val userDao: UserDao
+    private val userDao: UserDao,
+    @IoDispatcher val dispatcher: CoroutineDispatcher,
 ) {
 
-    suspend fun registerUser(username: String, password: String): Result<Unit> {
-        return try {
-            val hashedPassword = password.hashCode().toString()
-            val user = UserEntity(username = username, password = hashedPassword)
-            userDao.insertUser(user)
-            Result.success(Unit)
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
+    fun saveUser(user : User): Result<Unit> {
+        TODO()
     }
 
-    fun validateUser(username: String, password: String): Flow<Result<UserEntity?>> {
-        val hashedPassword = password.hashCode().toString()
-        return userDao.validateUser(username, hashedPassword)
-            .map { user -> Result.success(user) }
-            .catch { e -> emit(Result.failure(e)) }
-    }
+    fun getUser(user : User) = flow {
+            emit(NetworkResult.Loading<Unit>())
+            val result = userDao.getUser(user.username).map { u -> u?.toUser() }
+            emitAll(result)
+        }
+            .catch { e ->
+                emit(NetworkResult.Error<Unit>(e.message ?: Constantes.DATA_BASE_ERROR))
+            }
+            .flowOn(dispatcher)
 }

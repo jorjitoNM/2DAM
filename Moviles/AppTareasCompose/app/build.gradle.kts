@@ -28,7 +28,7 @@ android {
     productFlavors {
         create("development") {
             dimension = "env"
-            buildConfigField("String", "API_URL", "\"https://jsonplaceholder.typicode.com\"")
+            buildConfigField("String", "API_URL", "\"https://informatica.iesquevedo.es/marcas\"")
         }
         create("production") {
             dimension = "env"

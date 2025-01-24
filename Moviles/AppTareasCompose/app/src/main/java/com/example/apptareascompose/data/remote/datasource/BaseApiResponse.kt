@@ -1,7 +1,7 @@
 package com.example.apptareascompose.data.remote.datasource
 
 
-import com.example.apptareascompose.data.remote.NetworkResult
+import com.example.apptareascompose.common.NetworkResult
 import com.example.apptareascompose.data.utils.Constantes
 import retrofit2.Response
 import timber.log.Timber

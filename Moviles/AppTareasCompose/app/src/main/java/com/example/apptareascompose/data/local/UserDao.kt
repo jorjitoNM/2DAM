@@ -20,6 +20,6 @@ interface UserDao {
     @Delete
     suspend fun deleteUser(user: UserEntity)
 
-    @Query("SELECT * FROM users WHERE username = :username AND password = :hashedPassword LIMIT 1")
-    fun validateUser(username: String, hashedPassword: String): Flow<UserEntity?>
+    @Query("SELECT * FROM users WHERE username = :username LIMIT 1")
+    fun getUser(username: String): Flow<UserEntity?>
 }

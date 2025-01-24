@@ -1,4 +1,4 @@
-package com.example.apptareascompose.data.remote
+package com.example.apptareascompose.common
 
 sealed class NetworkResult<T> {
     class Success<T>(val data: T) : NetworkResult<T>()
