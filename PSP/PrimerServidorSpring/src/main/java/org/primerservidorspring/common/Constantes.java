@@ -12,6 +12,7 @@ public class Constantes {
     public static final String DISHES = "dishes";
     public static final String DISH = "dish";
     public static final String ERROR = "error";
+    public static final String SUBJECT_VERIFICATION = "Verfifique su correo antes de continuar";
 
     private Constantes () {}
 }

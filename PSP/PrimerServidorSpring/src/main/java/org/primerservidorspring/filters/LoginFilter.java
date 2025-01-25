@@ -25,5 +25,4 @@ public class LoginFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         return "/login".equals(path);
     }
-
 }

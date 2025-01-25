@@ -5,6 +5,7 @@ import org.primerservidorspring.common.Constantes;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -12,7 +13,6 @@ import org.springframework.web.servlet.view.RedirectView;
 public class LoginController {
 
     @GetMapping("/login")
-    @Validated
     public RedirectView login (HttpSession session, @RequestAttribute String email, @RequestAttribute String password ) {
         if (session.getAttribute(Constantes.EMAIL) == null || session.getAttribute(Constantes.PASSWORD) == null) {
             session.setAttribute(Constantes.EMAIL,email);
@@ -26,5 +26,10 @@ public class LoginController {
             session.setAttribute(Constantes.LOGGED,true);
             return new RedirectView(Constantes.HOME);
         }
+    }
+
+    @PostMapping("/confirm")
+    public RedirectView confirm (@RequestAttribute String email, @RequestAttribute String password ) {
+        return null;
     }
 }
