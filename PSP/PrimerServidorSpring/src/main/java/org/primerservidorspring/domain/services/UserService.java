@@ -2,7 +2,6 @@ package org.primerservidorspring.domain.services;
 
 import org.primerservidorspring.dao.DaoUsers;
 import org.primerservidorspring.domain.model.User;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
@@ -13,11 +12,9 @@ import java.util.List;
 public class UserService {
 
     private  final DaoUsers daoUsers;
-    private final PasswordEncoder passwordEncoder;
 
-    public UserService(DaoUsers daoUsers, PasswordEncoder passwordEncoder) {
+    public UserService(DaoUsers daoUsers) {
         this.daoUsers = daoUsers;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public String signUp (User user) {
@@ -25,7 +22,7 @@ public class UserService {
         SecureRandom sr = new SecureRandom();
         sr.nextBytes(randomCode);
         String code = Base64.getUrlEncoder().encodeToString(randomCode);
-        daoUsers.singUp(new User(user.getEmail(),passwordEncoder.encode(user.getPassword()),code));
+        daoUsers.singUp(new User(user.getEmail(),user.getPassword(),code));
         return code;
     }
 
@@ -39,6 +36,6 @@ public class UserService {
         if (foundUser == null)
             return false;
         else
-            return passwordEncoder.matches(user.getPassword(), foundUser.getPassword());
+            return user.getPassword().equals(foundUser.getPassword());
     }
 }

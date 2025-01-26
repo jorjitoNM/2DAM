@@ -96,27 +96,22 @@
         <td colspan="3">No Dishes Available</td>
     </tr>
     <tr th:each="dish : ${dishes}">
-        <!-- Nombre del plato -->
         <td rowspan="1">
             <span th:text="${dish.nombre()}">Name</span>
         </td>
 
-        <!-- Ingredientes como columnas dinámicas -->
         <td th:each="ingredient : ${dish.ingredientes()}" th:text="${ingredient}">
             Ingredient
         </td>
 
-        <!-- Columna de Acción -->
         <td rowspan="1">
-            <!-- Botón Delete -->
             <form action="delete" method="POST" style="display:inline;">
                 <input type="hidden" name="dishId" th:value="${dish.id}" />
                 <button type="submit" class="delete-button">Delete</button>
             </form>
             <br><br>
-            <!-- Botón Update -->
             <form action="getDish" method="POST" style="display:inline;">
-                <input type="hidden" name="dish_id" th:value="${dish.id}" />
+                <input type="hidden" name="dishId" th:value="${dish.id}" />
                 <button type="submit" class="update-button">Update</button>
             </form>
         </td>

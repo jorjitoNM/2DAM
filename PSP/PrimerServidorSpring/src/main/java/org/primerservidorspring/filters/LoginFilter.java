@@ -23,6 +23,6 @@ public class LoginFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
-        return "/login".equals(path);
+        return "/login".equals(path) || "/checkLogin".equals(path) || "/confirm".equals(path) || "/signUp".equals(path);
     }
 }

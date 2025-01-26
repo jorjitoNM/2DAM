@@ -9,9 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LoginController {
@@ -25,22 +24,33 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public RedirectView login (HttpSession session, @RequestAttribute String email, @RequestAttribute String password ) {
-        if (userService.login(new User(email,password)))
-            return new RedirectView(Constantes.HOME);
-        else
-            return new RedirectView(Constantes.ERROR);
+    public String login(Model model) {
+        return Constantes.LOGIN;
+    }
+
+    @PostMapping("/checkLogin")
+    public String checkLogin(HttpSession session, Model model, @RequestParam String email, @RequestParam String password) {
+        if (userService.login(new User(email, password))) {
+            session.setAttribute(Constantes.LOGGED,true);
+            return "redirect:/" + Constantes.HOME;
+        }
+        else {
+            model.addAttribute(Constantes.ERROR, true);
+            return Constantes.LOGIN;
+        }
     }
 
     @PostMapping("/signUp")
-    public void signUp (Model model, @RequestParam String email, @RequestParam String password) {
-        String code = userService.signUp(new User(email,password));
-        mailComponent.sendMail("jorge.novillo@educa.madrid.org","Comfirma tu correo","<html><a herf=\"http://locahost:8080/confirm?code="+code+"\">Comfirma tu correo pinchando aquí</a></html>");
+    public String signUp(Model model, @RequestParam String email, @RequestParam String password) {
+        String code = userService.signUp(new User(email, password));
+        mailComponent.sendMail("jorge.novillo@educa.madrid.org", "Confirma tu correo", "<html><a herf=\"http://localhost:8080/confirm?code=" + code + "\">Comfirma tu correo pinchando aquí</a></html>");
+        model.addAttribute(Constantes.CREATED,"true");
+        return Constantes.LOGIN;
     }
 
-    @PostMapping("/confirm")
-    public RedirectView confirm (@RequestAttribute String code) {
+    @GetMapping("/confirm")
+    public String confirm(Model model, @RequestParam String code) {
         userService.confirmUser(code);
-        return new RedirectView(Constantes.LOGIN);
+        return Constantes.LOGIN;
     }
 }

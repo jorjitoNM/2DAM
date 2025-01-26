@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -21,15 +20,15 @@ public class FoodController {
     }
 
     @GetMapping("/home")
-    public String getAll (Model model) {
-       model.addAttribute(Constantes.DISHES,foodService.getDishes());
-       return Constantes.HOME;
+    public String getAll(Model model) {
+        model.addAttribute(Constantes.DISHES, foodService.getDishes());
+        return Constantes.HOME;
     }
 
     @PostMapping("/getDish")
-    public String get (Model model, @RequestParam Integer dishId) {
+    public String get(Model model, @RequestParam String dishId) {
         if (dishId != null) {
-            Plato p = foodService.getDish(dishId);
+            Plato p = foodService.getDish(Integer.parseInt(dishId));
             if (p != null) {
                 model.addAttribute(Constantes.DISH, p);
                 return Constantes.UPDATE;
@@ -38,21 +37,18 @@ public class FoodController {
         return Constantes.HOME;
     }
 
-    @GetMapping("/delete")
-    public RedirectView delete (Model model, @RequestParam Integer dishId) {
-        if (dishId == null)
-            return new RedirectView();
-        else
+    @PostMapping("/delete")
+    public String delete(Model model, @RequestParam Integer dishId) {
+        if (dishId != null)
             foodService.delete(dishId);
-        return new RedirectView(Constantes.HOME);
+        return "redirect:/" + Constantes.HOME;
     }
 
-    @GetMapping("/update")
-    public RedirectView update (Model model, @RequestParam Integer dishId, @RequestParam String name, @RequestParam List<String> ingredients) {
-        if (dishId != null && name != null && ingredients != null) {
-            foodService.updateDish(new Plato(name,ingredients,dishId));
-        }
-        model.addAttribute(Constantes.DISHES,foodService.getDishes());
-        return new RedirectView(Constantes.HOME);
+    @PostMapping("/update")
+    public String update(Model model, @RequestParam String dishId, @RequestParam String nombre, @RequestParam List<String> ingredientes) {
+        if (dishId != null && nombre != null && ingredientes != null)
+            foodService.updateDish(new Plato(nombre, ingredientes, Integer.parseInt(dishId)));
+        model.addAttribute(Constantes.DISHES, foodService.getDishes());
+        return "redirect:/" + Constantes.HOME;
     }
 }

@@ -14,6 +14,7 @@ public class Constantes {
     public static final String ERROR = "error";
     public static final String SUBJECT_VERIFICATION = "Verfifique su correo antes de continuar";
     public static final String LOGIN = "login";
+    public static final String CREATED = "created";
 
     private Constantes () {}
 }
