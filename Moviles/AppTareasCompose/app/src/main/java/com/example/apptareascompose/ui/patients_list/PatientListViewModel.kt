@@ -42,13 +42,13 @@ class PatientListViewModel @Inject constructor(
         viewModelScope.launch(dispatcher) {
             getAllPatientsUseCase.invoke().collect { result ->
                 when (result) {
-                    is NetworkResult.Success -> _uiState.update { it.copy(patients = result.data) }
+                    is NetworkResult.Success -> _uiState.update { it.copy(patients = result.data, isLoading = false) }
 
                     is NetworkResult.Error -> _uiState.update {
-                        it.copy(uiEvent = UiEvent.ShowSnackbar(result.message)
+                        it.copy(uiEvent = UiEvent.ShowSnackbar(result.message), isLoading = false
                         )
                     }
-                    is NetworkResult.Loading -> TODO()
+                    is NetworkResult.Loading -> _uiState.update { it.copy(isLoading = true) }
                 }
             }
         }

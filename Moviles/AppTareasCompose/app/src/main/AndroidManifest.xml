@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
+        android:name="com.example.apptareascompose.HospitalApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,7 +15,7 @@
         android:theme="@style/Theme.AppTareasCompose"
         tools:targetApi="31">
         <activity
-            android:name="com.example.apptareascompose.MainActivity"
+            android:name="com.example.apptareascompose.ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.AppTareasCompose">
             <intent-filter>

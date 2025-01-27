@@ -6,5 +6,5 @@ import javax.inject.Inject
 class GetAllPatientsUseCase @Inject constructor(
     private val repositoryRemote: RepositoryRemote
 ) {
-    suspend fun invoke () = repositoryRemote.getAllPatients()
+    fun invoke () = repositoryRemote.getAllPatients()
 }

@@ -2,13 +2,11 @@ package com.example.apptareascompose.data
 
 import com.example.apptareascompose.common.NetworkResult
 import com.example.apptareascompose.data.local.UserDao
-import com.example.apptareascompose.data.local.modelo.UserEntity
 import com.example.apptareascompose.data.local.modelo.toUser
 import com.example.apptareascompose.data.utils.Constantes
 import com.example.apptareascompose.domain.model.User
 import com.example.primeraapp.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
@@ -25,7 +23,7 @@ class RepositoryLocal @Inject constructor(
         TODO()
     }
 
-    fun getUser(user : User) = flow {
+    fun getUser (user : User) = flow {
             emit(NetworkResult.Loading<Unit>())
             val result = userDao.getUser(user.username).map { u -> u?.toUser() }
             emitAll(result)

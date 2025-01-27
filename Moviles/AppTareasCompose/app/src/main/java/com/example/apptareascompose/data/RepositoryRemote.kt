@@ -25,4 +25,14 @@ class RepositoryRemote @Inject constructor(
         emit(NetworkResult.Error(e.message ?: Constantes.DATA_BASE_ERROR))
     }
         .flowOn(dispatcher)
+
+    fun getPatientMedicalRecords(id: Int) = flow {
+        emit(NetworkResult.Loading())
+        val result = medicalRecordDataSource.getPatientMedicalRecords(id)
+        emit(result)
+    }
+        .catch { e ->
+            emit(NetworkResult.Error(e.message ?: Constantes.DATA_BASE_ERROR))
+        }
+        .flowOn(dispatcher)
 }

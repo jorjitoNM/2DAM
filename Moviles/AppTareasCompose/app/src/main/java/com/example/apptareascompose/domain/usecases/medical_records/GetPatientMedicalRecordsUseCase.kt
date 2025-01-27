@@ -1,10 +1,11 @@
 package com.example.apptareascompose.domain.usecases.medical_records
 
+import com.example.apptareascompose.data.RepositoryRemote
 import com.example.apptareascompose.data.remote.datasource.MedicalRecordDataSource
 import javax.inject.Inject
 
 class GetPatientMedicalRecordsUseCase @Inject constructor(
-    private val medicalRecordDataSource: MedicalRecordDataSource
+    private val repositoryRemote : RepositoryRemote
 ) {
-    suspend fun invoke (id : Int) = medicalRecordDataSource.getPatientMedicalRecords(id)
+    suspend fun invoke (id : Int) = repositoryRemote.getPatientMedicalRecords(id)
 }
