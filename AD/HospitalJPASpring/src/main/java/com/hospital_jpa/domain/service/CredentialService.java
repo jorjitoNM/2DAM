@@ -14,6 +14,6 @@ public class CredentialService {
 
     public boolean login(CredentialUI userCredentialsUI) {
         return credentialRepository.findByUserName(userCredentialsUI.getUsername())
-                .map(value -> value.getPassword().equals(userCredentialsUI.getPassword())).orElse(false);
+                .map(credential -> credential.getPassword().equals(userCredentialsUI.getPassword())).orElse(false);
     }
 }
