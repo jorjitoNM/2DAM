@@ -10,7 +10,7 @@ data class MedicalRecordRemote (
     val date : String = LocalDate.now().toString(),
     val patientId : Int = 0,
     val doctorId : Int = 0,
-    val medications : List<Medication> = emptyList(),
+    val medications : List<String> = emptyList(),
 )
 fun MedicalRecordRemote.toMedicalRecord () : MedicalRecord =
     MedicalRecord(id,description,LocalDate.parse(date),patientId,doctorId,medications)

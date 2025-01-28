@@ -8,5 +8,5 @@ data class MedicalRecord(
     val date : LocalDate = LocalDate.now(),
     val patientId : Int = 0,
     val doctorId : Int = 0,
-    val medications : List<Medication> = emptyList(),
+    val medications : List<String> = emptyList(),
 )

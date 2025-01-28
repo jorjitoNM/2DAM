@@ -1,7 +1,6 @@
 package com.example.apptareascompose.domain.usecases.medical_records
 
 import com.example.apptareascompose.data.RepositoryRemote
-import com.example.apptareascompose.data.remote.datasource.MedicalRecordDataSource
 import javax.inject.Inject
 
 class GetPatientMedicalRecordsUseCase @Inject constructor(

@@ -31,8 +31,8 @@ class PatientListViewModel @Inject constructor(
     private val _uiError = Channel<UiEvent>()
     val uiError = _uiError.receiveAsFlow()
 
-    fun handleEvent (event : PatientListEvents) {
-        when (event ){
+    fun handleEvent(event: PatientListEvents) {
+        when (event) {
             is PatientListEvents.GetAllPatients -> getAllPatients()
             is PatientListEvents.EventDone -> _uiState.update { it.copy(uiEvent = null) }
         }
@@ -42,12 +42,19 @@ class PatientListViewModel @Inject constructor(
         viewModelScope.launch(dispatcher) {
             getAllPatientsUseCase.invoke().collect { result ->
                 when (result) {
-                    is NetworkResult.Success -> _uiState.update { it.copy(patients = result.data, isLoading = false) }
-
-                    is NetworkResult.Error -> _uiState.update {
-                        it.copy(uiEvent = UiEvent.ShowSnackbar(result.message), isLoading = false
+                    is NetworkResult.Success -> _uiState.update {
+                        it.copy(
+                            patients = result.data,
+                            isLoading = false
                         )
                     }
+
+                    is NetworkResult.Error -> _uiState.update {
+                        it.copy(
+                            uiEvent = UiEvent.ShowSnackbar(result.message), isLoading = false
+                        )
+                    }
+
                     is NetworkResult.Loading -> _uiState.update { it.copy(isLoading = true) }
                 }
             }

@@ -1,6 +1,7 @@
 package com.example.apptareascompose.ui.patients_list
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,7 +10,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
@@ -26,13 +26,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.apptareascompose.domain.model.Patient
+import com.example.primeraapp.ui.common.UiEvent
 import java.time.LocalDate
 
 @Composable
 fun PatientsListScreen(
     patientListViewModel: PatientListViewModel = hiltViewModel(),
-    showSnackbar: (String, () -> Unit) -> Unit,
-    onNavigateDetail: (String) -> Unit = {},
+    showSnackbar: (String) -> Unit,
+    onNavigateDetail: (Int) -> Unit = {},
 ) {
     val uiState by patientListViewModel.uiState.collectAsState()
 
@@ -42,6 +43,9 @@ fun PatientsListScreen(
 
     LaunchedEffect(uiState.uiEvent) {
         uiState.uiEvent?.let {
+            if (it is UiEvent.ShowSnackbar) {
+                showSnackbar(it.message)
+            }
             patientListViewModel.handleEvent(PatientListEvents.EventDone)
         }
     }
@@ -56,7 +60,7 @@ fun PatientsListScreen(
 @Composable
 fun PatientListContent(
     patients: List<Patient>,
-    onNavigateDetail: (String) -> Unit,
+    onNavigateDetail: (Int) -> Unit,
     loading: Boolean,
 ) {
     LazyColumn {
@@ -72,7 +76,7 @@ fun PatientListContent(
 @Composable
 fun PatientItem(
     patient: Patient,
-    onNavigateDetail: (String) -> Unit,
+    onNavigateDetail: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     OutlinedCard(
@@ -81,7 +85,7 @@ fun PatientItem(
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(8.dp),
+            .padding(8.dp).clickable(onClick = {onNavigateDetail(patient.id)}),
     ) {
         Column(
             modifier = Modifier

@@ -68,7 +68,7 @@ fun Navigation() {
             login(showSnackbar = {showSnackbar(it)})
             composable<PatientsListScreenDestination> {
                 PatientsListScreen(
-                    showSnackbar = { mensaje, undo -> },
+                    showSnackbar = { showSnackbar(it) },
                     onNavigateDetail = { patientId ->
                         navController.navigate(MedicalRecordListScreenDestination(patientId.toInt()))
                     }
@@ -77,7 +77,7 @@ fun Navigation() {
             composable<MedicalRecordListScreenDestination> {
                 MedicalRecordListScreen(
                     patientId = (it.toRoute() as MedicalRecordListScreenDestination).patientId,
-                    showSnackbar = { mensaje, undo -> },
+                    showSnackbar = { showSnackbar(it) },
                     onNavigateDetalle = { medicalRecordId ->
                         navController.navigate(MedicalRecordDetailDestination(medicalRecordId.toInt()))
                     }

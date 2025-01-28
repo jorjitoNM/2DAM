@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.apptareascompose.common.NetworkResult
 import com.example.apptareascompose.domain.usecases.medical_records.GetPatientMedicalRecordsUseCase
-import com.example.apptareascompose.ui.patients_list.PatientListState
 import com.example.primeraapp.di.IoDispatcher
 import com.example.primeraapp.ui.common.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel

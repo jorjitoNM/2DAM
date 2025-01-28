@@ -1,9 +1,7 @@
 package com.example.apptareascompose.data.remote.datasource
 
-import com.example.apptareascompose.common.NetworkResult
 import com.example.apptareascompose.data.remote.api_services.PatientService
 import com.example.apptareascompose.data.remote.model.toPatient
-import com.example.apptareascompose.domain.model.Patient
 import javax.inject.Inject
 
 
