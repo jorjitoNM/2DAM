@@ -32,7 +32,6 @@ class LoginViewModel @Inject constructor(
     private fun registerUser(username: String, password: String) {
         viewModelScope.launch {
             try {
-
                 userRegister.invoke(username, password)
                 _uiState.value =
                     _uiState.value.copy(event = UiEvent.ShowSnackbar(ConstantesUI.USER_REGISTER_SUCCESS))

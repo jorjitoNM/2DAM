@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.apptareascompose.domain.model.MedicalRecord
+import com.example.primeraapp.ui.common.Constantes
 import com.example.primeraapp.ui.common.UiEvent
 import java.time.LocalDate
 
@@ -42,7 +43,6 @@ fun MedicalRecordListScreen(
     val uiState by medicalRecordListViewModel.uiState.collectAsState()
     LaunchedEffect(key1 = Unit) {
         medicalRecordListViewModel.handleEvent(MedicalRecordListEvents.GetAllMedicalRecord(patientId))
-        medicalRecordListViewModel.handleEvent(MedicalRecordListEvents.GetPatientName(patientId))
     }
 
     LaunchedEffect(uiState.uiEvent) {
@@ -58,16 +58,14 @@ fun MedicalRecordListScreen(
         patientName = uiState.patientName,
         medicalRecords = uiState.medicalRecords,
         onNavigateDetail = onNavigateDetalle,
-        loading = uiState.isLoading
     )
 }
 
 @Composable
 fun MedicalRecordListContent(
-    patientName : String,
+    patientName : String = Constantes.PATIENT,
     medicalRecords: List<MedicalRecord>,
     onNavigateDetail: (Int) -> Unit,
-    loading: Boolean,
 ) {
     Column {
         Row (modifier = Modifier.fillMaxSize().weight(0.1f),
@@ -187,6 +185,5 @@ fun PreviewMedicalRecordListScreen() {
                 medications = listOf("Ibuprofen","Oxycodone")
         ),),
         onNavigateDetail = {},
-        loading = true,
     )
 }

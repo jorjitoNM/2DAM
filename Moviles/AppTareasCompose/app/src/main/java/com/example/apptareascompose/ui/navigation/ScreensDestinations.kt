@@ -13,3 +13,6 @@ data class MedicalRecordDetailDestination(val medicalRecordId : Int)
 
 @Serializable
 object LoginScreenDestination
+
+@Serializable
+object DoctorsListScreenDestination

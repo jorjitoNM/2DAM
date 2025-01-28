@@ -10,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,7 +19,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.apptareascompose.ui.common.BottomBar
 import com.example.apptareascompose.ui.common.TopBar
+import com.example.apptareascompose.ui.doctors_list.DoctorsListScreen
 import com.example.apptareascompose.ui.login.LoginScreen
+import com.example.apptareascompose.ui.medical_record_details.MedicalRecordDetailsScreen
 import com.example.apptareascompose.ui.medical_records_list.MedicalRecordListScreen
 import com.example.apptareascompose.ui.patients_list.PatientsListScreen
 import kotlinx.coroutines.launch
@@ -65,12 +68,12 @@ fun Navigation() {
             startDestination = LoginScreenDestination,
             modifier = Modifier.padding(innerPadding)
         ) {
-            login(showSnackbar = {showSnackbar(it)})
+            login(navController = navController, showSnackbar = { showSnackbar(it) })
             composable<PatientsListScreenDestination> {
                 PatientsListScreen(
                     showSnackbar = { showSnackbar(it) },
                     onNavigateDetail = { patientId ->
-                        navController.navigate(MedicalRecordListScreenDestination(patientId.toInt()))
+                        navController.navigate(MedicalRecordListScreenDestination(patientId))
                     }
                 )
             }
@@ -79,22 +82,37 @@ fun Navigation() {
                     patientId = (it.toRoute() as MedicalRecordListScreenDestination).patientId,
                     showSnackbar = { showSnackbar(it) },
                     onNavigateDetalle = { medicalRecordId ->
-                        navController.navigate(MedicalRecordDetailDestination(medicalRecordId.toInt()))
+                        navController.navigate(MedicalRecordDetailDestination(medicalRecordId))
                     }
                 )
             }
             composable<MedicalRecordDetailDestination> {
-
+                MedicalRecordDetailsScreen(
+                    recordId = (it.toRoute() as MedicalRecordDetailDestination).medicalRecordId,
+                    showSnackbar = { showSnackbar(it) }
+                )
+            }
+            composable<DoctorsListScreenDestination> {
+                DoctorsListScreen(
+                    showSnackbar = { showSnackbar(it) }
+                )
+            }
+            composable<LoginScreenDestination> {
+                LoginScreen(
+                    navController = navController,
+                    showSnackbar = { showSnackbar(it) }
+                )
             }
         }
     }
 }
 
 fun NavGraphBuilder.login(
-    showSnackbar: (String) -> Unit = { _ -> {} }
+    navController: NavController,
+    showSnackbar: (String) -> Unit
 ) {
     composable<LoginScreenDestination>(
     ) {
-        LoginScreen(showSnackbar = showSnackbar)
+        LoginScreen(navController = navController, showSnackbar = { showSnackbar(it) })
     }
 }

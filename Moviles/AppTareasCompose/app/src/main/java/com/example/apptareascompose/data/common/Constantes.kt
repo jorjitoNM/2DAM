@@ -1,6 +1,7 @@
-package com.example.apptareascompose.data.utils
+package com.example.apptareascompose.data.common
 
 object Constantes {
+    const val DOCTORS: String = "Doctors"
     const val LOGIN: String = "Login"
     const val MEDICAL_RECORDS: String = "Medical records"
     const val PATIENTS: String = "Patients"

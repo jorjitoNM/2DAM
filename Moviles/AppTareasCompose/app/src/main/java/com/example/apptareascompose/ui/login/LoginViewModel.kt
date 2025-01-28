@@ -2,23 +2,22 @@ package com.example.apptareascompose.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.apptareascompose.domain.model.User
 import com.example.apptareascompose.domain.usecases.login.LoginUseCase
 import com.example.apptareascompose.domain.usecases.login.RegisterUserUseCase
 import com.example.primeraapp.di.IoDispatcher
+import com.example.primeraapp.ui.common.Constantes
 import com.example.primeraapp.ui.common.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor (
+class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val registerUserUseCase: RegisterUserUseCase,
     @IoDispatcher val dispatcher: CoroutineDispatcher,
@@ -27,25 +26,49 @@ class LoginViewModel @Inject constructor (
     private val _uiState: MutableStateFlow<LoginState> = MutableStateFlow(LoginState())
     val uiState: StateFlow<LoginState> = _uiState.asStateFlow()
 
-    private val _uiError = Channel<UiEvent>()
-    val uiError = _uiError.receiveAsFlow()
-
-    fun handleEvent (event : LoginEvents) {
+    fun handleEvent(event: LoginEvents) {
         when (event) {
-            is LoginEvents.login -> login(User(0,event.username,event.password))
-            is LoginEvents.register -> register(User(0,event.username,event.password))
+            is LoginEvents.Login -> login(event.username, event.password)
+            is LoginEvents.Register -> register(event.username, event.password)
+            is LoginEvents.EventDone -> _uiState.update { it.copy(uiEvent = null) }
         }
     }
 
-    private fun login (user : User) {
-        viewModelScope.launch(dispatcher) {
-            loginUseCase.invoke(user)
+    private fun register(username: String, password: String) {
+        viewModelScope.launch {
+            try {
+                registerUserUseCase.invoke(username, password)
+                _uiState.value =
+                    _uiState.value.copy(uiEvent = UiEvent.ShowSnackbar(Constantes.USER_REGISTER_SUCCESS))
+            } catch (e: Exception) {
+                _uiState.value =
+                    _uiState.value.copy(uiEvent = UiEvent.ShowSnackbar(Constantes.USER_REGISTER_ERROR))
+            }
         }
     }
 
-    private fun register (user : User) {
-        viewModelScope.launch(dispatcher) {
-            //registerUserUseCase.invoke(user)
+    private fun login(username: String, password: String) {
+        viewModelScope.launch {
+            loginUseCase.invoke(username, password).collect { result ->
+                result.fold(
+                    onSuccess = { user ->
+                        if (user != null) {
+                            _uiState.update {
+                                it.copy(validated = true)
+                            }
+                        } else {
+                            _uiState.update {
+                                it.copy(uiEvent = UiEvent.ShowSnackbar(Constantes.CREDENCIALES_INCORRECTAS))
+                            }
+                        }
+                    },
+                    onFailure = { exception ->
+                        _uiState.update {
+                            it.copy(uiEvent = UiEvent.ShowSnackbar("${Constantes.ERROR_VALIDACION} ${exception.message}"))
+                        }
+                    }
+                )
+            }
         }
     }
 }

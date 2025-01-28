@@ -1,5 +1,6 @@
 package com.example.apptareascompose.data.remote.di
 
+import com.example.apptareascompose.data.remote.api_services.DoctorsService
 import com.example.apptareascompose.data.remote.api_services.MedicalRecordService
 import com.example.apptareascompose.data.remote.api_services.PatientService
 import com.example.compose.BuildConfig
@@ -42,12 +43,17 @@ object NetworkModule {
     }
 
     @Provides
-    fun providePostService(retrofit: Retrofit): PatientService {
+    fun providePatienService(retrofit: Retrofit): PatientService {
         return retrofit.create(PatientService::class.java);
     }
 
     @Provides
-    fun provideUserService(retrofit: Retrofit): MedicalRecordService {
+    fun provideMedicalRecordService(retrofit: Retrofit): MedicalRecordService {
         return retrofit.create(MedicalRecordService::class.java)
+    }
+
+    @Provides
+    fun provideDoctorService (retrofit: Retrofit): DoctorsService {
+        return retrofit.create(DoctorsService::class.java)
     }
 }

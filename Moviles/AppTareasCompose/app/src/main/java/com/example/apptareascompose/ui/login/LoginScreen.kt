@@ -1,44 +1,117 @@
 package com.example.apptareascompose.ui.login
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.example.apptareascompose.ui.navigation.PatientsListScreenDestination
+import com.example.primeraapp.ui.common.Constantes
+import com.example.primeraapp.ui.common.UiEvent
 
 @Composable
-fun LoginScreen (
+fun LoginScreen(
     loginViewModel: LoginViewModel = hiltViewModel(),
     showSnackbar: (String) -> Unit,
+    navController: NavController,
 ) {
     val uiState by loginViewModel.uiState.collectAsState()
 
-    LoginContent (
+    LaunchedEffect(uiState.uiEvent) {
+        uiState.uiEvent?.let {
+            if (it is UiEvent.ShowSnackbar) {
+                showSnackbar(it.message)
+            }
+            loginViewModel.handleEvent(LoginEvents.EventDone)
+        }
+    }
 
+    LaunchedEffect(uiState.validated) {
+        if (uiState.validated)
+            navController.navigate(PatientsListScreenDestination)
+    }
+
+    LoginContent(
+        loginViewModel = loginViewModel
     )
 }
 
 @Composable
-fun LoginContent() {
-    Box(
-
-    ) {
-        Row {
-//            TextField(
-//                value = "",
-//                onValueChange = {},
-//                placeholder = "Username (ej. juanElOne)",
-//            )
+fun LoginContent(
+    loginViewModel: LoginViewModel
+) {
+    var username by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    Column(modifier = Modifier.fillMaxSize()) {
+        Spacer(modifier = Modifier.weight(0.15f))
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(0.25f),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            TextField(
+                value = username,
+                onValueChange = { newText -> username = newText },
+                label = { Text(Constantes.USERNAME) },
+                singleLine = true
+            )
         }
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(0.25f),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            TextField(
+                value = password,
+                onValueChange = { newText -> password = newText },
+                label = { Text(Constantes.PASSWORD) },
+                singleLine = true
+            )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(0.25f),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(0.5f),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Button(onClick = { loginViewModel.handleEvent(LoginEvents.Login(username,password)) }) { Text(Constantes.LOGIN) }
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(0.5f),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Button(onClick = { loginViewModel.handleEvent(LoginEvents.Register(username,password)) }) { Text(Constantes.SING_UP) }
+            }
+        }
+        Spacer(modifier = Modifier.weight(0.1f))
     }
-}
-
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun LoginScreenPreview (modifier: Modifier = Modifier) {
-    LoginContent()
 }

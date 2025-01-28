@@ -4,9 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.apptareascompose.data.utils.Constantes
+import com.example.apptareascompose.data.common.Constantes
 
-val appDestinationList = listOf(PatientsListScreen,MedicalRecordsListScreen,MedicalRecordDetailsScreen,LoginScreen)
+val appDestinationList = listOf(PatientsListScreen,MedicalRecordsListScreen,MedicalRecordDetailsScreen,LoginScreen,DoctorsListScreen)
 
 interface AppDestination{
     val route: Any
@@ -51,5 +51,15 @@ object LoginScreen : AppDestination {
     override val title = Constantes.LOGIN
     override val scaffoldState = ScaffoldState(
         topBarState =TopBarState(showNavigationIcon = false, arrangement = Arrangement.Start),
+        fabVisible = true)
+}
+
+object DoctorsListScreen : AppMainBottomDestination {
+    override val route = DoctorsListScreenDestination
+    override val title = Constantes.DOCTORS
+    override val onBottomBar = true
+    override val icon = Icons.AutoMirrored.Filled.List
+    override val scaffoldState = ScaffoldState(
+        topBarState = TopBarState(showNavigationIcon = false, arrangement = Arrangement.Start),
         fabVisible = true)
 }

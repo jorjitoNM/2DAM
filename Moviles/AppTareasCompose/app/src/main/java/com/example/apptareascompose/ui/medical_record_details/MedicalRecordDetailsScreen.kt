@@ -14,11 +14,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.apptareascompose.domain.model.MedicalRecord
+import com.example.primeraapp.ui.common.Constantes
 import com.example.primeraapp.ui.common.UiEvent
 import java.time.LocalDate
 
@@ -45,15 +45,14 @@ fun MedicalRecordDetailsScreen (
 
     MedicalRecordDetailsContent(
         medicalRecord = uiState.medicalRecord,
-        loading = uiState.isLoading
     )
 
 }
 
+
 @Composable
 fun MedicalRecordDetailsContent (
     medicalRecord : MedicalRecord,
-    loading: Boolean,
 ) {
     Column( modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.weight(0.1f))
@@ -64,7 +63,7 @@ fun MedicalRecordDetailsContent (
                 TextField(
                     value = medicalRecord.description,
                     onValueChange = { newText -> newText },
-                    label = { Text("Description") },
+                    label = { Text(Constantes.DESCRIPTION) },
                     singleLine = true
                 )
             }
@@ -83,7 +82,7 @@ fun MedicalRecordDetailsContent (
                 TextField(
                     value = medicalRecord.medications.toString(),
                     onValueChange = { newText -> newText },
-                    label = { Text("Medications") },
+                    label = { Text(Constantes.MEDICATION) },
                     singleLine = true
                 )
             }
@@ -100,7 +99,7 @@ fun MedicalRecordDetailsContent (
                 TextField(
                     value = medicalRecord.date.toString(),
                     onValueChange = { newText -> newText },
-                    label = { Text("Date") },
+                    label = { Text(Constantes.DATE) },
                     singleLine = true
                 )
             }
@@ -114,12 +113,12 @@ fun MedicalRecordDetailsContent (
             Column (modifier = Modifier.fillMaxSize().weight(0.5f),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("Doctor ID: " + medicalRecord.doctorId.toString())
+                Text(Constantes.DOCTOR_ID + medicalRecord.doctorId.toString())
             }
             Column (modifier = Modifier.fillMaxSize().weight(0.5f),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("Patient ID: " + medicalRecord.patientId.toString())
+                Text(Constantes.PATIENT_ID + medicalRecord.patientId.toString())
             }
         }
         Spacer(modifier = Modifier.weight(0.1f))
@@ -131,6 +130,6 @@ fun MedicalRecordDetailsContent (
 @Preview(showBackground = true, device = Devices.PHONE)
 fun PreviewMedicalRecordDetailsScreen () {
     MedicalRecordDetailsContent(
-        MedicalRecord(1,"Cancer", LocalDate.now(),12,3, listOf("DiacetilMorphine")),false
+        MedicalRecord(1,"Cancer", LocalDate.now(),12,3, listOf("DiacetilMorphine"))
     )
 }

@@ -1,7 +1,6 @@
 package com.example.apptareascompose.data.remote.model
 
 import com.example.apptareascompose.domain.model.MedicalRecord
-import com.example.apptareascompose.domain.model.Medication
 import java.time.LocalDate
 
 data class MedicalRecordRemote (

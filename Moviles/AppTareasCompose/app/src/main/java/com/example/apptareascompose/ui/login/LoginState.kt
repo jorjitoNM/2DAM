@@ -7,4 +7,5 @@ data class LoginState (
     val user : User? = null,
     val isLoading : Boolean = false,
     val uiEvent : UiEvent? = null,
+    val validated : Boolean = false,
 )

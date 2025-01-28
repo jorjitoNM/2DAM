@@ -1,11 +1,10 @@
 package com.example.apptareascompose.data.local
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.apptareascompose.data.local.modelo.UserEntity
+import com.example.primeraapp.data.local.modelo.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -17,9 +16,6 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: UserEntity)
 
-    @Delete
-    suspend fun deleteUser(user: UserEntity)
-
-    @Query("SELECT * FROM users WHERE username = :username LIMIT 1")
-    fun getUser(username: String): Flow<UserEntity?>
+    @Query("SELECT * FROM users WHERE username = :username AND password = :hashedPassword LIMIT 1")
+    fun validateUser(username: String, hashedPassword: String): Flow<UserEntity?>
 }

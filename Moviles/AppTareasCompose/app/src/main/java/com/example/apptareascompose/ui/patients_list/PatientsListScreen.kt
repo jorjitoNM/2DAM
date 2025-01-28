@@ -53,7 +53,6 @@ fun PatientsListScreen(
     PatientListContent(
         patients = uiState.patients,
         onNavigateDetail = onNavigateDetail,
-        loading = uiState.isLoading,
     )
 }
 
@@ -61,7 +60,6 @@ fun PatientsListScreen(
 fun PatientListContent(
     patients: List<Patient>,
     onNavigateDetail: (Int) -> Unit,
-    loading: Boolean,
 ) {
     LazyColumn {
         this.items(items = patients, key = { patient -> patient.id }) { patient ->
@@ -145,6 +143,5 @@ fun PreviewPatientListScreen() {
             Patient(4, "Marcos", LocalDate.now(), "617-332-158", 375)
         ),
         onNavigateDetail = {},
-        loading = true,
     )
 }

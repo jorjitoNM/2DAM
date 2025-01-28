@@ -1,10 +1,10 @@
-package com.example.apptareascompose.data.local.di
+package com.example.primeraapp.data.local.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.apptareascompose.data.local.AppDatabase
+import com.example.apptareascompose.data.common.Constantes
 import com.example.apptareascompose.data.local.UserDao
-import com.example.apptareascompose.data.utils.Constantes
+import com.example.primeraapp.data.local.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +22,7 @@ object DatabaseModule {
         return Room.databaseBuilder(
             appContext,
             AppDatabase::class.java,
-            Constantes.APP_DB,
+            Constantes.APP_DB
         )
             .fallbackToDestructiveMigration().build()
     }
