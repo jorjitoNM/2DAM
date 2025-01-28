@@ -5,6 +5,7 @@ import com.example.primeraapp.ui.common.UiEvent
 
 data class MedicalRecordListState(
     val medicalRecords : List<MedicalRecord> = emptyList(),
+    val patientName : String = "Unknown",
     val uiEvent: UiEvent? = null,
     val isLoading : Boolean = false,
 )

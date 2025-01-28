@@ -28,8 +28,17 @@ class MedicalRecordListViewModel @Inject constructor(
     fun handleEvent(event: MedicalRecordListEvents) {
         when (event) {
             is MedicalRecordListEvents.GetAllMedicalRecord -> getAll(event.patientId)
-            is MedicalRecordListEvents.EventDone -> _uiState.update { it.copy(uiEvent = null) }
+            is MedicalRecordListEvents.GetPatientName -> getPatientName(event.patientId)
+            is MedicalRecordListEvents.EventDone -> _uiState.update { it.copy(uiEvent = null)
+            }
         }
+    }
+
+    private fun getPatientName(patientId: Int) {
+        viewModelScope.launch(dispatcher) {
+
+        }
+
     }
 
     private fun getAll(patientId: Int) {
