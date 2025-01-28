@@ -12,7 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Composable
 fun LoginScreen (
     loginViewModel: LoginViewModel = hiltViewModel(),
-    showSnackbar: (String, () -> Unit) -> Unit,
+    showSnackbar: (String) -> Unit,
 ) {
     val uiState by loginViewModel.uiState.collectAsState()
 
@@ -29,7 +29,7 @@ fun LoginContent() {
         Row {
 //            TextField(
 //                value = "",
-//                onValueChange = ,
+//                onValueChange = {},
 //                placeholder = "Username (ej. juanElOne)",
 //            )
         }

@@ -3,13 +3,13 @@ package com.example.apptareascompose.ui.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
-object PatientsListScreen
+object PatientsListScreenDestination
 
 @Serializable
-data class MedicalRecordListScreen(val patientId : Int)
+data class MedicalRecordListScreenDestination(val patientId : Int)
 
 @Serializable
-data class MedicalRecordDetail(val medicalRecordId : Int)
+data class MedicalRecordDetailDestination(val medicalRecordId : Int)
 
 @Serializable
-object LoginScreen
+object LoginScreenDestination
