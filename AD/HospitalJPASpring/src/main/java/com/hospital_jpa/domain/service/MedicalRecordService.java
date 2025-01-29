@@ -1,9 +1,7 @@
 package com.hospital_jpa.domain.service;
 
 
-import com.hospital_jpa.dao.model.MedicalRecord;
-import com.hospital_jpa.dao.model.Medication;
-import com.hospital_jpa.dao.model.Patient;
+import com.hospital_jpa.dao.model.*;
 import com.hospital_jpa.dao.repository.MedicalRecordsRepository;
 import com.hospital_jpa.dao.repository.MedicationsRepository;
 import com.hospital_jpa.domain.model.MedicalRecordUI;
@@ -18,19 +16,27 @@ import java.util.List;
 public class MedicalRecordService {
     private final MedicalRecordsRepository medicalRecordsRepository;
     private final MedicationsRepository medicationsRepository;
+    private final RoleService roleService;
 
-    public MedicalRecordService(MedicalRecordsRepository medicalRecordsRepository, MedicationsRepository medicationsRepository) {
+    public MedicalRecordService(MedicalRecordsRepository medicalRecordsRepository, MedicationsRepository medicationsRepository, RoleService roleService) {
         this.medicalRecordsRepository = medicalRecordsRepository;
         this.medicationsRepository = medicationsRepository;
+        this.roleService = roleService;
     }
 
     public int addMedicalRecord(MedicalRecordUI medicalRecordUI) {
-        MedicalRecord medicalRecord = new MedicalRecord(new Patient(medicalRecordUI.getIdPatient()), medicalRecordUI.getIdDoctor(),
-                medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()));
-        medicalRecord.setMedications(parseMedications(medicalRecordUI.getMedications()));
-        medicalRecord.getMedications().forEach(m -> m.setMedicalRecord(medicalRecord));
-        return medicalRecordsRepository.save(medicalRecord).getId();
-
+        FileUser fileUser = roleService.getFileUser();
+        if (UserType.PATIENT.equals(fileUser.getUserType()))
+            return -1;
+        else {
+            if (UserType.DOCTOR.equals(fileUser.getUserType()))
+                medicalRecordUI.setIdDoctor(fileUser.getId());
+            MedicalRecord medicalRecord = new MedicalRecord(new Patient(medicalRecordUI.getIdPatient()), medicalRecordUI.getIdDoctor(),
+                    medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()));
+            medicalRecord.setMedications(parseMedications(medicalRecordUI.getMedications()));
+            medicalRecord.getMedications().forEach(m -> m.setMedicalRecord(medicalRecord));
+            return medicalRecordsRepository.save(medicalRecord).getId();
+        }
     }
 
     private List<Medication> parseMedications(List<String> medications) {
@@ -40,8 +46,12 @@ public class MedicalRecordService {
     }
 
     public List<MedicalRecordUI> getMedicalRecords(int idPatient) {
+        FileUser fileUser = roleService.getFileUser();
         List<MedicalRecordUI> medicalRecordsUI = new ArrayList<>();
-        medicalRecordsRepository.findAllByPatient_Id(idPatient).forEach(mr ->
+        List<MedicalRecord> medicalRecords = medicalRecordsRepository.findAllByPatient_Id(idPatient);
+        if (UserType.DOCTOR.equals(fileUser.getUserType()))
+            medicalRecords = medicalRecords.stream().filter(m -> m.getIdDoctor() == fileUser.getId()).toList();
+        medicalRecords.forEach(mr ->
                 medicalRecordsUI.add(new MedicalRecordUI(mr.getId(), mr.getDiagnosis(),
                         mr.getDate().toString(),
                         mr.getId(), mr.getIdDoctor(),
@@ -56,14 +66,19 @@ public class MedicalRecordService {
     }
 
     public void deleteMedicalRecord(int id) {
-        medicalRecordsRepository.findById(id).ifPresent(medicalRecordsRepository::delete);
+        FileUser fileUser = roleService.getFileUser();
+        if (!UserType.PATIENT.equals(fileUser.getUserType()))
+            medicalRecordsRepository.findById(id).ifPresent(medicalRecordsRepository::delete);
     }
 
     @Transactional
     public void updateMedicalRecord(MedicalRecordUI medicalRecordUI) {
-        medicationsRepository.deleteAllByMedicalRecord_Id(medicalRecordUI.getId());
-        medicalRecordsRepository.save(new MedicalRecord(medicalRecordUI.getId(), new Patient(medicalRecordUI.getIdPatient()), medicalRecordUI.getIdDoctor(),
-                medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()), parseMedicationsWithRecordId(medicalRecordUI, medicalRecordUI.getMedications())));
+        FileUser fileUser = roleService.getFileUser();
+        if (!UserType.PATIENT.equals(fileUser.getUserType())) {
+            medicationsRepository.deleteAllByMedicalRecord_Id(medicalRecordUI.getId());
+            medicalRecordsRepository.save(new MedicalRecord(medicalRecordUI.getId(), new Patient(medicalRecordUI.getIdPatient()), medicalRecordUI.getIdDoctor(),
+                    medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()), parseMedicationsWithRecordId(medicalRecordUI, medicalRecordUI.getMedications())));
+        }
     }
 
     private List<Medication> parseMedicationsWithRecordId(MedicalRecordUI medicalRecordUI, List<String> medications) {
