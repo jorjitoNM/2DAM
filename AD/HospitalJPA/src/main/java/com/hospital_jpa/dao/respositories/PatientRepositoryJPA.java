@@ -3,11 +3,13 @@ package com.hospital_jpa.dao.respositories;
 import com.hospital_jpa.dao.model.Credential;
 import com.hospital_jpa.dao.model.MedicalRecord;
 import com.hospital_jpa.dao.model.Patient;
+import com.hospital_jpa.domain.error.DUPLICATED_USERNAME;
 import com.hospital_jpa.domain.error.FOREIGN_KEY_ERROR;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.RollbackException;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
 
@@ -46,6 +48,8 @@ public class PatientRepositoryJPA implements com.hospital_jpa.dao.interfaces.Pat
             tx.begin();
             em.persist(patient);
             tx.commit();
+        } catch (ConstraintViolationException e){
+            throw new DUPLICATED_USERNAME();
         } catch (Exception e) {
             assert tx != null;
             if (tx.isActive()) tx.rollback();
