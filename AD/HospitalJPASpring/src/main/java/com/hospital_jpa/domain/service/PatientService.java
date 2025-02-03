@@ -55,8 +55,10 @@ public class PatientService {
             return -1;
         else {
             try {
+                Credential credential = new Credential(patientUI.getUserName(), patientUI.getPassword());
                 Patient patient = new Patient(patientUI.getId(), patientUI.getName(), patientUI.getBirthDate(),
-                        patientUI.getPhone(), new Credential(patientUI.getUserName(), patientUI.getPassword()));
+                        patientUI.getPhone(), credential);
+                credential.setPatient(patient);
                 return patientRepository.save(patient).getId();
             } catch (DataIntegrityViolationException e) {
                 throw new DUPLICATED_USERNAME();
