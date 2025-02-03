@@ -10,25 +10,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LoginController {
 
     private final UserService userService;
-    private final MailComponent mailComponent;
 
-    public LoginController(UserService userService, MailComponent mailComponent) {
+    public LoginController(UserService userService) {
         this.userService = userService;
-        this.mailComponent = mailComponent;
     }
 
-    @GetMapping("/login")
-    public String login(Model model) {
+    @GetMapping(Constantes.LOGIN_URL)
+    public String login() {
         return Constantes.LOGIN;
     }
 
-    @PostMapping("/checkLogin")
+    @PostMapping(Constantes.CHECK_LOGIN_URL)
     public String checkLogin(HttpSession session, Model model, @RequestParam String email, @RequestParam String password) {
         if (userService.login(new User(email, password))) {
             session.setAttribute(Constantes.LOGGED,true);
@@ -40,16 +37,15 @@ public class LoginController {
         }
     }
 
-    @PostMapping("/signUp")
+    @PostMapping(Constantes.SIGNUP_URL)
     public String signUp(Model model, @RequestParam String email, @RequestParam String password) {
-        String code = userService.signUp(new User(email, password));
-        mailComponent.sendMail("jorge.novillo@educa.madrid.org", "Confirma tu correo", "<html><a herf=\"http://localhost:8080/confirm?code=" + code + "\">Comfirma tu correo pinchando aquí</a></html>");
+        userService.signUp(new User(email, password));
         model.addAttribute(Constantes.CREATED,"true");
         return Constantes.LOGIN;
     }
 
-    @GetMapping("/confirm")
-    public String confirm(Model model, @RequestParam String code) {
+    @GetMapping(Constantes.CONFIRM_URL)
+    public String confirm(@RequestParam String code) {
         userService.confirmUser(code);
         return Constantes.LOGIN;
     }

@@ -19,13 +19,13 @@ public class FoodController {
         this.foodService = foodService;
     }
 
-    @GetMapping("/home")
+    @GetMapping(Constantes.HOME_URL)
     public String getAll(Model model) {
         model.addAttribute(Constantes.DISHES, foodService.getDishes());
         return Constantes.HOME;
     }
 
-    @PostMapping("/getDish")
+    @PostMapping(Constantes.GET_DISH_URL)
     public String get(Model model, @RequestParam String dishId) {
         if (dishId != null) {
             Plato p = foodService.getDish(Integer.parseInt(dishId));
@@ -37,14 +37,14 @@ public class FoodController {
         return Constantes.HOME;
     }
 
-    @PostMapping("/delete")
-    public String delete(Model model, @RequestParam Integer dishId) {
+    @PostMapping(Constantes.DELETE_URL)
+    public String delete(@RequestParam Integer dishId) {
         if (dishId != null)
             foodService.delete(dishId);
         return "redirect:/" + Constantes.HOME;
     }
 
-    @PostMapping("/update")
+    @PostMapping(Constantes.UPDATE_URL)
     public String update(Model model, @RequestParam String dishId, @RequestParam String nombre, @RequestParam List<String> ingredientes) {
         if (dishId != null && nombre != null && ingredientes != null)
             foodService.updateDish(new Plato(nombre, ingredientes, Integer.parseInt(dishId)));

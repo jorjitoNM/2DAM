@@ -1,5 +1,6 @@
 package org.primerservidorspring.domain.services;
 
+import org.primerservidorspring.components.MailComponent;
 import org.primerservidorspring.dao.DaoUsers;
 import org.primerservidorspring.domain.model.User;
 import org.springframework.stereotype.Service;
@@ -12,18 +13,21 @@ import java.util.List;
 public class UserService {
 
     private  final DaoUsers daoUsers;
+    private final MailComponent mailComponent;
 
-    public UserService(DaoUsers daoUsers) {
+    public UserService(DaoUsers daoUsers, MailComponent mailComponent) {
         this.daoUsers = daoUsers;
+        this.mailComponent = mailComponent;
     }
 
-    public String signUp (User user) {
+    public void signUp (User user) {
         byte[] randomCode = new byte[16];
         SecureRandom sr = new SecureRandom();
         sr.nextBytes(randomCode);
         String code = Base64.getUrlEncoder().encodeToString(randomCode);
-        daoUsers.singUp(new User(user.getEmail(),user.getPassword(),code));
-        return code;
+        user.setCode(code);
+        daoUsers.singUp(user);
+        mailComponent.sendMail(user.getEmail(), "Confirma tu correo", "<html><a herf=\"http://localhost:8080/confirm?code=" + code + "\">Comfirma tu correo pinchando aquí</a></html>");
     }
 
     public void confirmUser(String code) {

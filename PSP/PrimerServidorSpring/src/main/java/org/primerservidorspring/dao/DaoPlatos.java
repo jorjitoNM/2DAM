@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Repository
 public class DaoPlatos {
@@ -33,7 +34,8 @@ public class DaoPlatos {
     }
 
     private List<String> fillIngredients () {
-        int random = (int) (Math.random()*5+2);
+        Random r = new Random();
+        int random = r.nextInt()*5+2;
         int i = 0;
         List<String> ingredients = new ArrayList<>();
         while (i < random) {

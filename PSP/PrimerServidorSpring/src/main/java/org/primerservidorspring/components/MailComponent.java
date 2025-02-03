@@ -26,6 +26,5 @@ public class MailComponent {
         } catch (MailException e) {
            log.error(e.getMessage(), e);
         }
-
     }
 }

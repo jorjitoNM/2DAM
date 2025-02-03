@@ -15,14 +15,17 @@ public class LoginFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if (request.getSession().getAttribute(Constantes.LOGGED) == null) {
-            response.sendRedirect("/login");
+            response.sendRedirect(Constantes.LOGIN_URL);
             return;
         }
         filterChain.doFilter(request, response);
     }
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
-        return "/login".equals(path) || "/checkLogin".equals(path) || "/confirm".equals(path) || "/signUp".equals(path);
+        return Constantes.LOGIN_URL.equals(path)
+                || Constantes.CHECK_LOGIN_URL.equals(path)
+                || Constantes.CONFIRM_URL.equals(path)
+                || Constantes.SIGNUP_URL.equals(path);
     }
 }
