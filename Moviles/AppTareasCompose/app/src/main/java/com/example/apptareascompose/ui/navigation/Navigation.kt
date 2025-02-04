@@ -43,7 +43,7 @@ fun Navigation() {
     val state by navController.currentBackStackEntryAsState()
 
     val screen = appDestinationList.find { screen ->
-        state?.destination?.route == screen.route
+        state?.destination?.route == screen.route::class.qualifiedName
     }
 
     val bottomBar: @Composable () -> Unit = {
