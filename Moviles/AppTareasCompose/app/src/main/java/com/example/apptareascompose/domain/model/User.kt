@@ -2,6 +2,6 @@ package com.example.apptareascompose.domain.model
 
 data class User(
     val id : Int = 0,
-    val username : String = "",
-    val password : String = "",
+    var username : String = "",
+    var password : String = "",
 )

@@ -12,13 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.apptareascompose.domain.model.User
 import com.example.apptareascompose.ui.navigation.PatientsListScreenDestination
 import com.example.primeraapp.ui.common.Constantes
 import com.example.primeraapp.ui.common.UiEvent
@@ -46,16 +44,16 @@ fun LoginScreen(
     }
 
     LoginContent(
-        loginViewModel = loginViewModel
+        loginViewModel = loginViewModel,
+        user = uiState.user,
     )
 }
 
 @Composable
 fun LoginContent(
-    loginViewModel: LoginViewModel
+    loginViewModel: LoginViewModel,
+    user : User,
 ) {
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.weight(0.15f))
         Row(
@@ -66,8 +64,8 @@ fun LoginContent(
             horizontalArrangement = Arrangement.Center
         ) {
             TextField(
-                value = username,
-                onValueChange = { newText -> username = newText },
+                value = user.username,
+                onValueChange = { user.username = it },
                 label = { Text(Constantes.USERNAME) },
                 singleLine = true
             )
@@ -80,8 +78,8 @@ fun LoginContent(
             horizontalArrangement = Arrangement.Center
         ) {
             TextField(
-                value = password,
-                onValueChange = { newText -> password = newText },
+                value = user.password,
+                onValueChange = { user.password = it },
                 label = { Text(Constantes.PASSWORD) },
                 singleLine = true
             )
@@ -100,7 +98,7 @@ fun LoginContent(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Button(onClick = { loginViewModel.handleEvent(LoginEvents.Login(username,password)) }) { Text(Constantes.LOGIN) }
+                Button(onClick = { loginViewModel.handleEvent(LoginEvents.Login(user)) }) { Text(Constantes.LOGIN) }
             }
             Column(
                 modifier = Modifier
@@ -109,7 +107,7 @@ fun LoginContent(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Button(onClick = { loginViewModel.handleEvent(LoginEvents.Register(username,password)) }) { Text(Constantes.SING_UP) }
+                Button(onClick = { loginViewModel.handleEvent(LoginEvents.Register(user)) }) { Text(Constantes.SING_UP) }
             }
         }
         Spacer(modifier = Modifier.weight(0.1f))
