@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f3f4f6;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4caf50;
+            margin-bottom: 20px;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        td[colspan] {
+            text-align: center;
+            font-style: italic;
+            color: #777;
+        }
+
+        .delete-button, .update-button {
+            padding: 8px 12px;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-button {
+            background-color: #ff4d4d;
+        }
+
+        .delete-button:hover {
+            background-color: #e60000;
+        }
+
+        .update-button {
+            background-color: #4caf50;
+        }
+
+        .update-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Dishes and Ingredients</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Dish Name</th>
+        <th id="ingredients-header" colspan="6">Ingredients</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${dishes.isEmpty()}">
+        <td colspan="3">No Dishes Available</td>
+    </tr>
+    <tr th:each="dish : ${dishes}">
+        <td rowspan="1">
+            <span th:text="${dish.nombre()}">Name</span>
+        </td>
+
+        <td th:each="ingredient : ${dish.ingredientes()}" th:text="${ingredient}">
+            Ingredient
+        </td>
+
+        <td rowspan="1">
+            <form action="delete" method="POST" style="display:inline;">
+                <input type="hidden" name="dishId" th:value="${dish.id}" />
+                <button type="submit" class="delete-button">Delete</button>
+            </form>
+            <br><br>
+            <form action="getDish" method="POST" style="display:inline;">
+                <input type="hidden" name="dishId" th:value="${dish.id}" />
+                <button type="submit" class="update-button">Update</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
