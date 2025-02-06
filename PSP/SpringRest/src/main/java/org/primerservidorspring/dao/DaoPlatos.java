@@ -29,8 +29,8 @@ public class DaoPlatos {
         return platos;
     }
 
-    public void deletePlato(int id) {
-        platos.removeIf(p -> p.id()==id);
+    public boolean deletePlato(int id) {
+        return platos.removeIf(p -> p.id()==id);
     }
 
     private List<String> fillIngredients () {

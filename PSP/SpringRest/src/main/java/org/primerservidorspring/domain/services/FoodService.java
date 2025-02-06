@@ -21,8 +21,8 @@ public class FoodService {
         return dao.getDishes();
     }
 
-    public void delete(Integer dishId) {
-        dao.deletePlato(dishId);
+    public boolean delete(Integer dishId) {
+        return dao.deletePlato(dishId);
     }
 
     public Plato updateDish (Plato p) {

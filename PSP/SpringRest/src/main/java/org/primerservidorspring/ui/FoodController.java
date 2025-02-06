@@ -1,17 +1,18 @@
 package org.primerservidorspring.ui;
 
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.websocket.server.PathParam;
 import org.primerservidorspring.common.Constantes;
 import org.primerservidorspring.domain.model.Plato;
 import org.primerservidorspring.domain.services.FoodService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class FoodController {
     private final FoodService foodService;
 
@@ -19,36 +20,31 @@ public class FoodController {
         this.foodService = foodService;
     }
 
-    @GetMapping(Constantes.HOME_URL)
-    public String getAll(Model model) {
-        model.addAttribute(Constantes.DISHES, foodService.getDishes());
-        return Constantes.HOME;
+    @GetMapping(Constantes.GET_ALL)
+    public List<Plato> getAll() {
+        return foodService.getDishes();
     }
 
     @PostMapping(Constantes.GET_DISH_URL)
-    public String get(Model model, @RequestParam String dishId) {
+    public ResponseEntity<Plato> get(@RequestParam String dishId) {
         if (dishId != null) {
             Plato p = foodService.getDish(Integer.parseInt(dishId));
             if (p != null) {
-                model.addAttribute(Constantes.DISH, p);
-                return Constantes.UPDATE;
+                return ResponseEntity.ok(p);
             }
         }
-        return Constantes.HOME;
+        return ResponseEntity.notFound().build();
     }
 
-    @PostMapping(Constantes.DELETE_URL)
-    public String delete(@RequestParam Integer dishId) {
-        if (dishId != null)
-            foodService.delete(dishId);
-        return "redirect:/" + Constantes.HOME;
+    @PostMapping(Constantes.DELETE_URL + "/{"+ Constantes.PATH_ID + "}")
+    public ResponseEntity<Boolean> delete(@PathVariable String id) {
+        return ResponseEntity.status(HttpServletResponse.SC_OK).body(foodService.delete(Integer.valueOf(id)));
     }
 
     @PostMapping(Constantes.UPDATE_URL)
-    public String update(Model model, @RequestParam String dishId, @RequestParam String nombre, @RequestParam List<String> ingredientes) {
+    public ResponseEntity<Plato> update(@RequestParam String dishId, @RequestParam String nombre, @RequestParam List<String> ingredientes) {
         if (dishId != null && nombre != null && ingredientes != null)
-            foodService.updateDish(new Plato(nombre, ingredientes, Integer.parseInt(dishId)));
-        model.addAttribute(Constantes.DISHES, foodService.getDishes());
-        return "redirect:/" + Constantes.HOME;
+            return ResponseEntity.ok(foodService.updateDish(new Plato(nombre, ingredientes, Integer.parseInt(dishId))));
+        return ResponseEntity.badRequest().build();
     }
 }
