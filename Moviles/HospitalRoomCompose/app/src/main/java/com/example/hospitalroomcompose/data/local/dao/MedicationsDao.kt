@@ -6,6 +6,6 @@ import com.example.hospitalroomcompose.data.local.model.MedicationEntity
 @Dao
 interface MedicationsDao {
 
-    @Query("SELECT * FROM medications")
-    suspend fun getAllMedications() : List<MedicationEntity>
+//    @Query("SELECT * FROM medications")
+//    suspend fun getAllMedications() : List<MedicationEntity>
 }

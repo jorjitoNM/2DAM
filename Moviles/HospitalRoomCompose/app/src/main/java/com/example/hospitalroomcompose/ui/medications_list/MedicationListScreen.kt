@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -21,12 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.apptareascompose.domain.model.Medication
 import com.example.primeraapp.ui.common.UiEvent
 
 @Composable
-fun MedicationListScreen (
-    medicationsListViewModel : MedicationsListViewModel = hiltViewModel(),
+fun MedicationListScreen(
+    medicationsListViewModel: MedicationsListViewModel = hiltViewModel(),
     showSnackbar: (String) -> Unit,
 ) {
     val uiState by medicationsListViewModel.uiState.collectAsState()
@@ -46,19 +48,19 @@ fun MedicationListScreen (
 }
 
 @Composable
-fun MedicationsListContent (
-    medications : List<Medication> = emptyList(),
+fun MedicationsListContent(
+    medications: List<Medication> = emptyList(),
 
-) {
+    ) {
     LazyColumn {
-        this.items(items = medications, key = {medication -> medication.id}) { medication ->
+        this.items(items = medications, key = { medication -> medication.id }) { medication ->
             MedicationItem(medication)
         }
     }
 }
 
 @Composable
-fun MedicationItem (
+fun MedicationItem(
     medication: Medication,
 ) {
     OutlinedCard(
@@ -112,8 +114,13 @@ fun MedicationItem (
 
 @Preview
 @Composable
-fun MedicationsListContentPreview () {
+fun MedicationsListContentPreview() {
     MedicationsListContent(
-        medications = listOf(Medication())
+        medications = listOf(
+            Medication(2, "Promethazine", 1, "Every 8 hours"),
+            Medication(1, "Diacetilmorphine", 1, "Every 8 hours"),
+            Medication(12, "Insulin", 1, "Every 8 hours"),
+            Medication(100, "Penicillin", 1, "Every 8 hours")
+        )
     )
 }
