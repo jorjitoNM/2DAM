@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.apptareascompose.domain.model.User
-import com.example.apptareascompose.ui.navigation.PatientsListScreenDestination
+import com.example.hospitalroomcompose.ui.navigation.PatientsListScreenDestination
 import com.example.hospitalroomcompose.ui.login.LoginEvents
 import com.example.hospitalroomcompose.ui.login.LoginViewModel
 import com.example.primeraapp.ui.common.Constantes

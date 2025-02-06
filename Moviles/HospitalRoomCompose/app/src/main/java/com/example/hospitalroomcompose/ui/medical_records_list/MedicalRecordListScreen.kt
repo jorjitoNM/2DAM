@@ -29,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.apptareascompose.domain.model.MedicalRecord
+import com.example.hospitalroomcompose.domain.model.MedicalRecord
 import com.example.apptareascompose.ui.medical_records_list.MedicalRecordListEvents
 import com.example.primeraapp.ui.common.Constantes
 import com.example.primeraapp.ui.common.UiEvent
@@ -172,24 +172,23 @@ fun PreviewMedicalRecordListScreen() {
                 id = 1,
                 description = "Routine checkup with no major issues.",
                 date = LocalDate.of(2025, 1, 20),
-                patientId = 101,
                 doctorId = 201,
+                patientId = 101,
                 medications = listOf("Vitamin D")
             ),
             MedicalRecord(
                 id = 2,
                 description = "Follow-up visit for hypertension treatment.",
                 date = LocalDate.of(2025, 1, 15),
-                patientId = 101,
                 doctorId = 202,
+                patientId = 101,
                 medications = listOf("Lisinopril","Hydrochlorothiazide"),
             ),
             MedicalRecord(
                 id = 3,
                 description = "Post-surgery recovery for knee replacement.",
-                date = LocalDate.of(2025, 1, 10),
-                patientId = 101,
                 doctorId = 203,
+                patientId = 101,
                 medications = listOf("Ibuprofen","Oxycodone")
         ),),
         onNavigateDetail = {},

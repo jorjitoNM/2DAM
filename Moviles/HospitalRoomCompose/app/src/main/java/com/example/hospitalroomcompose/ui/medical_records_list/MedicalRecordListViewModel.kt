@@ -2,12 +2,10 @@ package com.example.hospitalroomcompose.ui.medical_records_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.apptareascompose.common.NetworkResult
 import com.example.apptareascompose.ui.medical_records_list.MedicalRecordListEvents
 import com.example.apptareascompose.ui.medical_records_list.MedicalRecordListState
 import com.example.hospitalroomcompose.domain.usecases.medical_records.GetPatientMedicalRecordsUseCase
 import com.example.primeraapp.di.IoDispatcher
-import com.example.primeraapp.ui.common.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,25 +35,7 @@ class MedicalRecordListViewModel @Inject constructor(
 
     private fun getAll(patientId: Int) {
         viewModelScope.launch(dispatcher) {
-            getPatientMedicalRecordsUseCase.invoke(patientId).collect { result ->
-                when (result) {
-                    is NetworkResult.Success -> _uiState.update {
-                        it.copy(
-                            medicalRecords = result.data,
-                            isLoading = false
-                        )
-                    }
-
-                    is NetworkResult.Error -> _uiState.update {
-                        it.copy(
-                            isLoading = false,
-                            uiEvent = UiEvent.ShowSnackbar(result.message)
-                        )
-                    }
-
-                    is NetworkResult.Loading -> _uiState.update { it.copy(isLoading = true) }
-                }
-            }
+            _uiState.update { it.copy(medicalRecords = getPatientMedicalRecordsUseCase.invoke(patientId)) }
         }
     }
 }

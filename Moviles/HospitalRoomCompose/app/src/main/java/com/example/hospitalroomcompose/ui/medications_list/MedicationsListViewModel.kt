@@ -16,13 +16,13 @@ import javax.inject.Inject
 @HiltViewModel
 class MedicationsListViewModel @Inject constructor (
     private val getAllMedicationsUseCase : GetAllMedicationsUseCase,
-    @IoDispatcher dispatcher: CoroutineDispatcher,
+    @IoDispatcher val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<MedicationListsState> by lazy {
-        MutableStateFlow(MedicationListsState())
+    private val _uiState: MutableStateFlow<MedicationsListsState> by lazy {
+        MutableStateFlow(MedicationsListsState())
     }
-    val uiState: StateFlow<MedicationListsState> = _uiState.asStateFlow()
+    val uiState: StateFlow<MedicationsListsState> = _uiState.asStateFlow()
 
     fun handleEvent (event : MedicationListEvents) {
         when (event) {

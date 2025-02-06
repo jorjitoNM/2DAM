@@ -27,7 +27,7 @@ import com.example.apptareascompose.domain.model.Medication
 import com.example.primeraapp.ui.common.UiEvent
 
 @Composable
-fun MedicationListScreen(
+fun MedicationsListScreen(
     medicationsListViewModel: MedicationsListViewModel = hiltViewModel(),
     showSnackbar: (String) -> Unit,
 ) {

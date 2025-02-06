@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.apptareascompose.domain.model.Patient
 import com.example.apptareascompose.ui.patients_list.PatientListEvents
-import com.example.apptareascompose.ui.patients_list.PatientListViewModel
 import com.example.primeraapp.ui.common.UiEvent
 import java.time.LocalDate
 

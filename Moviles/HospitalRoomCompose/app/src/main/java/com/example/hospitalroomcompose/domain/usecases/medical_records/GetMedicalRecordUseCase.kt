@@ -1,10 +1,11 @@
-package com.example.apptareascompose.domain.usecases.medical_records
+package com.example.hospitalroomcompose.domain.usecases.medical_records
 
 import com.example.hospitalroomcompose.data.RepositoryLocal
+import com.example.hospitalroomcompose.data.local.model.toMedicalRecord
 import javax.inject.Inject
 
 class GetMedicalRecordUseCase @Inject constructor(
     private val repositoryLocal: RepositoryLocal
 ) {
-    fun invoke (id : Int) = {  }//repositoryLocal.getMedicalRecord(id)
+    suspend operator fun invoke (id : Int) = repositoryLocal.getMedicalRecord(id).toMedicalRecord()
 }

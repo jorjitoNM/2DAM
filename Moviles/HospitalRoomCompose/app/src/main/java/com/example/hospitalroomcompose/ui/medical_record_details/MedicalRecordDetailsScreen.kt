@@ -1,4 +1,4 @@
-package com.example.apptareascompose.ui.medical_record_details
+package com.example.hospitalroomcompose.ui.medical_record_details
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,7 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.apptareascompose.domain.model.MedicalRecord
+import com.example.apptareascompose.ui.medical_record_details.MedicalRecordDetailsEvents
+import com.example.hospitalroomcompose.domain.model.MedicalRecord
 import com.example.primeraapp.ui.common.Constantes
 import com.example.primeraapp.ui.common.UiEvent
 import java.time.LocalDate
@@ -31,7 +32,11 @@ fun MedicalRecordDetailsScreen (
 ) {
     val uiState by medicalRecordDetailsViewModel.uiState.collectAsState()
     LaunchedEffect(key1 = Unit) {
-        medicalRecordDetailsViewModel.handleEvent(MedicalRecordDetailsEvents.GetMedicalRecords(recordId))
+        medicalRecordDetailsViewModel.handleEvent(
+            MedicalRecordDetailsEvents.GetMedicalRecords(
+                recordId
+            )
+        )
     }
 
     LaunchedEffect(uiState.uiEvent) {
@@ -118,7 +123,7 @@ fun MedicalRecordDetailsContent (
             Column (modifier = Modifier.fillMaxSize().weight(0.5f),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(Constantes.PATIENT_ID + medicalRecord.patientId.toString())
+                Text(Constantes.PATIENT_ID + medicalRecord.doctorId.toString())
             }
         }
         Spacer(modifier = Modifier.weight(0.1f))
@@ -130,6 +135,6 @@ fun MedicalRecordDetailsContent (
 @Preview(showBackground = true, device = Devices.PHONE)
 fun PreviewMedicalRecordDetailsScreen () {
     MedicalRecordDetailsContent(
-        MedicalRecord(1,"Cancer", LocalDate.now(),12,3, listOf("DiacetilMorphine"))
+        MedicalRecord(1,"Cancer", LocalDate.now(),12,1,listOf("DiacetilMorphine"))
     )
 }

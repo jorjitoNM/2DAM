@@ -1,4 +1,6 @@
-package com.example.apptareascompose.ui.navigation
+package com.example.hospitalroomcompose.ui.navigation
+
+import kotlinx.serialization.Serializable
 
 @Serializable
 object PatientsListScreenDestination

@@ -1,6 +1,8 @@
 package com.example.hospitalroomcompose.data.common
 
 import androidx.room.TypeConverter
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -16,5 +18,4 @@ class LocalDateConverters {
 
     @TypeConverter
     fun stringToLocalDate(value: String): LocalDate = LocalDate.parse(value, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-
 }

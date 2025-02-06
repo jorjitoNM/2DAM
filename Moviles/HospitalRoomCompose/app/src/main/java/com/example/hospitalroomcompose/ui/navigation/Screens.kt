@@ -4,10 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.apptareascompose.ui.navigation.LoginScreenDestination
-import com.example.apptareascompose.ui.navigation.MedicalRecordListScreenDestination
-import com.example.apptareascompose.ui.navigation.MedicationsListDestination
-import com.example.apptareascompose.ui.navigation.PatientsListScreenDestination
 import com.example.apptareascompose.ui.navigation.ScaffoldState
 import com.example.apptareascompose.ui.navigation.TopBarState
 import com.example.hospitalroomcompose.data.common.Constantes

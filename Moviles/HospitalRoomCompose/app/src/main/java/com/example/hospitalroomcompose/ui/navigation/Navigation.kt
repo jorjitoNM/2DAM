@@ -20,12 +20,9 @@ import androidx.navigation.toRoute
 import com.example.apptareascompose.ui.common.BottomBar
 import com.example.apptareascompose.ui.common.TopBar
 import com.example.apptareascompose.ui.login.LoginScreen
-import com.example.apptareascompose.ui.medical_record_details.MedicalRecordDetailsScreen
-import com.example.apptareascompose.ui.navigation.LoginScreenDestination
-import com.example.apptareascompose.ui.navigation.MedicalRecordDetailDestination
-import com.example.apptareascompose.ui.navigation.MedicalRecordListScreenDestination
-import com.example.apptareascompose.ui.navigation.PatientsListScreenDestination
+import com.example.hospitalroomcompose.ui.medical_record_details.MedicalRecordDetailsScreen
 import com.example.hospitalroomcompose.ui.medical_records_list.MedicalRecordListScreen
+import com.example.hospitalroomcompose.ui.medications_list.MedicationsListScreen
 import com.example.hospitalroomcompose.ui.patients_list.PatientsListScreen
 import kotlinx.coroutines.launch
 
@@ -99,6 +96,11 @@ fun Navigation() {
             composable<LoginScreenDestination> {
                 LoginScreen(
                     navController = navController,
+                    showSnackbar = { showSnackbar(it) }
+                )
+            }
+            composable<MedicationsListDestination> {
+                MedicationsListScreen (
                     showSnackbar = { showSnackbar(it) }
                 )
             }
