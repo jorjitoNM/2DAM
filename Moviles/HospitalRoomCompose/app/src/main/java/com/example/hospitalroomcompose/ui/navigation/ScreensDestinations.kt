@@ -1,7 +1,5 @@
 package com.example.apptareascompose.ui.navigation
 
-import kotlinx.serialization.Serializable
-
 @Serializable
 object PatientsListScreenDestination
 

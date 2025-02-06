@@ -1,14 +1,12 @@
-package com.example.hospitalroomcompose.ui.patients_list
+package com.example.hospitalroomcompose.ui.medications_list
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -21,26 +19,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.apptareascompose.domain.model.Patient
-import com.example.apptareascompose.ui.patients_list.PatientListEvents
-import com.example.apptareascompose.ui.patients_list.PatientListViewModel
+import com.example.apptareascompose.domain.model.Medication
 import com.example.primeraapp.ui.common.UiEvent
-import java.time.LocalDate
 
 @Composable
-fun PatientsListScreen(
-    patientListViewModel: PatientListViewModel = hiltViewModel(),
+fun MedicationListScreen (
+    medicationsListViewModel : MedicationsListViewModel = hiltViewModel(),
     showSnackbar: (String) -> Unit,
-    onNavigateDetail: (Int) -> Unit = {},
 ) {
-    val uiState by patientListViewModel.uiState.collectAsState()
+    val uiState by medicationsListViewModel.uiState.collectAsState()
 
     LaunchedEffect(key1 = Unit) {
-        patientListViewModel.handleEvent(PatientListEvents.GetAllPatients)
+        medicationsListViewModel.handleEvent(MedicationListEvents.GetAllMedications)
     }
 
     LaunchedEffect(uiState.uiEvent) {
@@ -48,44 +40,34 @@ fun PatientsListScreen(
             if (it is UiEvent.ShowSnackbar) {
                 showSnackbar(it.message)
             }
-            patientListViewModel.handleEvent(PatientListEvents.EventDone)
+            medicationsListViewModel.handleEvent(MedicationListEvents.EventDone)
         }
     }
-
-    PatientListContent(
-        patients = uiState.patients,
-        onNavigateDetail = onNavigateDetail,
-    )
 }
 
 @Composable
-fun PatientListContent(
-    patients: List<Patient>,
-    onNavigateDetail: (Int) -> Unit,
+fun MedicationsListContent (
+    medications : List<Medication> = emptyList(),
+
 ) {
     LazyColumn {
-        this.items(items = patients, key = { patient -> patient.id }) { patient ->
-            PatientItem(
-                patient = patient,
-                onNavigateDetail = onNavigateDetail,
-            )
+        this.items(items = medications, key = {medication -> medication.id}) { medication ->
+            MedicationItem(medication)
         }
     }
 }
 
 @Composable
-fun PatientItem(
-    patient: Patient,
-    onNavigateDetail: (Int) -> Unit,
-    modifier: Modifier = Modifier
+fun MedicationItem (
+    medication: Medication,
 ) {
     OutlinedCard(
         colors = CardDefaults.outlinedCardColors(),
         border = BorderStroke(1.dp, Color.Black),
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(8.dp).clickable(onClick = {onNavigateDetail(patient.id)}),
+            .padding(8.dp),
     ) {
         Column(
             modifier = Modifier
@@ -96,22 +78,17 @@ fun PatientItem(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(modifier = Modifier.weight(1f)) {
+                Column {
                     Text(
-                        text = "Nombre: ${patient.name}",
+                        text = "Nombre: ${medication.medicationName}",
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
                     Text(
-                        text = "ID: ${patient.id}",
+                        text = "ID: ${medication.id}",
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
-                Text(
-                    text = "Fecha de Nacimiento: ${patient.birthDate}",
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(start = 8.dp)
-                )
             }
             HorizontalDivider(
                 modifier = Modifier
@@ -125,7 +102,7 @@ fun PatientItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Teléfono: ${patient.phone}",
+                    text = "Dosage: ${medication.dosage}",
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -133,17 +110,10 @@ fun PatientItem(
     }
 }
 
-
+@Preview
 @Composable
-@Preview(showBackground = true, device = Devices.PHONE)
-fun PreviewPatientListScreen() {
-    PatientListContent(
-        patients = listOf(
-            Patient(1, "Juan", LocalDate.now(), "123-123-123", 145),
-            Patient(2, "Julian", LocalDate.now(), "946-371-112", 620),
-            Patient(3, "Paula", LocalDate.now(), "600-511-538", 410),
-            Patient(4, "Marcos", LocalDate.now(), "617-332-158", 375)
-        ),
-        onNavigateDetail = {},
+fun MedicationsListContentPreview () {
+    MedicationsListContent(
+        medications = listOf(Medication())
     )
 }

@@ -1,6 +1,7 @@
 package com.example.hospitalroomcompose.data
 
 import com.example.hospitalroomcompose.data.local.dao.MedicalRecordsDao
+import com.example.hospitalroomcompose.data.local.dao.MedicationsDao
 import com.example.hospitalroomcompose.data.local.dao.PatientsDao
 import com.example.hospitalroomcompose.data.local.dao.UserDao
 import com.example.primeraapp.data.local.modelo.UserEntity
@@ -13,6 +14,7 @@ class RepositoryLocal @Inject constructor(
     private val userDao: UserDao,
     private val patientsDao: PatientsDao,
     private val medicalRecordsDao: MedicalRecordsDao,
+    private val medicationsDao: MedicationsDao,
 ) {
 
     suspend fun registerUser(username: String, password: String): Result<Unit> {
@@ -38,6 +40,8 @@ class RepositoryLocal @Inject constructor(
     suspend fun getPatientMedicalRecords (id :Int) = medicalRecordsDao.getPatientMedicalRecords(id)
 
     suspend fun getMedicalRecord (id : Int) = medicalRecordsDao.getMedicalRecord(id)
+
+    suspend fun getAllMedications () = medicationsDao.getAllMedications()
 
 
 }
