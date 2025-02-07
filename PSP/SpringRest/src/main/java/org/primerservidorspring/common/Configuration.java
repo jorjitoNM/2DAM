@@ -16,12 +16,9 @@ public class Configuration {
         return new Faker();
     }
 
-    @Bean
+    @Bean()
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
     public Key key() {
-        return Key key = new SecretKeySpec(
-                Base64.getDecoder().decode("your-base64-encoded-key-here"),
-                "HMACSHA256"
-        );
+        return Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 }

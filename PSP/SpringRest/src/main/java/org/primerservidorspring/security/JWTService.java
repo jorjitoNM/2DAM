@@ -2,7 +2,6 @@ package org.primerservidorspring.security;
 
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import org.primerservidorspring.domain.model.User;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -11,7 +10,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Map;
 
-@
 @Component
 public class JWTService {
 

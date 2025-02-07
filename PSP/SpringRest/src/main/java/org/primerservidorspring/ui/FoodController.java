@@ -1,13 +1,10 @@
 package org.primerservidorspring.ui;
 
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.websocket.server.PathParam;
 import org.primerservidorspring.common.Constantes;
 import org.primerservidorspring.domain.model.Plato;
 import org.primerservidorspring.domain.services.FoodService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,12 +33,13 @@ public class FoodController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping(Constantes.DELETE_URL + "/{"+ Constantes.PATH_ID + "}")
-    public ResponseEntity<Boolean> delete(@PathVariable String id) {
-        return ResponseEntity.status(HttpServletResponse.SC_OK).body(foodService.delete(Integer.valueOf(id)));
+    @DeleteMapping(Constantes.DELETE_URL + "/{"+ Constantes.PATH_ID + "}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        foodService.delete(Integer.valueOf(id));
+        return ResponseEntity.status(HttpServletResponse.SC_NO_CONTENT).build();
     }
 
-    @PostMapping(Constantes.UPDATE_URL)
+    @PutMapping(Constantes.UPDATE_URL)
     public ResponseEntity<Plato> update(@RequestParam String dishId, @RequestParam String nombre, @RequestParam List<String> ingredientes) {
         if (dishId != null && nombre != null && ingredientes != null)
             return ResponseEntity.ok(foodService.updateDish(new Plato(nombre, ingredientes, Integer.parseInt(dishId))));
