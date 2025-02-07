@@ -1,4 +1,4 @@
-package com.example.apptareascompose.ui.login
+package com.example.hospitalroomcompose.ui.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,8 +18,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.apptareascompose.domain.model.User
 import com.example.hospitalroomcompose.ui.navigation.PatientsListScreenDestination
-import com.example.hospitalroomcompose.ui.login.LoginEvents
-import com.example.hospitalroomcompose.ui.login.LoginViewModel
 import com.example.primeraapp.ui.common.Constantes
 import com.example.primeraapp.ui.common.UiEvent
 

@@ -9,11 +9,12 @@ import com.example.apptareascompose.ui.navigation.TopBarState
 import com.example.hospitalroomcompose.data.common.Constantes
 
 val appDestinationList = listOf(
+    SplashScreen,
+    LoginScreen,
     PatientsListScreen,
     MedicalRecordsListScreen,
     MedicalRecordDetailsScreen,
-    LoginScreen,
-    MedicationsListScreen
+    MedicationsListScreen,
 )
 
 interface AppDestination{
@@ -58,4 +59,9 @@ object MedicationsListScreen : AppMainBottomDestination {
     override val title = Constantes.MEDICATIONS
     override val onBottomBar = true
     override val icon = Icons.AutoMirrored.Filled.List
+}
+
+object SplashScreen : AppDestination {
+    override val route = LoginScreenDestination
+    override val title = Constantes.SPLASH_SCREEN
 }

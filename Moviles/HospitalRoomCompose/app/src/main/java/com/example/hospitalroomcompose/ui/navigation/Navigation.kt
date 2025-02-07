@@ -6,9 +6,12 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -19,11 +22,12 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.apptareascompose.ui.common.BottomBar
 import com.example.apptareascompose.ui.common.TopBar
-import com.example.apptareascompose.ui.login.LoginScreen
+import com.example.hospitalroomcompose.ui.login.LoginScreen
 import com.example.hospitalroomcompose.ui.medical_record_details.MedicalRecordDetailsScreen
 import com.example.hospitalroomcompose.ui.medical_records_list.MedicalRecordListScreen
 import com.example.hospitalroomcompose.ui.medications_list.MedicationsListScreen
 import com.example.hospitalroomcompose.ui.patients_list.PatientsListScreen
+import com.example.hospitalroomcompose.ui.splash_screen.SplashScreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -42,8 +46,11 @@ fun Navigation() {
 
     val state by navController.currentBackStackEntryAsState()
 
-    val screen = appDestinationList.find { screen ->
-        state?.destination?.route == screen.route::class.qualifiedName
+    var screen = appDestinationList[0]
+    LaunchedEffect(state) {
+         screen = appDestinationList.find { screen ->
+             state?.destination?.route == screen.route::class.qualifiedName
+         }!!
     }
 
     val bottomBar: @Composable () -> Unit = {
@@ -55,7 +62,7 @@ fun Navigation() {
     val topBar: @Composable () -> Unit = {
         TopBar(
             navController = navController,
-            screen = screen
+            screen = screen,
         )
     }
     Scaffold(
@@ -65,10 +72,14 @@ fun Navigation() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = LoginScreenDestination,
+            startDestination = SplashScreenDestination,
             modifier = Modifier.padding(innerPadding)
         ) {
-            login(navController = navController, showSnackbar = { showSnackbar(it) })
+            composable<SplashScreenDestination> {
+                SplashScreen(
+                    navController = navController,
+                )
+            }
             composable<PatientsListScreenDestination> {
                 PatientsListScreen(
                     showSnackbar = { showSnackbar(it) },
@@ -84,7 +95,13 @@ fun Navigation() {
                     onNavigateDetalle = { medicalRecordId ->
                         navController.navigate(MedicalRecordDetailDestination(medicalRecordId))
                     },
-                    onNavigateEmptyDetails = { navController.navigate(MedicalRecordDetailDestination(-1)) }
+                    onNavigateEmptyDetails = {
+                        navController.navigate(
+                            MedicalRecordDetailDestination(
+                                -1
+                            )
+                        )
+                    }
                 )
             }
             composable<MedicalRecordDetailDestination> {
@@ -100,20 +117,10 @@ fun Navigation() {
                 )
             }
             composable<MedicationsListDestination> {
-                MedicationsListScreen (
+                MedicationsListScreen(
                     showSnackbar = { showSnackbar(it) }
                 )
             }
         }
-    }
-}
-
-fun NavGraphBuilder.login(
-    navController: NavController,
-    showSnackbar: (String) -> Unit
-) {
-    composable<LoginScreenDestination>(
-    ) {
-        LoginScreen(navController = navController, showSnackbar = { showSnackbar(it) })
     }
 }
