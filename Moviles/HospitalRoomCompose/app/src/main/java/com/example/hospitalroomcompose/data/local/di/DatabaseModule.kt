@@ -26,7 +26,7 @@ object DatabaseModule {
             appContext,
             AppDatabase::class.java,
             Constantes.APP_DB
-        ).createFromAsset("database/hospital.db")
+        )//.createFromAsset("database/hospital.db")
             .fallbackToDestructiveMigration()
             .build()
     }
