@@ -2,8 +2,9 @@ package com.example.hospitalroomcompose.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.hospitalroomcompose.domain.usecases.login.LoginUseCase
-import com.example.hospitalroomcompose.domain.usecases.login.RegisterUserUseCase
+import com.example.hospitalroomcompose.domain.usecases.user.LoginUseCase
+import com.example.hospitalroomcompose.domain.usecases.user.RegisterUserUseCase
+import com.example.hospitalroomcompose.domain.usecases.user.SaveUserNameUseCase
 import com.example.primeraapp.di.IoDispatcher
 import com.example.primeraapp.ui.common.Constantes
 import com.example.primeraapp.ui.common.UiEvent
@@ -20,7 +21,8 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val registerUserUseCase: RegisterUserUseCase,
-    @IoDispatcher val dispatcher: CoroutineDispatcher,
+    private val saveUserNameUseCase: SaveUserNameUseCase,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<LoginState> = MutableStateFlow(LoginState())
@@ -56,6 +58,7 @@ class LoginViewModel @Inject constructor(
                             _uiState.update {
                                 it.copy(validated = true)
                             }
+                            saveUserNameUseCase.invoke(username)
                         } else {
                             _uiState.update {
                                 it.copy(uiEvent = UiEvent.ShowSnackbar(Constantes.CREDENCIALES_INCORRECTAS))

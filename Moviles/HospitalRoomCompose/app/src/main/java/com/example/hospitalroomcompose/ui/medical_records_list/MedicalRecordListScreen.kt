@@ -19,7 +19,6 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,8 +28,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.hospitalroomcompose.domain.model.MedicalRecord
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.apptareascompose.ui.medical_records_list.MedicalRecordListEvents
+import com.example.hospitalroomcompose.domain.model.MedicalRecord
 import com.example.primeraapp.ui.common.Constantes
 import com.example.primeraapp.ui.common.UiEvent
 import java.time.LocalDate
@@ -43,7 +43,9 @@ fun MedicalRecordListScreen(
     onNavigateDetalle: (Int) -> Unit = {},
     onNavigateEmptyDetails : () -> Unit = {},
 ) {
-    val uiState by medicalRecordListViewModel.uiState.collectAsState()
+    val uiState by medicalRecordListViewModel.uiState.collectAsStateWithLifecycle()
+    val userName by medicalRecordListViewModel.userName.collectAsStateWithLifecycle()
+
     LaunchedEffect(key1 = Unit) {
         medicalRecordListViewModel.handleEvent(MedicalRecordListEvents.GetAllMedicalRecord(patientId))
     }
@@ -58,7 +60,7 @@ fun MedicalRecordListScreen(
     }
 
     MedicalRecordListContent(
-        patientName = uiState.patientName,
+        patientName = userName,
         medicalRecords = uiState.medicalRecords,
         onNavigateDetail = onNavigateDetalle,
         onNavigateEmptyDetails = onNavigateEmptyDetails,

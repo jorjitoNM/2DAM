@@ -26,7 +26,6 @@ import com.example.hospitalroomcompose.ui.medical_record_details.MedicalRecordDe
 import com.example.hospitalroomcompose.ui.medical_records_list.MedicalRecordListScreen
 import com.example.hospitalroomcompose.ui.medications_list.MedicationsListScreen
 import com.example.hospitalroomcompose.ui.patients_list.PatientsListScreen
-import com.example.hospitalroomcompose.ui.splash_screen.SplashScreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -74,15 +73,9 @@ fun Navigation() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = SplashScreenDestination,
+            startDestination = LoginScreenDestination,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable<SplashScreenDestination> {
-                isBottomBarVisible =  false
-                SplashScreen(
-                    navController = navController,
-                )
-            }
             composable<PatientsListScreenDestination> {
                 PatientsListScreen(
                     showSnackbar = { showSnackbar(it) },

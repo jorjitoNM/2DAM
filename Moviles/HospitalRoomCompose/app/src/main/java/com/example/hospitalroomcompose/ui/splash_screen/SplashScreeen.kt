@@ -31,27 +31,27 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.example.hospitalroomcompose.R
-import com.example.hospitalroomcompose.ui.navigation.LoginScreenDestination
-import com.example.hospitalroomcompose.ui.navigation.SplashScreenDestination
 
 @Composable
 fun SplashScreen(
     viewModel: SplashViewModel = hiltViewModel(),
-    navController: NavController,
+    onLoaded  : () -> Unit = {},
 ) {
     val isLoading = viewModel.isLoading.collectAsState()
 
+    SplashScreenContent()
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.loadApp()
+    }
+
     LaunchedEffect(isLoading) {
         if (!isLoading.value) {
-            navController.navigate(LoginScreenDestination) {
-                popUpTo(SplashScreenDestination) { inclusive = true }
-            }
+            onLoaded()
         }
     }
 
-    SplashScreenContent()
 
 }
 

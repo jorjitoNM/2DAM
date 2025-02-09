@@ -16,6 +16,3 @@ object LoginScreenDestination
 
 @Serializable
 object MedicationsListDestination
-
-@Serializable
-object SplashScreenDestination

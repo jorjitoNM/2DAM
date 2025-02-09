@@ -1,8 +1,9 @@
 package com.example.hospitalroomcompose.data
 
-import com.example.hospitalroomcompose.data.local.dao.MedicalRecordsDao
-import com.example.hospitalroomcompose.data.local.dao.MedicationsDao
-import com.example.hospitalroomcompose.data.local.dao.PatientsDao
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.hospitalroomcompose.data.local.dao.UserDao
 import com.example.primeraapp.data.local.modelo.UserEntity
 import kotlinx.coroutines.flow.Flow
@@ -10,13 +11,9 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class RepositoryLocal @Inject constructor(
+class UsersRepository @Inject constructor(
     private val userDao: UserDao,
-    private val patientsDao: PatientsDao,
-    private val medicalRecordsDao: MedicalRecordsDao,
-    private val medicationsDao: MedicationsDao,
 ) {
-
     suspend fun registerUser(username: String, password: String): Result<Unit> {
         return try {
             val hashedPassword = password.hashCode().toString()
@@ -34,14 +31,25 @@ class RepositoryLocal @Inject constructor(
             .map { user -> Result.success(user) }
             .catch { e -> emit(Result.failure(e)) }
     }
-
-    suspend fun getAllPatients () = patientsDao.getAllPatients()
-
-    suspend fun getPatientMedicalRecords (id :Int) = medicalRecordsDao.getPatientMedicalRecords(id)
-
-    suspend fun getMedicalRecord (id : Int) = medicalRecordsDao.getMedicalRecord(id)
-
-    suspend fun getAllMedications () = medicationsDao.getAllMedications()
+}
 
 
+object PreferencesKeys {
+    val USER_NAME = stringPreferencesKey("user_name")
+}
+
+class DataStoreRepository @Inject constructor(
+    private val dataStore: DataStore<Preferences>,
+) {
+
+    val userName: Flow<String> = dataStore.data
+        .map { preferences ->
+            preferences[PreferencesKeys.USER_NAME].orEmpty()
+        }
+
+    suspend fun saveUserName(name: String) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.USER_NAME] = name
+        }
+    }
 }
