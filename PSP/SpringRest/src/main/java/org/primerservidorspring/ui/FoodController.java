@@ -1,10 +1,13 @@
 package org.primerservidorspring.ui;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.websocket.server.PathParam;
 import org.primerservidorspring.common.Constantes;
 import org.primerservidorspring.domain.model.Plato;
 import org.primerservidorspring.domain.services.FoodService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,9 +37,11 @@ public class FoodController {
     }
 
     @DeleteMapping(Constantes.DELETE_URL + "/{"+ Constantes.PATH_ID + "}")
-    public ResponseEntity<Void> delete(@PathVariable String id) {
-        foodService.delete(Integer.valueOf(id));
-        return ResponseEntity.status(HttpServletResponse.SC_NO_CONTENT).build();
+    public ResponseEntity<Boolean> delete(@PathVariable String id) {
+        if (foodService.delete(Integer.valueOf(id)))
+            return ResponseEntity.status(HttpServletResponse.SC_NO_CONTENT).build();
+        else
+            return ResponseEntity.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR).build();
     }
 
     @PutMapping(Constantes.UPDATE_URL)

@@ -11,8 +11,8 @@
     <groupId>org</groupId>
     <artifactId>SpringRest</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>PrimerServidorSpring</name>
-    <description>PrimerServidorSpring</description>
+    <name>SpringRest</name>
+    <description>SpringRest</description>
     <url/>
     <licenses>
         <license/>
