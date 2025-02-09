@@ -11,17 +11,15 @@ import java.util.Random;
 
 @Repository
 public class DaoPlatos {
-    private static final List<Plato> platos  = new ArrayList<>();
+    private final List<Plato> platos  = new ArrayList<>();
     private final Faker faker;
 
     public DaoPlatos(Faker faker) {
         this.faker = faker;
-        if (platos.isEmpty()) {
-            int id = 0;
-            while (id <= 10) {
-                platos.add(new Plato(faker.food().dish(),fillIngredients(), id));
-                id++;
-            }
+        int id = 0;
+        while (id <= 10) {
+            platos.add(new Plato(faker.food().dish(),fillIngredients(), id));
+            id++;
         }
     }
 

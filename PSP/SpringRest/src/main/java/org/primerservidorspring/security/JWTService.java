@@ -2,7 +2,7 @@ package org.primerservidorspring.security;
 
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import org.primerservidorspring.domain.model.User;
+import org.primerservidorspring.common.Constantes;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -11,7 +11,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Map;
 
-@
 @Component
 public class JWTService {
 
@@ -25,8 +24,8 @@ public class JWTService {
         return Jwts.builder()
                 .claims()
                 .add(Map.of(
-                        "email", email,
-                        "password", password
+                        Constantes.EMAIL, email,
+                        Constantes.PASSWORD, password
                 ))
                 .subject(email)
                 .issuer("JorgeRest")
@@ -38,6 +37,9 @@ public class JWTService {
     }
 
     public void validateToken(String token) throws JwtException {
-        Jwts.parser().setSigningKey(key).build();
+        Jwts.parser()
+                .setSigningKey(key)
+                .build()
+                .parseSignedClaims(token);
     }
 }

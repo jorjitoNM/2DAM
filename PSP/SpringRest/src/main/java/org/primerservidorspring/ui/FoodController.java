@@ -38,7 +38,10 @@ public class FoodController {
 
     @PostMapping(Constantes.DELETE_URL + "/{"+ Constantes.PATH_ID + "}")
     public ResponseEntity<Boolean> delete(@PathVariable String id) {
-        return ResponseEntity.status(HttpServletResponse.SC_OK).body(foodService.delete(Integer.valueOf(id)));
+        if (foodService.delete(Integer.valueOf(id)))
+            return ResponseEntity.status(HttpServletResponse.SC_NO_CONTENT).build();
+        else
+            return ResponseEntity.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR).build();
     }
 
     @PostMapping(Constantes.UPDATE_URL)

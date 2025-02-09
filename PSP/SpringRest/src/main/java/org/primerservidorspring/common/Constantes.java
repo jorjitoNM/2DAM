@@ -19,6 +19,8 @@ public class Constantes {
     public static final String UPDATE_URL = "/update";
     public static final String PETICION_INCOMPLETA = "Peticion incompleta, envie un token";
     public static final String PATH_ID = "id";
+    public static final String EMAIL = "email";
+    public static final String PASSWORD = "password";
 
     private Constantes () {}
 }
