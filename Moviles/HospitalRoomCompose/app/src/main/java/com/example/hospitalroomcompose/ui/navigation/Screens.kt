@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.apptareascompose.ui.navigation.ScaffoldState
-import com.example.apptareascompose.ui.navigation.TopBarState
 import com.example.hospitalroomcompose.data.common.Constantes
 
 val appDestinationList = listOf(

@@ -1,4 +1,4 @@
-package com.example.apptareascompose.ui.navigation
+package com.example.hospitalroomcompose.ui.navigation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.RowScope

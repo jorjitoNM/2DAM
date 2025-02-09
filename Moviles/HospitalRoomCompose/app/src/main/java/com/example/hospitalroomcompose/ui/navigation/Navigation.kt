@@ -12,16 +12,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.example.apptareascompose.ui.common.BottomBar
-import com.example.apptareascompose.ui.common.TopBar
+import com.example.hospitalroomcompose.ui.common.BottomBar
+import com.example.hospitalroomcompose.ui.common.TopBar
 import com.example.hospitalroomcompose.ui.login.LoginScreen
 import com.example.hospitalroomcompose.ui.medical_record_details.MedicalRecordDetailsScreen
 import com.example.hospitalroomcompose.ui.medical_records_list.MedicalRecordListScreen
@@ -46,6 +45,8 @@ fun Navigation() {
 
     val state by navController.currentBackStackEntryAsState()
 
+    var isBottomBarVisible by rememberSaveable { mutableStateOf(true) }
+
     var screen = appDestinationList[0]
     LaunchedEffect(state) {
          screen = appDestinationList.find { screen ->
@@ -56,7 +57,8 @@ fun Navigation() {
     val bottomBar: @Composable () -> Unit = {
         BottomBar(
             navController = navController,
-            screens = appDestinationList
+            screens = appDestinationList,
+            isVisible = isBottomBarVisible
         )
     }
     val topBar: @Composable () -> Unit = {
@@ -76,6 +78,7 @@ fun Navigation() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable<SplashScreenDestination> {
+                isBottomBarVisible =  false
                 SplashScreen(
                     navController = navController,
                 )
@@ -105,12 +108,14 @@ fun Navigation() {
                 )
             }
             composable<MedicalRecordDetailDestination> {
+                isBottomBarVisible =  false
                 MedicalRecordDetailsScreen(
                     recordId = (it.toRoute() as MedicalRecordDetailDestination).medicalRecordId,
                     showSnackbar = { showSnackbar(it) }
                 )
             }
             composable<LoginScreenDestination> {
+                isBottomBarVisible =  false
                 LoginScreen(
                     navController = navController,
                     showSnackbar = { showSnackbar(it) }

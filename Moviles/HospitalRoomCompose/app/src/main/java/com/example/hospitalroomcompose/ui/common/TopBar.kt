@@ -1,4 +1,4 @@
-package com.example.apptareascompose.ui.common
+package com.example.hospitalroomcompose.ui.common
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,36 +21,38 @@ import com.example.hospitalroomcompose.ui.navigation.AppDestination
 fun TopBar(
     navController: NavController,
     screen: AppDestination?,
-    ) {
-    screen?.let {destination ->
-        TopAppBar(
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                titleContentColor = MaterialTheme.colorScheme.primary,
-            ),
-            title = {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = destination.scaffoldState.topBarState.arrangement
-                ) {
-                    Text(
-                        text = destination.title,
-                    )
-                }
-
-            },
-            navigationIcon = {
-                if (destination.scaffoldState.topBarState.showNavigationIcon) {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Localized description"
+    isVisible: Boolean = true,
+) {
+    if (isVisible)
+        screen?.let { destination ->
+            TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
+                title = {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = destination.scaffoldState.topBarState.arrangement
+                    ) {
+                        Text(
+                            text = destination.title,
                         )
                     }
-                }
-            },
-            actions = destination.scaffoldState.topBarState.actions,
-            scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
-        )
-    }
+
+                },
+                navigationIcon = {
+                    if (destination.scaffoldState.topBarState.showNavigationIcon) {
+                        IconButton(onClick = { navController.popBackStack() }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Localized description"
+                            )
+                        }
+                    }
+                },
+                actions = destination.scaffoldState.topBarState.actions,
+                scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
+            )
+        }
 }

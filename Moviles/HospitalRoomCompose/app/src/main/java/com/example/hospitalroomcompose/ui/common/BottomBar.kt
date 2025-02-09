@@ -1,4 +1,4 @@
-package com.example.apptareascompose.ui.common
+package com.example.hospitalroomcompose.ui.common
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -17,33 +17,35 @@ import com.example.hospitalroomcompose.ui.navigation.AppMainBottomDestination
 fun BottomBar(
     navController: NavController,
     screens: List<AppDestination>,
-    ) {
-    NavigationBar {
-        val state = navController.currentBackStackEntryAsState()
-        val currentDestination = state.value?.destination
-        screens.forEach { screen ->
-            if (screen is AppMainBottomDestination) {
-                NavigationBarItem(
-                    icon = { Icon(screen.icon, contentDescription = null) } ,
-                    label = { Text(screen.title) },
-                    selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                    onClick = {
-                        navController.navigate(screen.route) {
-                            // Pop up to the start destination of the graph to
-                            // avoid building up a large stack of destinations
-                            // on the back stack as users select items
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
+    isVisible: Boolean = true,
+) {
+    if (isVisible)
+        NavigationBar {
+            val state = navController.currentBackStackEntryAsState()
+            val currentDestination = state.value?.destination
+            screens.forEach { screen ->
+                if (screen is AppMainBottomDestination) {
+                    NavigationBarItem(
+                        icon = { Icon(screen.icon, contentDescription = null) },
+                        label = { Text(screen.title) },
+                        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                        onClick = {
+                            navController.navigate(screen.route) {
+                                // Pop up to the start destination of the graph to
+                                // avoid building up a large stack of destinations
+                                // on the back stack as users select items
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                // Avoid multiple copies of the same destination when
+                                // reselecting the same item
+                                launchSingleTop = true
+                                // Restore state when reselecting a previously selected item
+                                restoreState = true
                             }
-                            // Avoid multiple copies of the same destination when
-                            // reselecting the same item
-                            launchSingleTop = true
-                            // Restore state when reselecting a previously selected item
-                            restoreState = true
                         }
-                    }
-                )
+                    )
+                }
             }
         }
-    }
 }
