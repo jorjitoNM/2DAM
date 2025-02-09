@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.navigation.safeargs.kotlin)
 }
 
 android {
@@ -15,6 +18,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "API_URL", "\"https://api.spotify.com/\"")
     }
 
     buildTypes {
@@ -26,8 +30,9 @@ android {
             )
         }
     }
-    buildFeatures {
-        viewBinding = true
+    buildFeatures{
+        viewBinding=true
+        buildConfig=true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -49,12 +54,36 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    // Lifecycle libraries
     // by ViewModels delegation extensions for activity
     implementation(libs.androidx.activity.ktx)
+
+
+    // Hilt
+    implementation(libs.hilt.core)
+    ksp(libs.hilt.compiler)
+
+
+    //Logs
+    implementation(libs.timber)
 
 
     //librerias del viewmodel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+
+
+    //Fragments
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
+    //Swipe
+    implementation(libs.recyclerview.swipedecorator)
+
+    //retrofit
+    implementation(libs.bundles.retrofit)
+
+    //coil
+    implementation(libs.coil)
 }

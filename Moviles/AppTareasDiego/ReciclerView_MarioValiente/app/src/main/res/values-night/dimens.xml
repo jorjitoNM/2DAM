@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="MediumText">22sp</dimen>
+    <dimen name="MedSize">8dp</dimen>
+    <dimen name="largeSize">30sp</dimen>
+    <dimen name="large">130dp</dimen>
+    <dimen name="_16sp">16sp</dimen>
+    <dimen name="_8dp">8dp</dimen>
+    <dimen name="_2dp">2dp</dimen>
+    <dimen name="_12dp">12dp</dimen>
+    <dimen name="_20dp">20dp</dimen>
+</resources>

@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">ExamenJorgeNovillo</string>
+    <string name="equipos">Equipos</string>
+    <string name="marcador">Marcador</string>
+    <string name="equipo_name">Nombre del equipo</string>
+    <string name="equipo_id">Id del equipo</string>
+    <string name="api_call">Api call failed</string>
+    <string name="name">PLayer name:</string>
+    <string name="surename">Player surename:</string>
+    <string name="dorsal">Dorsal</string>
+    <string name="jugadores">Jugadores</string>
+    <string name="add">Add</string>
+    <string name="tiempo">Tiempo:</string>
+    <string name="cuarto">Cuarto:</string>
+    <string name="local">Equipo local:</string>
+    <string name="visitante">Visitante:</string>
+    <string name="marcador_local">Puntos local:</string>
+    <string name="marcador_visitante">Puntos visitante:</string>
+    <string name="momentos">Momentos</string>
+</resources>

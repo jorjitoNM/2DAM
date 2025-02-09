@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/book_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ui.mainScreen.MainFragment">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/albumImageDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/listSongName"
+        />
+
+    <TextView
+        android:id="@+id/listSongName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/listSongArtist"
+        android:textSize="@dimen/_30sp"
+        android:textColor="@color/md_theme_onPrimary"
+        />
+
+    <TextView
+        android:id="@+id/listSongArtist"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/listSongName"
+        android:textSize="@dimen/_30sp"
+        android:textColor="@color/md_theme_onPrimary"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,78 +3,45 @@ package com.example.myapplication.ui.detailsScreen
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.myapplication.R
-import com.example.myapplication.domain.model.Book
-import com.example.myapplication.domain.usecases.DeleteBook
-import com.example.myapplication.domain.usecases.GetBook
-import com.example.myapplication.domain.usecases.GetBooksSize
-import com.example.myapplication.domain.usecases.UpdateBook
+import com.example.myapplication.data.remote.NetworkResult
+import com.example.myapplication.domain.usecases.GetSong
 import com.example.myapplication.ui.common.StringProvider
 import com.example.myapplication.ui.common.UiEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailsViewModel(
+@HiltViewModel
+class DetailsViewModel @Inject constructor (
     private val stringProvider: StringProvider,
-    private val updateBookUseCase: UpdateBook,
-    private val deleteBookUseCase: DeleteBook,
-    private val getBookUseCase: GetBook,
-    private val getBooksSize: GetBooksSize,
+    private val getSongUseCase: GetSong,
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData(DetailsState())
     val uiState: LiveData<DetailsState> get() = _uiState
 
-    fun updateBook(book: Book) {
-        if (!updateBookUseCase(book))
-            _uiState.value =
-                _uiState.value?.copy(event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.errorUpdateBook)))
-        else
-            _uiState.value = _uiState.value?.copy(event = UiEvent.PopBackStack)
-    }
-
-    fun getBook(id: Int) {
-        val book = getBookUseCase(id)
-        if (book.id < 0) {
-            _uiState.value =
-                _uiState.value?.copy(event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.bookNotFound)))
-        } else {
-            _uiState.value =
-                _uiState.value?.copy(book = book)}
-    }
-
-    fun deleteBook(id: Int) {
-        if (!deleteBookUseCase(id))
-            _uiState.value = _uiState.value?.copy(
-                event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.deleteError))
-            )
-        else
-            _uiState.value = _uiState.value?.copy(event = UiEvent.PopBackStack)
-    }
-
-    fun eventoMostrado() {
-        _uiState.value = _uiState.value?.copy(event = null)
-    }
-
-
-    class DetailsMainViewModelFactory(
-        private val stringProvider: StringProvider,
-        private val updateBook: UpdateBook,
-        private val deleteBook: DeleteBook,
-        private val getBook: GetBook,
-        private val getBookSizeUseCase: GetBooksSize,
-        ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(DetailsViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return DetailsViewModel(
-                    stringProvider,
-                    updateBook,
-                    deleteBook,
-                    getBook,
-                    getBookSizeUseCase,
-                ) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
+    fun handleEvent (event : DetailsEvents) {
+        when (event) {
+            is DetailsEvents.GetSong -> getSong(event.songId, event.token)
+            is DetailsEvents.EventDone -> eventDone()
         }
+    }
+
+
+    private fun getSong(id: String, token : String) {
+        viewModelScope.launch {
+            when (val song = getSongUseCase(id,token)) {
+                is NetworkResult.Error -> _uiState.value =
+                    _uiState.value?.copy(event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.songNotFound)))
+                is NetworkResult.Loading -> TODO()
+                is NetworkResult.Success -> _uiState.value = song.data.let { _uiState.value?.copy(song = it) }
+            }
+        }
+    }
+
+    private fun eventDone() {
+        _uiState.value = _uiState.value?.copy(event = null)
     }
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/jugadores_list_fragment"
+        android:icon="@drawable/home_icon"
+        android:title="@string/jugadores"
+        android:contentDescription="@string/jugadores"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/momentos_list_fragment"
+        android:title="@string/equipos"
+        android:icon="@drawable/checklist_24"
+        android:contentDescription="@string/momentos"
+        app:showAsAction="ifRoom"
+        />
+</menu>

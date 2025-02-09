@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/momento_details_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/timer_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/start_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=">"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="10"
+            android:text="10:00"
+            app:layout_constraintBottom_toBottomOf="@id/start_button"
+            app:layout_constraintStart_toEndOf="@id/start_button"
+            app:layout_constraintTop_toTopOf="@id/start_button" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="10"
+            android:text="1.º"
+            app:layout_constraintBottom_toBottomOf="@id/time"
+            app:layout_constraintStart_toEndOf="@id/time"
+            app:layout_constraintTop_toTopOf="@id/time" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/local"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/visitante"
+        app:layout_constraintEnd_toEndOf="@id/timer_bar"
+        app:layout_constraintStart_toStartOf="@id/timer_bar"
+        app:layout_constraintTop_toBottomOf="@id/timer_bar">
+
+        <Button
+            android:id="@+id/local_plus_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/local_plus_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+2"
+            app:layout_constraintEnd_toEndOf="@id/local_plus_1"
+            app:layout_constraintStart_toStartOf="@id/local_plus_1"
+            app:layout_constraintTop_toBottomOf="@id/local_plus_1" />
+
+        <Button
+            android:id="@+id/local_plus_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+3"
+            app:layout_constraintEnd_toEndOf="@id/local_plus_2"
+            app:layout_constraintStart_toStartOf="@id/local_plus_2"
+            app:layout_constraintTop_toBottomOf="@id/local_plus_2" />
+
+        <TextView
+            android:id="@+id/loca_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="10"
+            android:text="Equipo 1"
+            app:layout_constraintStart_toEndOf="@id/local_plus_1"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/visitante"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/faltas"
+        app:layout_constraintEnd_toEndOf="@id/local"
+        app:layout_constraintStart_toStartOf="@id/local"
+        app:layout_constraintTop_toBottomOf="@id/local">
+
+        <Button
+            android:id="@+id/visitante_plus_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/visitante_plus_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+2"
+            app:layout_constraintEnd_toEndOf="@id/visitante_plus_1"
+            app:layout_constraintStart_toStartOf="@id/visitante_plus_1"
+            app:layout_constraintTop_toBottomOf="@id/visitante_plus_1" />
+
+        <Button
+            android:id="@+id/visitante_plus_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+3"
+            app:layout_constraintEnd_toEndOf="@id/visitante_plus_2"
+            app:layout_constraintStart_toStartOf="@id/visitante_plus_2"
+            app:layout_constraintTop_toBottomOf="@id/visitante_plus_2" />
+
+        <TextView
+            android:id="@+id/visitante_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="10"
+            android:text="Equipo 1"
+            app:layout_constraintStart_toEndOf="@id/local_plus_1"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/faltas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/visitante"
+        app:layout_constraintStart_toStartOf="@id/visitante"
+        app:layout_constraintTop_toBottomOf="@id/visitante">
+
+    <TextView
+        android:id="@+id/faltas_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minEms="10"
+        android:text="Faltas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/faltas_marker"
+        />
+
+    <LinearLayout
+        android:id="@+id/faltas_marker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/faltas_text"
+        app:layout_constraintStart_toStartOf="@id/faltas_text"
+        app:layout_constraintTop_toBottomOf="@id/faltas_text"
+        app:layout_constraintBottom_toTopOf="@id/faltas_actions"
+        >
+
+        <Button
+            android:id="@+id/falta_plus_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            app:layout_constraintEnd_toStartOf="@id/faltas_counter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+             />
+
+        <TextView
+            android:id="@+id/faltas_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="10"
+            android:text="0 x 0"
+            app:layout_constraintStart_toEndOf="@id/falta_plus_1"
+            app:layout_constraintTop_toTopOf="@id/falta_plus_1"
+            app:layout_constraintEnd_toStartOf="@id/falta_plus_2"
+            app:layout_constraintBottom_toBottomOf="@id/falta_plus_1"
+            />
+
+        <Button
+            android:id="@+id/falta_plus_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/faltas_counter"
+            app:layout_constraintTop_toTopOf="@id/faltas_counter"
+            app:layout_constraintBottom_toBottomOf="@id/faltas_counter"
+            />
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/faltas_actions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@id/faltas_marker"
+            app:layout_constraintStart_toStartOf="@id/faltas_marker"
+            app:layout_constraintTop_toBottomOf="@id/faltas_marker">
+
+            <Button
+                android:id="@+id/update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update"
+                app:layout_constraintEnd_toStartOf="@id/compartir"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <Button
+                android:id="@+id/compartir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Compartir"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/update"
+                app:layout_constraintTop_toTopOf="@id/update"
+                app:layout_constraintBottom_toBottomOf="@id/update"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

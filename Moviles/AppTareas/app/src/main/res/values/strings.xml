@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">AppTareas</string>
+    <string name="username">Username (ex. Juanjo123)</string>
+    <string name="password">Password</string>
+    <string name="submit">Submit</string>
+    <string name="user">user</string>
+    <string name="user_id">user_id</string>
+    <string name="image">An image</string>
+    <string name="event_title">Event title</string>
+    <string name="event_id">1</string>
+    <string name="event_description">Event description</string>
+    <string name="add">Add</string>
+    <string name="home">Home</string>
+    <string name="events_list">My Events</string>
+    <string name="user_id_argument">userId</string>
+    <string name="event_id_argument">eventId</string>
+    <string name="name">Name</string>
+    <string name="title">Title</string>
+    <string name="body">Body</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="todos">Todos</string>
+    <string name="i_will_come">I will come</string>
+    <string name="user_info">Profile</string>
+    <string name="done">Done</string>
+    <string name="api_call">Api call failed</string>
+    <string name="search">Search</string>
+</resources>

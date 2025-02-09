@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation"
+    app:startDestination="@id/equipos_list_fragment">
+
+    <fragment
+        android:id="@+id/equipos_list_fragment"
+        android:name="com.example.examenjorgenovillo.ui.equipos_list.EquiposListFragment"
+        android:label="EquiposListFragment">
+
+        <action
+            android:id="@+id/action_equipos_list_fragment_to_jugadores_list_fragment"
+            app:destination="@id/jugadores_list_fragment" />
+        <action
+            android:id="@+id/action_equipos_list_fragment_to_momentos_list_fragment"
+            app:destination="@id/momentos_list_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/jugadores_list_fragment"
+        android:name="com.example.examenjorgenovillo.ui.jugadores_list.JugadoresListFragment"
+        android:label="JugadoresListFragment">
+        <argument
+            android:name="equipoId"
+            android:defaultValue="1"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_jugadores_list_fragment_to_jugador_details_fragment"
+            app:destination="@id/jugador_details_fragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/jugador_details_fragment"
+        android:name="com.example.examenjorgenovillo.ui.jugador_details.JugadorDetailsFragment"
+        android:label="JugadorDetailsFragment">
+        <argument
+            android:name="equipoId"
+            android:defaultValue="1"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/momentos_list_fragment"
+        android:name="com.example.examenjorgenovillo.ui.momentos_list.MomentosListFragment"
+        android:label="MomentosListFragment">
+        <argument
+            android:name="equipoId"
+            android:defaultValue="1"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_momentos_list_fragment_to_momento_details_fragment"
+            app:destination="@id/momento_details_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/momento_details_fragment"
+        android:name="com.example.examenjorgenovillo.ui.momentos_list.MomentosListFragment"
+        android:label="MomentosListFragment">
+        <argument
+            android:name="equipoId"
+            android:defaultValue="1"
+            app:argType="integer" />
+        <argument
+            android:name="momentoId"
+            android:defaultValue="1"
+            app:argType="integer" />
+    </fragment>
+</navigation>

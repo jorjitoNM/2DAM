@@ -1,8 +1,9 @@
 package com.example.myapplication.ui.mainScreen
 
-import com.example.myapplication.domain.model.Book
+import com.example.myapplication.domain.model.Song
+import com.example.myapplication.ui.common.UiEvent
 
 data class MainState(
-    val books: List<Book> = emptyList(),
-    val isIrDetalle: Boolean = false,
+    val songs: List<Song> = emptyList(),
+    val appEvent : UiEvent? = null,
 )

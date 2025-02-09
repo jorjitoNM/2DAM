@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.primeraapp.ui.pantallaPosts.PostFragment"
+        android:label="Gestion de Posts"
+        tools:layout="@layout/fragment_post">
+
+        <argument
+            android:name="user_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_mainFragment_to_commentFragment"
+            app:destination="@id/commentFragment" />
+
+        <action
+            android:id="@+id/action_mainFragment_to_addFragment"
+            app:destination="@id/addFragment" />
+
+        <action
+            android:id="@+id/action_mainFragment_to_ajustesFragment"
+            app:destination="@id/ajustesFragment" />
+
+        <action
+            android:id="@+id/action_mainFragment_to_postUserFragment"
+            app:destination="@id/postUserFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/commentFragment"
+        android:name="com.example.primeraapp.ui.pantallaComments.CommentFragment"
+        android:label="Comentarios del Post">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addFragment"
+        android:name="com.example.primeraapp.ui.pantallaAdd.AddFragment"
+        android:label="Añadir un Post"
+        tools:layout="@layout/fragment_add" />
+
+    <fragment
+        android:id="@+id/postUserFragment"
+        android:name="com.example.primeraapp.ui.pantallaPostsOfUser.PostUserFragment"
+        android:label="Tus Posts" />
+
+    <fragment
+        android:id="@+id/ajustesFragment"
+        android:name="com.example.primeraapp.ui.pantallaAjustes.AjustesFragment"
+        android:label="Ajustes"
+        tools:layout="@layout/fragment_ajustes" />
+</navigation>
