@@ -26,7 +26,7 @@ public class UserService {
         sr.nextBytes(randomCode);
         String code = Base64.getUrlEncoder().encodeToString(randomCode);
         user.setCode(code);
-        daoUsers.singUp(user);
+        daoUsers.signUp(user);
         mailComponent.sendMail(user.getEmail(), "Confirma tu correo", "<html><a herf=\"http://localhost:8080/confirm?code=" + code + "\">Comfirma tu correo pinchando aquí</a></html>");
     }
 

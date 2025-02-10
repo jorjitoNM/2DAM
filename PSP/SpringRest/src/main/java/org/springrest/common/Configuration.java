@@ -12,7 +12,7 @@ import java.security.Key;
 @org.springframework.context.annotation.Configuration
 public class Configuration {
     @Bean
-    public Faker createFaker () {
+    public Faker faker () {
         return new Faker();
     }
 

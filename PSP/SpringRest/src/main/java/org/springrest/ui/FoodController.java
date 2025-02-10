@@ -34,7 +34,7 @@ public class FoodController {
     }
 
     @DeleteMapping(Constantes.DELETE_URL + "/{"+ Constantes.PATH_ID + "}")
-    public ResponseEntity<Boolean> delete(@PathVariable String id) {
+    public ResponseEntity<Boolean> delete(@PathVariable(Constantes.PATH_ID) String id) {
         if (foodService.delete(Integer.valueOf(id)))
             return ResponseEntity.status(HttpServletResponse.SC_NO_CONTENT).build();
         else
@@ -42,9 +42,9 @@ public class FoodController {
     }
 
     @PutMapping(Constantes.UPDATE_URL)
-    public ResponseEntity<Plato> update(@RequestParam String dishId, @RequestParam String nombre, @RequestParam List<String> ingredientes) {
-        if (dishId != null && nombre != null && ingredientes != null)
-            return ResponseEntity.ok(foodService.updateDish(new Plato(nombre, ingredientes, Integer.parseInt(dishId))));
+    public ResponseEntity<Plato> update(@RequestParam(Constantes.DISH_ID) String dishId, @RequestParam(Constantes.NAME) String name, @RequestParam(Constantes.INGREDIENTS) List<String> ingredients) {
+        if (dishId != null && name != null && ingredients != null)
+            return ResponseEntity.ok(foodService.updateDish(new Plato(name, ingredients, Integer.parseInt(dishId))));
         return ResponseEntity.badRequest().build();
     }
 }

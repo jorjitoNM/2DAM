@@ -23,7 +23,7 @@ public class LoginController {
     }
 
     @GetMapping(Constantes.LOGIN_URL)
-    public ResponseEntity<String> login(@RequestParam String email, @RequestParam String password) {
+    public ResponseEntity<String> login(@RequestParam(Constantes.EMAIL) String email, @RequestParam(Constantes.PASSWORD) String password) {
         if (userService.login(new User(email, password))) {
             return ResponseEntity.ok(tokenService.getToken(email,password));
         }
@@ -33,14 +33,14 @@ public class LoginController {
     }
 
     @PostMapping(Constantes.SIGNUP_URL)
-    public ResponseEntity<Void> signUp(@RequestParam String email, @RequestParam String password) {
+    public ResponseEntity<String> signUp(@RequestParam(Constantes.EMAIL) String email, @RequestParam(Constantes.PASSWORD) String password) {
         userService.signUp(new User(email, password));
-        return ResponseEntity.status(HttpServletResponse.SC_CREATED).body(null);
+        return ResponseEntity.status(HttpServletResponse.SC_CREATED).body(Constantes.CHECK_MAIL);
     }
 
     @GetMapping(Constantes.CONFIRM_URL)
-    public ResponseEntity<Void> confirm(@RequestParam String code) {
+    public ResponseEntity<String> confirm(@RequestParam(Constantes.CODE) String code) {
         userService.confirmUser(code);
-        return ResponseEntity.status(HttpServletResponse.SC_ACCEPTED).body(null);
+        return ResponseEntity.status(HttpServletResponse.SC_ACCEPTED).body(Constantes.ACCEPTED);
     }
 }

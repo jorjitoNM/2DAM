@@ -62,17 +62,18 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Utils -->
         <dependency>
             <groupId>net.datafaker</groupId>
             <artifactId>datafaker</artifactId>
             <version>2.4.2</version>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
 
         <!-- JWT -->
         <dependency>

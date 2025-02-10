@@ -25,16 +25,17 @@ public class TokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (isEmpty(header) || !header.startsWith("Bearer ")) {
+        if (isEmpty(header) || !header.startsWith("Bearer "))
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, Constantes.PETICION_INCOMPLETA);
+        else {
+            final String token = header.split(" ")[1].trim();
+            try {
+                tokenService.validateToken(token);
+            } catch (Exception e) {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+            }
+            filterChain.doFilter(request, response);
         }
-        final String token = header.split(" ")[1].trim();
-        try {
-            tokenService.validateToken(token);
-        } catch (Exception e) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
-        }
-        filterChain.doFilter(request, response);
     }
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {

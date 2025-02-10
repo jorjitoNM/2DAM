@@ -9,14 +9,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1f3e9583-fc27-48be-b871-88dd70ded3b4" name="Changes" comment="merged PSP into master">
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hospitalroomcompose/ui/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hospitalroomcompose/ui/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hospitalroomcompose/ui/common/TopBar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hospitalroomcompose/ui/common/TopBar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/hospitalroomcompose/ui/medical_record_details/MedicalRecordDetailsScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/hospitalroomcompose/ui/medical_record_details/MedicalRecordDetailsScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
-    </list>
+    <list default="true" id="1f3e9583-fc27-48be-b871-88dd70ded3b4" name="Changes" comment="correcciones de clase" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -224,7 +217,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739175598529</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="correcciones de clase">
+      <option name="closed" value="true" />
+      <created>1739201225856</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1739201225856</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -242,6 +243,7 @@
     <MESSAGE value="añadidas clases y eliminadas clases basura dela practica de Room" />
     <MESSAGE value="resolviendo conflictos" />
     <MESSAGE value="merged PSP into master" />
-    <option name="LAST_COMMIT_MESSAGE" value="merged PSP into master" />
+    <MESSAGE value="correcciones de clase" />
+    <option name="LAST_COMMIT_MESSAGE" value="correcciones de clase" />
   </component>
 </project>

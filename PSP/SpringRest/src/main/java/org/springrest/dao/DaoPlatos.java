@@ -2,8 +2,8 @@ package org.springrest.dao;
 
 
 import net.datafaker.Faker;
-import org.springrest.domain.model.Plato;
 import org.springframework.stereotype.Repository;
+import org.springrest.domain.model.Plato;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +11,13 @@ import java.util.Random;
 
 @Repository
 public class DaoPlatos {
-    private final List<Plato> platos  = new ArrayList<>();
+    private static final List<Plato> platos  = new ArrayList<>();
     private final Faker faker;
 
     public DaoPlatos(Faker faker) {
         this.faker = faker;
         int id = 0;
-        while (id <= 10) {
+        while (id < 10) {
             platos.add(new Plato(faker.food().dish(),fillIngredients(), id));
             id++;
         }
@@ -31,14 +31,12 @@ public class DaoPlatos {
         return platos.removeIf(p -> p.id()==id);
     }
 
-    private List<String> fillIngredients () {
+    private List<String> fillIngredients() {
         Random r = new Random();
-        int random = r.nextInt()*5+2;
-        int i = 0;
+        int numberOfIngredients = r.nextInt(5) + 2;
         List<String> ingredients = new ArrayList<>();
-        while (i < random) {
+        for (int i = 0; i < numberOfIngredients; i++) {
             ingredients.add(faker.food().ingredient());
-            i++;
         }
         return ingredients;
     }
