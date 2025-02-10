@@ -1071,7 +1071,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </collation>
     <schema id="288" parent="1" name="examen">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-11-27.12:38:08</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-11-28.14:31:12</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="289" parent="1" name="information_schema">
@@ -1133,7 +1133,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
     <column id="304" parent="298" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>6</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1240,7 +1240,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="326" parent="300" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>9</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1280,7 +1280,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="334" parent="301" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>11</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1306,7 +1306,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="339" parent="302" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>11</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1332,7 +1332,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="344" parent="303" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>9</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>

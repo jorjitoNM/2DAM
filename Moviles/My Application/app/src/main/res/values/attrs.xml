@@ -1,6 +1,0 @@
-<resources>
-    <attr name="colorCustomColor" format="color" />
-    <attr name="colorOnCustomColor" format="color" />
-    <attr name="colorCustomColorContainer" format="color" />
-    <attr name="colorOnCustomColorContainer" format="color" />
-</resources>
