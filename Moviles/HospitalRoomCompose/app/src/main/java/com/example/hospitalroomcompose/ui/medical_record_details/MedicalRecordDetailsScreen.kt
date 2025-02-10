@@ -26,7 +26,7 @@ import java.time.LocalDate
 
 @Composable
 fun MedicalRecordDetailsScreen (
-    recordId: Int = 1,
+    recordId: Int = -1,
     medicalRecordDetailsViewModel : MedicalRecordDetailsViewModel = hiltViewModel(),
     showSnackbar: (String) -> Unit,
 ) {

@@ -39,7 +39,6 @@ fun TopBar(
                             text = destination.title,
                         )
                     }
-
                 },
                 navigationIcon = {
                     if (destination.scaffoldState.topBarState.showNavigationIcon) {

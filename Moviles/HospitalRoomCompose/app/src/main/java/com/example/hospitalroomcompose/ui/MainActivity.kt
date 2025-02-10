@@ -20,14 +20,15 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             HospitalRoomComposeTheme {
-                var showSplash by rememberSaveable { mutableStateOf(true) }
-                if (showSplash) {
-                    SplashScreen(
-                        onLoaded = { showSplash = false }
-                    )
-                } else {
-                    Navigation()
-                }
+//                var showSplash by rememberSaveable { mutableStateOf(true) }
+//                if (showSplash) {
+//                    SplashScreen(
+//                        onLoaded = { showSplash = false }
+//                    )
+//                } else {
+//                    Navigation()
+//                }
+                Navigation()
             }
         }
     }
