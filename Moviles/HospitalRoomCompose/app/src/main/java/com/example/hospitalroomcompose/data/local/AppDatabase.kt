@@ -13,12 +13,12 @@ import com.example.hospitalroomcompose.data.local.model.MedicalRecordEntity
 import com.example.hospitalroomcompose.data.local.model.MedicationEntity
 import com.example.hospitalroomcompose.data.local.model.PatientEntity
 import com.example.hospitalroomcompose.data.local.model.PatientMedicalRecordsCrossRef
-import com.example.primeraapp.data.local.modelo.UserEntity
+import com.example.hospitalroomcompose.data.local.model.UserEntity
 
 @Database(
     entities = [UserEntity::class,PatientEntity::class,MedicationEntity::class,PatientMedicalRecordsCrossRef::class,MedicalRecordEntity::class],
-    version = 1,
-    exportSchema = true
+    version = 2,
+    exportSchema = false
 )
 @TypeConverters(LocalDateConverters::class, MedicationsConverter::class)
 abstract class AppDatabase : RoomDatabase() {

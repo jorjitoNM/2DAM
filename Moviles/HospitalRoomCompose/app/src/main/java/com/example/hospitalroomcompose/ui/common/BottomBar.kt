@@ -17,7 +17,7 @@ import com.example.hospitalroomcompose.ui.navigation.AppMainBottomDestination
 fun BottomBar(
     navController: NavController,
     screens: List<AppDestination>,
-    isVisible: Boolean = true,
+    isVisible: Boolean,
 ) {
     if (isVisible)
         NavigationBar {

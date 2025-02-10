@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7dd5e0e637cf33788fdbbf4a3dc8cc69",
+    "identityHash": "b1ab3444fcbf65864ae376345302d9b1",
     "entities": [
       {
         "tableName": "users",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `username` TEXT NOT NULL, `password` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `username` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -28,7 +28,7 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": true,
+          "autoGenerate": false,
           "columnNames": [
             "id"
           ]
@@ -38,7 +38,7 @@
       },
       {
         "tableName": "patients",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`patientId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `birthDate` TEXT NOT NULL, `phone` TEXT NOT NULL, `paid` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`patientId` INTEGER NOT NULL, `name` TEXT NOT NULL, `birthDate` TEXT NOT NULL, `phone` TEXT NOT NULL, `paid` INTEGER NOT NULL, PRIMARY KEY(`patientId`))",
         "fields": [
           {
             "fieldPath": "patientId",
@@ -72,7 +72,7 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": true,
+          "autoGenerate": false,
           "columnNames": [
             "patientId"
           ]
@@ -82,7 +82,7 @@
       },
       {
         "tableName": "medications",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `medicationName` TEXT NOT NULL, `dosage` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `medicationName` TEXT NOT NULL, `dosage` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -104,7 +104,7 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": true,
+          "autoGenerate": false,
           "columnNames": [
             "id"
           ]
@@ -141,7 +141,7 @@
       },
       {
         "tableName": "medicalRecords",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recordId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `description` TEXT NOT NULL, `date` TEXT NOT NULL, `doctorId` INTEGER NOT NULL, `patientId` INTEGER NOT NULL, `medications` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recordId` INTEGER NOT NULL, `description` TEXT NOT NULL, `date` TEXT NOT NULL, `doctorId` INTEGER NOT NULL, `patientId` INTEGER NOT NULL, `medications` TEXT NOT NULL, PRIMARY KEY(`recordId`))",
         "fields": [
           {
             "fieldPath": "recordId",
@@ -181,7 +181,7 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": true,
+          "autoGenerate": false,
           "columnNames": [
             "recordId"
           ]
@@ -193,7 +193,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7dd5e0e637cf33788fdbbf4a3dc8cc69')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b1ab3444fcbf65864ae376345302d9b1')"
     ]
   }
 }

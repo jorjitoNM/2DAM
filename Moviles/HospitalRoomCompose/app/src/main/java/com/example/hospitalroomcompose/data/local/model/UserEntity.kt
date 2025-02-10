@@ -1,4 +1,4 @@
-package com.example.primeraapp.data.local.modelo
+package com.example.hospitalroomcompose.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "users")
 data class UserEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     val id: Int = 0,
     val username: String,
     val password: String

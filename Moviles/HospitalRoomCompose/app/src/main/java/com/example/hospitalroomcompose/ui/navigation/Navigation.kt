@@ -45,12 +45,10 @@ fun Navigation() {
     val state by navController.currentBackStackEntryAsState()
 
     var isBottomBarVisible by rememberSaveable { mutableStateOf(true) }
+    var isTopBarVisible by rememberSaveable { mutableStateOf(true) }
 
-    var screen = appDestinationList[0]
-    LaunchedEffect(state) {
-         screen = appDestinationList.find { screen ->
-             state?.destination?.route == screen.route::class.qualifiedName
-         }!!
+    val screen = appDestinationList.find { screen ->
+        state?.destination?.route == screen.route::class.qualifiedName
     }
 
     val bottomBar: @Composable () -> Unit = {
@@ -64,6 +62,7 @@ fun Navigation() {
         TopBar(
             navController = navController,
             screen = screen,
+            isVisible = isTopBarVisible,
         )
     }
     Scaffold(
@@ -77,6 +76,8 @@ fun Navigation() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable<PatientsListScreenDestination> {
+                isBottomBarVisible =  true
+                isTopBarVisible = true
                 PatientsListScreen(
                     showSnackbar = { showSnackbar(it) },
                     onNavigateDetail = { patientId ->
@@ -85,6 +86,8 @@ fun Navigation() {
                 )
             }
             composable<MedicalRecordListScreenDestination> {
+                isBottomBarVisible =  true
+                isTopBarVisible = true
                 MedicalRecordListScreen(
                     patientId = (it.toRoute() as MedicalRecordListScreenDestination).patientId,
                     showSnackbar = { showSnackbar(it) },
@@ -102,6 +105,7 @@ fun Navigation() {
             }
             composable<MedicalRecordDetailDestination> {
                 isBottomBarVisible =  false
+                isTopBarVisible = true
                 MedicalRecordDetailsScreen(
                     recordId = (it.toRoute() as MedicalRecordDetailDestination).medicalRecordId,
                     showSnackbar = { showSnackbar(it) }
@@ -109,12 +113,15 @@ fun Navigation() {
             }
             composable<LoginScreenDestination> {
                 isBottomBarVisible =  false
+                isTopBarVisible = false
                 LoginScreen(
                     navController = navController,
                     showSnackbar = { showSnackbar(it) }
                 )
             }
             composable<MedicationsListDestination> {
+                isBottomBarVisible =  true
+                isTopBarVisible = true
                 MedicationsListScreen(
                     showSnackbar = { showSnackbar(it) }
                 )

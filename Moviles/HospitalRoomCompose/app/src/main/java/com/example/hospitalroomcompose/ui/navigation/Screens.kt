@@ -44,11 +44,21 @@ object MedicalRecordsListScreen : AppDestination {
 object MedicalRecordDetailsScreen : AppDestination {
     override val route = MedicalRecordListScreenDestination
     override val title = Constantes.MEDICAL_RECORDS
+    override val scaffoldState = ScaffoldState(
+        topBarState = TopBarState(showNavigationIcon = false, arrangement = Arrangement.Start),
+        fabVisible = true,
+        bottomBarVisible = false,
+    )
 }
 
 object LoginScreen : AppDestination {
     override val route = LoginScreenDestination
     override val title = Constantes.LOGIN
+    override val scaffoldState = ScaffoldState(
+        topBarState = TopBarState(showNavigationIcon = false, arrangement = Arrangement.Start),
+        fabVisible = true,
+        bottomBarVisible = false,
+    )
 }
 
 object MedicationsListScreen : AppMainBottomDestination {

@@ -1,4 +1,4 @@
-package com.example.primeraapp.ui.common
+package com.example.hospitalroomcompose.ui.common
 
 
 object Constantes {

@@ -6,7 +6,7 @@ import com.example.hospitalroomcompose.domain.usecases.user.LoginUseCase
 import com.example.hospitalroomcompose.domain.usecases.user.RegisterUserUseCase
 import com.example.hospitalroomcompose.domain.usecases.user.SaveUserNameUseCase
 import com.example.primeraapp.di.IoDispatcher
-import com.example.primeraapp.ui.common.Constantes
+import com.example.hospitalroomcompose.ui.common.Constantes
 import com.example.primeraapp.ui.common.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -22,7 +22,6 @@ class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val registerUserUseCase: RegisterUserUseCase,
     private val saveUserNameUseCase: SaveUserNameUseCase,
-    @IoDispatcher private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<LoginState> = MutableStateFlow(LoginState())
@@ -30,6 +29,20 @@ class LoginViewModel @Inject constructor(
 
     fun handleEvent(event: LoginEvents) {
         when (event) {
+            is LoginEvents.UpdateUsername -> {
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        user = currentState.user.copy(username = event.username)
+                    )
+                }
+            }
+            is LoginEvents.UpdatePassword -> {
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        user = currentState.user.copy(password = event.password)
+                    )
+                }
+            }
             is LoginEvents.Login -> login(event.user.username, event.user.password)
             is LoginEvents.Register -> register(event.user.username, event.user.password)
             is LoginEvents.EventDone -> _uiState.update { it.copy(uiEvent = null) }

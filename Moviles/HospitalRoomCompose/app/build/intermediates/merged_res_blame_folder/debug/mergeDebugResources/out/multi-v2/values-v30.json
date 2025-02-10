@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.hospitalroomcompose.app-mergeDebugResources-66:/values-v30/values-v30.xml",
+            "outputFile": "com.example.hospitalroomcompose.app-mergeDebugResources-70:/values-v30/values-v30.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Usuario\\.gradle\\caches\\transforms-4\\ec85000c4a58c82c143c2840bc3b4357\\transformed\\material3-release\\res\\values-v30\\values-v30.xml",
+                    "source": "C:\\Users\\cnovi\\.gradle\\caches\\transforms-4\\b184c5f987d9c7be032cde2b526795b0\\transformed\\material3-release\\res\\values-v30\\values-v30.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

@@ -7,7 +7,7 @@ import java.time.LocalDate
 
 @Entity(tableName = "medicalRecords")
 data class MedicalRecordEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     val recordId : Int = 0,
     val description : String = "",
     val date : LocalDate = LocalDate.now(),

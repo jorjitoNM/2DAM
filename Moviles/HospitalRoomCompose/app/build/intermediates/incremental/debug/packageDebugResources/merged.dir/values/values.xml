@@ -9,4 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <string name="app_name">HospitalRoomCompose</string>
     <style name="Theme.HospitalRoomCompose" parent="android:Theme.Material.Light.NoActionBar"/>
+    <style name="Theme.MySplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/black</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_screen</item>
+        <item name="postSplashScreenTheme">@style/Theme.HospitalRoomCompose</item>
+    </style>
 </resources>

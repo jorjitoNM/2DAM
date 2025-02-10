@@ -12,13 +12,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.apptareascompose.domain.model.User
+import com.example.hospitalroomcompose.domain.model.User
 import com.example.hospitalroomcompose.ui.navigation.PatientsListScreenDestination
-import com.example.primeraapp.ui.common.Constantes
+import com.example.hospitalroomcompose.ui.common.Constantes
 import com.example.primeraapp.ui.common.UiEvent
 
 @Composable
@@ -28,7 +32,7 @@ fun LoginScreen(
     navController: NavController,
 ) {
     val uiState by loginViewModel.uiState.collectAsState()
-
+    val user = uiState.user
     LaunchedEffect(uiState.uiEvent) {
         uiState.uiEvent?.let {
             if (it is UiEvent.ShowSnackbar) {
@@ -44,15 +48,25 @@ fun LoginScreen(
     }
 
     LoginContent(
-        loginViewModel = loginViewModel,
-        user = uiState.user,
+        user = user,
+        onUsernameChange = { newUsername ->
+            loginViewModel.handleEvent(LoginEvents.UpdateUsername(newUsername))
+        },
+        onPasswordChange = { newPassword ->
+            loginViewModel.handleEvent(LoginEvents.UpdatePassword(newPassword))
+        },
+        onLoginClick = { loginViewModel.handleEvent(LoginEvents.Login(user)) },
+        onRegisterClick = { loginViewModel.handleEvent(LoginEvents.Register(user)) },
     )
 }
 
 @Composable
 fun LoginContent(
-    loginViewModel: LoginViewModel,
     user : User,
+    onUsernameChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onLoginClick: () -> Unit,
+    onRegisterClick: () -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.weight(0.15f))
@@ -65,7 +79,7 @@ fun LoginContent(
         ) {
             TextField(
                 value = user.username,
-                onValueChange = { user.username = it },
+                onValueChange = onUsernameChange,
                 label = { Text(Constantes.USERNAME) },
                 singleLine = true
             )
@@ -79,7 +93,7 @@ fun LoginContent(
         ) {
             TextField(
                 value = user.password,
-                onValueChange = { user.password = it },
+                onValueChange = onPasswordChange,
                 label = { Text(Constantes.PASSWORD) },
                 singleLine = true
             )
@@ -98,7 +112,8 @@ fun LoginContent(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Button(onClick = { loginViewModel.handleEvent(LoginEvents.Login(user)) }) { Text(Constantes.LOGIN) }
+                Button(onClick = onLoginClick) { Text(
+                    Constantes.LOGIN) }
             }
             Column(
                 modifier = Modifier
@@ -107,9 +122,23 @@ fun LoginContent(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Button(onClick = { loginViewModel.handleEvent(LoginEvents.Register(user)) }) { Text(Constantes.SING_UP) }
+                Button(onClick = onRegisterClick) { Text(
+                    Constantes.SING_UP) }
             }
         }
         Spacer(modifier = Modifier.weight(0.1f))
     }
+}
+
+@Composable
+@Preview
+fun LoginScreenPreview () {
+    var user by rememberSaveable { mutableStateOf(User()) }
+    LoginContent (
+        user = User(),
+        onUsernameChange = { newUsername -> user = user.copy(username = newUsername) },
+        onPasswordChange = { newPassword -> user = user.copy(password = newPassword) },
+        onLoginClick = {  },
+        onRegisterClick = { },
+    )
 }

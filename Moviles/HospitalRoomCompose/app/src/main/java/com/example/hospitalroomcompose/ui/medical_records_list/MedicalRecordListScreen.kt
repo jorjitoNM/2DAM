@@ -31,7 +31,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.apptareascompose.ui.medical_records_list.MedicalRecordListEvents
 import com.example.hospitalroomcompose.domain.model.MedicalRecord
-import com.example.primeraapp.ui.common.Constantes
+import com.example.hospitalroomcompose.ui.common.Constantes
 import com.example.primeraapp.ui.common.UiEvent
 import java.time.LocalDate
 

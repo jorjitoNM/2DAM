@@ -1,6 +1,6 @@
 package com.example.hospitalroomcompose.ui.login
 
-import com.example.apptareascompose.domain.model.User
+import com.example.hospitalroomcompose.domain.model.User
 import com.example.primeraapp.ui.common.UiEvent
 
 data class LoginState (

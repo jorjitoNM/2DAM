@@ -1,4 +1,4 @@
-package com.example.apptareascompose.domain.model
+package com.example.hospitalroomcompose.domain.model
 
 data class User(
     val id : Int = 0,

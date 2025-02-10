@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.primeraapp.data.local.modelo.UserEntity
+import com.example.hospitalroomcompose.data.local.model.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

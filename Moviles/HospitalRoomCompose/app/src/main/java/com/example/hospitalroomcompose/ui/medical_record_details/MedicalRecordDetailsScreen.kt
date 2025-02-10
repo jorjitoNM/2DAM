@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.apptareascompose.ui.medical_record_details.MedicalRecordDetailsEvents
 import com.example.hospitalroomcompose.domain.model.MedicalRecord
-import com.example.primeraapp.ui.common.Constantes
+import com.example.hospitalroomcompose.ui.common.Constantes
 import com.example.primeraapp.ui.common.UiEvent
 import java.time.LocalDate
 
