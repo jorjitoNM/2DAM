@@ -33,7 +33,7 @@ class MedicationsListViewModel @Inject constructor (
 
     private fun getAllMedications () {
         viewModelScope.launch(dispatcher) {
-
+           _uiState.update { it.copy(medications = getAllMedicationsUseCase.invoke()) }
         }
     }
 }
