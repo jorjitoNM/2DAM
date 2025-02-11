@@ -1,24 +1,44 @@
 package com.example.myapplication.data.remote
 
-import retrofit2.Response
-
 
 sealed class NetworkResult<T>(
-    var data: T? = null,
-    val message: String? = null
+
 ) {
 
-    class Success<T>(data: T) : NetworkResult<T>(data)
+    class Success<T>(val data: T) : NetworkResult<T>()
 
-    class Error<T>(message: String, data: T? = null) : NetworkResult<T>(data, message)
+    class Error<T>(val message: String) : NetworkResult<T>()
 
     class Loading<T> : NetworkResult<T>()
 
-
-    fun <R> map( transform :(data: T?) -> R) : NetworkResult<R> =
+    inline fun <R> map( transform :(data: T) -> R) : NetworkResult<R> =
         when(this){
-            is Error -> Error(message!!,transform(data))
+            is Error -> Error(message)
             is Loading -> Loading()
             is Success -> Success(transform(data))
         }
+    inline fun <R> then(transform: (data: T) -> NetworkResult<R>): NetworkResult<R> =
+        when (this) {
+            is Error -> Error(message)
+            is Loading -> Loading()
+            is Success -> transform(data)
+        }
+
+
+
+
 }
+
+fun <T> List<NetworkResult<T>>.combine(): NetworkResult<List<T>> {
+    val successData = mutableListOf<T>()
+
+    for (result in this) {
+        when (result) {
+            is NetworkResult.Success -> successData.add(result.data)
+            is NetworkResult.Error -> return NetworkResult.Error(result.message)
+            is NetworkResult.Loading -> return NetworkResult.Loading()
+        }
+    }
+    return NetworkResult.Success(successData)
+}
+

@@ -1,4 +1,4 @@
-package org.example.hospitaljpa.dao.respositories.jdbc;
+package com.hospitalcrud.dao.respositories.jdbc;
 
 import com.hospitalcrud.dao.mappers.jdbc_mappers.MapPayments;
 import com.hospitalcrud.dao.model.Payment;
@@ -63,10 +63,5 @@ public class JDBCPaymentsRepository implements PaymentsRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void deletePatientPayments(int patientId) {
-
     }
 }

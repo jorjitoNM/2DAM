@@ -2,6 +2,7 @@ package org.example.hospitaljpa.domain.service;
 
 import com.hospitalcrud.dao.respositories.DoctorsRepository;
 import com.hospitalcrud.domain.model.DoctorUI;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

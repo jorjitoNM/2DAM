@@ -1,4 +1,4 @@
-package org.example.hospitaljpa.dao.respositories.jdbc;
+package com.hospitalcrud.dao.respositories.jdbc;
 
 import com.hospitalcrud.dao.mappers.jdbc_mappers.MapDoctors;
 import com.hospitalcrud.dao.model.Doctor;

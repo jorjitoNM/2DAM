@@ -1,0 +1,6 @@
+pathAnimalVisitsXML = data/visits.xml
+pathAnimalVisitsTXT = data/animalVisits
+dbUrl = jdbc:mysql://localhost:3306/examen_AD
+userName = root
+password = quevedo2dam
+dbDriver = com.mysql.cj.jdbc.Driver

@@ -1,5 +1,6 @@
-package org.example.hospitaljpa.domain.service;
+package com.hospitalcrud.domain.service;
 
+import com.hospitalcrud.dao.model.Credential;
 import com.hospitalcrud.dao.respositories.CredentialRepository;
 import com.hospitalcrud.domain.model.CredentialUI;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,7 @@ public class CredentialService {
     }
 
     public boolean login(CredentialUI userCredentialsUI) {
-        if (credentialRepository.get(userCredentialsUI.getUsername()) == null)
-            return false;
-        else
-            return credentialRepository
-                .get(userCredentialsUI.getUsername())
+        return credentialRepository.get(userCredentialsUI.getUsername())
                 .getPassword().equals(userCredentialsUI.getPassword());
     }
 }

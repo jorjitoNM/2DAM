@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<<< HEAD:Interfaces/Demo/.idea/modules.xml
       <module fileurl="file://$PROJECT_DIR$/Demo.iml" filepath="$PROJECT_DIR$/Demo.iml" />
+========
+      <module fileurl="file://$PROJECT_DIR$/.idea/PrimerServidor.iml" filepath="$PROJECT_DIR$/.idea/PrimerServidor.iml" />
+>>>>>>>> refs/remotes/2DAMGitHub/AD:PSP/PrimerServidor/.idea/modules.xml
     </modules>
   </component>
 </project>

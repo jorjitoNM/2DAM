@@ -1,7 +1,7 @@
 package com.example.myapplication.data.remote.di
 
 import com.example.myapplication.BuildConfig
-import com.example.myapplication.data.remote.apiService.RickAndMortyService
+import com.example.myapplication.data.remote.apiService.SpotifyService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,7 +43,7 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideUserService(retrofit: Retrofit): RickAndMortyService {
-        return retrofit.create(RickAndMortyService::class.java);
+    fun provideUserService(retrofit: Retrofit): SpotifyService {
+        return retrofit.create(SpotifyService::class.java);
     }
 }

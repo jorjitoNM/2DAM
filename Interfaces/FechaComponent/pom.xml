@@ -5,13 +5,22 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
+<<<<<<<< HEAD:Interfaces/FechaComponent/pom.xml
     <artifactId>FechaComponent</artifactId>
+========
+    <artifactId>Temporal</artifactId>
+>>>>>>>> refs/remotes/2DAMGitHub/AD:PSP/Temporal/pom.xml
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+
+    </dependencies>
 
 </project>

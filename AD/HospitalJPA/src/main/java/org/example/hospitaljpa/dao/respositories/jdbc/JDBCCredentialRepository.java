@@ -1,7 +1,6 @@
-package org.example.hospitaljpa.dao.respositories.jdbc;
+package com.hospitalcrud.dao.respositories.jdbc;
 
 import com.hospitalcrud.dao.model.Credential;
-import com.hospitalcrud.dao.model.Patient;
 import com.hospitalcrud.dao.respositories.CredentialRepository;
 import com.hospitalcrud.dao.utilities.DBConnection;
 import com.hospitalcrud.dao.utilities.SQLQueries;
@@ -9,10 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 @Repository
@@ -42,12 +38,12 @@ public class JDBCCredentialRepository implements CredentialRepository {
     }
 
     @Override
-    public void save(Patient patient) {
+    public void save(Credential credential) {
         try (Connection con = dbConnection.getConnection();
              PreparedStatement insertCredential = con.prepareStatement(SQLQueries.INSERT_CREDENTIAL)) {
-            insertCredential.setString(1, patient.getCredential().getUserName());
-            insertCredential.setString(2, patient.getCredential().getPassword());
-            insertCredential.setInt(3, patient.getId());
+            insertCredential.setString(1, credential.getUserName());
+            insertCredential.setString(2, credential.getPassword());
+            insertCredential.setInt(3, credential.getPatientId());
             insertCredential.setNull(4, 0);
             insertCredential.executeUpdate();
         } catch (SQLException e) {

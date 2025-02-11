@@ -1,4 +1,4 @@
-package org.example.hospitaljpa.dao.respositories;
+package com.hospitalcrud.dao.respositories;
 
 import com.hospitalcrud.dao.model.Payment;
 
@@ -10,5 +10,4 @@ public interface PaymentsRepository {
     void update(Payment payment);
     boolean delete(int paymentId);
     List<Payment> getPaymentsByPatient();
-    void deletePatientPayments(int patientId);
 }

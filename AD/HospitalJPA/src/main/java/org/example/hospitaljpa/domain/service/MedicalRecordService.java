@@ -1,4 +1,4 @@
-package org.example.hospitaljpa.domain.service;
+package com.hospitalcrud.domain.service;
 
 
 import com.hospitalcrud.dao.model.MedicalRecord;
@@ -52,13 +52,13 @@ public class MedicalRecordService {
     }
 
     public void deleteMedicalRecord(int id) {
-        medicalRecordsRepository.delete(new MedicalRecord(
-                id,-1,-1,null,null));
+        medicalRecordsRepository.delete(id);
     }
 
     public void updateMedicalRecord(MedicalRecordUI medicalRecordUI) {
-        medicalRecordsRepository.update(new MedicalRecord(medicalRecordUI.getId(), medicalRecordUI.getIdPatient(),
+        MedicalRecord medicalRecord = new MedicalRecord(medicalRecordUI.getId(), medicalRecordUI.getIdPatient(),
                 medicalRecordUI.getIdDoctor(), medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),
-                parseMedications(medicalRecordUI.getMedications(),medicalRecordUI.getId())));
+                parseMedications(medicalRecordUI.getMedications(),medicalRecordUI.getId()));
+        medicalRecordsRepository.update(medicalRecord);
     }
 }

@@ -1,4 +1,4 @@
-package org.example.hospitaljpa.dao.respositories.jdbc;
+package com.hospitalcrud.dao.respositories.jdbc;
 
 import com.hospitalcrud.dao.mappers.jdbc_mappers.MapPatients;
 import com.hospitalcrud.dao.model.Patient;
@@ -43,29 +43,29 @@ public class JDBCPatientsRepository implements PatientRepository {
              PreparedStatement insertPatient = con.prepareStatement(SQLQueries.INSERT_PATIENT, Statement.RETURN_GENERATED_KEYS);
              PreparedStatement insertCredential = con.prepareStatement(SQLQueries.INSERT_CREDENTIAL)
         ) {
-            try {
-                con.setAutoCommit(false);
-                setPatientValues(patient, insertPatient).executeUpdate();
-                ResultSet rs = insertPatient.getGeneratedKeys();
-                rs.next();
+            con.setAutoCommit(false);
+            setPatientValues(patient, insertPatient).executeUpdate();
+            ResultSet rs = insertPatient.getGeneratedKeys();
+            if (rs.next()) {
                 insertCredential.setString(1, patient.getCredential().getUserName());
                 insertCredential.setString(2, patient.getCredential().getPassword());
                 insertCredential.setInt(3, rs.getInt(1));
                 insertCredential.setNull(4, 0);
-                insertCredential.executeUpdate();
-                con.commit();
-                patient.setId(rs.getInt(1));
-            } catch (SQLIntegrityConstraintViolationException e) {
+                try {
+                    insertCredential.executeUpdate();
+                    con.commit();
+                    return rs.getInt(1);
+                } catch (SQLException e) {
+                    con.rollback();
+                    throw new DUPLICATED_USERNAME();
+                }
+            } else {
                 con.rollback();
-                e.printStackTrace();
-                throw new DUPLICATED_USERNAME();
-            } catch (SQLException e) {
-                con.rollback();
+                return -1;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return patient.getId();
     }
 
     @Override
@@ -81,44 +81,49 @@ public class JDBCPatientsRepository implements PatientRepository {
     }
 
     @Override
-    public boolean delete(int patientId, boolean confirmation) {
+    public boolean delete(int patientId) {
         int result = 0;
         try (Connection con = pool.getConnection();
              PreparedStatement deletePatient = con.prepareStatement(SQLQueries.DELETE_PATIENT);
+             PreparedStatement getMedicalRecords = con.prepareStatement(SQLQueries.GET_MEDICAL_RECORDS);
              PreparedStatement deleteCredential = con.prepareStatement(SQLQueries.DELETE_CREDENTIAL);
              PreparedStatement deleteMedicalRecords = con.prepareStatement(SQLQueries.DELETE_PATIENT_MEDICAL_RECORDS);
-             PreparedStatement deletePrescribedMedications = con.prepareStatement(SQLQueries.DELETE_PATIENT_PRESCRIBED_MEDICATIONS);
-             PreparedStatement deletePatientPayments = con.prepareStatement(SQLQueries.DELETE_PATIENT_PAYMENTS);
-             PreparedStatement deletePatientAppointments = con.prepareStatement(SQLQueries.DELETE_PATIENT_APPOINTMENTS);
+             PreparedStatement deletePrescribedMedications = con.prepareStatement(SQLQueries.DELETE_PRESCRIBED_MEDICATIONS);
+
         ) {
-            try {
-                con.setAutoCommit(false);
-                if (confirmation) {
-                    deletePrescribedMedications.setInt(1, patientId);
-                    deletePrescribedMedications.executeUpdate();
-                    deleteMedicalRecords.setInt(1, patientId);
-                    deleteMedicalRecords.executeUpdate();
-                    deletePatientPayments.setInt(1, patientId);
-                    deletePatientPayments.executeUpdate();
-                    deletePatientAppointments.setInt(1,patientId);
-                    deletePatientPayments.executeUpdate();
-                }
-                deleteCredential.setInt(1, patientId);
-                deleteCredential.executeUpdate();
-                deletePatient.setInt(1, patientId);
-                result = deletePatient.executeUpdate();
-                con.commit();
-            } catch (SQLIntegrityConstraintViolationException e) {
-                con.rollback();
-                e.printStackTrace();
-                throw new FOREIGN_KEY_ERROR();
-            } catch (SQLException e) {
-                con.rollback();
+            boolean rollback = false;
+            con.setAutoCommit(false);
+            getMedicalRecords.setInt(1, patientId);
+            ResultSet resultSet = getMedicalRecords.executeQuery();
+            while (resultSet.next()) {
+                deletePrescribedMedications.setInt(1, resultSet.getInt("record_id"));
+                deletePrescribedMedications.executeUpdate();
             }
+            deleteMedicalRecords.setInt(1, patientId);
+            if (deleteMedicalRecords.executeUpdate() > 0) {
+                deleteCredential.setInt(1, patientId);
+                if (deleteCredential.executeUpdate() > 0) {
+                    deletePatient.setInt(1, patientId);
+                    try {
+                        result = deletePatient.executeUpdate();
+                        con.commit();
+                    } catch (SQLIntegrityConstraintViolationException e) {
+                        con.rollback();
+                        throw new FOREIGN_KEY_ERROR();
+                    }
+                } else {
+                    rollback = true;
+                }
+            } else
+                rollback = true;
+            if (rollback)
+                con.rollback();
+            else
+                con.commit();
+            return result == 1;
         } catch (SQLException sqle) {
             throw new RuntimeException(sqle);
         }
-        return result == 1;
     }
 
     private PreparedStatement setPatientValues(Patient patient, PreparedStatement preparedStatement) throws SQLException {

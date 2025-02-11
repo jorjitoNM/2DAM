@@ -1,7 +1,7 @@
-package org.example.hospitaljpa.dao.respositories.files.txt;
+package com.hospitalcrud.dao.respositories.files.txt;
 
 import com.hospitalcrud.dao.configuration.FilesConfiguration;
-import com.hospitalcrud.dao.mappers.files_mappers.PatientRowMapper;
+import com.hospitalcrud.dao.mappers.PatientRowMapper;
 import com.hospitalcrud.dao.model.Patient;
 import com.hospitalcrud.dao.respositories.PatientRepository;
 import lombok.extern.log4j.Log4j2;
@@ -71,7 +71,7 @@ public class TxtPatientRepository implements PatientRepository {
     }
 
     @Override
-    public boolean delete(int patientId,boolean confirmation) {
+    public boolean delete(int patientId) {
         List<Patient> patients = loadPatients();
         if (patients.removeIf(p -> p.getId() == patientId))
             return savePatients(patients);

@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
-import com.example.myapplication.databinding.CharacterDetailsBinding
+import com.example.myapplication.databinding.SongDetailsBinding
 import com.example.myapplication.ui.common.UiEvent
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,9 +17,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailsFragment : Fragment() {
 
-    private var _binding: CharacterDetailsBinding? = null
+    private var _binding: SongDetailsBinding? = null
     private val binding get() = _binding!!
-    private var id : Int = -1
+    private var id : String = ""
+    private var token : String = ""
 
     private val viewModel: DetailsViewModel by viewModels ()
 
@@ -27,15 +28,16 @@ class DetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = CharacterDetailsBinding.inflate(inflater, container, false)
+        _binding = SongDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val args : DetailsFragmentArgs by navArgs()
         super.onViewCreated(view, savedInstanceState)
-        id = args.characterId
-        viewModel.handleEvent(DetailsEvents.GetCharacter(id))
+        id = args.songId
+        token = args.token
+        viewModel.handleEvent(DetailsEvents.GetSong(id,token))
         observarViewModel()
     }
 
@@ -44,10 +46,11 @@ class DetailsFragment : Fragment() {
 
             if (state.event == null) {
                 with (binding) {
-                    characterName.setText(state.character.name)
-                    characterSpecies.setText(state.character.species)
-                    alive.check(fillCheckButton(state.character.alive))
-                    image.load(state.character.image)
+                    songName.setText(state.song.name)
+                    songArtist.setText(parseArtists(state.song.artist))
+                    songDuration.setText(state.song.duration.toString())
+                    explicit.check(fillCheckButton(state.song.explicit))
+                    image.load(state.song.albumImage)
                 }
             }
 
@@ -61,8 +64,14 @@ class DetailsFragment : Fragment() {
             }
 
             if (state.event == null)
-                binding.characterName.setText(state.character.name)
+                binding.songName.setText(state.song.name)
         }
+    }
+
+    private fun parseArtists(artist: List<String>): String {
+        val sb : StringBuilder = StringBuilder()
+        artist.forEach { a -> sb.append(a).append(",") }
+        return sb.toString()
     }
 
     private fun fillCheckButton(explicit: Boolean): Int {
