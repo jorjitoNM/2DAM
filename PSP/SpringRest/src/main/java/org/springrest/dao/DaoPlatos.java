@@ -33,7 +33,7 @@ public class DaoPlatos {
 
     private List<String> fillIngredients() {
         Random r = new Random();
-        int numberOfIngredients = r.nextInt(5) + 2;
+        int numberOfIngredients = r.nextInt(2,5);
         List<String> ingredients = new ArrayList<>();
         for (int i = 0; i < numberOfIngredients; i++) {
             ingredients.add(faker.food().ingredient());
