@@ -24,9 +24,9 @@ public class MedicalRecordService {
     }
 
     public int addMedicalRecord(MedicalRecordUI medicalRecordUI) {
-        return medicalRecordsRepository.save(new MedicalRecord(new Patient(medicalRecordUI.getIdPatient()), medicalRecordUI.getIdDoctor(),
-                medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),parseMedications(medicalRecordUI.getMedications())));
-
+        //return medicalRecordsRepository.save(new MedicalRecord(new Patient(medicalRecordUI.getIdPatient()), medicalRecordUI.getIdDoctor(),
+                //medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),parseMedications(medicalRecordUI.getMedications())));
+        return 0;
     }
 
     private List<Medication> parseMedications(List<String> medications) {
@@ -56,8 +56,8 @@ public class MedicalRecordService {
     }
 
     public void updateMedicalRecord(MedicalRecordUI medicalRecordUI) {
-        medicalRecordsRepository.update(new MedicalRecord(medicalRecordUI.getId(),new Patient(medicalRecordUI.getIdPatient()), medicalRecordUI.getIdDoctor(),
-                medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),parseMedicationsWithRecordId(medicalRecordUI,medicalRecordUI.getMedications())));
+//        medicalRecordsRepository.update(new MedicalRecord(medicalRecordUI.getId(),new Patient(medicalRecordUI.getIdPatient()), medicalRecordUI.getIdDoctor(),
+//                medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),parseMedicationsWithRecordId(medicalRecordUI,medicalRecordUI.getMedications())));
     }
 
     private List<Medication> parseMedicationsWithRecordId(MedicalRecordUI medicalRecordUI, List<String> medications) {

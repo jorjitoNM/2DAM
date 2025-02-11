@@ -1,52 +1,69 @@
 package com.hospital_jpa.domain.service;
 
 
+import com.hospital_jpa.dao.interfaces.CredentialRepository;
 import com.hospital_jpa.dao.interfaces.PatientRepository;
-import com.hospital_jpa.dao.interfaces.PaymentsRepository;
 import com.hospital_jpa.dao.model.Credential;
 import com.hospital_jpa.dao.model.Patient;
-import com.hospital_jpa.dao.model.Payment;
 import com.hospital_jpa.domain.model.PatientUI;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PatientService {
 
     private final PatientRepository patientRepository;
-    private final PaymentsRepository paymentsRepository;
+    private final CredentialRepository credentialRepository;
+    private final Map<ObjectId,Integer> ids;
+    private Integer autoIncrement;
 
-    public PatientService(PatientRepository patientRepository, PaymentsRepository paymentsRepository) {
+    public PatientService(PatientRepository patientRepository, CredentialRepository credentialRepository) {
         this.patientRepository = patientRepository;
-        this.paymentsRepository = paymentsRepository;
+        this.credentialRepository = credentialRepository;
+        this.ids = new HashMap<>();
+        this.autoIncrement = 0;
     }
 
     public List<PatientUI> getPatients() {
         List<Patient> patients = patientRepository.getAll();
-        List<PatientUI> patientsUI = new ArrayList<>();
-        patients.forEach(p -> patientsUI.add(new PatientUI(p)));
-        List<Payment> payments = paymentsRepository.getPaymentsByPatient();
-        payments.forEach(p -> patientsUI.stream()
-                .filter(patient -> patient.getId() == p.getPatient().getId())
-                .findAny()
-                .ifPresent(found -> found.setPaid(p.getAmount())));
-        return patientsUI;
+        if (ids.isEmpty())
+            fillIds(patients);
+        return patients.stream().map(p -> p.toPatientUI(ids.get(p.get_id()))).toList();
+    }
+
+    private void fillIds (List<Patient> patients) {
+        patients.forEach(p -> ids.put(p.get_id(), autoIncrement++) );
     }
 
     public int addPatient(PatientUI patientUI) {
-        Patient patient = new Patient(patientUI.getId(), patientUI.getName(), patientUI.getBirthDate(),
-                patientUI.getPhone(), new Credential(patientUI.getUserName(), patientUI.getPassword()));
-        return patientRepository.save(patient);
+        ObjectId generatedId = patientRepository.save(patientUI.toPatient());
+        if (generatedId != null) {
+            credentialRepository.save(new Credential(patientUI.getUserName(),patientUI.getPassword(),generatedId));
+            ids.put(generatedId,autoIncrement++);
+        }
+        return autoIncrement;
     }
 
     public void updatePatient(PatientUI patientUI) {
-        Patient patient = new Patient(patientUI.getId(), patientUI.getName(), patientUI.getBirthDate(), patientUI.getPhone());
-        patientRepository.update(patient);
+        patientRepository.update(patientUI.toPatient(getPatientTrueID(patientUI.getId())));
     }
 
     public void deletePatient(int patientId, boolean confirmation) {
-        patientRepository.delete(patientId,confirmation);
+        ObjectId objectId = getPatientTrueID(patientId);
+        if (credentialRepository.delete(objectId) == 1)
+            patientRepository.delete(objectId,confirmation);
+    }
+
+    private ObjectId getPatientTrueID (int id) {
+        for (Map.Entry<ObjectId, Integer> entry : ids.entrySet()) {
+            if (entry.getValue().equals(id)) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 }

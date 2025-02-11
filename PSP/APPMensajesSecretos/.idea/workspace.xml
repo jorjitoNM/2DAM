@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="792f91b4-7da5-4e4e-b07f-27756a7daaae" name="Changes" comment="cambios tarde (entrega final PSP, no he probado a fondo la aplicacion, los mensajes no se certifican) 01/12/2024" />
+    <list default="true" id="792f91b4-7da5-4e4e-b07f-27756a7daaae" name="Changes" comment="cambios tarde (entrega final PSP, no he probado a fondo la aplicacion, los mensajes no se certifican) 01/12/2024">
+      <change beforePath="$PROJECT_DIR$/../../AD/HospitalMongo/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../AD/HospitalMongo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../AD/HospitalMongo/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../AD/HospitalMongo/src/main/java/com/hospital_jpa/dao/common/MongoDBUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../AD/HospitalMongo/src/main/java/com/hospital_jpa/dao/respositories/PatientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../AD/HospitalMongo/src/main/java/com/hospital_jpa/dao/respositories/PatientRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/appmensajessecretos/dao/DataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/appmensajessecretos/dao/DataBase.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,26 +51,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Moviles&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/cnovi/OneDrive/Escritorio/Jorge/RepositorioOscar/dam2_2425/psp/javafx&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/cnovi/OneDrive/Escritorio/Jorge/GitHub2DAM/PSP/APPMensajesSecretos",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -76,12 +82,13 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f09953df-7e38-4b59-96cc-10115dbb70db" name="Changes" comment="" />
+      <changelist id="792f91b4-7da5-4e4e-b07f-27756a7daaae" name="Changes" comment="cambios tarde (entrega final PSP, no he probado a fondo la aplicacion, los mensajes no se certifican) 01/12/2024" />
       <created>1732205609404</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1732205609404</updated>
       <workItem from="1732205611008" duration="3691000" />
+      <workItem from="1739273324835" duration="253000" />
     </task>
     <task id="LOCAL-00001" summary="cambios tarde (muchos problemas tanto en servicios como en Asymmetric) 21/11/2024">
       <option name="closed" value="true" />
