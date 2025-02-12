@@ -2,10 +2,11 @@ package com.hospital_jpa.domain.service;
 
 
 import com.hospital_jpa.dao.interfaces.MedicalRecordsRepository;
-import com.hospital_jpa.dao.interfaces.MedicationsRepository;
 import com.hospital_jpa.dao.model.MedicalRecord;
-import com.hospital_jpa.dao.model.Medication;
+import com.hospital_jpa.domain.mappers.MedicalRecordMappers;
 import com.hospital_jpa.domain.model.MedicalRecordUI;
+import com.hospital_jpa.domain.utils.IdManager;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,53 +15,43 @@ import java.util.List;
 @Service
 public class MedicalRecordService {
     private final MedicalRecordsRepository medicalRecordsRepository;
-    private final MedicationsRepository medicationsRepository;
+    private final IdManager idManager;
+    private final MedicalRecordMappers mappers;
 
-    public MedicalRecordService(MedicalRecordsRepository medicalRecordsRepository, MedicationsRepository medicationsRepository) {
+
+    public MedicalRecordService(MedicalRecordsRepository medicalRecordsRepository, IdManager idManager, MedicalRecordMappers mappers) {
         this.medicalRecordsRepository = medicalRecordsRepository;
-        this.medicationsRepository = medicationsRepository;
+        this.idManager = idManager;
+        this.mappers = mappers;
     }
 
     public int addMedicalRecord(MedicalRecordUI medicalRecordUI) {
-        //return medicalRecordsRepository.save(new MedicalRecord(new Patient(medicalRecordUI.getIdPatient()), medicalRecordUI.getIdDoctor(),
-                //medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),parseMedications(medicalRecordUI.getMedications())));
-        return 0;
+        ObjectId generatedId = medicalRecordsRepository.save(mappers.toMedicalRecord(
+                medicalRecordUI,
+                idManager.getPatientTrueID(medicalRecordUI.getIdPatient()),
+                idManager.getDoctorTrueID(medicalRecordUI.getIdDoctor())));
+        if (generatedId != null)
+            idManager.addMedicalRecordId(generatedId);
+        return idManager.getMedicalRecordAutoIncrement()-1;
     }
 
-    private List<Medication> parseMedications(List<String> medications) {
-        List<Medication> medicationList = new ArrayList<>();
-        medications.forEach(medication -> medicationList.add(new Medication(medication,"every 8 hours")));
-        return medicationList;
-    }
-
-    public List<MedicalRecordUI> getMedicalRecords(int idPatient) {
-        List<MedicalRecordUI> medicalRecordsUI = new ArrayList<>();
-        medicalRecordsRepository.getAll(idPatient).forEach(mr ->
-                medicalRecordsUI.add(new MedicalRecordUI(mr.getId(), mr.getDiagnosis(),
-                        mr.getDate().toString(),
-                        mr.getId(), mr.getIdDoctor(),
-                        parseStringMedications(mr.getMedications()))));
-        return medicalRecordsUI;
-    }
-
-    private List<String> parseStringMedications(List<Medication> medications) {
-        List<String> stringMedications = new ArrayList<>();
-        medications.forEach(m -> stringMedications.add(m.getMedicationName()));
-        return stringMedications;
+    public List<MedicalRecordUI> getAll(int patientId) {
+        return medicalRecordsRepository.getAll(idManager.getPatientTrueID(patientId))
+                .stream()
+                .map(mr -> mappers.toMedicalRecordUI(
+                        mr,
+                        idManager.getMedicalRecordsIds().get(mr.get_id()),
+                        patientId,
+                        idManager.getMedicalRecordsIds().get(mr.getDoctor())
+                        ))
+                .toList();
     }
 
     public void deleteMedicalRecord(int id) {
-        medicalRecordsRepository.delete(new MedicalRecord(id));
+        medicalRecordsRepository.delete(idManager.getMedicalRecordTrueID(id));
     }
 
     public void updateMedicalRecord(MedicalRecordUI medicalRecordUI) {
-//        medicalRecordsRepository.update(new MedicalRecord(medicalRecordUI.getId(),new Patient(medicalRecordUI.getIdPatient()), medicalRecordUI.getIdDoctor(),
-//                medicalRecordUI.getDescription(), LocalDate.parse(medicalRecordUI.getDate()),parseMedicationsWithRecordId(medicalRecordUI,medicalRecordUI.getMedications())));
-    }
-
-    private List<Medication> parseMedicationsWithRecordId(MedicalRecordUI medicalRecordUI, List<String> medications) {
-        List<Medication> medicationList = new ArrayList<>();
-        medications.forEach(medication -> medicationList.add(new Medication(new MedicalRecord(medicalRecordUI.getId()),medication,"every 8 hours")));
-        return medicationList;
+        medicalRecordsRepository.update(mappers.toMedicalRecord()));
     }
 }

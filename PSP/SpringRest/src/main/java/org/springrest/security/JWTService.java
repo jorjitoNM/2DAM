@@ -20,12 +20,11 @@ public class JWTService {
         this.key = key;
     }
 
-    public String getToken(String email, String password) {
+    public String getToken(String email) {
         return Jwts.builder()
                 .claims()
                 .add(Map.of(
-                        Constantes.EMAIL, email,
-                        Constantes.PASSWORD, password
+                        Constantes.EMAIL, email
                 ))
                 .subject(email)
                 .issuer("JorgeRest")

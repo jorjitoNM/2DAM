@@ -39,12 +39,4 @@ public class Patient {
         this.birthDate = birthDate;
         this.phone = phone;
     }
-
-    public PatientUI toPatientUI (Integer id) {
-        return new PatientUI(id,this.name,this.birthDate,getPaymentsAmount(),this.phone);
-    }
-
-    private int getPaymentsAmount () {
-        return payments.stream().mapToInt(Payment::getAmount).sum();
-    }
 }

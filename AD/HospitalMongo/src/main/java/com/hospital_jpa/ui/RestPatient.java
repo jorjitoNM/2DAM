@@ -18,7 +18,7 @@ public class RestPatient {
     @CrossOrigin(origins = "http://127.0.0.1:5500")
     @GetMapping("/patients")
     public List<PatientUI> getPatients () {
-        return patientService.getPatients();
+        return patientService.getAll();
     }
 
     @CrossOrigin(origins = "http://127.0.0.1:5500")

@@ -52,11 +52,6 @@ public class CredentialRepository implements com.hospital_jpa.dao.interfaces.Cre
     }
 
     @Override
-    public void update(Credential credential) {
-
-    }
-
-    @Override
     public Credential get(String username) {
         try (MongoClient mongo = MongoClients.create(Constants.MONGODB_URL)) {
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);

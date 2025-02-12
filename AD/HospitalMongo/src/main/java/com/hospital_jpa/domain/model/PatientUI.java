@@ -16,9 +16,9 @@ public class PatientUI {
     private String name;
     private LocalDate birthDate;
     private int paid;
-    private String password;
     private String phone;
     private String userName;
+    private String password;
 
     public PatientUI(int id, String name, LocalDate birthDate, int paid, String phone) {
         this.id = id;
@@ -36,12 +36,5 @@ public class PatientUI {
         password = "";
         phone = patient.getPhone();
         userName = "";
-    }
-
-    public Patient toPatient () {
-        return new Patient(this.name,this.birthDate,this.phone);
-    }
-    public Patient toPatient (ObjectId _id) {
-        return new Patient(_id,this.name,this.birthDate,this.phone);
     }
 }

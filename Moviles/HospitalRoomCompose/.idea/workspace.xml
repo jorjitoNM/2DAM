@@ -9,7 +9,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f5a4e603-1918-4673-9dba-f44672d61746" name="Changes" comment="avanzando lo que se puede con Moviles" />
+    <list default="true" id="f5a4e603-1918-4673-9dba-f44672d61746" name="Changes" comment="avanzando lo que se puede con Moviles">
+      <change afterPath="$PROJECT_DIR$/../../PSP/SpringRest/src/test/java/org/springrest/generated-requests.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

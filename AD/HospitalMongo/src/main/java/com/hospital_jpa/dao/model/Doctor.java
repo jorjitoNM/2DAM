@@ -1,15 +1,16 @@
 package com.hospital_jpa.dao.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Doctor {
-    private int doctorId;
+    private ObjectId _id;
     private String name;
-    private String specialization;
-    private String phone;
 }

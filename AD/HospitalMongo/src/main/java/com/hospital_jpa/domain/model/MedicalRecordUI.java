@@ -9,7 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 public class MedicalRecordUI {
     private int id;
-    private String description;
+    private String diagnosis;
     private String date;
     private int idPatient;
     private int idDoctor;

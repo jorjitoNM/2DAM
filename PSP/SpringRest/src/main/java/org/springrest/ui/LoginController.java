@@ -25,7 +25,7 @@ public class LoginController {
     @GetMapping(Constantes.LOGIN_URL)
     public ResponseEntity<String> login(@RequestParam(Constantes.EMAIL) String email, @RequestParam(Constantes.PASSWORD) String password) {
         if (userService.login(new User(email, password))) {
-            return ResponseEntity.ok(tokenService.getToken(email,password));
+            return ResponseEntity.ok(tokenService.getToken(email));
         }
         else {
             return ResponseEntity.status(HttpServletResponse.SC_UNAUTHORIZED).build();

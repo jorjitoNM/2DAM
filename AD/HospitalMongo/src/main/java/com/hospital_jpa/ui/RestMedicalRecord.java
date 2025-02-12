@@ -19,7 +19,7 @@ public class RestMedicalRecord {
 
     @GetMapping("/patients/{patientId}/medRecords")
     public List<MedicalRecordUI> getMedicalRecords(@PathVariable int patientId) {
-        return medicalRecordService.getMedicalRecords(patientId);
+        return medicalRecordService.getAll(patientId);
     }
 
     @PostMapping("/patients/medRecords")

@@ -8,6 +8,7 @@ public class Constants {
     public static final String BIRTH_DATE = "birthDate";
     public static final String PHONE = "phone";
     public static final String PAYMENTS = "payments";
+    public static final String PATIENT = "patient";
 
     private Constants () {}
 }

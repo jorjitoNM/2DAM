@@ -1,8 +1,10 @@
 package com.hospital_jpa.dao.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,23 +12,21 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class MedicalRecord {
-    private int id;
-    private Patient patient;
-    private int idDoctor;
-    private String diagnosis;
+    private ObjectId _id;
     private LocalDate date;
-    private List<Medication> medications;
+    private String diagnosis;
+    private ObjectId doctor;
+    private List<String> medications;
+    private ObjectId patient;
 
-    public MedicalRecord(Patient patient, int idDoctor, String diagnosis, LocalDate date, List<Medication> medications) {
-        this.patient = patient;
-        this.idDoctor = idDoctor;
+
+    public MedicalRecord(String date, String diagnosis, ObjectId doctor, List<String> medications, ObjectId patient) {
+        this.date = LocalDate.parse(date);
         this.diagnosis = diagnosis;
-        this.date = date;
+        this.doctor = doctor;
         this.medications = medications;
-    }
-
-    public MedicalRecord (int id) {
-        this.id = id;
+        this.patient = patient;
     }
 }
