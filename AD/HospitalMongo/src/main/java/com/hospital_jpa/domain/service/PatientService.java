@@ -45,7 +45,7 @@ public class PatientService {
             credentialRepository.save(new Credential(patientUI.getUserName(),patientUI.getPassword(),generatedId));
             ids.put(generatedId,autoIncrement++);
         }
-        return autoIncrement;
+        return autoIncrement-1;
     }
 
     public void updatePatient(PatientUI patientUI) {

@@ -5,11 +5,9 @@ import com.hospital_jpa.dao.interfaces.MedicalRecordsRepository;
 import com.hospital_jpa.dao.interfaces.MedicationsRepository;
 import com.hospital_jpa.dao.model.MedicalRecord;
 import com.hospital_jpa.dao.model.Medication;
-import com.hospital_jpa.dao.model.Patient;
 import com.hospital_jpa.domain.model.MedicalRecordUI;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

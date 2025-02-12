@@ -32,11 +32,10 @@ public class CredentialRepository implements com.hospital_jpa.dao.interfaces.Cre
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
             MongoCollection<Document> est = db.getCollection(Constants.CREDENTIAL);
             Credential c = Credential.builder()
-                    ._id(credential.get_id())
                     .username(credential.getUsername())
                     .password(credential.getPassword())
                     .patient(credential.getPatient())
-                    .doctorId(credential.getDoctorId())
+                    .doctor(credential.getDoctor())
                     .build();
             Document document = Document.parse(gson.toJson(c));
             est.insertOne(document);

@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Updates.set;
 
 @Repository
 @Log4j2
@@ -66,10 +65,10 @@ public class PatientRepository implements com.hospital_jpa.dao.interfaces.Patien
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
             MongoCollection<Document> est = db.getCollection(Constants.PATIENTS);
             Document filter = new Document(com.hospital_jpa.common.Constants.ID, patient.get_id());
-            String birthDateStr = gson.toJson(patient.getBirthDate()).replace("\"", "");
+            //String birthDateStr = gson.toJson(patient.getBirthDate()).replace("\"", "");
             Bson updates = Updates.combine(
                     Updates.set(com.hospital_jpa.common.Constants.NAME, patient.getName()),
-                    Updates.set(com.hospital_jpa.common.Constants.BIRTH_DATE,birthDateStr),
+                    Updates.set(com.hospital_jpa.common.Constants.BIRTH_DATE,patient.getBirthDate().toString()),
                     Updates.set(com.hospital_jpa.common.Constants.PHONE, patient.getPhone())
             );
             est.updateOne(filter, updates);

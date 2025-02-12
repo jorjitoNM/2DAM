@@ -15,13 +15,13 @@ public class Credential {
     private String username;
     private String password;
     private ObjectId patient;
-    private ObjectId doctorId;
+    private ObjectId doctor;
 
 
     public Credential(String username, String password, ObjectId patient) {
         this.username = username;
         this.password = password;
         this.patient = patient;
-        this.doctorId = null;
+        this.doctor = null;
     }
 }
