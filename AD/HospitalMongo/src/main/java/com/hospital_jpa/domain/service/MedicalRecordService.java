@@ -52,6 +52,9 @@ public class MedicalRecordService {
     }
 
     public void updateMedicalRecord(MedicalRecordUI medicalRecordUI) {
-        medicalRecordsRepository.update(mappers.toMedicalRecord()));
+        medicalRecordsRepository.update(mappers.toMedicalRecord(
+                medicalRecordUI,
+                idManager.getPatientTrueID(medicalRecordUI.getIdPatient()),
+                idManager.getDoctorTrueID(medicalRecordUI.getIdDoctor())));
     }
 }
