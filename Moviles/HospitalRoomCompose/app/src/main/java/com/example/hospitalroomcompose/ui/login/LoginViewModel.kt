@@ -5,11 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.hospitalroomcompose.domain.usecases.user.LoginUseCase
 import com.example.hospitalroomcompose.domain.usecases.user.RegisterUserUseCase
 import com.example.hospitalroomcompose.domain.usecases.user.SaveUserNameUseCase
-import com.example.primeraapp.di.IoDispatcher
 import com.example.hospitalroomcompose.ui.common.Constantes
 import com.example.primeraapp.ui.common.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

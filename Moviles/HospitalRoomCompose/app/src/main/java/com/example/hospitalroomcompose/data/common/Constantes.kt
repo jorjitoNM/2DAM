@@ -1,7 +1,7 @@
 package com.example.hospitalroomcompose.data.common
 
 object Constantes {
-    const val DATABASE_LOCATION: String = "hospital.db"
+    const val DATABASE_LOCATION: String = "assets/hospital2.db"
     const val MEDICATIONS: String = "Medications"
     const val LOGIN: String = "Login"
     const val MEDICAL_RECORDS: String = "Medical records"

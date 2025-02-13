@@ -350,6 +350,7 @@ string tab
 string template_percent
 string tooltip_description
 string tooltip_label
+string unknownError
 style Base_Theme_SplashScreen
 style Base_Theme_SplashScreen_DayNight
 style Base_Theme_SplashScreen_Light

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">HospitalRoomCompose</string>
+    <string name="unknownError">An unexpected error occurred</string>
 </resources>

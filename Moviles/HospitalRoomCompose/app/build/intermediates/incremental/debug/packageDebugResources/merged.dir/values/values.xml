@@ -8,6 +8,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="white">#FFFFFFFF</color>
     <string name="app_name">HospitalRoomCompose</string>
+    <string name="unknownError">An unexpected error occurred</string>
     <style name="Theme.HospitalRoomCompose" parent="android:Theme.Material.Light.NoActionBar"/>
     <style name="Theme.MySplashScreen" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/black</item>

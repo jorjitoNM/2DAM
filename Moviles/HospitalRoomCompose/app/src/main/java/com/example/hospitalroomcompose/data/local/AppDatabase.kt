@@ -16,9 +16,9 @@ import com.example.hospitalroomcompose.data.local.model.PatientMedicalRecordsCro
 import com.example.hospitalroomcompose.data.local.model.UserEntity
 
 @Database(
-    entities = [UserEntity::class,PatientEntity::class,MedicationEntity::class,PatientMedicalRecordsCrossRef::class,MedicalRecordEntity::class],
-    version = 2,
-    exportSchema = false
+    entities = [UserEntity::class,PatientEntity::class,MedicationEntity::class,MedicalRecordEntity::class,PatientMedicalRecordsCrossRef::class],
+    version = 3,
+    exportSchema = true
 )
 @TypeConverters(LocalDateConverters::class, MedicationsConverter::class)
 abstract class AppDatabase : RoomDatabase() {

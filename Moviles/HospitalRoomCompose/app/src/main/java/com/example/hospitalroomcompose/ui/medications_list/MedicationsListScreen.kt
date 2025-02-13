@@ -50,7 +50,6 @@ fun MedicationsListScreen(
 @Composable
 fun MedicationsListContent(
     medications: List<Medication> = emptyList(),
-
     ) {
     LazyColumn {
         this.items(items = medications, key = { medication -> medication.id }) { medication ->

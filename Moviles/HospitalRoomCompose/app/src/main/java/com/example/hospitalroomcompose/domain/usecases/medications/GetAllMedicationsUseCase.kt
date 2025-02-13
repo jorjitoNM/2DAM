@@ -7,5 +7,5 @@ import javax.inject.Inject
 class GetAllMedicationsUseCase @Inject constructor(
     private val medicationsRepository: MedicationsRepository
 ) {
-    suspend operator fun invoke () = medicationsRepository.getAllMedications().map { m -> m.toMedication() }
+    suspend fun invoke () = medicationsRepository.getAllMedications().map { m -> m.toMedication() }
 }

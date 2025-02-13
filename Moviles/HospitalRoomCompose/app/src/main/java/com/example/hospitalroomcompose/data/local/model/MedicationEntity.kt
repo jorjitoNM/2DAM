@@ -6,7 +6,7 @@ import com.example.apptareascompose.domain.model.Medication
 
 @Entity(tableName = "medications")
 data class MedicationEntity(
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = true)
     val id :Int,
     val medicationName : String = "",
     val dosage : String = "",

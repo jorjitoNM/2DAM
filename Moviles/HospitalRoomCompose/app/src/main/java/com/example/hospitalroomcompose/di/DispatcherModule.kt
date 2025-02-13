@@ -1,4 +1,4 @@
-package com.example.primeraapp.di
+package com.example.hospitalroomcompose.di
 
 import dagger.Module
 import dagger.Provides
