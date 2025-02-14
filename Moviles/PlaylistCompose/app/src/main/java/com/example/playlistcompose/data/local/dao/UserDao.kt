@@ -13,6 +13,6 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: User)
 
-    @Query("SELECT * FROM users WHERE username = :username AND password = :hashedPassword LIMIT 1")
+    @Query("SELECT * FROM user WHERE username = :username AND password = :hashedPassword LIMIT 1")
     fun login(username: String, hashedPassword: String): Flow<User?>
 }

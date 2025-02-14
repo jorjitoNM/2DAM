@@ -310,12 +310,12 @@
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
     <style name="TextAppearance.Compat.Notification.Title" parent="@android:style/TextAppearance.StatusBar.EventContent.Title"/>
-    <style name="Theme.HospitalRoomCompose" parent="android:Theme.Material.Light.NoActionBar"/>
     <style name="Theme.MySplashScreen" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/black</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/splash_screen</item>
-        <item name="postSplashScreenTheme">@style/Theme.HospitalRoomCompose</item>
+        <item name="postSplashScreenTheme">@style/Theme.PlaylistCompose</item>
     </style>
+    <style name="Theme.PlaylistCompose" parent="android:Theme.Material.Light.NoActionBar"/>
     <style name="Theme.SplashScreen" parent="Theme.SplashScreen.Common">
         <item name="postSplashScreenTheme">?android:attr/theme</item>
         <item name="windowSplashScreenAnimationDuration">

@@ -1,4 +1,4 @@
-package com.example.musicappcompse.ui.theme
+package com.example.hospitalroomcompose.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
