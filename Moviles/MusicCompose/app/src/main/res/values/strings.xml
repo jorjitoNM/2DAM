@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MusicCompose</string>
+    <string name="unknownError">An unexpected error occurred</string>
+</resources>
