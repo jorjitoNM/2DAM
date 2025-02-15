@@ -17,9 +17,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.hospitalroomcompose.ui.common.BottomBar
-import com.example.hospitalroomcompose.ui.common.TopBar
-import com.example.playlistcompose.ui.playlist_list.PlaylistListScreen
+import androidx.navigation.toRoute
+import com.example.musicappcompse.ui.common.BottomBar
+import com.example.musicappcompse.ui.common.TopBar
+import com.example.musicappcompse.ui.login.LoginScreen
+import com.example.musicappcompse.ui.playlist_details.PlaylistDetailsScreen
+import com.example.musicappcompse.ui.playlist_list.PlaylistListScreen
+import com.example.musicappcompse.ui.songs_list.SongsListScreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -42,7 +46,7 @@ fun Navigation() {
     var isTopBarVisible by rememberSaveable { mutableStateOf(true) }
 
     val screen = appDestinationList.find { screen ->
-        state?.destination?.route == LoginScreen.route::class.qualifiedName
+        state?.destination?.route == screen.route::class.qualifiedName
     }
 
     val bottomBar: @Composable () -> Unit = {
@@ -66,24 +70,40 @@ fun Navigation() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = PlaylistListScreenDestination,
+            startDestination = LoginScreenDestination,
             modifier = Modifier.padding(innerPadding)
         ) {
-//            composable<LoginScreenDestination> {
-//                isBottomBarVisible =  false
-//                isTopBarVisible = false
-//                LoginScreen(
-//                    navController = navController,
-//                    showSnackbar = { showSnackbar(it) }
-//                )
-//            }
+            composable<LoginScreenDestination> {
+                isBottomBarVisible =  false
+                isTopBarVisible = false
+                LoginScreen(
+                    navController = navController,
+                    showSnackbar = { showSnackbar(it) }
+                )
+            }
             composable<PlaylistListScreenDestination> {
                 isBottomBarVisible =  true
                 isTopBarVisible = true
                 PlaylistListScreen(
                     showSnackbar = { showSnackbar(it)},
                     onNavigateDetail = {playlistId ->
+                        navController.navigate(PlaylistDetailsScreenDestination(playlistId))
                     }
+                )
+            }
+            composable<PlaylistDetailsScreenDestination> {
+                isBottomBarVisible =  false
+                isTopBarVisible = true
+                PlaylistDetailsScreen(
+                    playlistdId = (it.toRoute() as PlaylistDetailsScreenDestination).playlistId,
+                    showSnackbar = { showSnackbar(it)},
+                )
+            }
+            composable<SongsListScreenDestination> {
+                isBottomBarVisible =  true
+                isTopBarVisible = true
+                SongsListScreen(
+                    showSnackbar = { showSnackbar(it) }
                 )
             }
         }

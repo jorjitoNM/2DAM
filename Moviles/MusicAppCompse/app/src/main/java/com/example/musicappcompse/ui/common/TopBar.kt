@@ -1,4 +1,4 @@
-package com.example.hospitalroomcompose.ui.common
+package com.example.musicappcompse.ui.common
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth

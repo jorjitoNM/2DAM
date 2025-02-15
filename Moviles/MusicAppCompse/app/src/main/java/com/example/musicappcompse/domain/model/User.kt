@@ -4,9 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Song(
+data class User (
     @PrimaryKey(autoGenerate = true)
-    val songId: Long = 0,
-    val songName: String = "",
-    val artist: String = "",
+    val id: Int = 0,
+    val username: String = "",
+    val password: String = "",
 )

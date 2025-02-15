@@ -1,4 +1,4 @@
-package com.example.hospitalroomcompose.ui.common
+package com.example.musicappcompse.ui.common
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar

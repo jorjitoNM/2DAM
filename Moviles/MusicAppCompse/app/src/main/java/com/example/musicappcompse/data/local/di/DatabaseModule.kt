@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.example.musicappcompse.data.local.AppDatabase
 import com.example.musicappcompse.data.local.dao.PlaylistDao
+import com.example.musicappcompse.data.local.dao.SongsDao
+import com.example.musicappcompse.data.local.dao.UsersDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,5 +32,15 @@ object DatabaseModule {
     @Provides
     fun providePlaylistDao (appDatabase: AppDatabase): PlaylistDao {
         return appDatabase.playlistDao()
+    }
+
+    @Provides
+    fun provideSongsDao (appDatabase: AppDatabase): SongsDao {
+        return appDatabase.songsDao()
+    }
+
+    @Provides
+    fun provideUsersDao (appDatabase: AppDatabase): UsersDao {
+        return appDatabase.usersDao()
     }
 }

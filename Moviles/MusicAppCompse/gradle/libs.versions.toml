@@ -23,6 +23,7 @@ lifecycleRuntimeComposeAndroid = "2.8.0"
 adaptiveAndroid = "1.1.0-beta01"
 navigationCompose = "2.8.6"
 kotlinxSerialization = "1.6.3"
+coreSplashscreen = "1.0.1"
 
 
 
@@ -45,6 +46,7 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 
 
 # para compose collectaslyfecyle

@@ -6,5 +6,5 @@ import javax.inject.Inject
 class GetPlaylistUseCase @Inject constructor(
     private val playlistRepository: PlaylistRepository
 ) {
-    suspend fun invoke(playlistId : Int) = playlistRepository.getPlaylist(playlistId)
+    fun invoke(playlistId : Int) = playlistRepository.getPlaylist(playlistId)
 }

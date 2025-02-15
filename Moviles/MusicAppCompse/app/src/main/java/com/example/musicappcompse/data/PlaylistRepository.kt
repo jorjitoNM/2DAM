@@ -1,6 +1,7 @@
 package com.example.musicappcompse.data
 
 import com.example.musicappcompse.data.local.dao.PlaylistDao
+import com.example.musicappcompse.domain.model.Playlist
 import javax.inject.Inject
 
 class PlaylistRepository @Inject constructor(
@@ -9,4 +10,6 @@ class PlaylistRepository @Inject constructor(
     fun getAll() = playlistDao.getAll()
 
     fun getPlaylist(playlistId : Int) = playlistDao.getPlaylist(playlistId)
+
+    fun update(playlist: Playlist) = playlistDao.update(playlist)
 }

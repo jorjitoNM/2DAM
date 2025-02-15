@@ -76,7 +76,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
 
-
+    implementation(libs.androidx.core.splashscreen)
 
 
     implementation(libs.timber)

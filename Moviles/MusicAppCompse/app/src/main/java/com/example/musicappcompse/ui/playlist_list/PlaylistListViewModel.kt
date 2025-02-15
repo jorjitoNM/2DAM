@@ -1,9 +1,11 @@
-package com.example.playlistcompose.ui.playlist_list
+package com.example.musicappcompse.ui.playlist_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.playlistcompose.di.IoDispatcher
 import com.example.playlistcompose.domain.usecases.playlist.GetAllPlaylistUseCase
+import com.example.playlistcompose.ui.playlist_list.PlaylistListEvents
+import com.example.playlistcompose.ui.playlist_list.PlaylistListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,12 +25,12 @@ class PlaylistListViewModel @Inject constructor(
 
     fun handleEvent (event : PlaylistListEvents) {
         when (event) {
-            is PlaylistListEvents.GetAll -> getAllMedications()
+            is PlaylistListEvents.GetAll -> getAllPlaylists()
             is PlaylistListEvents.EventDone -> _uiState.update { it.copy(event = null) }
         }
     }
 
-    private fun getAllMedications () {
+    private fun getAllPlaylists () {
         viewModelScope.launch(dispatcher) {
             _uiState.update { it.copy(playlists = getAllPlaylistUseCase.invoke()) }
         }

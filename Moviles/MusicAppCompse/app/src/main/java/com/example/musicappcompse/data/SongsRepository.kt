@@ -6,4 +6,5 @@ import javax.inject.Inject
 class SongsRepository @Inject constructor(
     private val songsDao : SongsDao,
 ) {
+    fun getAll() = songsDao.getAll()
 }
