@@ -1,0 +1,67 @@
+###
+POST http://localhost:8080/signUp?email=jorge.novillo@educa.madrid.org&password=1234
+
+<> 2025-02-10T223914.201.txt
+<> 2025-02-10T180150.201.txt
+<> 2025-02-10T175015.201.txt
+<> 2025-02-10T174358.201.txt
+<> 2025-02-10T173945.405.json
+
+###
+GET http://localhost:8080/login?email=jorge.novillo@educa.madrid.org&password=1234
+
+> {%
+    client.global.set("token", response.body);
+%}
+
+<> 2025-02-10T224044.200.txt
+<> 2025-02-10T180253.200.txt
+<> 2025-02-10T174627.200.txt
+<> 2025-02-10T174441.200.txt
+<> 2025-02-10T173505.500.json
+<> 2025-02-10T171053.500.jso
+
+###
+DELETE http://localhost:8080/delete/3
+Authorization: Bearer {{token}}
+
+<> 2025-02-10T174952.401.json
+<> 2025-02-10T174836.401.json
+<> 2025-02-10T174826.401.json
+<> 2025-02-10T174645.500.json
+
+###
+GET http://localhost:8080/getAll
+Authorization: Bearer {{token}}
+
+<> 2025-02-10T224132.200.json
+<> 2025-02-10T224118.200.json
+<> 2025-02-10T224102.200.json
+<> 2025-02-10T224055.200.json
+<> 2025-02-10T180326.200.json
+<> 2025-02-10T180306.200.json
+<> 2025-02-10T175221.401.json
+<> 2025-02-10T175200.401.json
+<> 2025-02-10T174810.401.json
+<> 2025-02-10T174633.200.json
+<> 2025-02-10T174454.200.json
+
+###
+GET http://localhost:8080/confirm?
+    code=HrlEoQg1PtYy99lliVQaBw==__;!!D9dNQwwGXtA!XsUiQbw-EXfWYyh50pNYE0wg3XK_XLU7CDiYbhWAy2PcUy2NBkq3JvTp_R0Bmycj0rLRAwu9t91UeFYia5qS5465g2ayFAQ1U-g$
+
+<> 2025-02-10T224000.202.txt
+<> 2025-02-10T180121.202.txt
+<> 2025-02-10T180103.202.txt
+
+###
+PUT http://localhost:8080/update?
+    dishId=1&
+    name=Hola&
+    ingredients=Hola
+Authorization: Bearer {{token}}
+Content-Type: application/x-www-form-urlencoded
+
+<> 2025-02-10T224126.200.json
+<> 2025-02-10T180633.500.json
+<> 2025-02-10T180619.401.json

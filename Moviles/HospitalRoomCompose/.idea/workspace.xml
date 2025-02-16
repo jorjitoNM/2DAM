@@ -9,58 +9,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="038acbdf-be1a-4328-b09a-81bcd03eb5be" name="Changes" comment="eliminado archivo txt">
-      <change afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/common/StringProvider.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/data/UsersRepository.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/data/local/dao/UsersDao.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/domain/model/User.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/domain/usecases/playlist/UpdatePlaylistUseCase.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/domain/usecases/user/LoginUseCase.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/domain/usecases/user/RegisterUserUseCase.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/domain/usecases/user/SaveUserNameUseCase.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/login/LoginEvents.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/login/LoginScreen.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/login/LoginState.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/login/LoginViewModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/songs_list/SongsListEvents.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/songs_list/SongsListScreen.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/songs_list/SongsListState.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/songs_list/SongsListViewModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/res/drawable/splash_screen.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/res/values/dimens.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/.idea/material_theme_project_new.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/data/PlaylistRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/data/PlaylistRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/data/SongsRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/data/SongsRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/data/local/AppDatabase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/data/local/AppDatabase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/data/local/dao/PlaylistDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/data/local/dao/PlaylistDao.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/data/local/dao/SongsDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/data/local/dao/SongsDao.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/data/local/di/DatabaseModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/data/local/di/DatabaseModule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/data/local/model/PlaylistWithSongs.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/data/local/model/PlaylistWithSongs.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/domain/model/Song.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/domain/model/Song.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/domain/usecases/playlist/GetPlaylistUseCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/domain/usecases/playlist/GetPlaylistUseCase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/domain/usecases/song/GetAllSongs.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/domain/usecases/song/GetAllSongsUseCase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/common/BottomBar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/common/BottomBar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/common/Constantes.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/common/Constantes.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/common/TopBar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/common/TopBar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/navigation/Navigation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/navigation/Navigation.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/navigation/Screens.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/navigation/Screens.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/navigation/ScreensDestinations.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/navigation/ScreensDestinations.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/playlist_details/PlaylistDetailsEvents.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/playlist_details/PlaylistDetailsEvents.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/playlist_details/PlaylistDetailsScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/playlist_details/PlaylistDetailsScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/playlist_details/PlaylistDetailsState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/playlist_details/PlaylistDetailsState.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/playlist_details/PlaylistDetailsViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/playlist_details/PlaylistDetailsViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/playlist_list/PlaylistListScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/playlist_list/PlaylistListScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/playlist_list/PlaylistListViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/java/com/example/musicappcompse/ui/playlist_list/PlaylistListViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/app/src/main/res/values/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppCompse/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppCompse/gradle/libs.versions.toml" afterDir="false" />
-    </list>
+    <list default="true" id="038acbdf-be1a-4328-b09a-81bcd03eb5be" name="Changes" comment="eliminado archivo txt" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
