@@ -1,7 +1,9 @@
 package org.springrest.domain.services;
 
+import org.springrest.common.Constantes;
 import org.springrest.components.MailComponent;
 import org.springrest.dao.UsersRepository;
+import org.springrest.domain.errors.NotFoundException;
 import org.springrest.domain.model.User;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +40,7 @@ public class UserService {
     public boolean login(User user) {
         User foundUser = usersRepository.findAll().stream().filter(u -> u.getEmail().equals(user.getEmail()) && u.isActive()).findFirst().orElse(null);
         if (foundUser == null)
-            return false;
+            throw new NotFoundException(Constantes.USER_NOT_FOUND);
         else
             return user.getPassword().equals(foundUser.getPassword());
     }
