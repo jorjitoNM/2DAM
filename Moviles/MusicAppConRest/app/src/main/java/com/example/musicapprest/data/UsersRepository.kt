@@ -13,13 +13,10 @@ import javax.inject.Inject
 class UsersRepository @Inject constructor(
     private val usersDataSource: UsersDataSource,
 ) {
-    suspend fun registerUser(username: String, password: String): Result<Unit> {
-        return TODO()
-    }
+    suspend fun registerUser(username: String, password: String): Result<Unit> =
+        usersDataSource.register(username, password)
 
-    fun login(username: String, password: String): Flow<Result<User?>> {
-        return TODO()
-    }
+    suspend fun login(username: String, password: String): Flow<Result<User?>> = usersDataSource.login(username, password)
 }
 
 
