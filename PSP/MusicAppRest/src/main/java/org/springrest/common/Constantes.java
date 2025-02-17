@@ -6,7 +6,7 @@ public class Constantes {
     public static final String SIGNUP_URL = "/signUp";
     public static final String CONFIRM_URL = "/confirm";
     public static final String GET_ALL = "/getAll";
-    public static final String PLAYLISTS = "/playlists";
+    public static final String PLAYLISTS_URL = "/playlists";
     public static final String GET_URL = "/get";
     public static final String DELETE_URL = "/delete";
     public static final String UPDATE_URL = "/update";
@@ -17,6 +17,8 @@ public class Constantes {
     public static final String CODE = "code";
     public static final String CHECK_MAIL = "Please, check your mail to activate your account";
     public static final String ACCEPTED = "Accepted";
+    public static final String SONGS_URL = "/songs";
+    public static final String FAVOURITE_SONG = "/favourite";
 
     private Constantes () {}
 }

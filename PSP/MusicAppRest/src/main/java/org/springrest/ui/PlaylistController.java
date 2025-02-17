@@ -1,6 +1,7 @@
 package org.springrest.ui;
 
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springrest.common.Constantes;
@@ -10,13 +11,10 @@ import org.springrest.domain.services.PlaylistService;
 import java.util.List;
 
 @RestController
-@RequestMapping(Constantes.PLAYLISTS)
+@RequestMapping(Constantes.PLAYLISTS_URL)
+@RequiredArgsConstructor
 public class PlaylistController {
     private final PlaylistService playlistService;
-
-    public PlaylistController(PlaylistService playlistService) {
-        this.playlistService = playlistService;
-    }
 
     @GetMapping(Constantes.GET_ALL)
     public List<Playlist> getAll() {
@@ -37,9 +35,7 @@ public class PlaylistController {
     @DeleteMapping(Constantes.DELETE_URL + "/{"+ Constantes.PATH_ID + "}")
     public ResponseEntity<Boolean> delete(@PathVariable(Constantes.PATH_ID) String id) {
         playlistService.delete(Integer.valueOf(id));
-            return ResponseEntity.status(HttpServletResponse.SC_NO_CONTENT).build();
-//        else
-//            return ResponseEntity.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR).build();
+        return ResponseEntity.status(HttpServletResponse.SC_NO_CONTENT).build();
     }
 
     @PutMapping(Constantes.UPDATE_URL)
