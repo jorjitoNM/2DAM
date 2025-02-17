@@ -2,8 +2,11 @@ package org.springrest.domain.services;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springrest.common.Constantes;
 import org.springrest.dao.PlaylistRepository;
+import org.springrest.domain.errors.ForeignKeyException;
 import org.springrest.domain.model.Playlist;
 
 import java.util.List;

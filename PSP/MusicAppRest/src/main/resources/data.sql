@@ -1,108 +1,48 @@
-CREATE TABLE IF NOT EXIST users
-(
-    user_id
-    INT
-    PRIMARY
-    KEY
-    AUTO_INCREMENT,
-    email
-    VARCHAR
-(
-    255
-) NOT NULL,
-    password VARCHAR
-(
-    255
-) NOT NULL,
-    code VARCHAR
-(
-    255
-),
-    active BOOLEAN NOT NULL
-    );
+-- Delete existing data (if any) in the correct order to avoid foreign key constraints
+DELETE FROM playlist_songs;
+DELETE FROM songs;
+DELETE FROM playlists;
+DELETE FROM users;
 
-CREATE TABLE IF NOT EXIST playlists
+-- Create tables if they don't exist
+CREATE TABLE IF NOT EXISTS users
 (
-    playlist_id
-    INT
-    PRIMARY
-    KEY
-    AUTO_INCREMENT,
-    name
-    VARCHAR
-(
-    255
-) NOT NULL,
-    owner INT,
-    FOREIGN KEY
-(
-    owner
-) REFERENCES users
-(
-    user_id
-)
-    );
+    email    VARCHAR(255) PRIMARY KEY,
+    password VARCHAR(255) NOT NULL,
+    code     VARCHAR(255),
+    active   BOOLEAN      NOT NULL
+);
 
-CREATE TABLE IF NOT EXIST songs
+CREATE TABLE IF NOT EXISTS playlists
 (
-    song_id
-    INT
-    PRIMARY
-    KEY
-    AUTO_INCREMENT,
-    name
-    VARCHAR
-(
-    255
-) NOT NULL,
-    artist VARCHAR
-(
-    255
-)
-    );
+    playlist_id INT PRIMARY KEY AUTO_INCREMENT,
+    name        VARCHAR(255) NOT NULL,
+    owner       VARCHAR(255),
+    FOREIGN KEY (owner) REFERENCES users (email)
+);
 
-CREATE TABLE IF NOT EXIST playlist_songs
+CREATE TABLE IF NOT EXISTS songs
 (
-    playlist_id
-    INT,
-    song_id
-    INT,
-    PRIMARY
-    KEY
-(
-    playlist_id,
-    song_id
-),
-    FOREIGN KEY
-(
-    playlist_id
-) REFERENCES playlists
-(
-    playlist_id
-),
-    FOREIGN KEY
-(
-    song_id
-) REFERENCES songs
-(
-    song_id
-)
-    );
+    song_id INT PRIMARY KEY AUTO_INCREMENT,
+    name    VARCHAR(255) NOT NULL,
+    artist  VARCHAR(255)
+);
 
-delete
-* from playlist_songs;
-delete
-* from songs;
-delete
-* from playlists;
-delete
-* from users;
+CREATE TABLE IF NOT EXISTS playlist_songs
+(
+    playlist_id INT,
+    song_id     INT,
+    PRIMARY KEY (playlist_id, song_id),
+    FOREIGN KEY (playlist_id) REFERENCES playlists (playlist_id),
+    FOREIGN KEY (song_id) REFERENCES songs (song_id)
+);
 
-
+-- Insert data into users
 INSERT INTO users (email, password, code, active)
 VALUES ('john@example.com', 'password123', 'ABC123', true),
        ('jane@example.com', 'password456', 'DEF456', false);
 
+-- Insert data into songs
 INSERT INTO songs (name, artist)
 VALUES ('Bohemian Rhapsody', 'Queen'),
        ('Shape of You', 'Ed Sheeran'),
@@ -115,18 +55,19 @@ VALUES ('Bohemian Rhapsody', 'Queen'),
        ('Someone Like You', 'Adele'),
        ('Smells Like Teen Spirit', 'Nirvana');
 
-
+-- Insert data into playlists (use valid email addresses for the owner column)
 INSERT INTO playlists (name, owner)
-VALUES ('Classic Rock Hits', 1),
-       ('Pop Favorites', 2);
+VALUES ('Classic Rock Hits', 'john@example.com'),  -- Owned by John
+       ('Pop Favorites', 'jane@example.com');      -- Owned by Jane
 
+-- Insert data into playlist_songs
 INSERT INTO playlist_songs (playlist_id, song_id)
-VALUES (1, 1),
-       (1, 5),
-       (1, 7),
-       (1, 10),
-       (2, 2),
-       (2, 3),
-       (2, 6),
-       (2, 8),
-       (2, 9);
+VALUES (1, 1),  -- Bohemian Rhapsody in Classic Rock Hits
+       (1, 5),  -- Hotel California in Classic Rock Hits
+       (1, 7),  -- Stairway to Heaven in Classic Rock Hits
+       (1, 10), -- Smells Like Teen Spirit in Classic Rock Hits
+       (2, 2),  -- Shape of You in Pop Favorites
+       (2, 3),  -- Rolling in the Deep in Pop Favorites
+       (2, 6),  -- Blinding Lights in Pop Favorites
+       (2, 8),  -- Uptown Funk in Pop Favorites
+       (2, 9);  -- Someone Like You in Pop Favorites

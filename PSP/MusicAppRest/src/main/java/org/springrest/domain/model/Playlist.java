@@ -23,6 +23,6 @@ public class Playlist {
     )
     private List<Song> songs;
     @ManyToOne
-    @JoinColumn(name = "owner")
+    @JoinColumn(name = "owner", referencedColumnName = "email")
     private User owner;
 }
