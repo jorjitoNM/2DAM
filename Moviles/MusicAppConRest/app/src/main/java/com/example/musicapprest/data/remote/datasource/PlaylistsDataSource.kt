@@ -8,7 +8,9 @@ class PlaylistsDataSource @Inject constructor(
     private val playlistsService: PlaylistsService
 ) : BaseApiResponse() {
 
-    suspend fun getAll () : List<Playlist> {return emptyList()}
+    suspend fun getAll () = safeApiCall {
+        playlistsService.getAll()
+    }
 
     suspend fun get (playlistId : Int) : Playlist {return Playlist()}
 

@@ -2,9 +2,11 @@ package com.example.musicapprest.ui.playlist_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.musicapprest.common.NetworkResult
 import com.example.musicapprest.di.IoDispatcher
 import com.example.musicapprest.domain.usecases.playlist.GetAllPlaylistUseCase
 import com.example.playlistcompose.ui.playlist_list.PlaylistListEvents
+import com.example.primeraapp.ui.common.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,19 +21,29 @@ class PlaylistListViewModel @Inject constructor(
     private val getAllPlaylistUseCase: GetAllPlaylistUseCase,
     @IoDispatcher private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
-    private val _uiState : MutableStateFlow<PlaylistListState> = MutableStateFlow(PlaylistListState())
-    val uiState : StateFlow<PlaylistListState> =_uiState.asStateFlow()
+    private val _uiState: MutableStateFlow<PlaylistListState> =
+        MutableStateFlow(PlaylistListState())
+    val uiState: StateFlow<PlaylistListState> = _uiState.asStateFlow()
 
-    fun handleEvent (event : PlaylistListEvents) {
+    fun handleEvent(event: PlaylistListEvents) {
         when (event) {
             is PlaylistListEvents.GetAll -> getAllPlaylists()
             is PlaylistListEvents.EventDone -> _uiState.update { it.copy(event = null) }
         }
     }
 
-    private fun getAllPlaylists () {
+    private fun getAllPlaylists() {
         viewModelScope.launch(dispatcher) {
-            _uiState.update { it.copy(playlists = getAllPlaylistUseCase.invoke()) }
+            when (val result = getAllPlaylistUseCase.invoke()) {
+                is NetworkResult.Success -> _uiState.update { it.copy(playlists = result.data) }
+                is NetworkResult.Error -> _uiState.update {
+                    it.copy(
+                        event = UiEvent.ShowSnackbar(result.message),
+                    )
+                }
+
+                is NetworkResult.Loading -> TODO()
+            }
         }
     }
 }
