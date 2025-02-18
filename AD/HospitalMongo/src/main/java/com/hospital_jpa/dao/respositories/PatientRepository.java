@@ -65,7 +65,6 @@ public class PatientRepository implements com.hospital_jpa.dao.interfaces.Patien
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
             MongoCollection<Document> est = db.getCollection(Constants.PATIENTS);
             Document filter = new Document(com.hospital_jpa.common.Constants.ID, patient.get_id());
-            //String birthDateStr = gson.toJson(patient.getBirthDate()).replace("\"", "");
             Bson updates = Updates.combine(
                     Updates.set(com.hospital_jpa.common.Constants.NAME, patient.getName()),
                     Updates.set(com.hospital_jpa.common.Constants.BIRTH_DATE,patient.getBirthDate().toString()),

@@ -31,6 +31,10 @@ public class IdManager {
         this.doctorAutoIncrement = 1;
     }
 
+    public int getPatientIntId (ObjectId patientId) {
+        return patientIds.get(patientId);
+    }
+
     public void fillPatientIds (List<Patient> patients) {
         if (patientIds.isEmpty())
             patients.forEach(p -> patientIds.put(p.get_id(), patientAutoIncrement++) );
@@ -40,7 +44,7 @@ public class IdManager {
         patientIds.put(patientId, patientAutoIncrement++);
     }
 
-    public ObjectId getPatientTrueID (int id) {
+    public ObjectId getPatientObjectId(int id) {
         for (Map.Entry<ObjectId, Integer> entry : patientIds.entrySet()) {
             if (entry.getValue().equals(id)) {
                 return entry.getKey();
@@ -49,16 +53,20 @@ public class IdManager {
         return null;
     }
 
+
+    public int getMedicalRecordIntId (ObjectId medicalRecordId) {
+        return medicalRecordsIds.get(medicalRecordId);
+    }
+
     public void fillMedicalRecordsIds (List<MedicalRecord> medicalRecords) {
-        if (medicalRecordsIds.isEmpty())
-            medicalRecords.forEach(m -> patientIds.put(m.get_id(), medicalRecordAutoIncrement++) );
+        medicalRecords.stream().filter(m -> !medicalRecordsIds.containsKey(m.get_id())).forEach(m -> medicalRecordsIds.put(m.get_id(), medicalRecordAutoIncrement++) );
     }
 
     public void addMedicalRecordId (ObjectId medicalRecordId) {
-        patientIds.put(medicalRecordId, medicalRecordAutoIncrement++);
+        medicalRecordsIds.put(medicalRecordId, medicalRecordAutoIncrement++);
     }
 
-    public ObjectId getMedicalRecordTrueID (int id) {
+    public ObjectId getMedicalRecordObjectId (int id) {
         for (Map.Entry<ObjectId, Integer> entry : medicalRecordsIds.entrySet()) {
             if (entry.getValue().equals(id)) {
                 return entry.getKey();
@@ -67,16 +75,21 @@ public class IdManager {
         return null;
     }
 
+
+    public int getDoctorIntId (ObjectId doctorId) {
+        return doctorIds.get(doctorId);
+    }
+
     public void fillDoctorIds (List<Doctor> doctors) {
         if (doctorIds.isEmpty())
-            doctors.forEach(d -> patientIds.put(d.get_id(), doctorAutoIncrement++) );
+            doctors.forEach(d -> doctorIds.put(d.get_id(), doctorAutoIncrement++) );
     }
 
     public void addDoctorId (ObjectId doctorId) {
         doctorIds.put(doctorId, doctorAutoIncrement++);
     }
 
-    public ObjectId getDoctorTrueID (int id) {
+    public ObjectId getDoctorObjectId (int id) {
         for (Map.Entry<ObjectId, Integer> entry : doctorIds.entrySet()) {
             if (entry.getValue().equals(id)) {
                 return entry.getKey();

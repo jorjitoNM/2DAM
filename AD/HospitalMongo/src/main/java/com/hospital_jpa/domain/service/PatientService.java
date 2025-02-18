@@ -31,7 +31,7 @@ public class PatientService {
     public List<PatientUI> getAll() {
         List<Patient> patients = patientRepository.getAll();
         idManager.fillPatientIds(patients);
-        return patients.stream().map(p -> mappers.toPatientUI(p,idManager.getPatientIds().get(p.get_id()))).toList();
+        return patients.stream().map(p -> mappers.toPatientUI(p,idManager.getPatientIntId(p.get_id()))).toList();
     }
 
     public int addPatient(PatientUI patientUI) {
@@ -44,11 +44,11 @@ public class PatientService {
     }
 
     public void updatePatient(PatientUI patientUI) {
-        patientRepository.update(mappers.toPatient(patientUI,idManager.getPatientTrueID(patientUI.getId())));
+        patientRepository.update(mappers.toPatient(patientUI,idManager.getPatientObjectId(patientUI.getId())));
     }
 
     public void deletePatient(int patientId, boolean confirmation) {
-        ObjectId objectId = idManager.getPatientTrueID(patientId);
+        ObjectId objectId = idManager.getPatientObjectId(patientId);
         if (credentialRepository.delete(objectId) == 1)
             patientRepository.delete(objectId,confirmation);
     }

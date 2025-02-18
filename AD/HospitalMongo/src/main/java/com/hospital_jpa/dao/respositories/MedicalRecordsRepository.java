@@ -8,8 +8,10 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Updates;
 import lombok.extern.log4j.Log4j2;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Repository;
 
@@ -34,7 +36,7 @@ public class MedicalRecordsRepository implements com.hospital_jpa.dao.interfaces
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
             MongoCollection<Document> est = db.getCollection(Constants.MEDICAL_RECORDS);
             List<MedicalRecord> medicalRecords = new ArrayList<>();
-            List<Document> documents = est.find(eq(com.hospital_jpa.common.Constants.PATIENT,patientId)).into(new ArrayList<>());
+            List<Document> documents = est.find(eq(com.hospital_jpa.common.Constants.PATIENT, patientId)).into(new ArrayList<>());
             for (Document document : documents) {
                 MedicalRecord medicalRecord = gson.fromJson(document.toJson(), MedicalRecord.class);
                 medicalRecord.set_id(document.getObjectId(com.hospital_jpa.common.Constants.ID));
@@ -55,10 +57,35 @@ public class MedicalRecordsRepository implements com.hospital_jpa.dao.interfaces
 
     @Override
     public ObjectId save(MedicalRecord medicalRecord) {
-        return medicalRecord.get_id();
+        try (MongoClient mongo = MongoClients.create(Constants.MONGODB_URL)) {
+            MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
+            MongoCollection<Document> est = db.getCollection(Constants.MEDICAL_RECORDS);
+            MedicalRecord mr = MedicalRecord.builder()
+                    .date(medicalRecord.getDate())
+                    .diagnosis("dfsfds")
+                    .doctor(medicalRecord.getDoctor())
+                    .medications(medicalRecord.getMedications())
+                    .patient(medicalRecord.getPatient())
+                    .build();
+            Document document = Document.parse(gson.toJson(mr));
+            est.insertOne(document);
+            return (ObjectId) document.get(com.hospital_jpa.common.Constants.ID);
+        }
     }
 
     @Override
     public void update(MedicalRecord medicalRecord) {
+        try (MongoClient mongo = MongoClients.create(Constants.MONGODB_URL)) {
+            MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
+            MongoCollection<Document> est = db.getCollection(Constants.MEDICAL_RECORDS);
+            Document filter = new Document(com.hospital_jpa.common.Constants.ID, medicalRecord.get_id());
+            Bson updates = Updates.combine(
+                   Updates.set(com.hospital_jpa.common.Constants.DATE,medicalRecord.getDate().toString()),
+                   Updates.set(com.hospital_jpa.common.Constants.DIAGNOSIS,medicalRecord.getDiagnosis()),
+                   Updates.set(com.hospital_jpa.common.Constants.DOCTOR,medicalRecord.getDoctor()),
+                   Updates.set(com.hospital_jpa.common.Constants.MEDICATIONS,medicalRecord.getMedications())
+            );
+            est.updateOne(filter, updates);
+        }
     }
 }
