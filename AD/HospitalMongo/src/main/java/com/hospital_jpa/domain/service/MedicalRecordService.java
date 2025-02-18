@@ -58,6 +58,7 @@ public class MedicalRecordService {
     public void updateMedicalRecord(MedicalRecordUI medicalRecordUI) {
         medicalRecordsRepository.update(mappers.toMedicalRecord(
                 medicalRecordUI,
+                idManager.getMedicalRecordObjectId(medicalRecordUI.getId()),
                 idManager.getPatientObjectId(medicalRecordUI.getIdPatient()),
                 idManager.getDoctorObjectId(medicalRecordUI.getIdDoctor())));
     }

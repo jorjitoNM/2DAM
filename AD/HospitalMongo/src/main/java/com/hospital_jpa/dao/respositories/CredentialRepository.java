@@ -3,6 +3,8 @@ package com.hospital_jpa.dao.respositories;
 import com.google.gson.Gson;
 import com.hospital_jpa.dao.common.Constants;
 import com.hospital_jpa.dao.model.Credential;
+import com.hospital_jpa.domain.error.DUPLICATED_USERNAME;
+import com.hospital_jpa.domain.error.FOREIGN_KEY_ERROR;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -31,7 +33,8 @@ public class CredentialRepository implements com.hospital_jpa.dao.interfaces.Cre
         try (MongoClient mongo = MongoClients.create(Constants.MONGODB_URL)) {
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
             MongoCollection<Document> collection = db.getCollection(Constants.CREDENTIAL);
-            if collection.find(eq(com.hospital_jpa.common.Constants.USERNAME,credential.getUsername())).first();
+            if (collection.find(eq(com.hospital_jpa.common.Constants.USERNAME,credential.getUsername())).first() != null)
+                throw new DUPLICATED_USERNAME();
             Credential c = Credential.builder()
                     .username(credential.getUsername())
                     .password(credential.getPassword())
@@ -48,7 +51,7 @@ public class CredentialRepository implements com.hospital_jpa.dao.interfaces.Cre
         try (MongoClient mongo = MongoClients.create(Constants.MONGODB_URL)) {
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
             MongoCollection<Document> collection = db.getCollection(Constants.CREDENTIAL);
-            return (int) collection.deleteOne(eq(com.hospital_jpa.common.Constants.ID, patientId)).getDeletedCount();
+            return (int) collection.deleteOne(eq(com.hospital_jpa.common.Constants.PATIENT, patientId)).getDeletedCount();
         }
     }
 

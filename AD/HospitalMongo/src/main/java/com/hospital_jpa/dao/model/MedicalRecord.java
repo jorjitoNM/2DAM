@@ -31,4 +31,13 @@ public class MedicalRecord {
         this.medications = medications;
         this.patient = patient;
     }
+
+    public MedicalRecord(ObjectId medicalRecordId, String date, String diagnosis, ObjectId doctor, List<String> medications, ObjectId patient) {
+        this.id = medicalRecordId;
+        this.date = LocalDate.parse(date);
+        this.diagnosis = diagnosis;
+        this.doctor = doctor;
+        this.medications = medications;
+        this.patient = patient;
+    }
 }

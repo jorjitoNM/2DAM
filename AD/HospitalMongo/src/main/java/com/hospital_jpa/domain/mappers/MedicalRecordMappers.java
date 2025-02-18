@@ -19,6 +19,17 @@ public class MedicalRecordMappers {
                 );
     }
 
+    public MedicalRecord toMedicalRecord (MedicalRecordUI medicalRecord,ObjectId medicalRecordId, ObjectId patient, ObjectId doctor) {
+        return new MedicalRecord(
+                medicalRecordId,
+                medicalRecord.getDate(),
+                medicalRecord.getDiagnosis(),
+                doctor,
+                medicalRecord.getMedications(),
+                patient
+        );
+    }
+
     public MedicalRecord toMedicalRecord (MedicalRecordUI medicalRecord, ObjectId patient, ObjectId doctor) {
         return new MedicalRecord(
                 medicalRecord.getDate(),

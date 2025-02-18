@@ -3,6 +3,7 @@ package com.hospital_jpa.dao.respositories;
 import com.google.gson.Gson;
 import com.hospital_jpa.dao.common.Constants;
 import com.hospital_jpa.dao.model.Patient;
+import com.hospital_jpa.domain.error.FOREIGN_KEY_ERROR;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -50,11 +51,11 @@ public class PatientRepository implements com.hospital_jpa.dao.interfaces.Patien
     public ObjectId save(Patient patient) {
         try (MongoClient mongo = MongoClients.create(Constants.MONGODB_URL)) {
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
-            MongoCollection<Document> collection = db.getCollection(Constants.PATIENTS);
+            MongoCollection<Document> patients = db.getCollection(Constants.PATIENTS);
             Patient p = Patient.builder().name(patient.getName())
                     .birthDate(patient.getBirthDate()).phone(patient.getPhone()).payments(patient.getPayments()).build();
             Document document = Document.parse(gson.toJson(p));
-            collection.insertOne(document);
+            patients.insertOne(document);
             return (ObjectId) document.get(com.hospital_jpa.common.Constants.ID);
         }
     }
@@ -78,8 +79,17 @@ public class PatientRepository implements com.hospital_jpa.dao.interfaces.Patien
     public void delete(ObjectId patientId, boolean confirmation) {
         try (MongoClient mongo = MongoClients.create(Constants.MONGODB_URL)) {
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
-            MongoCollection<Document> collection = db.getCollection(Constants.PATIENTS);
-            collection.deleteOne(eq(com.hospital_jpa.common.Constants.ID, patientId));
+            MongoCollection<Document> patients = db.getCollection(Constants.PATIENTS);
+            MongoCollection<Document> medicalRecord = db.getCollection(Constants.MEDICAL_RECORDS);
+            if (!confirmation) {
+                if (medicalRecord.find(eq(com.hospital_jpa.common.Constants.PATIENT, patientId)).first() != null) {
+                    throw new FOREIGN_KEY_ERROR();
+                }
+            }
+            else {
+                medicalRecord.deleteMany(eq(com.hospital_jpa.common.Constants.PATIENT, patientId)).wasAcknowledged();
+            }
+            patients.deleteOne(eq(com.hospital_jpa.common.Constants.ID, patientId));
         }
     }
 }
