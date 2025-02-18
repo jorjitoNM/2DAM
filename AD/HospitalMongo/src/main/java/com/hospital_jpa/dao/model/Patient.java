@@ -1,6 +1,6 @@
 package com.hospital_jpa.dao.model;
 
-import com.hospital_jpa.domain.model.PatientUI;
+import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +16,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 public class Patient {
-    private ObjectId _id;
+    @SerializedName("_id")
+    private ObjectId id;
     private String name;
     private LocalDate birthDate;
     private String phone;
@@ -29,12 +30,12 @@ public class Patient {
         this.payments = new ArrayList<>();
     }
 
-    public Patient(ObjectId _id) {
-        this._id = _id;
+    public Patient(ObjectId id) {
+        this.id = id;
     }
 
     public Patient(ObjectId id, String name, LocalDate birthDate, String phone) {
-        this._id = id;
+        this.id = id;
         this.name = name;
         this.birthDate = birthDate;
         this.phone = phone;

@@ -7,7 +7,6 @@ import com.hospital_jpa.domain.model.DoctorUI;
 import com.hospital_jpa.domain.utils.IdManager;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,6 +24,6 @@ public class DoctorService {
     public List<DoctorUI> getAll() {
         List<Doctor> doctors = doctorsRepository.getAll();
         idManager.fillDoctorIds(doctors);
-        return doctors.stream().map(p -> mappers.toDoctorUI(p,idManager.getDoctorIds().get(p.get_id()))).toList();
+        return doctors.stream().map(p -> mappers.toDoctorUI(p,idManager.getDoctorIds().get(p.getId()))).toList();
     }
 }

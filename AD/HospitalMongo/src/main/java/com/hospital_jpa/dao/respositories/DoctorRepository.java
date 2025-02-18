@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.hospital_jpa.dao.common.Constants;
 import com.hospital_jpa.dao.interfaces.DoctorsRepository;
 import com.hospital_jpa.dao.model.Doctor;
-import com.hospital_jpa.dao.model.Patient;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -33,7 +32,7 @@ public class DoctorRepository implements DoctorsRepository {
             List<Document> documents = est.find().into(new ArrayList<>());
             for (Document document : documents) {
                 Doctor doctor = gson.fromJson(document.toJson(), Doctor.class);
-                doctor.set_id(document.getObjectId(com.hospital_jpa.common.Constants.ID));
+                doctor.setId(document.getObjectId(com.hospital_jpa.common.Constants.ID));
                 doctors.add(doctor);
             }
             return doctors;

@@ -34,12 +34,12 @@ public class PatientRepository implements com.hospital_jpa.dao.interfaces.Patien
     public List<Patient> getAll() {
         try (MongoClient mongo = MongoClients.create(Constants.MONGODB_URL)) {
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
-            MongoCollection<Document> est = db.getCollection(Constants.PATIENTS);
+            MongoCollection<Document> collection = db.getCollection(Constants.PATIENTS);
             List<Patient> patients = new ArrayList<>();
-            List<Document> documents = est.find().into(new ArrayList<>());
+            List<Document> documents = collection.find().into(new ArrayList<>());
             for (Document document : documents) {
                 Patient patient = gson.fromJson(document.toJson(), Patient.class);
-                patient.set_id(document.getObjectId(com.hospital_jpa.common.Constants.ID));
+                patient.setId(document.getObjectId(com.hospital_jpa.common.Constants.ID));
                 patients.add(patient);
             }
             return patients;
@@ -50,11 +50,11 @@ public class PatientRepository implements com.hospital_jpa.dao.interfaces.Patien
     public ObjectId save(Patient patient) {
         try (MongoClient mongo = MongoClients.create(Constants.MONGODB_URL)) {
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
-            MongoCollection<Document> est = db.getCollection(Constants.PATIENTS);
+            MongoCollection<Document> collection = db.getCollection(Constants.PATIENTS);
             Patient p = Patient.builder().name(patient.getName())
                     .birthDate(patient.getBirthDate()).phone(patient.getPhone()).payments(patient.getPayments()).build();
             Document document = Document.parse(gson.toJson(p));
-            est.insertOne(document);
+            collection.insertOne(document);
             return (ObjectId) document.get(com.hospital_jpa.common.Constants.ID);
         }
     }
@@ -63,14 +63,14 @@ public class PatientRepository implements com.hospital_jpa.dao.interfaces.Patien
     public void update(Patient patient) {
         try (MongoClient mongo = MongoClients.create(Constants.MONGODB_URL)) {
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
-            MongoCollection<Document> est = db.getCollection(Constants.PATIENTS);
-            Document filter = new Document(com.hospital_jpa.common.Constants.ID, patient.get_id());
+            MongoCollection<Document> collection = db.getCollection(Constants.PATIENTS);
+            Document filter = new Document(com.hospital_jpa.common.Constants.ID, patient.getId());
             Bson updates = Updates.combine(
                     Updates.set(com.hospital_jpa.common.Constants.NAME, patient.getName()),
                     Updates.set(com.hospital_jpa.common.Constants.BIRTH_DATE,patient.getBirthDate().toString()),
                     Updates.set(com.hospital_jpa.common.Constants.PHONE, patient.getPhone())
             );
-            est.updateOne(filter, updates);
+            collection.updateOne(filter, updates);
         }
     }
 
@@ -78,8 +78,8 @@ public class PatientRepository implements com.hospital_jpa.dao.interfaces.Patien
     public void delete(ObjectId patientId, boolean confirmation) {
         try (MongoClient mongo = MongoClients.create(Constants.MONGODB_URL)) {
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
-            MongoCollection<Document> est = db.getCollection(Constants.PATIENTS);
-            est.deleteOne(eq(com.hospital_jpa.common.Constants.ID, patientId));
+            MongoCollection<Document> collection = db.getCollection(Constants.PATIENTS);
+            collection.deleteOne(eq(com.hospital_jpa.common.Constants.ID, patientId));
         }
     }
 }

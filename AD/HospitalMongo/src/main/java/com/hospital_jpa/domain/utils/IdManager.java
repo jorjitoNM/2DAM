@@ -37,7 +37,7 @@ public class IdManager {
 
     public void fillPatientIds (List<Patient> patients) {
         if (patientIds.isEmpty())
-            patients.forEach(p -> patientIds.put(p.get_id(), patientAutoIncrement++) );
+            patients.forEach(p -> patientIds.put(p.getId(), patientAutoIncrement++) );
     }
 
     public void addPatientId (ObjectId patientId) {
@@ -59,7 +59,7 @@ public class IdManager {
     }
 
     public void fillMedicalRecordsIds (List<MedicalRecord> medicalRecords) {
-        medicalRecords.stream().filter(m -> !medicalRecordsIds.containsKey(m.get_id())).forEach(m -> medicalRecordsIds.put(m.get_id(), medicalRecordAutoIncrement++) );
+        medicalRecords.stream().filter(m -> !medicalRecordsIds.containsKey(m.getId())).forEach(m -> medicalRecordsIds.put(m.getId(), medicalRecordAutoIncrement++) );
     }
 
     public void addMedicalRecordId (ObjectId medicalRecordId) {
@@ -82,7 +82,7 @@ public class IdManager {
 
     public void fillDoctorIds (List<Doctor> doctors) {
         if (doctorIds.isEmpty())
-            doctors.forEach(d -> doctorIds.put(d.get_id(), doctorAutoIncrement++) );
+            doctors.forEach(d -> doctorIds.put(d.getId(), doctorAutoIncrement++) );
     }
 
     public void addDoctorId (ObjectId doctorId) {

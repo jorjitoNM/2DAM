@@ -3,7 +3,6 @@ package com.hospital_jpa.dao.respositories;
 import com.google.gson.Gson;
 import com.hospital_jpa.dao.common.Constants;
 import com.hospital_jpa.dao.model.MedicalRecord;
-import com.hospital_jpa.dao.model.Patient;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -34,12 +33,12 @@ public class MedicalRecordsRepository implements com.hospital_jpa.dao.interfaces
     public List<MedicalRecord> getAll(ObjectId patientId) {
         try (MongoClient mongo = MongoClients.create(Constants.MONGODB_URL)) {
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
-            MongoCollection<Document> est = db.getCollection(Constants.MEDICAL_RECORDS);
+            MongoCollection<Document> collection = db.getCollection(Constants.MEDICAL_RECORDS);
             List<MedicalRecord> medicalRecords = new ArrayList<>();
-            List<Document> documents = est.find(eq(com.hospital_jpa.common.Constants.PATIENT, patientId)).into(new ArrayList<>());
+            List<Document> documents = collection.find(eq(com.hospital_jpa.common.Constants.PATIENT, patientId)).into(new ArrayList<>());
             for (Document document : documents) {
                 MedicalRecord medicalRecord = gson.fromJson(document.toJson(), MedicalRecord.class);
-                medicalRecord.set_id(document.getObjectId(com.hospital_jpa.common.Constants.ID));
+                medicalRecord.setId(document.getObjectId(com.hospital_jpa.common.Constants.ID));
                 medicalRecords.add(medicalRecord);
             }
             return medicalRecords;
@@ -50,8 +49,8 @@ public class MedicalRecordsRepository implements com.hospital_jpa.dao.interfaces
     public int delete(ObjectId medicalRecordId) {
         try (MongoClient mongo = MongoClients.create(Constants.MONGODB_URL)) {
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
-            MongoCollection<Document> est = db.getCollection(Constants.MEDICAL_RECORDS);
-            return (int) est.deleteOne(eq(com.hospital_jpa.common.Constants.ID, medicalRecordId)).getDeletedCount();
+            MongoCollection<Document> collection = db.getCollection(Constants.MEDICAL_RECORDS);
+            return (int) collection.deleteOne(eq(com.hospital_jpa.common.Constants.ID, medicalRecordId)).getDeletedCount();
         }
     }
 
@@ -59,16 +58,16 @@ public class MedicalRecordsRepository implements com.hospital_jpa.dao.interfaces
     public ObjectId save(MedicalRecord medicalRecord) {
         try (MongoClient mongo = MongoClients.create(Constants.MONGODB_URL)) {
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
-            MongoCollection<Document> est = db.getCollection(Constants.MEDICAL_RECORDS);
+            MongoCollection<Document> collection = db.getCollection(Constants.MEDICAL_RECORDS);
             MedicalRecord mr = MedicalRecord.builder()
                     .date(medicalRecord.getDate())
-                    .diagnosis("dfsfds")
+                    .diagnosis(medicalRecord.getDiagnosis())
                     .doctor(medicalRecord.getDoctor())
                     .medications(medicalRecord.getMedications())
                     .patient(medicalRecord.getPatient())
                     .build();
             Document document = Document.parse(gson.toJson(mr));
-            est.insertOne(document);
+            collection.insertOne(document);
             return (ObjectId) document.get(com.hospital_jpa.common.Constants.ID);
         }
     }
@@ -78,7 +77,7 @@ public class MedicalRecordsRepository implements com.hospital_jpa.dao.interfaces
         try (MongoClient mongo = MongoClients.create(Constants.MONGODB_URL)) {
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
             MongoCollection<Document> est = db.getCollection(Constants.MEDICAL_RECORDS);
-            Document filter = new Document(com.hospital_jpa.common.Constants.ID, medicalRecord.get_id());
+            Document filter = new Document(com.hospital_jpa.common.Constants.ID, medicalRecord.getId());
             Bson updates = Updates.combine(
                    Updates.set(com.hospital_jpa.common.Constants.DATE,medicalRecord.getDate().toString()),
                    Updates.set(com.hospital_jpa.common.Constants.DIAGNOSIS,medicalRecord.getDiagnosis()),

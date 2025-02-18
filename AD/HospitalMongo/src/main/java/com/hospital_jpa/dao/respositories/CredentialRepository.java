@@ -30,7 +30,8 @@ public class CredentialRepository implements com.hospital_jpa.dao.interfaces.Cre
     public void save(Credential credential) {
         try (MongoClient mongo = MongoClients.create(Constants.MONGODB_URL)) {
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
-            MongoCollection<Document> est = db.getCollection(Constants.CREDENTIAL);
+            MongoCollection<Document> collection = db.getCollection(Constants.CREDENTIAL);
+            if collection.find(eq(com.hospital_jpa.common.Constants.USERNAME,credential.getUsername())).first();
             Credential c = Credential.builder()
                     .username(credential.getUsername())
                     .password(credential.getPassword())
@@ -38,7 +39,7 @@ public class CredentialRepository implements com.hospital_jpa.dao.interfaces.Cre
                     .doctor(credential.getDoctor())
                     .build();
             Document document = Document.parse(gson.toJson(c));
-            est.insertOne(document);
+            collection.insertOne(document);
         }
     }
 
@@ -46,8 +47,8 @@ public class CredentialRepository implements com.hospital_jpa.dao.interfaces.Cre
     public int delete(ObjectId patientId) {
         try (MongoClient mongo = MongoClients.create(Constants.MONGODB_URL)) {
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
-            MongoCollection<Document> est = db.getCollection(Constants.CREDENTIAL);
-            return (int) est.deleteOne(eq(com.hospital_jpa.common.Constants.ID, patientId)).getDeletedCount();
+            MongoCollection<Document> collection = db.getCollection(Constants.CREDENTIAL);
+            return (int) collection.deleteOne(eq(com.hospital_jpa.common.Constants.ID, patientId)).getDeletedCount();
         }
     }
 
@@ -55,8 +56,8 @@ public class CredentialRepository implements com.hospital_jpa.dao.interfaces.Cre
     public Credential get(String username) {
         try (MongoClient mongo = MongoClients.create(Constants.MONGODB_URL)) {
             MongoDatabase db = mongo.getDatabase(Constants.DB_NAME);
-            MongoCollection<Document> est = db.getCollection(Constants.CREDENTIAL);
-            Document document = est.find(eq(com.hospital_jpa.common.Constants.USERNAME,username)).first();
+            MongoCollection<Document> collection = db.getCollection(Constants.CREDENTIAL);
+            Document document = collection.find(eq(com.hospital_jpa.common.Constants.USERNAME,username)).first();
             if (document != null) {
                 return gson.fromJson(document.toJson(), Credential.class);
             } else {

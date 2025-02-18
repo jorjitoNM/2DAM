@@ -1,5 +1,6 @@
 package com.hospital_jpa.dao.model;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,7 @@ import org.bson.types.ObjectId;
 @NoArgsConstructor
 @Builder
 public class Doctor {
-    private ObjectId _id;
+    @SerializedName("_id")
+    private ObjectId id;
     private String name;
 }

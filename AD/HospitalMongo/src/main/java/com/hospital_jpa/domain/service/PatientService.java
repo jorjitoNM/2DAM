@@ -31,7 +31,7 @@ public class PatientService {
     public List<PatientUI> getAll() {
         List<Patient> patients = patientRepository.getAll();
         idManager.fillPatientIds(patients);
-        return patients.stream().map(p -> mappers.toPatientUI(p,idManager.getPatientIntId(p.get_id()))).toList();
+        return patients.stream().map(p -> mappers.toPatientUI(p,idManager.getPatientIntId(p.getId()))).toList();
     }
 
     public int addPatient(PatientUI patientUI) {

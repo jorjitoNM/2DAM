@@ -44,7 +44,7 @@ public class MedicalRecordService {
                 .stream()
                 .map(mr -> mappers.toMedicalRecordUI(
                         mr,
-                        idManager.getMedicalRecordIntId(mr.get_id()),
+                        idManager.getMedicalRecordIntId(mr.getId()),
                         patientId,
                         idManager.getDoctorIntId(mr.getDoctor())
                         ))
