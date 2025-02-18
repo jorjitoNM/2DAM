@@ -3,12 +3,13 @@ package com.example.musicapprest.ui.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapprest.R
+import com.example.musicapprest.common.NetworkResult
 import com.example.musicapprest.common.StringProvider
 import com.example.musicapprest.di.IoDispatcher
+import com.example.musicapprest.domain.model.User
 import com.example.musicapprest.domain.usecases.user.LoginUseCase
 import com.example.musicapprest.domain.usecases.user.RegisterUserUseCase
 import com.example.musicapprest.domain.usecases.user.SaveUserNameUseCase
-import com.example.musicapprest.ui.common.Constantes
 import com.example.primeraapp.ui.common.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,14 +18,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val registerUserUseCase: RegisterUserUseCase,
-    private val saveUserNameUseCase: SaveUserNameUseCase,
+    private val saveTokenUseCase: SaveUserNameUseCase,
     @IoDispatcher private val dispatcher: CoroutineDispatcher,
     private val stringProvider: StringProvider,
 ) : ViewModel() {
@@ -37,10 +37,11 @@ class LoginViewModel @Inject constructor(
             is LoginEvents.UpdateUsername -> {
                 _uiState.update { currentState ->
                     currentState.copy(
-                        user = currentState.user.copy(username = event.username)
+                        user = currentState.user.copy(email = event.username)
                     )
                 }
             }
+
             is LoginEvents.UpdatePassword -> {
                 _uiState.update { currentState ->
                     currentState.copy(
@@ -48,48 +49,51 @@ class LoginViewModel @Inject constructor(
                     )
                 }
             }
-            is LoginEvents.Login -> login(event.user.username, event.user.password)
-            is LoginEvents.Register -> register(event.user.username, event.user.password)
-            is LoginEvents.EventDone -> _uiState.update { it.copy(uiEvent = null) }
+
+            is LoginEvents.Login -> login(event.user)
+            is LoginEvents.Register -> register(event.user)
+            is LoginEvents.EventDone -> _uiState.update { it.copy(event = null) }
         }
     }
 
-    private fun register(username: String, password: String) {
+    private fun register(user : User) {
         viewModelScope.launch(dispatcher) {
-            try {
-                registerUserUseCase.invoke(username, password)
-                _uiState.value =
-                    _uiState.value.copy(uiEvent = UiEvent.ShowSnackbar(Constantes.USER_REGISTER_SUCCESS))
-            } catch (e: Exception) {
-                _uiState.value =
-                    _uiState.value.copy(uiEvent = UiEvent.ShowSnackbar(Constantes.USER_REGISTER_ERROR))
+            when (val result = registerUserUseCase.invoke(user)) {
+                is NetworkResult.Success -> _uiState.value =
+                    _uiState.value.copy(event = UiEvent.ShowSnackbar(stringProvider.getString(R.string.user_registered)))
+
+                is NetworkResult.Error -> _uiState.update {
+                    it.copy(
+                        event = UiEvent.ShowSnackbar(result.message),
+                        isLoading = false,
+                    )
+                }
+
+                is NetworkResult.Loading -> _uiState.update {
+                    it.copy(
+                        isLoading = true
+                    )
+                }
             }
         }
     }
 
-    private fun login(username: String, password: String) {
+    private fun login(user : User) {
         viewModelScope.launch(dispatcher) {
-            loginUseCase.invoke(username, password).collect { result ->
-                result.fold(
-                    onSuccess = { user ->
-                        if (user != null) {
-                            _uiState.update {
-                                it.copy(validated = true)
-                            }
-                            saveUserNameUseCase.invoke(username)
-                        } else {
-                            _uiState.update {
-                                it.copy(uiEvent = UiEvent.ShowSnackbar(stringProvider.getString(R.string.wrong_credentials)))
-                            }
-                        }
-                    },
-                    onFailure = { exception ->
-                        _uiState.update {
-                            Timber.e(exception.message ?: stringProvider.getString(R.string.global_error))
-                            it.copy(uiEvent = UiEvent.ShowSnackbar( stringProvider.getString(R.string.error_validating_user)+  "${exception.message}"))
-                        }
-                    }
-                )
+            when (val result = loginUseCase.invoke(user)) {
+                is NetworkResult.Success -> saveTokenUseCase.invoke(result.data)
+                is NetworkResult.Error -> _uiState.update {
+                    it.copy(
+                        event = UiEvent.ShowSnackbar(result.message),
+                        isLoading = false,
+                    )
+                }
+
+                is NetworkResult.Loading -> _uiState.update {
+                    it.copy(
+                        isLoading = true
+                    )
+                }
             }
         }
     }

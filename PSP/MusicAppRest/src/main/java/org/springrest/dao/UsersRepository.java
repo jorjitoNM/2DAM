@@ -6,5 +6,5 @@ import org.springrest.domain.model.User;
 
 @Repository
 public interface UsersRepository extends JpaRepository<User, Integer> {
-
+    User getUserByCode(String code);
 }

@@ -34,8 +34,8 @@ fun LoginScreen(
 ) {
     val uiState by loginViewModel.uiState.collectAsState()
     val user = uiState.user
-    LaunchedEffect(uiState.uiEvent) {
-        uiState.uiEvent?.let {
+    LaunchedEffect(uiState.event) {
+        uiState.event?.let {
             if (it is UiEvent.ShowSnackbar) {
                 showSnackbar(it.message)
             }
@@ -79,7 +79,7 @@ fun LoginContent(
             horizontalArrangement = Arrangement.Center
         ) {
             TextField(
-                value = user.username,
+                value = user.email,
                 onValueChange = onUsernameChange,
                 label = { Text(stringResource(R.string.username)) },
                 singleLine = true
@@ -138,7 +138,7 @@ fun LoginScreenPreview () {
     var user by rememberSaveable { mutableStateOf(User()) }
     LoginContent (
         user = User(),
-        onUsernameChange = { newUsername -> user = user.copy(username = newUsername) },
+        onUsernameChange = { newUsername -> user = user.copy(email = newUsername) },
         onPasswordChange = { newPassword -> user = user.copy(password = newPassword) },
         onLoginClick = {  },
         onRegisterClick = { },

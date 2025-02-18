@@ -17,4 +17,5 @@
     <string name="updated_successfully">Updated Successfully</string>
     <string name="error_updating">Could not update</string>
     <string name="update">Update</string>
+    <string name="user_registered">User registered successfully</string>
 </resources>

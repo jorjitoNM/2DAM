@@ -33,8 +33,9 @@ public class UserService {
     }
 
     public void confirmUser(String code) {
-        List<User> users = usersRepository.findAll();
-        users.stream().filter(u -> u.getCode().equals(code)).findFirst().ifPresent(u -> u.setActive(true));
+        User u = usersRepository.getUserByCode(code);
+        u.setActive(true);
+        usersRepository.save(u);
     }
 
     public boolean login(User user) {

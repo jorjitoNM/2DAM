@@ -1,5 +1,6 @@
 package org.springrest.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,5 +19,6 @@ public class Song {
     @Column
     private String artist;
     @ManyToMany(mappedBy = "songs")
+    @JsonIgnore
     private List<Playlist> playlist;
 }

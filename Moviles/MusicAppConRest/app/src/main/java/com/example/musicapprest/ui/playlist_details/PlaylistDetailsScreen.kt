@@ -44,7 +44,6 @@ fun PlaylistDetailsScreen(
 
     LaunchedEffect(key1 = Unit) {
         playlistDetailsViewModel.handleEvent(PlaylistDetailsEvents.GetPlaylist(playlistdId))
-        playlistDetailsViewModel.handleEvent(PlaylistDetailsEvents.GetUserName)
     }
 
     LaunchedEffect(uiState.event) {
@@ -65,7 +64,6 @@ fun PlaylistDetailsScreen(
                 )
             )
         },
-        userName = uiState.userName,
         updatePlaylist = { playlistDetailsViewModel.handleEvent(PlaylistDetailsEvents.UpdatePlaylist(uiState.playlist)) }
     )
 }
@@ -74,7 +72,6 @@ fun PlaylistDetailsScreen(
 fun PlaylistDetailsContent(
     playlist: Playlist = Playlist(),
     onPlaylistNameChange: (String) -> Unit = {},
-    userName : String = "Jorge",
     updatePlaylist : () -> Unit = {}
 ) {
     Column(
@@ -87,7 +84,7 @@ fun PlaylistDetailsContent(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(userName + stringResource(R.string.playlist_s), style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onPrimaryContainer)
+            Text(playlist.owner.split("@")[0] + stringResource(R.string.playlist_s), style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onPrimaryContainer)
         }
         Row(
             modifier = Modifier

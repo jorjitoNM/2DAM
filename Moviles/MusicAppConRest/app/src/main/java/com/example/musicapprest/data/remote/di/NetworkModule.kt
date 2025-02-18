@@ -4,6 +4,10 @@ package com.example.musicapprest.data.remote.di
 import com.example.musicapprest.BuildConfig
 import com.example.musicapprest.data.remote.api_services.PlaylistsService
 import com.example.musicapprest.data.remote.api_services.SongsService
+import com.example.musicapprest.data.remote.api_services.UsersService
+import com.example.musicapprest.data.remote.security.AuthAuthenticator
+import com.example.musicapprest.data.remote.security.AuthInterceptor
+import com.example.musicapprest.data.remote.security.TokenProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,6 +16,8 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
+import dagger.Lazy
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -26,10 +32,14 @@ object NetworkModule {
 
     @Provides
     fun provideOkHttpClient(
-        loggingInterceptor: HttpLoggingInterceptor
+        loggingInterceptor: HttpLoggingInterceptor,
+        authInterceptor: AuthInterceptor,
+        authenticator: AuthAuthenticator,
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(authInterceptor)
+            .authenticator(authenticator)
             .build()
     }
 
@@ -51,4 +61,19 @@ object NetworkModule {
     fun providePlaylistsService (retrofit: Retrofit): PlaylistsService {
         return retrofit.create(PlaylistsService::class.java);
     }
+
+    @Provides
+    fun provideUsersService (retrofit: Retrofit): UsersService {
+        return retrofit.create(UsersService::class.java);
+    }
+
+    @Singleton
+    @Provides
+    fun provideAuthInterceptor(tokenProvider: TokenProvider): AuthInterceptor =
+        AuthInterceptor(tokenProvider)
+
+    @Singleton
+    @Provides
+    fun provideAuthAuthenticator(tokenProvider: TokenProvider,usersService: Lazy<UsersService>): AuthAuthenticator =
+        AuthAuthenticator(tokenProvider,usersService)
 }

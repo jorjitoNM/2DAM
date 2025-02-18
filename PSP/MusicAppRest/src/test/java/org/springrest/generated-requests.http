@@ -31,7 +31,7 @@ Authorization: Bearer {{token}}
 <> 2025-02-10T174645.500.json
 
 ###
-GET http://localhost:8080/getAll
+GET http://localhost:8080/playlists/getAll
 Authorization: Bearer {{token}}
 
 <> 2025-02-10T224132.200.json
