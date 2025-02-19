@@ -1,5 +1,6 @@
 package com.example.musicapprest.data.remote.security
 
+import com.example.musicapprest.data.DataStoreRepository
 import com.example.musicapprest.data.remote.api_services.UsersService
 import dagger.Lazy
 import kotlinx.coroutines.flow.first
@@ -12,24 +13,20 @@ import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Inject
 
 class AuthAuthenticator @Inject constructor(
-    private val tokenProvider: TokenProvider,
+    private val dataStoreRepository: DataStoreRepository,
     private val service : Lazy<UsersService>,
 ): Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {
         val refreshToken = runBlocking {
-            tokenProvider.getRefreshToken().first()
+            dataStoreRepository.getRefreshToken().first()
         }
         return runBlocking {
             val newToken = getNewToken(refreshToken)
 
-            if (!newToken.isSuccessful || newToken.body() == null) {
-                //service.get().login()
-            }
-
             newToken.body()?.let {
-                tokenProvider.saveLoginToken(it.login)
-                tokenProvider.saveRefreshToken(it.refresh)
+                dataStoreRepository.saveLoginToken(it.login)
+                dataStoreRepository.saveRefreshToken(it.refresh)
                 response.request.newBuilder()
                     .header("Authorization", "Bearer ${it.refresh}")
                     .build()

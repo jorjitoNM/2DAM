@@ -64,7 +64,20 @@ fun PlaylistDetailsScreen(
                 )
             )
         },
-        updatePlaylist = { playlistDetailsViewModel.handleEvent(PlaylistDetailsEvents.UpdatePlaylist(uiState.playlist)) }
+        updatePlaylist = {
+            playlistDetailsViewModel.handleEvent(
+                PlaylistDetailsEvents.UpdatePlaylist(
+                    uiState.playlist
+                )
+            )
+        },
+        deletePlaylist = {
+            playlistDetailsViewModel.handleEvent(
+                PlaylistDetailsEvents.DeletePlaylist(
+                    uiState.playlist.playlistId
+                )
+            )
+        }
     )
 }
 
@@ -72,10 +85,10 @@ fun PlaylistDetailsScreen(
 fun PlaylistDetailsContent(
     playlist: Playlist = Playlist(),
     onPlaylistNameChange: (String) -> Unit = {},
-    updatePlaylist : () -> Unit = {}
+    updatePlaylist: () -> Unit = {},
+    deletePlaylist: () -> Unit = {}
 ) {
     Column(
-        modifier = Modifier.fillMaxSize()
     ) {
         Row(
             modifier = Modifier
@@ -84,7 +97,11 @@ fun PlaylistDetailsContent(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(playlist.owner.split("@")[0] + stringResource(R.string.playlist_s), style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onPrimaryContainer)
+            Text(
+                playlist.owner.split("@")[0] + stringResource(R.string.playlist_s),
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
+            )
         }
         Row(
             modifier = Modifier
@@ -118,26 +135,62 @@ fun PlaylistDetailsContent(
             }
         }
         Row(
-            modifier = Modifier.weight(0.55f).fillMaxSize().padding(dimensionResource(R.dimen.padding8)),
+            modifier = Modifier
+                .weight(0.55f)
+                .fillMaxSize()
+                .padding(dimensionResource(R.dimen.padding8)),
             horizontalArrangement = Arrangement.Center
         ) {
-            LazyColumn (contentPadding = PaddingValues(dimensionResource(R.dimen.padding8))) {
+            LazyColumn(contentPadding = PaddingValues(dimensionResource(R.dimen.padding8))) {
                 this.items(items = playlist.songs, key = { song -> song.songId }) { song ->
                     SongItem(song)
                 }
             }
         }
-        Row (
-            modifier = Modifier.weight(0.2f).fillMaxSize().padding(dimensionResource(R.dimen.padding8)),
+        Row(
+            modifier = Modifier
+                .weight(0.2f)
+                .fillMaxSize()
+                .padding(dimensionResource(R.dimen.padding8)),
             horizontalArrangement = Arrangement.Center
         ) {
-            Button(onClick = updatePlaylist, colors = ButtonColors(
-                MaterialTheme.colorScheme.primaryContainer,
-                MaterialTheme.colorScheme.onPrimaryContainer,
-                MaterialTheme.colorScheme.onSecondaryContainer,
-                MaterialTheme.colorScheme.onSecondaryContainer,)) {
-                Text(stringResource(R.string.update))
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(0.5f),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Button(
+                    onClick = updatePlaylist, colors = ButtonColors(
+                        MaterialTheme.colorScheme.primaryContainer,
+                        MaterialTheme.colorScheme.onPrimaryContainer,
+                        MaterialTheme.colorScheme.onSecondaryContainer,
+                        MaterialTheme.colorScheme.onSecondaryContainer,
+                    )
+                ) {
+                    Text(stringResource(R.string.update))
+                }
             }
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(0.5f),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Button(
+                    onClick = deletePlaylist, colors = ButtonColors(
+                        MaterialTheme.colorScheme.secondaryContainer,
+                        MaterialTheme.colorScheme.onSecondaryContainer,
+                        MaterialTheme.colorScheme.onTertiaryContainer,
+                        MaterialTheme.colorScheme.onTertiaryContainer,
+                    )
+                ) {
+                    Text(stringResource(R.string.delete))
+                }
+            }
+
         }
     }
 }
@@ -166,7 +219,11 @@ fun SongItem(
                 )
             }
             Row(modifier = Modifier.fillMaxWidth()) {
-                Text(song.artist, style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.secondary)
+                Text(
+                    song.artist,
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.secondary
+                )
 
             }
         }
@@ -177,10 +234,10 @@ fun SongItem(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-                Icon(
-                    Icons.Default.MoreVert,
-                    contentDescription = stringResource(id = R.string.more_actions)
-                )
+            Icon(
+                Icons.Default.MoreVert,
+                contentDescription = stringResource(id = R.string.more_actions)
+            )
         }
     }
     HorizontalDivider()
@@ -193,7 +250,7 @@ fun PlaylistDetailsScreenPreview(
 ) {
     PlaylistDetailsContent(
         playlist = Playlist(
-            1, "This is Kendrick Lamar",listOf(
+            1, "This is Kendrick Lamar", listOf(
                 Song(1, "Not Like Us", "Kendrick lamar"),
                 Song(2, "Money In The Grave", "Drake, Rick Ross")
             )

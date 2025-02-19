@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -61,13 +60,9 @@ fun PlaylistListContent(
     playlists: List<Playlist> = emptyList(),
     onNavigateDetail: (Int) -> Unit,
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        LazyColumn {
-            this.items(items = playlists, key = { playlist -> playlist.playlistId }) { playlist ->
-                PlaylistItem(playlist, onNavigateDetail)
-            }
+    LazyColumn {
+        this.items(items = playlists, key = { playlist -> playlist.playlistId }) { playlist ->
+            PlaylistItem(playlist, onNavigateDetail)
         }
     }
 
@@ -80,7 +75,10 @@ fun PlaylistItem(
 ) {
     OutlinedCard(
         colors = CardDefaults.outlinedCardColors(),
-        border = BorderStroke(dimensionResource(R.dimen.border1dp), MaterialTheme.colorScheme.onSecondaryContainer),
+        border = BorderStroke(
+            dimensionResource(R.dimen.border1dp),
+            MaterialTheme.colorScheme.onSecondaryContainer
+        ),
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()

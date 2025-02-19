@@ -32,7 +32,7 @@ public class LoginController {
 
     @PostMapping(Constantes.REFRESH_URL)
     public ResponseEntity<Token> refresh (@RequestHeader(HttpHeaders.AUTHORIZATION) String refreshToken) {
-        return ResponseEntity.ok(tokenService.getToken(tokenService.getEmail(refreshToken.split(" ")[1].trim())));
+        return ResponseEntity.ok(tokenService.getToken(tokenService.getEmail(refreshToken.split("Bearer ")[1].trim())));
     }
 
     @PostMapping(Constantes.SIGNUP_URL)

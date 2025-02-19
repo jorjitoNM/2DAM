@@ -20,4 +20,8 @@ class PlaylistsDataSource @Inject constructor(
     suspend fun update (playlist: Playlist) : NetworkResult<Playlist> = safeApiCall {
         playlistsService.update(playlist)
     }
+
+    suspend fun delete (id : Int) : NetworkResult<Unit> = safeApiCall {
+        playlistsService.delete(id)
+    }
 }

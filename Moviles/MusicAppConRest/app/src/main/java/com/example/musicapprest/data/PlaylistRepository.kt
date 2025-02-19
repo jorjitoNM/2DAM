@@ -13,4 +13,6 @@ class PlaylistRepository @Inject constructor(
     suspend fun getPlaylist(playlistId : Int) : NetworkResult<Playlist> = playlistsDataSource.get(playlistId)
 
     suspend fun update(playlist: Playlist) : NetworkResult<Playlist> = playlistsDataSource.update(playlist)
+
+    suspend fun delete (id: Int) : NetworkResult<Unit> = playlistsDataSource.delete(id)
 }

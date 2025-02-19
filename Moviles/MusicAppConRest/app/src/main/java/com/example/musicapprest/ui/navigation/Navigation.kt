@@ -45,6 +45,7 @@ fun Navigation() {
     var isBottomBarVisible by rememberSaveable { mutableStateOf(true) }
     var isTopBarVisible by rememberSaveable { mutableStateOf(true) }
 
+
     val screen = appDestinationList.find { screen ->
         state?.destination?.route == screen.route::class.qualifiedName
     }
@@ -91,7 +92,7 @@ fun Navigation() {
                     }
                 )
             }
-            composable<PlaylistDetailsScreenDestination> { it ->
+            composable<PlaylistDetailsScreenDestination> {
                 isBottomBarVisible =  false
                 isTopBarVisible = true
                 PlaylistDetailsScreen(

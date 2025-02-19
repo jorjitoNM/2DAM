@@ -6,6 +6,6 @@ interface PlaylistDetailsEvents {
     data class GetPlaylist (val playlistId : Int) : PlaylistDetailsEvents
     data class OnPlaylistNameChanged(val playlistName : String) : PlaylistDetailsEvents
     data object EventDone : PlaylistDetailsEvents
-    data object GetUserName : PlaylistDetailsEvents
     data class UpdatePlaylist (val playlist : Playlist) : PlaylistDetailsEvents
+    data class DeletePlaylist (val playlistId : Int) : PlaylistDetailsEvents
 }

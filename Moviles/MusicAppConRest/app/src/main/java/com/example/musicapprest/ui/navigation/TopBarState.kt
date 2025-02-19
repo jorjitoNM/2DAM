@@ -1,4 +1,4 @@
-package com.example.playlistcompose.ui.navigation
+package com.example.musicapprest.ui.navigation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.RowScope

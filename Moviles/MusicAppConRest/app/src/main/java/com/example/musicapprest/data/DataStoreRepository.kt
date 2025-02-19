@@ -1,4 +1,4 @@
-package com.example.musicapprest.data.remote.security
+package com.example.musicapprest.data
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class TokenProvider @Inject constructor(@ApplicationContext private val context: Context) {
+class DataStoreRepository @Inject constructor(@ApplicationContext private val context: Context) {
 
 
     private val LOGIN_TOKEN = stringPreferencesKey("jwt_login")

@@ -28,7 +28,7 @@ android {
     productFlavors {
         create("development") {
             dimension = "env"
-            buildConfigField("String", "API_URL", "\"http://192.168.3.91:8080/\"")
+            buildConfigField("String", "API_URL", "\"http://192.168.1.17:8080/\"")
         }
         create("production") {
             dimension = "env"

@@ -31,7 +31,7 @@ public class JWTService {
                 .subject(email)
                 .issuer("JorgeRest")
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(Date.from(LocalDateTime.now().plusSeconds(60).atZone(ZoneId.systemDefault()).toInstant()))
+                .expiration(Date.from(LocalDateTime.now().plusSeconds(20).atZone(ZoneId.systemDefault()).toInstant()))
                 .and()
                 .signWith(key)
                 .compact();

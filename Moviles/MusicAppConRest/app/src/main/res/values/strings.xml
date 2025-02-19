@@ -22,4 +22,7 @@
     <string name="invalid_email_format">This is not a valid email</string>
     <string name="name">Name:</string>
     <string name="id">ID:</string>
+    <string name="delete">Delete</string>
+    <string name="deleted_successfully">Deleted Successfully</string>
+    <string name="error_deleting">Could not delete</string>
 </resources>

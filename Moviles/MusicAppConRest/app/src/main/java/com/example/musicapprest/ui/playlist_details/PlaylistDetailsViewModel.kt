@@ -7,6 +7,7 @@ import com.example.musicapprest.common.NetworkResult
 import com.example.musicapprest.common.StringProvider
 import com.example.musicapprest.di.IoDispatcher
 import com.example.musicapprest.domain.model.Playlist
+import com.example.musicapprest.domain.usecases.playlist.DeletePlaylistUseCase
 import com.example.musicapprest.domain.usecases.playlist.GetPlaylistUseCase
 import com.example.musicapprest.domain.usecases.playlist.UpdatePlaylistUseCase
 import com.example.primeraapp.ui.common.UiEvent
@@ -25,6 +26,7 @@ class PlaylistDetailsViewModel @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher,
     private val stringProvider: StringProvider,
     private val updatePlaylistUseCase: UpdatePlaylistUseCase,
+    private val deletePlaylistUseCase: DeletePlaylistUseCase,
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<PlaylistDetailsState> =
         MutableStateFlow(PlaylistDetailsState())
@@ -44,6 +46,7 @@ class PlaylistDetailsViewModel @Inject constructor(
             }
 
             is PlaylistDetailsEvents.UpdatePlaylist -> update()
+            is PlaylistDetailsEvents.DeletePlaylist -> delete(event.playlistId)
         }
     }
 
@@ -65,6 +68,32 @@ class PlaylistDetailsViewModel @Inject constructor(
                         event =
                         UiEvent.ShowSnackbar(
                             stringProvider.getString(R.string.error_updating)
+                        )
+                    )
+                }
+
+                is NetworkResult.Loading -> TODO()
+            }
+        }
+    }
+
+    private fun delete(id : Int) {
+        viewModelScope.launch(dispatcher) {
+            when (val result = deletePlaylistUseCase.invoke(id)) {
+                is NetworkResult.Success -> {
+                    _uiState.update {
+                        it.copy(
+                            event =
+                            UiEvent.PopBackStack
+                        )
+                    }
+                }
+
+                is NetworkResult.Error -> _uiState.update {
+                    it.copy(
+                        event =
+                        UiEvent.ShowSnackbar(
+                            stringProvider.getString(R.string.error_deleting) + ": " + result.message
                         )
                     )
                 }

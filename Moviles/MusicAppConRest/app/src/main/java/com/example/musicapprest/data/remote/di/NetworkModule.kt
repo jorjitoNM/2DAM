@@ -2,12 +2,12 @@ package com.example.musicapprest.data.remote.di
 
 
 import com.example.musicapprest.BuildConfig
+import com.example.musicapprest.data.DataStoreRepository
 import com.example.musicapprest.data.remote.api_services.PlaylistsService
 import com.example.musicapprest.data.remote.api_services.SongsService
 import com.example.musicapprest.data.remote.api_services.UsersService
 import com.example.musicapprest.data.remote.security.AuthAuthenticator
 import com.example.musicapprest.data.remote.security.AuthInterceptor
-import com.example.musicapprest.data.remote.security.TokenProvider
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
@@ -69,11 +69,11 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideAuthInterceptor(tokenProvider: TokenProvider): AuthInterceptor =
-        AuthInterceptor(tokenProvider)
+    fun provideAuthInterceptor(dataStoreRepository: DataStoreRepository): AuthInterceptor =
+        AuthInterceptor(dataStoreRepository)
 
     @Singleton
     @Provides
-    fun provideAuthAuthenticator(tokenProvider: TokenProvider,usersService: Lazy<UsersService>): AuthAuthenticator =
-        AuthAuthenticator(tokenProvider,usersService)
+    fun provideAuthAuthenticator(dataStoreRepository: DataStoreRepository, usersService: Lazy<UsersService>): AuthAuthenticator =
+        AuthAuthenticator(dataStoreRepository,usersService)
 }

@@ -7,8 +7,6 @@ import androidx.compose.material.icons.automirrored.sharp.List
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.musicapprest.ui.common.Constantes
-import com.example.playlistcompose.ui.navigation.ScaffoldState
-import com.example.playlistcompose.ui.navigation.TopBarState
 
 val appDestinationList = listOf(
     LoginScreen,
