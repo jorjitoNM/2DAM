@@ -12,7 +12,6 @@ public class Constantes {
     public static final String PETICION_INCOMPLETA = "Peticion incompleta, envie un token";
     public static final String PATH_ID = "id";
     public static final String EMAIL = "email";
-    public static final String PASSWORD = "password";
     public static final String CODE = "code";
     public static final String CHECK_MAIL = "Please, check your mail to activate your account";
     public static final String ACCEPTED = "Accepted";

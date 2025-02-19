@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springrest.common.Constantes;
 import org.springrest.dao.PlaylistRepository;
 import org.springrest.domain.errors.ForeignKeyException;
+import org.springrest.domain.errors.NotFoundException;
 import org.springrest.domain.model.Playlist;
 
 import java.util.List;
@@ -18,8 +19,8 @@ public class PlaylistService {
     private final PlaylistRepository repository;
 
 
-    public List<Playlist> getAll () {
-        return repository.findAll();
+    public List<Playlist> getAll (String owner) {
+        return repository.findAllByOwner_Email(owner);
     }
 
     public void delete(Integer dishId) {
@@ -31,6 +32,6 @@ public class PlaylistService {
     }
 
     public Playlist get (Integer playlistId) {
-        return repository.getReferenceById(playlistId);
+        return repository.findById(playlistId).orElse(null);
     }
 }
