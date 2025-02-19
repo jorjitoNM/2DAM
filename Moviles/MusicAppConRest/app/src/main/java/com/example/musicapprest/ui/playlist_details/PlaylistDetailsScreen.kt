@@ -89,7 +89,8 @@ fun PlaylistDetailsContent(
         Row(
             modifier = Modifier
                 .weight(0.15f)
-                .fillMaxSize(),
+                .fillMaxSize()
+                .padding(dimensionResource(R.dimen.padding8)),
             horizontalArrangement = Arrangement.Center
         ) {
             Column(
@@ -117,7 +118,7 @@ fun PlaylistDetailsContent(
             }
         }
         Row(
-            modifier = Modifier.weight(0.55f),
+            modifier = Modifier.weight(0.55f).fillMaxSize().padding(dimensionResource(R.dimen.padding8)),
             horizontalArrangement = Arrangement.Center
         ) {
             LazyColumn (contentPadding = PaddingValues(dimensionResource(R.dimen.padding8))) {
@@ -127,7 +128,7 @@ fun PlaylistDetailsContent(
             }
         }
         Row (
-            modifier = Modifier.weight(0.2f).fillMaxSize(),
+            modifier = Modifier.weight(0.2f).fillMaxSize().padding(dimensionResource(R.dimen.padding8)),
             horizontalArrangement = Arrangement.Center
         ) {
             Button(onClick = updatePlaylist, colors = ButtonColors(

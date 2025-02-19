@@ -9,7 +9,7 @@ import com.example.musicapprest.di.IoDispatcher
 import com.example.musicapprest.domain.model.User
 import com.example.musicapprest.domain.usecases.user.LoginUseCase
 import com.example.musicapprest.domain.usecases.user.RegisterUserUseCase
-import com.example.musicapprest.domain.usecases.user.SaveUserNameUseCase
+import com.example.musicapprest.domain.usecases.user.SaveTokenUseCase
 import com.example.primeraapp.ui.common.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -24,7 +24,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val registerUserUseCase: RegisterUserUseCase,
-    private val saveTokenUseCase: SaveUserNameUseCase,
+    private val saveTokenUseCase: SaveTokenUseCase,
     @IoDispatcher private val dispatcher: CoroutineDispatcher,
     private val stringProvider: StringProvider,
 ) : ViewModel() {
@@ -81,7 +81,10 @@ class LoginViewModel @Inject constructor(
     private fun login(user : User) {
         viewModelScope.launch(dispatcher) {
             when (val result = loginUseCase.invoke(user)) {
-                is NetworkResult.Success -> saveTokenUseCase.invoke(result.data)
+                is NetworkResult.Success -> {
+                    saveTokenUseCase.invoke(result.data)
+                    _uiState.update { it.copy(validated = true) }
+                }
                 is NetworkResult.Error -> _uiState.update {
                     it.copy(
                         event = UiEvent.ShowSnackbar(result.message),

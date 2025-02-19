@@ -2,7 +2,6 @@ package com.example.musicapprest.ui.playlist_list
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,10 +19,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.musicapprest.R
@@ -61,27 +59,14 @@ fun PlaylistListScreen(
 @Composable
 fun PlaylistListContent(
     playlists: List<Playlist> = emptyList(),
-    onNavigateDetail : (Int) -> Unit,
+    onNavigateDetail: (Int) -> Unit,
 ) {
-    Column (
+    Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        Row (
-            modifier = Modifier.fillMaxSize().weight(0.2f),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-        ) {
-            Text(stringResource(R.string.your_playlists))
-        }
-        Row (
-            modifier = Modifier.fillMaxSize().weight(0.8f),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-        ) {
-            LazyColumn {
-                this.items(items = playlists, key = { playlist -> playlist.playlistId }) { playlist ->
-                    PlaylistItem(playlist,onNavigateDetail)
-                }
+        LazyColumn {
+            this.items(items = playlists, key = { playlist -> playlist.playlistId }) { playlist ->
+                PlaylistItem(playlist, onNavigateDetail)
             }
         }
     }
@@ -91,20 +76,21 @@ fun PlaylistListContent(
 @Composable
 fun PlaylistItem(
     playlist: Playlist = Playlist(),
-    onNavigateDetail : (Int) -> Unit,
+    onNavigateDetail: (Int) -> Unit,
 ) {
     OutlinedCard(
         colors = CardDefaults.outlinedCardColors(),
-        border = BorderStroke(1.dp, Color.Black),
+        border = BorderStroke(dimensionResource(R.dimen.border1dp), MaterialTheme.colorScheme.onSecondaryContainer),
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(8.dp).clickable( onClick = {onNavigateDetail(playlist.playlistId.toInt())}),
+            .padding(dimensionResource(R.dimen.padding8))
+            .clickable(onClick = { onNavigateDetail(playlist.playlistId) }),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(dimensionResource(R.dimen.padding8))
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -112,12 +98,12 @@ fun PlaylistItem(
             ) {
                 Column {
                     Text(
-                        text = "Nombre: ${playlist.playlistName}",
+                        text = stringResource(R.string.name) + " " + playlist.playlistName,
                         style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(bottom = 4.dp)
+                        modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding4))
                     )
                     Text(
-                        text = "ID: ${playlist.playlistId}",
+                        text = stringResource(R.string.id) + " " + playlist.playlistId,
                         style = MaterialTheme.typography.bodySmall
                     )
                 }

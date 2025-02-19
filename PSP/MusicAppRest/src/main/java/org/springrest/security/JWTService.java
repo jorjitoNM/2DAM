@@ -1,5 +1,7 @@
 package org.springrest.security;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import org.springrest.common.Constantes;
@@ -20,8 +22,8 @@ public class JWTService {
         this.key = key;
     }
 
-    public String getToken(String email) {
-        return Jwts.builder()
+    public Token getToken(String email) {
+        String login = Jwts.builder()
                 .claims()
                 .add(Map.of(
                         Constantes.EMAIL, email
@@ -33,6 +35,19 @@ public class JWTService {
                 .and()
                 .signWith(key)
                 .compact();
+        String refresh = Jwts.builder()
+                .claims()
+                .add(Map.of(
+                        Constantes.EMAIL, email
+                ))
+                .subject(email)
+                .issuer("JorgeRest")
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(Date.from(LocalDateTime.now().plusSeconds(600000).atZone(ZoneId.systemDefault()).toInstant()))
+                .and()
+                .signWith(key)
+                .compact();
+        return new Token(login,refresh);
     }
 
     public void validateToken(String token) throws JwtException {
@@ -40,5 +55,10 @@ public class JWTService {
                 .setSigningKey(key)
                 .build()
                 .parseSignedClaims(token);
+    }
+
+    public String getEmail (String token) {
+        Jws<Claims> claims = Jwts.parser().setSigningKey(key).build().parseClaimsJws(token);
+        return claims.getPayload().get(Constantes.EMAIL,String.class);
     }
 }

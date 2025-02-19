@@ -91,7 +91,7 @@ fun Navigation() {
                     }
                 )
             }
-            composable<PlaylistDetailsScreenDestination> {
+            composable<PlaylistDetailsScreenDestination> { it ->
                 isBottomBarVisible =  false
                 isTopBarVisible = true
                 PlaylistDetailsScreen(

@@ -2,7 +2,6 @@ package org.springrest.common;
 
 public class Constantes {
     public static final String LOGIN_URL = "/login";
-    public static final String CHECK_LOGIN_URL = "/checkLogin";
     public static final String SIGNUP_URL = "/signUp";
     public static final String CONFIRM_URL = "/confirm";
     public static final String GET_ALL = "/getAll";
@@ -20,7 +19,7 @@ public class Constantes {
     public static final String SONGS_URL = "/songs";
     public static final String FAVOURITE_SONG = "/favourite";
     public static final String USER_NOT_FOUND = "There is no such email registered";
-    public static final String ERROR_DELETING_PLAYLIST = "";
+    public static final String REFRESH_URL = "/refresh";
 
     private Constantes () {}
 }

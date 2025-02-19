@@ -1,6 +1,7 @@
 package org.springrest.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class User {
     @Id
     @Column
+    @JsonValue
     private String email;
     @Column
     private String password;
@@ -31,11 +33,5 @@ public class User {
     public User(String email, String password) {
         this.email = email;
         this.password = password;
-    }
-
-    public User(String email, String password, String code) {
-        this.email = email;
-        this.password = password;
-        this.code = code;
     }
 }

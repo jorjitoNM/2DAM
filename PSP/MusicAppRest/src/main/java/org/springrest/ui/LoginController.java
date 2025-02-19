@@ -1,15 +1,15 @@
 package org.springrest.ui;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.*;
 import org.springrest.common.Constantes;
 import org.springrest.domain.model.User;
 import org.springrest.domain.services.UserService;
 import org.springrest.security.JWTService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springrest.security.Token;
+import org.springrest.ui.model.AuthUser;
 
 @RestController
 public class LoginController {
@@ -22,17 +22,22 @@ public class LoginController {
         this.tokenService = tokenService;
     }
 
-    @GetMapping(Constantes.LOGIN_URL)
-    public ResponseEntity<String> login(@RequestParam(Constantes.EMAIL) String email, @RequestParam(Constantes.PASSWORD) String password) {
-        if (userService.login(new User(email, password)))
-            return ResponseEntity.ok(tokenService.getToken(email));
+    @PostMapping(Constantes.LOGIN_URL)
+    public ResponseEntity<Token> login(@RequestBody AuthUser user) {
+        if (userService.login(new User(user.getEmail(), user.getPassword())))
+            return ResponseEntity.ok(tokenService.getToken(user.getEmail()));
         else
             return ResponseEntity.status(HttpServletResponse.SC_UNAUTHORIZED).build();
     }
 
+    @PostMapping(Constantes.REFRESH_URL)
+    public ResponseEntity<Token> refresh (@RequestHeader(HttpHeaders.AUTHORIZATION) String refreshToken) {
+        return ResponseEntity.ok(tokenService.getToken(tokenService.getEmail(refreshToken.split(" ")[1].trim())));
+    }
+
     @PostMapping(Constantes.SIGNUP_URL)
-    public ResponseEntity<String> signUp(@RequestParam(Constantes.EMAIL) String email, @RequestParam(Constantes.PASSWORD) String password) {
-        userService.signUp(new User(email, password));
+    public ResponseEntity<String> signUp(@RequestBody AuthUser user) {
+        userService.signUp(new User(user.getEmail(), user.getPassword()));
         return ResponseEntity.status(HttpServletResponse.SC_CREATED).body(Constantes.CHECK_MAIL);
     }
 

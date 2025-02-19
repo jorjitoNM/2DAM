@@ -19,6 +19,9 @@ abstract class BaseApiResponse {
                     NetworkResult.Error(Constantes.ERROR)
                 }
             }
+            response.errorBody()?.let {
+                return error(it.string())
+            }
             return error("${response.code()} ${response.message()}")
         } catch (e: Exception) {
             Timber.e(e.message, e)

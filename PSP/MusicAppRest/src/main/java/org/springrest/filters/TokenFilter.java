@@ -26,7 +26,7 @@ public class TokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (isEmpty(header) || !header.startsWith("Bearer "))
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, Constantes.PETICION_INCOMPLETA);
+            response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, Constantes.PETICION_INCOMPLETA);
         else {
             final String token = header.split(" ")[1].trim();
             try {
@@ -41,7 +41,7 @@ public class TokenFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
         return Constantes.LOGIN_URL.equals(path)
-                || Constantes.CHECK_LOGIN_URL.equals(path)
+                || Constantes.REFRESH_URL.equals(path)
                 || Constantes.CONFIRM_URL.equals(path)
                 || Constantes.SIGNUP_URL.equals(path);
     }

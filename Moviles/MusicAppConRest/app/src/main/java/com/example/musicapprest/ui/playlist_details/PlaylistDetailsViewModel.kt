@@ -3,6 +3,7 @@ package com.example.musicapprest.ui.playlist_details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapprest.R
+import com.example.musicapprest.common.NetworkResult
 import com.example.musicapprest.common.StringProvider
 import com.example.musicapprest.di.IoDispatcher
 import com.example.musicapprest.domain.model.Playlist
@@ -16,7 +17,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -48,18 +48,19 @@ class PlaylistDetailsViewModel @Inject constructor(
     }
 
     private fun update() {
-        try {
-            viewModelScope.launch(dispatcher) {
-                updatePlaylistUseCase.invoke(_uiState.value.playlist)
-                _uiState.update {
-                    it.copy(
-                        event =
-                        UiEvent.ShowSnackbar(stringProvider.getString(R.string.updated_successfully))
-                    )
+        viewModelScope.launch(dispatcher) {
+            when (val result = updatePlaylistUseCase.invoke(_uiState.value.playlist)) {
+                is NetworkResult.Success -> {
+                    _uiState.update {
+                        it.copy(
+                            event =
+                            UiEvent.ShowSnackbar(stringProvider.getString(R.string.updated_successfully))
+                        )
+                    }
+                    getPlaylist(result.data.playlistId)
                 }
-                getPlaylist(_uiState.value.playlist.playlistId.toInt())
-                //else
-                _uiState.update {
+
+                is NetworkResult.Error -> _uiState.update {
                     it.copy(
                         event =
                         UiEvent.ShowSnackbar(
@@ -67,35 +68,24 @@ class PlaylistDetailsViewModel @Inject constructor(
                         )
                     )
                 }
-            }
-        } catch (e: Exception) {
-            _uiState.update {
-                it.copy(
-                    event =
-                    UiEvent.ShowSnackbar(
-                        e.message ?: stringProvider.getString(R.string.global_error)
-                    )
-                )
+
+                is NetworkResult.Loading -> TODO()
             }
         }
     }
 
     private fun getPlaylist(playlistId: Int) {
-        try {
-            viewModelScope.launch(dispatcher) {
-                _uiState.update {
-                    it.copy(playlist = getPlaylistUseCase.invoke(playlistId))
+        viewModelScope.launch(dispatcher) {
+            when (val result = getPlaylistUseCase.invoke(playlistId)) {
+                is NetworkResult.Success -> _uiState.update {
+                    it.copy(playlist = result.data)
                 }
-            }
-        } catch (e: Exception) {
-            Timber.e(e.message, e)
-            _uiState.update {
-                it.copy(
-                    event =
-                    UiEvent.ShowSnackbar(
-                        e.message ?: stringProvider.getString(R.string.global_error)
-                    )
-                )
+
+                is NetworkResult.Error -> _uiState.update {
+                    it.copy(event = UiEvent.ShowSnackbar(result.message))
+                }
+
+                is NetworkResult.Loading -> TODO()
             }
         }
     }

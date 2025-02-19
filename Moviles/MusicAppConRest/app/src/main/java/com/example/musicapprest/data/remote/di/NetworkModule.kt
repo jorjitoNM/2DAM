@@ -8,6 +8,7 @@ import com.example.musicapprest.data.remote.api_services.UsersService
 import com.example.musicapprest.data.remote.security.AuthAuthenticator
 import com.example.musicapprest.data.remote.security.AuthInterceptor
 import com.example.musicapprest.data.remote.security.TokenProvider
+import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,7 +18,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
-import dagger.Lazy
 
 @Module
 @InstallIn(SingletonComponent::class)
