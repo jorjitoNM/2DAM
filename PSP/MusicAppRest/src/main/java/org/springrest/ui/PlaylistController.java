@@ -22,9 +22,9 @@ public class PlaylistController {
     }
 
     @PostMapping(Constantes.GET_URL)
-    public ResponseEntity<Playlist> get(@RequestParam String dishId) {
-        if (dishId != null) {
-            Playlist p = playlistService.get(Integer.parseInt(dishId));
+    public ResponseEntity<Playlist> get(@RequestParam Integer id) {
+        if (id != null) {
+            Playlist p = playlistService.get(id);
             if (p != null) {
                 return ResponseEntity.ok(p);
             }
@@ -33,8 +33,8 @@ public class PlaylistController {
     }
 
     @DeleteMapping(Constantes.DELETE_URL + "/{"+ Constantes.PATH_ID + "}")
-    public ResponseEntity<Boolean> delete(@PathVariable(Constantes.PATH_ID) String id) {
-        playlistService.delete(Integer.valueOf(id));
+    public ResponseEntity<Boolean> delete(@PathVariable(Constantes.PATH_ID) Integer id) {
+        playlistService.delete(id);
         return ResponseEntity.status(HttpServletResponse.SC_NO_CONTENT).build();
     }
 
