@@ -15,7 +15,7 @@ public class Playlist {
     private int playlistId;
     @Column(name = "name")
     private String playlistName;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "playlist_songs",
             joinColumns = { @JoinColumn(name = "playlist_id") },

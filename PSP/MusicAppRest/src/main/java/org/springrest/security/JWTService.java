@@ -6,6 +6,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import org.springrest.common.Constantes;
 import org.springframework.stereotype.Component;
+import org.springrest.domain.errors.NotFoundException;
 
 import java.security.Key;
 import java.time.LocalDateTime;
@@ -58,7 +59,11 @@ public class JWTService {
     }
 
     public String getEmail (String token) {
-        Jws<Claims> claims = Jwts.parser().setSigningKey(key).build().parseClaimsJws(token);
-        return claims.getPayload().get(Constantes.EMAIL,String.class);
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(key).build().parseClaimsJws(token);
+            return claims.getPayload().get(Constantes.EMAIL, String.class);
+        } catch (Exception e) {
+            throw new NotFoundException("hola");
+        }
     }
 }

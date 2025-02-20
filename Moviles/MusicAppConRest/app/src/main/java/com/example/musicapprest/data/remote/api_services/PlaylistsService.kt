@@ -6,6 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface PlaylistsService {
@@ -15,7 +16,7 @@ interface PlaylistsService {
     @POST("playlists/get")
     suspend fun get (@Body id : Int) : Response<Playlist>
 
-    @POST("playlists/update")
+    @PUT("playlists/update")
     suspend fun update (@Body playlist: Playlist) : Response<Playlist>
 
     @DELETE("playlists/delete/{id}")

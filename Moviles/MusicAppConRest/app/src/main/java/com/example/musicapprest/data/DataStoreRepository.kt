@@ -28,12 +28,6 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
         }
     }
 
-    suspend fun deleteLoginToken() {
-        context.dataStore.edit { preferences ->
-            preferences.remove(LOGIN_TOKEN)
-        }
-    }
-
     fun getRefreshToken(): Flow<String?> {
         return context.dataStore.data.map { preferences ->
             preferences[REFRESH_TOKEN]

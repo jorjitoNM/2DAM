@@ -40,7 +40,9 @@ class PlaylistDetailsViewModel @Inject constructor(
                 currentState.copy(
                     playlist = Playlist(
                         _uiState.value.playlist.playlistId,
-                        event.playlistName
+                        event.playlistName,
+                        _uiState.value.playlist.songs,
+                        _uiState.value.playlist.owner
                     )
                 )
             }

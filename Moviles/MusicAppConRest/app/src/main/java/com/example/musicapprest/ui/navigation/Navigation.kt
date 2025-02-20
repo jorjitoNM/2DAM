@@ -80,8 +80,8 @@ fun Navigation() {
                 isBottomBarVisible =  false
                 isTopBarVisible = false
                 LoginScreen(
-                    navController = navController,
-                    showSnackbar = { showSnackbar(it) }
+                    showSnackbar = { showSnackbar(it) },
+                    navigateToApp = {navController.navigate(PlaylistListScreenDestination)}
                 )
             }
             composable<PlaylistListScreenDestination> {

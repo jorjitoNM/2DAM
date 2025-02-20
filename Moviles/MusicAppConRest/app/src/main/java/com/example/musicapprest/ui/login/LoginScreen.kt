@@ -23,20 +23,18 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.example.musicapprest.R
 import com.example.musicapprest.domain.model.User
-import com.example.musicapprest.ui.navigation.PlaylistListScreenDestination
 import com.example.primeraapp.ui.common.UiEvent
 
 @Composable
 fun LoginScreen(
     loginViewModel: LoginViewModel = hiltViewModel(),
     showSnackbar: (String) -> Unit,
-    navController: NavController,
-) {
+    navigateToApp: () -> Unit,
+
+    ) {
     val uiState by loginViewModel.uiState.collectAsState()
-    val user = uiState.user
     LaunchedEffect(uiState.event) {
         uiState.event?.let {
             if (it is UiEvent.ShowSnackbar) {
@@ -48,19 +46,19 @@ fun LoginScreen(
 
     LaunchedEffect(uiState.validated) {
         if (uiState.validated)
-            navController.navigate(PlaylistListScreenDestination)
+           navigateToApp()
     }
 
     LoginContent(
-        user = user,
+        user = uiState.user,
         onUsernameChange = { newUsername ->
             loginViewModel.handleEvent(LoginEvents.UpdateUsername(newUsername))
         },
         onPasswordChange = { newPassword ->
             loginViewModel.handleEvent(LoginEvents.UpdatePassword(newPassword))
         },
-        onLoginClick = { loginViewModel.handleEvent(LoginEvents.Login(user)) },
-        onRegisterClick = { loginViewModel.handleEvent(LoginEvents.Register(user)) },
+        onLoginClick = { loginViewModel.handleEvent(LoginEvents.Login(uiState.user)) },
+        onRegisterClick = { loginViewModel.handleEvent(LoginEvents.Register(uiState.user)) },
     )
 }
 
