@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 data class ScaffoldState(
     val topBarState: TopBarState = TopBarState(),
     val fabVisible : Boolean = false,
-    val bottomBarVisible : Boolean = true,
 )
 
 data class TopBarState(

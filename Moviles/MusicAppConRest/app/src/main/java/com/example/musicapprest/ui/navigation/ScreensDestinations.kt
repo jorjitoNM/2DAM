@@ -9,7 +9,7 @@ object LoginScreenDestination
 object PlaylistListScreenDestination
 
 @Serializable
-data class PlaylistDetailsScreenDestination(val playlistId : Int)
+data class PlaylistDetailsScreenDestination(val playlistId : Int, val addMode : Boolean)
 
 @Serializable
 object SongsListScreenDestination

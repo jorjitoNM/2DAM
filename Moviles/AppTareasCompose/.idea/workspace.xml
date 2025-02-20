@@ -5,22 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d5ef7ddd-fc4a-4ac7-a01e-d391f00d57b4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/ui/model/PlaylistUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HospitalRoomCompose/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/../HospitalRoomCompose/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HospitalRoomCompose/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../HospitalRoomCompose/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HospitalRoomCompose/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../HospitalRoomCompose/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/data/SongsRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/data/SongsRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/data/remote/api_services/PlaylistsService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/data/remote/api_services/PlaylistsService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/data/remote/api_services/SongsService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/data/remote/api_services/SongsService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/data/remote/datasource/SongsDataSource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/data/remote/datasource/SongsDataSource.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/data/remote/di/NetworkModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/data/remote/di/NetworkModule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/data/remote/security/AuthAuthenticator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/data/remote/security/AuthAuthenticator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/data/remote/security/AuthInterceptor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/data/remote/security/AuthInterceptor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/data/remote/security/TokenProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/data/DataStoreRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/domain/usecases/song/GetAllSongsUseCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/domain/usecases/song/GetAllSongsUseCase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/domain/usecases/user/SaveTokenUseCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/domain/usecases/user/SaveTokenUseCase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/ui/playlist_list/PlaylistListScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/ui/playlist_list/PlaylistListScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/ui/songs_list/SongsListScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/ui/songs_list/SongsListScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/ui/songs_list/SongsListViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/ui/songs_list/SongsListViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/security/JWTService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/security/JWTService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/ui/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/ui/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/ui/navigation/Navigation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/ui/navigation/Navigation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/ui/navigation/Screens.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/ui/navigation/Screens.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/ui/navigation/TopBarState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/ui/navigation/TopBarState.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/res/values/dimens.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/res/values/dimens.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../My Application2/.gradle/8.7/dependencies-accessors/31d28efd9481e2fcc31f06532142ec2f02138258/metadata.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../My Application2/.gradle/8.7/dependencies-accessors/31d28efd9481e2fcc31f06532142ec2f02138258/metadata.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../My Application2/.gradle/8.7/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../My Application2/.gradle/8.7/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../My Application2/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../My Application2/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../My Application2/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/../My Application2/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../My Application2/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../My Application2/.idea/caches/deviceStreaming.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../My Application2/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../My Application2/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../My Application2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../My Application2/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../My Application2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../My Application2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/dao/UsersRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/dao/UsersRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/domain/model/Playlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/domain/model/Playlist.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/domain/services/PlaylistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/domain/services/PlaylistService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/ui/PlaylistController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/ui/PlaylistController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -109,7 +113,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/cnovi/OneDrive/Escritorio/Jorge/GitHub2DAM/Moviles/AppTareas"
+    "last_opened_file_path": "C:/Users/cnovi/OneDrive/Escritorio/Jorge/GitHub2DAM/Moviles/AppTareasCompose"
   },
   "keyToStringList": {
     "kotlin-gradle-user-dirs": [

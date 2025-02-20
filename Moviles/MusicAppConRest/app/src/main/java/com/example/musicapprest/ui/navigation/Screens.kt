@@ -23,6 +23,8 @@ interface AppDestination{
             topBarState = TopBarState(showNavigationIcon = true, arrangement = Arrangement.Start),
             fabVisible = true
         )
+    val isBottomBarVisible : Boolean
+    val isTopBarVisible : Boolean
 }
 
 interface AppMainBottomDestination : AppDestination {
@@ -36,8 +38,9 @@ object LoginScreen : AppDestination {
     override val scaffoldState = ScaffoldState(
         topBarState = TopBarState(showNavigationIcon = false, arrangement = Arrangement.Start),
         fabVisible = false,
-        bottomBarVisible = false,
     )
+    override val isBottomBarVisible = false
+    override val isTopBarVisible = false
 }
 
 object PlaylistListScreen : AppMainBottomDestination {
@@ -48,9 +51,9 @@ object PlaylistListScreen : AppMainBottomDestination {
     override val scaffoldState = ScaffoldState(
         topBarState = TopBarState(showNavigationIcon = false, arrangement = Arrangement.Start),
         fabVisible = true,
-        bottomBarVisible = true,
     )
-
+    override val isBottomBarVisible = true
+    override val isTopBarVisible = true
 }
 
 object PlaylistDetailsScreen : AppDestination {
@@ -59,8 +62,9 @@ object PlaylistDetailsScreen : AppDestination {
     override val scaffoldState = ScaffoldState(
         topBarState = TopBarState(showNavigationIcon = true, arrangement = Arrangement.Start),
         fabVisible = false,
-        bottomBarVisible = false,
     )
+    override val isBottomBarVisible = false
+    override val isTopBarVisible = true
 }
 
 object SongsListScreen : AppMainBottomDestination {
@@ -70,7 +74,8 @@ object SongsListScreen : AppMainBottomDestination {
     override val title = Constantes.SONGS_LIST
     override val scaffoldState = ScaffoldState(
         topBarState = TopBarState(showNavigationIcon = false, arrangement = Arrangement.Start),
-        fabVisible = true,
-        bottomBarVisible = true,
+        fabVisible = false,
     )
+    override val isBottomBarVisible = true
+    override val isTopBarVisible = true
 }

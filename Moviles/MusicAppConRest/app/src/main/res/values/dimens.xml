@@ -4,4 +4,5 @@
     <dimen name="zero">0dp</dimen>
     <dimen name="border1dp">1dp</dimen>
     <dimen name="padding4">4dp</dimen>
+    <dimen name="padding16">16dp</dimen>
 </resources>

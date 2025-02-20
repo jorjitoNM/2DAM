@@ -9,6 +9,7 @@ import org.springrest.common.Constantes;
 import org.springrest.domain.model.Playlist;
 import org.springrest.domain.services.PlaylistService;
 import org.springrest.security.JWTService;
+import org.springrest.ui.model.PlaylistUI;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class PlaylistController {
     }
 
     @PutMapping(Constantes.UPDATE_URL)
-    public ResponseEntity<Playlist> update(@RequestBody Playlist playlist) {
-        return ResponseEntity.ok(playlistService.update(playlist));
+    public ResponseEntity<Playlist> update(@RequestBody PlaylistUI playlistUI) {
+        return ResponseEntity.ok(playlistService.update(playlistUI));
     }
 }

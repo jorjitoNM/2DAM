@@ -35,7 +35,8 @@ import com.example.primeraapp.ui.common.UiEvent
 
 @Composable
 fun PlaylistDetailsScreen(
-    playlistdId: Int = 1,
+    playlistId: Int = 1,
+    addMode : Boolean,
     playlistDetailsViewModel: PlaylistDetailsViewModel = hiltViewModel(),
     showSnackbar: (String) -> Unit = {},
 ) {
@@ -43,7 +44,8 @@ fun PlaylistDetailsScreen(
     val uiState by playlistDetailsViewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = Unit) {
-        playlistDetailsViewModel.handleEvent(PlaylistDetailsEvents.GetPlaylist(playlistdId))
+        if (!addMode)
+            playlistDetailsViewModel.handleEvent(PlaylistDetailsEvents.GetPlaylist(playlistId))
     }
 
     LaunchedEffect(uiState.event) {
@@ -77,7 +79,8 @@ fun PlaylistDetailsScreen(
                     uiState.playlist.playlistId
                 )
             )
-        }
+        },
+        addMode = addMode
     )
 }
 
@@ -86,7 +89,8 @@ fun PlaylistDetailsContent(
     playlist: Playlist = Playlist(),
     onPlaylistNameChange: (String) -> Unit = {},
     updatePlaylist: () -> Unit = {},
-    deletePlaylist: () -> Unit = {}
+    deletePlaylist: () -> Unit = {},
+    addMode : Boolean = false,
 ) {
     Column(
     ) {
@@ -152,15 +156,48 @@ fun PlaylistDetailsContent(
                 .weight(0.2f)
                 .fillMaxSize()
                 .padding(dimensionResource(R.dimen.padding8)),
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(0.5f),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+            if (!addMode) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(0.5f),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Button(
+                        onClick = updatePlaylist, colors = ButtonColors(
+                            MaterialTheme.colorScheme.primaryContainer,
+                            MaterialTheme.colorScheme.onPrimaryContainer,
+                            MaterialTheme.colorScheme.onSecondaryContainer,
+                            MaterialTheme.colorScheme.onSecondaryContainer,
+                        )
+                    ) {
+                        Text(stringResource(R.string.update))
+                    }
+                }
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(0.5f),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Button(
+                        onClick = deletePlaylist, colors = ButtonColors(
+                            MaterialTheme.colorScheme.secondaryContainer,
+                            MaterialTheme.colorScheme.onSecondaryContainer,
+                            MaterialTheme.colorScheme.onTertiaryContainer,
+                            MaterialTheme.colorScheme.onTertiaryContainer,
+                        )
+                    ) {
+                        Text(stringResource(R.string.delete))
+                    }
+                }
+            }
+            else {
                 Button(
                     onClick = updatePlaylist, colors = ButtonColors(
                         MaterialTheme.colorScheme.primaryContainer,
@@ -169,28 +206,9 @@ fun PlaylistDetailsContent(
                         MaterialTheme.colorScheme.onSecondaryContainer,
                     )
                 ) {
-                    Text(stringResource(R.string.update))
+                    Text(stringResource(R.string.add))
                 }
             }
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(0.5f),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Button(
-                    onClick = deletePlaylist, colors = ButtonColors(
-                        MaterialTheme.colorScheme.secondaryContainer,
-                        MaterialTheme.colorScheme.onSecondaryContainer,
-                        MaterialTheme.colorScheme.onTertiaryContainer,
-                        MaterialTheme.colorScheme.onTertiaryContainer,
-                    )
-                ) {
-                    Text(stringResource(R.string.delete))
-                }
-            }
-
         }
     }
 }
@@ -254,6 +272,7 @@ fun PlaylistDetailsScreenPreview(
                 Song(1, "Not Like Us", "Kendrick lamar"),
                 Song(2, "Money In The Grave", "Drake, Rick Ross")
             )
-        )
+        ),
+        addMode = true
     )
 }

@@ -9,7 +9,19 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="038acbdf-be1a-4328-b09a-81bcd03eb5be" name="Changes" comment="eliminado archivo txt" />
+    <list default="true" id="038acbdf-be1a-4328-b09a-81bcd03eb5be" name="Changes" comment="eliminado archivo txt">
+      <change afterPath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/ui/model/PlaylistUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/ui/navigation/Navigation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/ui/navigation/Navigation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/ui/navigation/Screens.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/ui/navigation/Screens.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/ui/navigation/TopBarState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MusicAppConRest/app/src/main/java/com/example/musicapprest/ui/navigation/TopBarState.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/dao/UsersRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/dao/UsersRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/domain/model/Playlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/domain/model/Playlist.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/domain/services/PlaylistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/domain/services/PlaylistService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/ui/PlaylistController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../PSP/MusicAppRest/src/main/java/org/springrest/ui/PlaylistController.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,12 +58,12 @@
     &quot;assignee&quot;: &quot;jorjitoNM&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/jorjitoNM/2DAM.git&quot;,
-    &quot;accountId&quot;: &quot;ae74deb0-111d-4f1c-a481-6caaae1ff728&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/jorjitoNM/2DAM.git",
+    "accountId": "3694ff23-0e6c-4e9c-96a1-982748c9fe1e"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
@@ -70,8 +82,9 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Usuario/Desktop/Jorge/Curso-ISMIE---Compose/ComposeApp"
+    "last_opened_file_path": "C:/Users/cnovi/OneDrive/Escritorio/Jorge/GitHub2DAM/Moviles/My Application2"
   },
   "keyToStringList": {
     "kotlin-gradle-user-dirs": [

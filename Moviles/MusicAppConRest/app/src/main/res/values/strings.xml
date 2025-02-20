@@ -25,4 +25,5 @@
     <string name="delete">Delete</string>
     <string name="deleted_successfully">Deleted Successfully</string>
     <string name="error_deleting">Could not delete</string>
+    <string name="add">Add</string>
 </resources>

@@ -6,9 +6,11 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springrest.common.Constantes;
 import org.springrest.dao.PlaylistRepository;
+import org.springrest.dao.UsersRepository;
 import org.springrest.domain.errors.ForeignKeyException;
 import org.springrest.domain.errors.NotFoundException;
 import org.springrest.domain.model.Playlist;
+import org.springrest.ui.model.PlaylistUI;
 
 import java.util.List;
 
@@ -17,18 +19,20 @@ import java.util.List;
 public class PlaylistService {
 
     private final PlaylistRepository repository;
+    private final UsersRepository usersRepository;
 
 
     public List<Playlist> getAll (String owner) {
         return repository.findAllByOwner_Email(owner);
     }
 
-    public void delete(Integer dishId) {
-        repository.deleteById(dishId);
+    public void delete(Integer id) {
+        repository.deleteById(id);
     }
 
-    public Playlist update (Playlist p) {
-        return repository.save(p);
+    public Playlist update (PlaylistUI p) {
+        Playlist playlist = new Playlist(p.getPlaylistId(),p.getPlaylistName(),p.getSongs(),usersRepository.getUserByEmail(p.getOwner()));
+        return repository.save(playlist);
     }
 
     public Playlist get (Integer playlistId) {
