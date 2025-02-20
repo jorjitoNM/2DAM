@@ -47,7 +47,9 @@ fun Navigation() {
 
 
     val screen = appDestinationList.find { screen ->
-        state?.destination?.route == screen.route::class.qualifiedName
+        val currentRoute = state?.destination?.route?.substringBefore("/")
+        val screenRoute = screen.route.toString().substringBefore("@").substringBefore("$")
+        currentRoute == screenRoute
     }
 
     val bottomBar: @Composable () -> Unit = {
