@@ -21,6 +21,7 @@ public class Constants {
     public static final String CREDENTIAL = "credentials";
     public static final String MEDICAL_RECORDS = "medicalRecords";
     public static final String DOCTORS = "doctors";
+    public static final String AMOUNT = "amount";
 
     private Constants() {}
 }
