@@ -107,7 +107,7 @@ fun Navigation() {
                     showSnackbar = { showSnackbar(it)},
                     onNavigateDetail = {playlistId ->
                         navController.navigate(PlaylistDetailsScreenDestination(playlistId,false))
-                    }
+                    },
                 )
             }
             composable<PlaylistDetailsScreenDestination> {

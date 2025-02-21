@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">Examen2evaJorgeNovillo</string>
+    <string name="common_error">Un unexpected error occurred</string>
+
+    <!-- CRUD -->
+
+    <string name="delete">Delete</string>
+    <string name="deleted_successfully">Deleted Successfully</string>
+    <string name="error_deleting">Could not delete</string>
+    <string name="add">Add</string>
+    <string name="updated_successfully">Updated Successfully</string>
+    <string name="error_updating">Could not update</string>
+    <string name="update">Update</string>
+
+    <!-- Login Screen -->
+
+    <string name="user_registered">User registered successfully</string>
+    <string name="email">Email</string>
+    <string name="invalid_email_format">This is not a valid email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign up</string>
+    <string name="login_error">No se ha podido iniciar sesion</string>
+
+
+
+    <string name="name">Nombre:</string>
+    <string name="dni">DNI:</string>
+    <string name="sin_datos">Sin datos</string>
+    <string name="error_getting_informes">No se han podido cargar los informes</string>
+    <string name="token_not_saved">No se ha podido guardar el token</string>
+    <string name="contenido">Contenido:</string>
 </resources>

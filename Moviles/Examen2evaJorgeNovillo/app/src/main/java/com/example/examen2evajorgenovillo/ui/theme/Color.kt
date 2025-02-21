@@ -1,4 +1,4 @@
-package com.example.examen2evajorgenovillo.ui.theme
+package com.example.hospitalroomcompose.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

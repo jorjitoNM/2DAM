@@ -4,44 +4,29 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.example.examen2evajorgenovillo.ui.navigation.Navigation
 import com.example.examen2evajorgenovillo.ui.theme.Examen2evaJorgeNovilloTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             Examen2evaJorgeNovilloTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                Navigation()
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Examen2evaJorgeNovilloTheme {
-        Greeting("Android")
-    }
-}
+//fun <T> parseErrorResponse(errorBody: ResponseBody): NetworkResult<T> {
+//    return try {
+//        val errorBodyString = errorBody.string()
+//        val apiError = Gson().fromJson(errorBodyString, ApiError::class.java)
+//        NetworkResult.Error(apiError.message)
+//    } catch (e: Exception) {
+//        NetworkResult.Error(e.message ?: e.toString())
+//    }
+//}

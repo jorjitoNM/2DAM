@@ -48,7 +48,7 @@ class PlaylistDetailsViewModel @Inject constructor(
             }
 
             is PlaylistDetailsEvents.UpdatePlaylist -> update()
-            is PlaylistDetailsEvents.DeletePlaylist -> delete(event.playlistId)
+            is PlaylistDetailsEvents.DeletePlaylist -> delete()
         }
     }
 
@@ -79,9 +79,9 @@ class PlaylistDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun delete(id : Int) {
+    private fun delete() {
         viewModelScope.launch(dispatcher) {
-            when (val result = deletePlaylistUseCase.invoke(id)) {
+            when (val result = deletePlaylistUseCase.invoke(_uiState.value.playlist.playlistId)) {
                 is NetworkResult.Success -> {
                     _uiState.update {
                         it.copy(

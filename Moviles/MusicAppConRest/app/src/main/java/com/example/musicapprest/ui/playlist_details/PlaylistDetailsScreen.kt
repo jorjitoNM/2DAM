@@ -68,18 +68,15 @@ fun PlaylistDetailsScreen(
         },
         updatePlaylist = {
             playlistDetailsViewModel.handleEvent(
-                PlaylistDetailsEvents.UpdatePlaylist(
-                    uiState.playlist
-                )
+                PlaylistDetailsEvents.UpdatePlaylist
             )
         },
         deletePlaylist = {
             playlistDetailsViewModel.handleEvent(
-                PlaylistDetailsEvents.DeletePlaylist(
-                    uiState.playlist.playlistId
-                )
+                PlaylistDetailsEvents.DeletePlaylist
             )
         },
+        addPlaylist = { playlistDetailsViewModel.handleEvent(PlaylistDetailsEvents.AddPlaylists) },
         addMode = addMode
     )
 }
@@ -90,6 +87,7 @@ fun PlaylistDetailsContent(
     onPlaylistNameChange: (String) -> Unit = {},
     updatePlaylist: () -> Unit = {},
     deletePlaylist: () -> Unit = {},
+    addPlaylist : () -> Unit = {},
     addMode : Boolean = false,
 ) {
     Column(
@@ -199,7 +197,7 @@ fun PlaylistDetailsContent(
             }
             else {
                 Button(
-                    onClick = updatePlaylist, colors = ButtonColors(
+                    onClick = addPlaylist, colors = ButtonColors(
                         MaterialTheme.colorScheme.primaryContainer,
                         MaterialTheme.colorScheme.onPrimaryContainer,
                         MaterialTheme.colorScheme.onSecondaryContainer,

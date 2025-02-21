@@ -2,30 +2,31 @@ package com.example.musicapprest.data.remote.datasource
 
 
 import com.example.musicapprest.common.NetworkResult
-import com.example.musicapprest.ui.common.Constantes
+import com.example.musicapprest.data.model.ApiError
+import com.google.gson.Gson
+import okhttp3.ResponseBody
 import retrofit2.Response
 import timber.log.Timber
 
 
 abstract class BaseApiResponse {
-    suspend fun <T> safeApiCall(apiCall: suspend () -> Response<T>): NetworkResult<T> {
-        try {
+    inline fun <reified T> safeApiCall(apiCall: () -> Response<T>): NetworkResult<T> {
+        return try {
             val response = apiCall()
             if (response.isSuccessful) {
                 val body = response.body()
-                return if (body != null) {
-                    NetworkResult.Success(body)
-                } else {
-                    NetworkResult.Error(Constantes.ERROR)
+                when {
+                    body != null -> NetworkResult.Success(body)
+                    else -> NetworkResult.Success(Unit as T)
                 }
+            } else {
+                response.errorBody()?.let { errorBody ->
+                    parseErrorResponse(errorBody)
+                } ?: NetworkResult.Error("${response.code()} ${response.message()})")
             }
-            response.errorBody()?.let {
-                return error(it.string())
-            }
-            return error("${response.code()} ${response.message()}")
         } catch (e: Exception) {
             Timber.e(e.message, e)
-            return error(e.message ?: e.toString())
+            NetworkResult.Error(e.message ?: e.toString())
         }
     }
 
@@ -45,4 +46,14 @@ abstract class BaseApiResponse {
     private fun <T> error(errorMessage: String): NetworkResult<T> =
         NetworkResult.Error(errorMessage)
 
+}
+
+fun <T> parseErrorResponse(errorBody: ResponseBody): NetworkResult<T> {
+    return try {
+        val errorBodyString = errorBody.string()
+        val apiError = Gson().fromJson(errorBodyString, ApiError::class.java)
+        NetworkResult.Error(apiError.message)
+    } catch (e: Exception) {
+        NetworkResult.Error(e.message ?: e.toString())
+    }
 }

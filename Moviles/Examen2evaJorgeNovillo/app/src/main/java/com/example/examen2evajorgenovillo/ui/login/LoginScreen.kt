@@ -1,0 +1,134 @@
+package com.example.examen2evajorgenovillo.ui.login
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.examen2evajorgenovillo.R
+import com.example.examen2evajorgenovillo.domain.model.User
+import com.example.examen2evajorgenovillo.ui.common.UiEvent
+
+@Composable
+fun LoginScreen(
+    loginViewModel: LoginViewModel = hiltViewModel(),
+    showSnackbar: (String) -> Unit,
+    navigateToApp: () -> Unit,
+
+    ) {
+    val uiState by loginViewModel.uiState.collectAsState()
+    LaunchedEffect(uiState.event) {
+        uiState.event?.let {
+            if (it is UiEvent.ShowSnackbar) {
+                showSnackbar(it.message)
+            }
+            loginViewModel.handleEvent(LoginEvents.EventDone)
+        }
+    }
+
+    LaunchedEffect(uiState.validated) {
+        if (uiState.validated)
+           navigateToApp()
+    }
+
+    LoginContent(
+        user = uiState.user,
+        onUsernameChange = { newUsername ->
+            loginViewModel.handleEvent(LoginEvents.UpdateUsername(newUsername))
+        },
+        onPasswordChange = { newPassword ->
+            loginViewModel.handleEvent(LoginEvents.UpdatePassword(newPassword))
+        },
+        onLoginClick = { loginViewModel.handleEvent(LoginEvents.Login(uiState.user)) },
+    )
+}
+
+@Composable
+fun LoginContent(
+    user : User,
+    onUsernameChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onLoginClick: () -> Unit,
+) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        Spacer(modifier = Modifier.weight(0.15f))
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(0.25f),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            TextField(
+                value = user.username,
+                onValueChange = onUsernameChange,
+                label = { Text(stringResource(R.string.email)) },
+                singleLine = true
+            )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(0.25f),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            TextField(
+                value = user.password,
+                onValueChange = onPasswordChange,
+                label = { Text(stringResource(R.string.password)) },
+                singleLine = true,
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+            )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(0.25f),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Button(onClick = onLoginClick) { Text(
+                    stringResource(R.string.login)) }
+            }
+        }
+        Spacer(modifier = Modifier.weight(0.1f))
+    }
+}
+
+@Composable
+@Preview
+fun LoginScreenPreview () {
+    var user by rememberSaveable { mutableStateOf(User()) }
+    LoginContent (
+        user = User(),
+        onUsernameChange = { newUsername -> user = user.copy(username = newUsername) },
+        onPasswordChange = { newPassword -> user = user.copy(password = newPassword) },
+        onLoginClick = {  },
+    )
+}

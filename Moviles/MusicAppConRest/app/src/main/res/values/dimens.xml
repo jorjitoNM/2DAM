@@ -5,4 +5,5 @@
     <dimen name="border1dp">1dp</dimen>
     <dimen name="padding4">4dp</dimen>
     <dimen name="padding16">16dp</dimen>
+    <dimen name="size65">65dp</dimen>
 </resources>
