@@ -1,69 +1,88 @@
 package org.springrest.security.jwt;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import org.springrest.common.Constantes;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springrest.domain.errors.NotFoundException;
 
 import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Map;
+import java.util.function.Function;
 
 @Component
+@RequiredArgsConstructor
 public class JWTService {
 
     private final Key key;
+    @Value("${application.security.jwt.expiration}")
+    private long jwtExpiration;
+    @Value("${application.security.jwt.refresh-token.expiration}")
+    private long refreshExpiration;
 
-    public JWTService(Key key) {
-        this.key = key;
+
+    public String extractUsername(String token) {
+        return extractClaim(token, Claims::getSubject);
     }
 
-    public Token getToken(String email) {
+
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
+
+    public Token generateToken(
+            Map<String, Object> extraClaims,
+            UserDetails userDetails
+    ) {
+        return buildToken(extraClaims, userDetails, jwtExpiration);
+    }
+
+    private Token buildToken(
+            Map<String, Object> extraClaims,
+            UserDetails userDetails,
+            long expiration
+    ) {
         String login = Jwts.builder()
-                .claims()
-                .add(Map.of(
-                        Constantes.EMAIL, email
-                ))
-                .subject(email)
-                .issuer("JorgeRest")
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(Date.from(LocalDateTime.now().plusSeconds(20).atZone(ZoneId.systemDefault()).toInstant()))
-                .and()
+                .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(Date.from(LocalDateTime.now().plusSeconds(20).atZone(ZoneId.systemDefault()).toInstant()))
                 .signWith(key)
                 .compact();
         String refresh = Jwts.builder()
-                .claims()
-                .add(Map.of(
-                        Constantes.EMAIL, email
-                ))
-                .subject(email)
-                .issuer("JorgeRest")
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(Date.from(LocalDateTime.now().plusSeconds(600000).atZone(ZoneId.systemDefault()).toInstant()))
-                .and()
+                .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(Date.from(LocalDateTime.now().plusSeconds(600000).atZone(ZoneId.systemDefault()).toInstant()))
                 .signWith(key)
                 .compact();
         return new Token(login,refresh);
     }
 
-    public void validateToken(String token) throws JwtException {
-        Jwts.parser()
-                .setSigningKey(key)
-                .build()
-                .parseSignedClaims(token);
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
-    public String getEmail (String token) {
-        try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(key).build().parseClaimsJws(token);
-            return claims.getPayload().get(Constantes.EMAIL, String.class);
-        } catch (Exception e) {
-            throw new NotFoundException("hola");
-        }
+    private boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    private Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
+    }
+
+    private Claims extractAllClaims(String token) {
+        return Jwts
+                .parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 }

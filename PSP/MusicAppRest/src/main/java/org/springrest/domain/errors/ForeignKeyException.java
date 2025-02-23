@@ -1,7 +1,7 @@
 package org.springrest.domain.errors;
 
-public class ForeignKeyException extends RuntimeException {
+public class ForeignKeyException extends ApiError {
     public ForeignKeyException(String message) {
-        super(message);
+        super(400,message);
     }
 }

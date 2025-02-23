@@ -1,15 +1,14 @@
 package org.springrest.domain.services;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import org.springrest.common.Constantes;
 import org.springrest.components.MailComponent;
 import org.springrest.dao.UsersRepository;
-import org.springrest.domain.errors.NotFoundException;
 import org.springrest.domain.model.User;
-import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.util.Base64;
-import java.util.List;
 
 @Service
 public class UserService {
@@ -33,16 +32,12 @@ public class UserService {
     }
 
     public void confirmUser(String code) {
-        User u = usersRepository.getUserByCode(code);
+        User u = usersRepository.findUserByCode(code);
         u.setActive(true);
         usersRepository.save(u);
     }
 
-    public boolean login(User user) {
-        User foundUser = usersRepository.findAll().stream().filter(u -> u.getEmail().equals(user.getEmail()) && u.isActive()).findFirst().orElse(null);
-        if (foundUser == null)
-            throw new NotFoundException(Constantes.USER_NOT_FOUND);
-        else
-            return user.getPassword().equals(foundUser.getPassword());
+    public User findUserByEmail(String email) {
+        return usersRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException(Constantes.USER_NOT_FOUND));
     }
 }

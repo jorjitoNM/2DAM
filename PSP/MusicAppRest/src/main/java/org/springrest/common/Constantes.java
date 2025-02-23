@@ -19,6 +19,7 @@ public class Constantes {
     public static final String FAVOURITE_SONG = "/favourite";
     public static final String USER_NOT_FOUND = "There is no such email registered";
     public static final String REFRESH_URL = "/refresh";
+    public static final String PLAYLIST_NOT_FOUND = "Playlist not found";
 
     private Constantes () {}
 }

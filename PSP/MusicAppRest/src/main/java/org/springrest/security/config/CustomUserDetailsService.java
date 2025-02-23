@@ -1,35 +1,28 @@
 package org.springrest.security.config;
 
 
-import org.example.backendspring.dao.RolesEntity;
-import org.example.backendspring.dao.UserEntity;
-import org.example.backendspring.dao.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springrest.domain.model.RolesEntity;
+import org.springrest.domain.services.UserService;
 
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-
-    private final UserRepository userRepository;
-
-    public CustomUserDetailsService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final UserService service;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        UserEntity user = userRepository.findByName(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-
-        UserDetails u =  User.builder()
-                .username(user.getName())
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        org.springrest.domain.model.User user = service.findUserByEmail(email);
+        return User.builder()
+                .username(user.getEmail())
                 .password(user.getPassword())
                 .roles(
                         user.getRoles().stream()
@@ -39,12 +32,6 @@ public class CustomUserDetailsService implements UserDetailsService {
                         .map(RolesEntity::getRol)
 
                         .collect(Collectors.joining(",")))
-
                 .build();
-
-        return u;
-
-
-
     }
 }
