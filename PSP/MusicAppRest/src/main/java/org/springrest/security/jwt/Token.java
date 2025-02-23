@@ -1,4 +1,4 @@
-package org.springrest.security;
+package org.springrest.security.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

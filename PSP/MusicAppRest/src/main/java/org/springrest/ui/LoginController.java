@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springrest.common.Constantes;
 import org.springrest.domain.model.User;
 import org.springrest.domain.services.UserService;
-import org.springrest.security.JWTService;
+import org.springrest.security.jwt.JWTService;
 import org.springframework.http.ResponseEntity;
-import org.springrest.security.Token;
+import org.springrest.security.jwt.Token;
 import org.springrest.ui.model.AuthUser;
 
 @RestController

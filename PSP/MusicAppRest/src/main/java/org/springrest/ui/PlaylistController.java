@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springrest.common.Constantes;
 import org.springrest.domain.model.Playlist;
 import org.springrest.domain.services.PlaylistService;
-import org.springrest.security.JWTService;
+import org.springrest.security.jwt.JWTService;
 import org.springrest.ui.model.PlaylistUI;
 
 import java.util.List;
