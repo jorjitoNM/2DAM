@@ -2,7 +2,6 @@ package org.springrest.ui;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,7 +36,7 @@ public class LoginController {
     }
 
     @PostMapping(Constantes.REFRESH_URL)
-    public ResponseEntity<Token> refresh(@RequestHeader(HttpHeaders.AUTHORIZATION) String refreshToken) {
+    public ResponseEntity<Token> refresh() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok(tokenService.generateToken(Map.of(
                 Constantes.EMAIL, email

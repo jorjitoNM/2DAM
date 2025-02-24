@@ -2,7 +2,6 @@ package org.springrest.ui;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springrest.common.Constantes;
 import org.springrest.domain.model.Playlist;
 import org.springrest.domain.services.PlaylistService;
-import org.springrest.security.jwt.JWTService;
 import org.springrest.ui.model.PlaylistUI;
 
 import java.util.List;
@@ -20,11 +18,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PlaylistController {
     private final PlaylistService playlistService;
-    private final JWTService tokenService;
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('" + Constantes.USER_ROLE + "')")
     @GetMapping(Constantes.GET_ALL)
-    public List<Playlist> getAll(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    public List<Playlist> getAll() {
         return playlistService.getAll(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
@@ -35,7 +32,7 @@ public class PlaylistController {
         return ResponseEntity.badRequest().build();
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('" + Constantes.ADMIN_ROLE + "')")
     @DeleteMapping(Constantes.DELETE_URL + "/{" + Constantes.PATH_ID + "}")
     public ResponseEntity<Boolean> delete(@PathVariable(Constantes.PATH_ID) Integer id) {
         playlistService.delete(id);

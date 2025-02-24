@@ -29,11 +29,12 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers(Constantes.LOGIN_URL).permitAll()
+                        req.requestMatchers(Constantes.LOGIN_URL,Constantes.SIGNUP_URL,Constantes.CONFIRM_URL).permitAll()
                                 .anyRequest()
                                 .authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
+                .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

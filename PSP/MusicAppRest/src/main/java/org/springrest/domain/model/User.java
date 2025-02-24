@@ -8,8 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
-
 @Data
 @Entity
 @Table(name = "users")
@@ -29,12 +27,12 @@ public class User {
     @Column
     private boolean active;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_email"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
-    private Set<RolesEntity> roles;
+    private RolesEntity roles;
 
     public User(String email, String password, String randomCode, boolean b) {
         this.email = email;

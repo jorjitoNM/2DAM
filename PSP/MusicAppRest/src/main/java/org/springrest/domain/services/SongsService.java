@@ -15,8 +15,4 @@ public class SongsService {
     public List<Song> getAll () {
         return repository.findAll();
     }
-
-    public Song addFavouriteSong() {
-        return null;
-    }
 }

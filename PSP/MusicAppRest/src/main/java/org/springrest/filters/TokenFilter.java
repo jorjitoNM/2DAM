@@ -33,15 +33,12 @@ public class TokenFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        if (request.getServletPath().contains(Constantes.LOGIN_URL)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-        final String authHeader = request.getHeader("Authorization");
+        final String authHeader = request.getHeader(Constantes.AUTHORIZATION);
         final String jwt;
         final String userEmail;
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        if (authHeader == null || !authHeader.startsWith(Constantes.BEARER)) {
             response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, Constantes.PETICION_INCOMPLETA);
+            return;
         }
         jwt = authHeader.split(" ")[1].trim();
         userEmail = jwtService.extractUsername(jwt);
@@ -65,7 +62,7 @@ public class TokenFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        String path = request.getRequestURI();
+        String path = request.getServletPath();
         return Constantes.LOGIN_URL.equals(path)
                 || Constantes.REFRESH_URL.equals(path)
                 || Constantes.CONFIRM_URL.equals(path)

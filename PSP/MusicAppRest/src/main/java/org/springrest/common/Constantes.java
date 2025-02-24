@@ -16,10 +16,14 @@ public class Constantes {
     public static final String CHECK_MAIL = "Please, check your mail to activate your account";
     public static final String ACCEPTED = "Accepted";
     public static final String SONGS_URL = "/songs";
-    public static final String FAVOURITE_SONG = "/favourite";
     public static final String USER_NOT_FOUND = "There is no such email registered";
     public static final String REFRESH_URL = "/refresh";
     public static final String PLAYLIST_NOT_FOUND = "Playlist not found";
+    public static final String ROLE_ = "ROLE_";
+    public static final String USER_ROLE = "USER";
+    public static final String ADMIN_ROLE = "ADMIN";
+    public static final String BEARER = "Bearer ";
+    public static final String AUTHORIZATION = "Authorization";
 
     private Constantes () {}
 }
