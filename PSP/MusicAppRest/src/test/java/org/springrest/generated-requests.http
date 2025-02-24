@@ -8,10 +8,24 @@ POST http://localhost:8080/signUp?email=jane@example.com&password=1234
 <> 2025-02-10T173945.405.json
 
 ###
-POST http://localhost:8080/login?email=jane@example.com&password=1234
+GET http://localhost:8080/confirm?
+    code=HrlEoQg1PtYy99lliVQaBw==__;!!D9dNQwwGXtA!XsUiQbw-EXfWYyh50pNYE0wg3XK_XLU7CDiYbhWAy2PcUy2NBkq3JvTp_R0Bmycj0rLRAwu9t91UeFYia5qS5465g2ayFAQ1U-g$
+
+<> 2025-02-10T224000.202.txt
+<> 2025-02-10T180121.202.txt
+<> 2025-02-10T180103.202.txt
+
+###
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "jane@example.com",
+  "password": "1234"
+}
 
 > {%
-    client.global.set("token", response.body);
+    client.global.set("token", response.body.login);
 %}
 
 <> 2025-02-10T224044.200.txt
@@ -20,14 +34,6 @@ POST http://localhost:8080/login?email=jane@example.com&password=1234
 <> 2025-02-10T174441.200.txt
 <> 2025-02-10T173505.500.json
 <> 2025-02-10T171053.500.jso
-
-###
-GET http://localhost:8080/confirm?
-    code=HrlEoQg1PtYy99lliVQaBw==__;!!D9dNQwwGXtA!XsUiQbw-EXfWYyh50pNYE0wg3XK_XLU7CDiYbhWAy2PcUy2NBkq3JvTp_R0Bmycj0rLRAwu9t91UeFYia5qS5465g2ayFAQ1U-g$
-
-<> 2025-02-10T224000.202.txt
-<> 2025-02-10T180121.202.txt
-<> 2025-02-10T180103.202.txt
 
 
 ###

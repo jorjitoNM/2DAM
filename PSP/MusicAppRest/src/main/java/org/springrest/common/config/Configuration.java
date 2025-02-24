@@ -2,7 +2,6 @@ package org.springrest.common.config;
 
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import net.datafaker.Faker;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
@@ -20,10 +19,6 @@ import java.security.Key;
 
 @org.springframework.context.annotation.Configuration
 public class Configuration {
-    @Bean
-    public Faker faker () {
-        return new Faker();
-    }
 
     @Bean()
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)

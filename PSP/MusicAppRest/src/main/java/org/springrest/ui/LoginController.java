@@ -6,7 +6,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +29,8 @@ public class LoginController {
 
     @PostMapping(Constantes.LOGIN_URL)
     public ResponseEntity<Token> login(@RequestBody AuthUser user) {
-        Authentication auth =
-                authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
         return ResponseEntity.ok(tokenService.generateToken(Map.of(
                 Constantes.EMAIL, user.getEmail()
         ), userDetailsService.loadUserByUsername(user.getEmail())));
