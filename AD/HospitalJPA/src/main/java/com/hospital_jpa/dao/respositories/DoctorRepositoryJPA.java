@@ -2,6 +2,7 @@ package com.hospital_jpa.dao.respositories;
 
 import com.hospital_jpa.dao.interfaces.DoctorsRepository;
 import com.hospital_jpa.dao.model.Doctor;
+import com.hospital_jpa.dao.utils.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import lombok.extern.log4j.Log4j2;

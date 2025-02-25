@@ -7,6 +7,7 @@ import com.hospital_jpa.dao.model.MedicalRecord;
 import com.hospital_jpa.dao.model.Medication;
 import com.hospital_jpa.dao.model.Patient;
 import com.hospital_jpa.domain.model.MedicalRecordUI;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,14 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class MedicalRecordService {
     private final MedicalRecordsRepository medicalRecordsRepository;
-    private final MedicationsRepository medicationsRepository;
-
-    public MedicalRecordService(MedicalRecordsRepository medicalRecordsRepository, MedicationsRepository medicationsRepository) {
-        this.medicalRecordsRepository = medicalRecordsRepository;
-        this.medicationsRepository = medicationsRepository;
-    }
 
     public int addMedicalRecord(MedicalRecordUI medicalRecordUI) {
         return medicalRecordsRepository.save(new MedicalRecord(new Patient(medicalRecordUI.getIdPatient()), medicalRecordUI.getIdDoctor(),

@@ -3,6 +3,7 @@ package com.hospital_jpa.dao.respositories;
 import com.hospital_jpa.dao.model.Credential;
 import com.hospital_jpa.dao.model.MedicalRecord;
 import com.hospital_jpa.dao.model.Patient;
+import com.hospital_jpa.dao.utils.JPAUtil;
 import com.hospital_jpa.domain.error.DUPLICATED_USERNAME;
 import com.hospital_jpa.domain.error.FOREIGN_KEY_ERROR;
 import jakarta.persistence.EntityManager;

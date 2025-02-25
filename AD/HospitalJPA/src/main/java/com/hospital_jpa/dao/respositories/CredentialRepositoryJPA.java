@@ -1,6 +1,7 @@
 package com.hospital_jpa.dao.respositories;
 
 import com.hospital_jpa.dao.model.Credential;
+import com.hospital_jpa.dao.utils.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import lombok.extern.log4j.Log4j2;
@@ -24,7 +25,7 @@ public class CredentialRepositoryJPA implements com.hospital_jpa.dao.interfaces.
     }
 
     @Override
-    public boolean delete(int patient_id) {
+    public boolean delete(int patientId) {
         return false;
     }
 

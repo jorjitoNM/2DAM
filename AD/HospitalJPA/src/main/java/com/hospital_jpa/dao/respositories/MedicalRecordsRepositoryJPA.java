@@ -1,6 +1,7 @@
 package com.hospital_jpa.dao.respositories;
 
 import com.hospital_jpa.dao.model.MedicalRecord;
+import com.hospital_jpa.dao.utils.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
