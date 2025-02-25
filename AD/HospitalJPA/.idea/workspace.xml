@@ -4,159 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c120a716-90e8-4cbe-a762-346b8fbf46cd" name="Changes" comment="cambios bus (creados los repositorios) 13/12/2024">
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model/Faction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model/Weapon.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/ui/Ej1.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/pom.xml" afterDir="false" />
+    <list default="true" id="c120a716-90e8-4cbe-a762-346b8fbf46cd" name="Changes" comment="AD: creado proyecto para practicar para el examen y limpiado el JPA">
+      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model_reversed/Battle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model_reversed/Faction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/resources/META-INF/beans.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/resources/META-INF/persistence.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ExamenJorgeNovillo/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/doctors.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/medicalRecords.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/patients.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/common/Constantes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/common/Constantes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/configuration/FilesConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/configuration/XMLConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/interfaces/CredentialRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/interfaces/CredentialRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/respositories/CredentialRepositoryJPA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/respositories/CredentialRepositoryJPA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/respositories/DoctorRepositoryJPA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/respositories/DoctorRepositoryJPA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/respositories/JPAUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/utils/JPAUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/respositories/MedicalRecordsRepositoryJPA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/respositories/MedicalRecordsRepositoryJPA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/respositories/MedicationsRepositoryJPA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/respositories/MedicationsRepositoryJPA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/respositories/PatientRepositoryJPA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/respositories/PatientRepositoryJPA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/respositories/PaymentsRepositoryJPA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/respositories/PaymentsRepositoryJPA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/utilities/SQLQueries.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/dao/utilities/SQLQueriesSpring.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/domain/service/MedicalRecordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/domain/service/MedicalRecordService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/ui/RestPatient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hospital_jpa/ui/RestPatient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/HospitalJpaApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/HospitalJpaApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/common/Constantes.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/common/Constantes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/configuration/FilesConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/configuration/FilesConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/configuration/XMLConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/configuration/XMLConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/mappers/files_mappers/DoctorRowMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/mappers/files_mappers/DoctorRowMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/mappers/files_mappers/LocalDateAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/mappers/files_mappers/LocalDateAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/mappers/files_mappers/PatientRowMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/mappers/files_mappers/PatientRowMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/mappers/jdbc_mappers/MapDoctors.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/mappers/jdbc_mappers/MapDoctors.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/mappers/jdbc_mappers/MapMedicalRecords.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/mappers/jdbc_mappers/MapMedicalRecords.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/mappers/jdbc_mappers/MapMedications.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/mappers/jdbc_mappers/MapMedications.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/mappers/jdbc_mappers/MapPatients.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/mappers/jdbc_mappers/MapPatients.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/mappers/jdbc_mappers/MapPayments.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/mappers/jdbc_mappers/MapPayments.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/mappers/spring_mappers/MapSpringCredential.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/mappers/spring_mappers/MapSpringCredential.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/mappers/spring_mappers/MapSpringMedicalRecords.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/mappers/spring_mappers/MapSpringMedicalRecords.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/mappers/spring_mappers/MapSpringMedications.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/mappers/spring_mappers/MapSpringMedications.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/mappers/spring_mappers/MapSpringPatients.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/mappers/spring_mappers/MapSpringPatients.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/mappers/spring_mappers/MapSpringPayments.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/mappers/spring_mappers/MapSpringPayments.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/model/Credential.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/model/Credential.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/model/Doctor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/model/Doctor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/model/MedicalRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/model/MedicalRecord.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/model/Medication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/model/Medication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/model/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/model/Patient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/model/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/model/Payment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/AppointmentsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/AppointmentsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/CredentialRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/CredentialRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/DoctorsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/DoctorsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/MedicalRecordsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/MedicalRecordsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/MedicationsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/MedicationsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/PatientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/PatientRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/PaymentsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/PaymentsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/files/txt/TxtDoctorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/files/txt/TxtDoctorRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/files/txt/TxtPatientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/files/txt/TxtPatientRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/files/xml/XmlMedicalRecordRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/files/xml/XmlMedicalRecordRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/jdbc/JDBCCredentialRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/jdbc/JDBCCredentialRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/jdbc/JDBCDoctorsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/jdbc/JDBCDoctorsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/jdbc/JDBCMedicalRecordsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/jdbc/JDBCMedicalRecordsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/jdbc/JDBCMedicationsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/jdbc/JDBCMedicationsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/jdbc/JDBCPatientsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/jdbc/JDBCPatientsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/jdbc/JDBCPaymentsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/jdbc/JDBCPaymentsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/spring/SpringAppointmentsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/spring/SpringAppointmentsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/spring/SpringCredentialsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/spring/SpringCredentialsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/spring/SpringDoctorsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/spring/SpringDoctorsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/spring/SpringMedicalRecordsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/spring/SpringMedicalRecordsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/spring/SpringMedicationsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/spring/SpringMedicationsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/spring/SpringPatientsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/spring/SpringPatientsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/spring/SpringPaymentsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/spring/SpringPaymentsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/statiC/StaticCredentialRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/statiC/StaticCredentialRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/statiC/StaticDoctorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/statiC/StaticDoctorRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/statiC/StaticMedicalRecordsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/statiC/StaticMedicalRecordsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/statiC/StaticMedicationsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/statiC/StaticMedicationsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/respositories/statiC/StaticPatientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/respositories/statiC/StaticPatientRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/utilities/DBConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/utilities/DBConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/utilities/DBConnectionPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/utilities/DBConnectionPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/utilities/SQLQueries.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/utilities/SQLQueries.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/dao/utilities/SQLQueriesSpring.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/dao/utilities/SQLQueriesSpring.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/domain/error/DUPLICATED_USERNAME.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/domain/error/DUPLICATED_USERNAME.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/domain/error/DataBaseError.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/domain/error/DataBaseError.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/domain/error/FOREIGN_KEY_ERROR.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/domain/error/FOREIGN_KEY_ERROR.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/domain/model/CredentialUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/domain/model/CredentialUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/domain/model/DoctorUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/domain/model/DoctorUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/domain/model/MedicalRecordUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/domain/model/MedicalRecordUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/domain/model/PatientUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/domain/model/PatientUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/domain/service/CredentialService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/domain/service/CredentialService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/domain/service/DoctorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/domain/service/DoctorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/domain/service/MedicalRecordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/domain/service/MedicalRecordService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/domain/service/MedicationsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/domain/service/MedicationsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/domain/service/PatientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/domain/service/PatientService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/ui/RestCredential.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/ui/RestCredential.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/ui/RestDoctor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/ui/RestDoctor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/ui/RestMedicalRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/ui/RestMedicalRecord.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/ui/RestMedication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/ui/RestMedication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/ui/RestPatient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/ui/RestPatient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/hospitaljpa/ui/error/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospital_JPA_Raro/src/main/java/hospitaljpa/ui/error/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config/properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config/properties.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/hospitaljpa/HospitalJpaApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/HospitalJPA.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/HospitalJPA.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/common/Constantes.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/common/Constantes.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/configuration/FilesConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/configuration/FilesConfiguration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/configuration/XMLConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/configuration/XMLConfiguration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/interfaces/AppointmentsRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/interfaces/AppointmentsRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/interfaces/CredentialRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/interfaces/CredentialRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/interfaces/DoctorsRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/interfaces/DoctorsRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/interfaces/MedicalRecordsRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/interfaces/MedicalRecordsRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/interfaces/MedicationsRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/interfaces/MedicationsRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/interfaces/PatientRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/interfaces/PatientRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/interfaces/PaymentsRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/interfaces/PaymentsRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/model/Appointment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/model/Appointment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/model/Credential.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/model/Credential.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/model/Doctor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/model/Doctor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/model/MedicalRecord.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/model/MedicalRecord.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/model/Medication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/model/Medication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/model/Patient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/model/Patient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/model/Payment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/model/Payment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/respositories/CredentialRepositoryJPA.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/respositories/CredentialRepositoryJPA.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/respositories/DoctorRepositoryJPA.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/respositories/DoctorRepositoryJPA.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/respositories/JPAUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/respositories/JPAUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/respositories/MedicalRecordsRepositoryJPA.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/respositories/MedicalRecordsRepositoryJPA.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/respositories/MedicationsRepositoryJPA.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/respositories/MedicationsRepositoryJPA.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/respositories/PatientRepositoryJPA.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/respositories/PatientRepositoryJPA.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/respositories/PaymentsRepositoryJPA.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/respositories/PaymentsRepositoryJPA.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/utilities/SQLQueries.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/dao/utilities/SQLQueriesSpring.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/error/DUPLICATED_USERNAME.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/error/DUPLICATED_USERNAME.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/error/DataBaseError.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/error/DataBaseError.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/error/FOREIGN_KEY_ERROR.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/error/FOREIGN_KEY_ERROR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/model/CredentialUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/model/CredentialUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/model/DoctorUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/model/DoctorUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/model/MedicalRecordUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/model/MedicalRecordUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/model/PatientUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/model/PatientUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/service/CredentialService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/service/CredentialService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/service/DoctorService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/service/DoctorService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/service/MedicalRecordService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/service/MedicalRecordService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/service/MedicationsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/service/MedicationsService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/service/PatientService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/domain/service/PatientService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/ui/RestCredential.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/ui/RestCredential.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/ui/RestDoctor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/ui/RestDoctor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/ui/RestMedicalRecord.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/ui/RestMedicalRecord.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/ui/RestMedication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/ui/RestMedication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/ui/RestPatient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/ui/RestPatient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/hospital_jpa/ui/error/GlobalExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/hospital_jpa/ui/error/GlobalExceptionHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MongoAggregations/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MongoAggregations/.idea/misc.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -261,7 +116,7 @@
       <workItem from="1734080196395" duration="472000" />
       <workItem from="1734086935182" duration="27000" />
       <workItem from="1740476497680" duration="2627000" />
-      <workItem from="1740481862684" duration="411000" />
+      <workItem from="1740481862684" duration="3389000" />
     </task>
     <task id="LOCAL-00001" summary="cambios clase (empezando con JPA) 12/12/2024">
       <option name="closed" value="true" />
@@ -287,7 +142,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734071263862</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="AD: creado proyecto para practicar para el examen y limpiado el JPA">
+      <option name="closed" value="true" />
+      <created>1740482446294</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1740482446294</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -298,6 +161,7 @@
     <MESSAGE value="gitignore de PSP" />
     <MESSAGE value="cambios bus (creados los repositorios) 13/12/2024" />
     <MESSAGE value="cambios clase (acabado patient, login y getAllDoctors) 18/12/2024" />
-    <option name="LAST_COMMIT_MESSAGE" value="cambios clase (acabado patient, login y getAllDoctors) 18/12/2024" />
+    <MESSAGE value="AD: creado proyecto para practicar para el examen y limpiado el JPA" />
+    <option name="LAST_COMMIT_MESSAGE" value="AD: creado proyecto para practicar para el examen y limpiado el JPA" />
   </component>
 </project>
