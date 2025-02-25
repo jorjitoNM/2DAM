@@ -1,8 +1,7 @@
-package org.examen.domain.model_reversed;
+package org.examen.domain.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -10,6 +9,9 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "battles")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Battle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,4 +39,12 @@ public class Battle {
     @JoinColumn(name = "id_spy", nullable = false)
     private Spy spy;
 
+    public Battle(String name, Faction factionOne, Faction factionTwo, String place, LocalDate date, Spy spy) {
+        this.name = name;
+        this.factionOne = factionOne;
+        this.factionTwo = factionTwo;
+        this.place = place;
+        this.date = date;
+        this.spy = spy;
+    }
 }

@@ -1,19 +1,17 @@
-package org.examen.domain.model_reversed;
+package org.examen.domain.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "spies")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Spy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +24,12 @@ public class Spy {
     @Column(name = "srace")
     private String race;
 
-    @OneToMany(mappedBy = "idSpy")
+    @OneToMany(mappedBy = "spy",cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Battle> battles;
 
+    public Spy(String name, String race, List<Battle> battles) {
+        this.name = name;
+        this.race = race;
+        this.battles = battles;
+    }
 }
