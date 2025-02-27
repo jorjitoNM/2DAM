@@ -22,11 +22,11 @@ public class WeaponsFaction {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "name_faction")
     private Faction faction;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "id_weapon")
     private Weapon weapon;
 

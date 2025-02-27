@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.examen.dao.utils.JPAUtil;
 import org.examen.domain.model.Weapon;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
@@ -63,5 +64,78 @@ public class WeaponsRepository {
                 em.close();
             }
         }
+    }
+
+    public void update(Weapon weapon) {
+        EntityManager em = null;
+        EntityTransaction tx = null;
+        weapon.getWeaponsFactions().forEach(f -> f.setWeapon(weapon));
+        try {
+            em = jpaUtil.getEntityManager();
+            tx = em.getTransaction();
+            tx.begin();
+            em.merge(weapon);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+            log.error(e.getMessage(), e);
+            throw new RuntimeException(e);
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+    }
+
+    public List<Weapon> getAll() {
+        List<Weapon> weapons;
+        EntityManager em = null;
+        EntityTransaction tx = null;
+        try {
+            em = jpaUtil.getEntityManager();
+            tx = em.getTransaction();
+            tx.begin();
+            weapons = em.createNamedQuery("getAllWeapons", Weapon.class).getResultList();
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+            log.error(e.getMessage(), e);
+            throw new RuntimeException(e);
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+        return weapons;
+    }
+
+    public List<Weapon> getAll(String factionName) {
+        List<Weapon> weapons;
+        EntityManager em = null;
+        EntityTransaction tx = null;
+        try {
+            em = jpaUtil.getEntityManager();
+            tx = em.getTransaction();
+            tx.begin();
+            weapons = em.createNamedQuery("getAllFactionWeapons", Weapon.class)
+                    .setParameter("faction_name",factionName)
+                    .getResultList();
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+            log.error(e.getMessage(), e);
+            throw new RuntimeException(e);
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+        return weapons;
     }
 }

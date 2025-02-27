@@ -28,4 +28,16 @@ public class WeaponsService {
         weapon.setWeaponsFactions(weaponsFactionList);
         weaponsRepository.save(weapon);
     }
+
+    public void update(Weapon weapon) {
+        weaponsRepository.update(weapon);
+    }
+
+    public List<Weapon> getAll() {
+        return weaponsRepository.getAll();
+    }
+
+    public List<Weapon> getAll(String factionName) {
+        return weaponsRepository.getAll(factionName);
+    }
 }

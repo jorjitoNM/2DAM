@@ -32,10 +32,10 @@ public class Battle {
     @Column(name = "bplace")
     private String place;
 
-    @Column(name = "bdate", nullable = false)
+    @Column(name = "bdate")
     private LocalDate date;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "id_spy", nullable = false)
     private Spy spy;
 

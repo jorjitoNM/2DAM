@@ -9,13 +9,12 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "spies")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Spy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "sname")

@@ -1,14 +1,9 @@
 package org.examen.domain.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -16,6 +11,11 @@ import java.util.Set;
 @Table(name = "weapons")
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
+@NamedQueries({
+        @NamedQuery(name = "getAllWeapons", query = "from Weapon"),
+        @NamedQuery(name = "getAllFactionWeapons", query = "from Weapon w join w.weaponsFactions wf where wf.faction.name = :faction_name")
+})
 public class Weapon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

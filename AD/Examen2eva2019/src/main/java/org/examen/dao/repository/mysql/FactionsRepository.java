@@ -7,6 +7,7 @@ import jakarta.persistence.PersistenceException;
 import lombok.extern.log4j.Log4j2;
 import org.examen.dao.utils.JPAUtil;
 import org.examen.domain.model.Faction;
+import org.examen.domain.model.Weapon;
 
 import java.util.List;
 
@@ -53,5 +54,29 @@ public class FactionsRepository {
             log.error(e.getMessage(), e);
         }
         return f;
+    }
+
+    public List<Faction> getAll() {
+        List<Faction> factions;
+        EntityManager em = null;
+        EntityTransaction tx = null;
+        try {
+            em = jpaUtil.getEntityManager();
+            tx = em.getTransaction();
+            tx.begin();
+            factions = em.createNamedQuery("getAllFactions", Faction.class).getResultList();
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+            log.error(e.getMessage(), e);
+            throw new RuntimeException(e);
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+        return factions;
     }
 }

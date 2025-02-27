@@ -1,15 +1,10 @@
 package org.examen.domain.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -17,7 +12,11 @@ import java.util.Set;
 @Table(name = "faction")
 @AllArgsConstructor
 @NoArgsConstructor
-@NamedQuery(name = "GET_FACTION", query = "from Faction where name = :name")
+@ToString
+@NamedQueries({
+        @NamedQuery(name = "GET_FACTION", query = "from Faction where name = :name"),
+        @NamedQuery(name = "getAllFactions", query = "from Faction")
+})
 public class Faction {
     @Id
     @Column(name = "fname")
@@ -44,5 +43,9 @@ public class Faction {
         this.planet = planet;
         this.controlledSystems = controlledSystems;
         this.lastPurchase = lastPurchase;
+    }
+
+    public Faction (String name) {
+        this.name = name;
     }
 }

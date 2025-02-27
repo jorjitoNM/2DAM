@@ -5,42 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c120a716-90e8-4cbe-a762-346b8fbf46cd" name="Changes" comment="AD: creado proyecto para practicar para el examen y limpiado el JPA">
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/common/Constantes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/dao/mappers/FactionMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/dao/model/FactionMongo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/dao/model/FactionsDocument.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/dao/repository/mongo/MongoRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/dao/repository/mysql/BattlesRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/dao/repository/mysql/FactionsRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/dao/repository/mysql/WeaponFactionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/dao/repository/mysql/WeaponsRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/dao/utils/JPAUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/dao/utils/MongoUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/di/ObjectIdTypeAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/service/BattlesService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/service/FactionsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/service/MongoService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/service/WeaponsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/ui/Ex1.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/ui/Ex2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/ui/Ex3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/ui/Ex4.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/ui/Ex5.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/ui/Ex6.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2evaJorgeNovillo/.idea/sonarlint.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2evaJorgeNovillo/src/main/java/org/examen/dao/repository/mongo/MongoAnimalVisitsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2evaJorgeNovillo/src/main/java/org/examen/dao/repository/mysql/AnimalVisitsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2evaJorgeNovillo/src/main/java/org/examen/dao/repository/mysql/AnimalsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2evaJorgeNovillo/src/main/java/org/examen/dao/repository/mysql/HabitatsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2evaJorgeNovillo/src/main/java/org/examen/dao/repository/mysql/VisitorsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2evaJorgeNovillo/src/main/java/org/examen/domain/errors/AnimalHashVisits.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2evaJorgeNovillo/src/main/java/org/examen/domain/errors/AppError.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2evaJorgeNovillo/src/main/java/org/examen/domain/model/Animal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2evaJorgeNovillo/src/main/java/org/examen/domain/model/AnimalVisit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2evaJorgeNovillo/src/main/java/org/examen/domain/model/Habitat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2evaJorgeNovillo/src/main/java/org/examen/domain/model/Visitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2evaJorgeNovillo/src/main/java/org/examen/domain/service/AnimalsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2evaJorgeNovillo/src/main/java/org/examen/domain/service/MongoAggregationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2evaJorgeNovillo/src/main/java/org/examen/domain/service/MongoAnimalVisitsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2evaJorgeNovillo/src/main/java/org/examen/ui/Ex2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2evaJorgeNovillo/src/main/java/org/examen/ui/Ex3.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Examen2evaJorgeNovillo/src/main/java/org/examen/ui/Ex4.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/common/Constantes.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/common/Constantes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/dao/repository/mysql/BattlesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/dao/repository/mysql/BattlesRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/dao/repository/mysql/FactionsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/dao/repository/mysql/FactionsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/dao/repository/mysql/WeaponsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/dao/repository/mysql/WeaponsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model/Battle.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model/Battle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model/Faction.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model/Faction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model/Spy.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model/Spy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model/Weapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model/Weapon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model_reversed/Battle.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model/Battle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model_reversed/Faction.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model_reversed/Sale.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model/Sale.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model_reversed/Spy.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model/Spy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model_reversed/Weapon.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model_reversed/WeaponsFaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model/WeaponsFaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/ui/Ej1.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/resources/META-INF/beans.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/resources/META-INF/beans.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/resources/META-INF/persistence.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ExamenJorgeNovillo/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ExamenJorgeNovillo/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ExamenJorgeNovillo/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model/WeaponsFaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/model/WeaponsFaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/service/FactionsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/service/FactionsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/service/WeaponsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Examen2eva2019/src/main/java/org/examen/domain/service/WeaponsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,12 +65,12 @@
     &quot;assignee&quot;: &quot;jorjitoNM&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/jorjitoNM/2DAM.git",
-    "accountId": "c4be70ac-9896-42e5-a54e-4dce48a8566e"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/jorjitoNM/2DAM.git&quot;,
+    &quot;accountId&quot;: &quot;8a378f4a-2147-47a7-8eb1-64e66706b89c&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -90,33 +86,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "Spring Boot.HospitalJPA.executor": "Run",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Usuario/Desktop/Jorge/GitHub2DAM/AD/HospitalJPA",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;Spring Boot.HospitalJPA.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/cnovi/OneDrive/Escritorio/Jorge/GitHub2DAM/AD/HospitalJPA&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="HospitalJPA" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
@@ -149,6 +145,8 @@
       <workItem from="1740476497680" duration="2627000" />
       <workItem from="1740481862684" duration="3389000" />
       <workItem from="1740501204204" duration="7251000" />
+      <workItem from="1740559771539" duration="216000" />
+      <workItem from="1740560714318" duration="4812000" />
     </task>
     <task id="LOCAL-00001" summary="cambios clase (empezando con JPA) 12/12/2024">
       <option name="closed" value="true" />

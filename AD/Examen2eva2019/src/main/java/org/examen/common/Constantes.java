@@ -6,7 +6,7 @@ public class Constantes {
 
     //Mongo
     public static final String MONGODB_URL = "mongodb://localhost:27017";
-    public static final String DB_NAME = "examen_practica";
+    public static final String DB_NAME = "exam_practice";
 
 
 
