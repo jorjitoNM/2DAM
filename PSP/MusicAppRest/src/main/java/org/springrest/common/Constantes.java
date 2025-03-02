@@ -26,6 +26,8 @@ public class Constantes {
     public static final String AUTHORIZATION = "Authorization";
     public static final String ADD_TO_FAVOURITE_URL = "/favourite";
     public static final String SONG_NOT_FOUND = "Song not found";
+    public static final String FAVOURITES_URL = "/favourites";
+    public static final String SONG_ALREADY_ADDED_TO_FAVOURITES = "This song was already added to your favourite list";
 
     private Constantes () {}
 }

@@ -30,4 +30,10 @@ public class SongsController {
     public Song addToFavourite (@PathVariable(Constantes.PATH_ID) Integer id) {
         return service.addToFavourite(SecurityContextHolder.getContext().getAuthentication().getName(),id);
     }
+
+    @PreAuthorize("hasRole('" + Constantes.USER_ROLE + "')")
+    @GetMapping(Constantes.FAVOURITES_URL)
+    public List<Song> getFavourites () {
+        return service.getFavourites(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
 }
