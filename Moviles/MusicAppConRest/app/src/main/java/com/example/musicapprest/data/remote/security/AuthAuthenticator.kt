@@ -23,30 +23,16 @@ class AuthAuthenticator @Inject constructor(
         }
         return runBlocking {
             val newToken = getNewToken(refreshToken)
-
-            if (!newToken.isSuccessful || newToken.body() == null) {
-                //tokenManager.deleteToken()
-
-//                val username = runBlocking {
-//                    dataStoreRepository.getUsername().first()
-//                }
-//                val password = runBlocking {
-//                    dataStoreRepository.getPassword().first()
-//                }
-                // Despues pedimos un nuevo token al servidor
-            }
-
             newToken.body()?.let {
-                dataStoreRepository.saveLoginToken(it.login)
-                dataStoreRepository.saveRefreshToken(it.refresh)
+                dataStoreRepository.saveLoginToken(it)
                 response.request.newBuilder()
-                    .header("Authorization", "Bearer ${it.refresh}")
+                    .header("Authorization", "Bearer $it")
                     .build()
             }
         }
     }
 
-    private suspend fun getNewToken(refreshToken: String?): retrofit2.Response<Token> {
+    private suspend fun getNewToken(refreshToken: String?): retrofit2.Response<String> {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return service.get().refreshToken("Bearer $refreshToken")

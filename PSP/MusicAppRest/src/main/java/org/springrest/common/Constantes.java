@@ -24,6 +24,8 @@ public class Constantes {
     public static final String ADMIN_ROLE = "ADMIN";
     public static final String BEARER = "Bearer ";
     public static final String AUTHORIZATION = "Authorization";
+    public static final String ADD_TO_FAVOURITE_URL = "/favourite";
+    public static final String SONG_NOT_FOUND = "Song not found";
 
     private Constantes () {}
 }

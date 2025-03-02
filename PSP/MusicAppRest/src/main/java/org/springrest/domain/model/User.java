@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "users")
@@ -26,6 +28,9 @@ public class User {
     private String code;
     @Column
     private boolean active;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserFavourite> favourites;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(

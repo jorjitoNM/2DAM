@@ -35,10 +35,10 @@ public class LoginController {
         ), userDetailsService.loadUserByUsername(user.getEmail())));
     }
 
-    @PostMapping(Constantes.REFRESH_URL)
-    public ResponseEntity<Token> refresh() {
+    @GetMapping(Constantes.REFRESH_URL)
+    public ResponseEntity<String> refresh() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return ResponseEntity.ok(tokenService.generateToken(Map.of(
+        return ResponseEntity.ok(tokenService.generateLogin(Map.of(
                 Constantes.EMAIL, email
         ), userDetailsService.loadUserByUsername(email)));
     }

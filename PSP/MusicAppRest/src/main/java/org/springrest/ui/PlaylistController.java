@@ -25,8 +25,8 @@ public class PlaylistController {
         return playlistService.getAll(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
-    @PostMapping(Constantes.GET_URL)
-    public ResponseEntity<Playlist> get(@RequestBody Integer id) {
+    @GetMapping(Constantes.GET_URL + "/{" + Constantes.PATH_ID + "}")
+    public ResponseEntity<Playlist> get(@PathVariable(Constantes.PATH_ID) Integer id) {
         if (id != null)
             return ResponseEntity.ok(playlistService.get(id));
         return ResponseEntity.badRequest().build();

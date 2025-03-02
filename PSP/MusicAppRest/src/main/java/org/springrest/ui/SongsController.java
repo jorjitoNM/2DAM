@@ -2,7 +2,9 @@ package org.springrest.ui;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springrest.common.Constantes;
@@ -21,5 +23,11 @@ public class SongsController {
     @GetMapping(Constantes.GET_ALL)
     public List<Song> getAll () {
         return service.getAll();
+    }
+
+    @PreAuthorize("hasRole('" + Constantes.USER_ROLE + "')")
+    @GetMapping(Constantes.ADD_TO_FAVOURITE_URL + "/{" + Constantes.PATH_ID + "}")
+    public Song addToFavourite (@PathVariable(Constantes.PATH_ID) Integer id) {
+        return service.addToFavourite(SecurityContextHolder.getContext().getAuthentication().getName(),id);
     }
 }

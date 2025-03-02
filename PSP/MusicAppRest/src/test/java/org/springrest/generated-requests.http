@@ -55,3 +55,7 @@ Authorization: Bearer {{token}}
 ###
 GET http://localhost:8080/songs/getAll
 Authorization: Bearer {{token}}
+
+###
+GET http://localhost:8080/songs/favourite/2
+Authorization: Bearer {{token}}

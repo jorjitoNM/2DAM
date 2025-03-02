@@ -39,29 +39,29 @@ public class JWTService {
             Map<String, Object> extraClaims,
             UserDetails userDetails
     ) {
+        return new Token(buildToken(extraClaims, userDetails, jwtExpiration), buildToken(extraClaims, userDetails, refreshExpiration));
+    }
+
+    public String generateLogin (
+            Map<String, Object> extraClaims,
+            UserDetails userDetails
+    ) {
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
-    private Token buildToken(
+    private String buildToken(
             Map<String, Object> extraClaims,
             UserDetails userDetails,
             long expiration
     ) {
-        String login = Jwts.builder()
+        String token = Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(Date.from(LocalDateTime.now().plusSeconds(20).atZone(ZoneId.systemDefault()).toInstant()))
+                .setExpiration(Date.from(LocalDateTime.now().plusSeconds(expiration).atZone(ZoneId.systemDefault()).toInstant()))
                 .signWith(key)
                 .compact();
-        String refresh = Jwts.builder()
-                .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(Date.from(LocalDateTime.now().plusSeconds(600000).atZone(ZoneId.systemDefault()).toInstant()))
-                .signWith(key)
-                .compact();
-        return new Token(login,refresh);
+        return token;
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
