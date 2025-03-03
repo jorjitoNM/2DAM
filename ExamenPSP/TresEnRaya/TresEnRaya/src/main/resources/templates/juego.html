@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tres en Raya sin Script</title>
+    <style>
+        table {
+            margin: auto;
+            border-collapse: collapse;
+        }
+        td {
+            border: 1px solid #000;
+            width: 120px;
+            height: 120px;
+            text-align: center;
+            vertical-align: middle;
+            padding: 5px;
+        }
+        .valor {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        button {
+            font-size: 1em;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>Tres en Raya</h1>
+<h3>Turno del jugador: <span th:text="${jugadorActual}">X</span></h3>
+
+<table>
+    <tr>
+        <td>
+            <div class="valor" th:text="${board[0] == '' ? ' ' : board[0]}"></div>
+            <form method="post" action="/juego">
+                <input type="hidden" name="cell" value="0">
+                <button type="submit" th:if="${board[0] == ''}">Seleccionar</button>
+            </form>
+        </td>
+        <td>
+            <div class="valor" th:text="${board[1] == '' ? ' ' : board[1]}"></div>
+            <form method="post" action="/juego">
+                <input type="hidden" name="cell" value="1">
+                <button type="submit" th:if="${board[1] == ''}">Seleccionar</button>
+            </form>
+        </td>
+        <td>
+            <div class="valor" th:text="${board[2] == '' ? ' ' : board[2]}"></div>
+            <form method="post" action="/juego">
+                <input type="hidden" name="cell" value="2">
+                <button type="submit" th:if="${board[2] == ''}">Seleccionar</button>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="valor" th:text="${board[3] == '' ? ' ' : board[3]}"></div>
+            <form method="post" action="/juego">
+                <input type="hidden" name="cell" value="3">
+                <button type="submit" th:if="${board[3] == ''}">Seleccionar</button>
+            </form>
+        </td>
+        <td>
+            <div class="valor" th:text="${board[4] == '' ? ' ' : board[4]}"></div>
+            <form method="post" action="/juego">
+                <input type="hidden" name="cell" value="4">
+                <button type="submit" th:if="${board[4] == ''}">Seleccionar</button>
+            </form>
+        </td>
+        <td>
+            <div class="valor" th:text="${board[5] == '' ? ' ' : board[5]}"></div>
+            <form method="post" action="/juego">
+                <input type="hidden" name="cell" value="5">
+                <button type="submit" th:if="${board[5] == ''}">Seleccionar</button>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="valor" th:text="${board[6] == '' ? ' ' : board[6]}"></div>
+            <form method="post" action="/juego">
+                <input type="hidden" name="cell" value="6">
+                <button type="submit" th:if="${board[6] == ''}">Seleccionar</button>
+            </form>
+        </td>
+        <td>
+            <div class="valor" th:text="${board[7] == '' ? ' ' : board[7]}"></div>
+            <form method="post" action="/juego">
+                <input type="hidden" name="cell" value="7">
+                <button type="submit" th:if="${board[7] == ''}">Seleccionar</button>
+            </form>
+        </td>
+        <td>
+            <div class="valor" th:text="${board[8] == '' ? ' ' : board[8]}"></div>
+            <form method="post" action="/juego">
+                <input type="hidden" name="cell" value="8">
+                <button type="submit" th:if="${board[8] == ''}">Seleccionar</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<br>
+<form method="post" action="/juego/reset">
+    <button type="submit">Reiniciar Juego</button>
+</form>
+</body>
+</html>

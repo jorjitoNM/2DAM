@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ahorcado</title>
+    <style>
+        .contenedor { text-align: center; margin-top: 20px; }
+        .progreso { font-size: 2em; letter-spacing: 5px; }
+        .ahorcado { white-space: pre; font-family: monospace; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+<div class="contenedor">
+    <h1>AHORCADO</h1>
+    <div class="ahorcado">Ahorcado</div>
+    <div class="progreso" th:text="${progreso}"></div>
+
+    <p>Letras usadas: <span th:text="${letras_usadas}"></span></p>
+    <p>Intentos restantes: <span th:text="${5 - intentos}"></span></p>
+
+    <form th:if="${intentos < 6 && win == false}" method="post">
+        <input type="text" name="letra" maxlength="1" size="1" required>
+        <button type="submit">Probar letra</button>
+    </form>
+
+    <div>
+        <span th:text="${palabra}"></span>
+    </div>
+
+    <h1 th:if="${loss == true}" id="error-box" class="error-message">Se han agotado tus oportunidades, resetea el juego e intentalo otra vez</h1>
+
+    <br>
+    <form method="get" action="/reset">
+        <button type="submit">Nueva partida</button>
+    </form>
+</div>
+</body>
+</html>

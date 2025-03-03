@@ -1,0 +1,80 @@
+###
+POST http://localhost:8080/api/login
+Content-Type: application/json
+
+{
+  "nombre": "admin",
+  "password": "admin"
+}
+
+> {%
+    client.global.set("token", response.body.access_token)
+%}
+
+###
+GET http://localhost:8080/api/autores
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+###
+GET http://localhost:8080/api/autores/user?username=admin
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+###
+GET http://localhost:8080/api/libros
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+###
+PUT http://localhost:8080/api/libros
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "libroId": 1,
+  "titulo": "Un años de soledad",
+  "anioPublicacion": 1967,
+  "genero": "Realismo mágico",
+  "editorial": "Editorial Sudamericana",
+  "autores": [
+    {
+      "autorId": 1,
+      "nombre": "Gabriel García Márquez",
+      "fechaNac": "1927-03-06",
+      "fechaMuerte": "2014-04-17",
+      "lugarNac": "Colombia"
+    }
+  ]
+}
+
+###
+POST http://localhost:8080/api/autores
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "George Orwell",
+  "fechaNac": "1903-06-25",
+  "fechaMuerte": "1950-01-21",
+  "lugarNac": "Reino Unido",
+  "libros": [
+    {
+      "libroId": 4,
+      "titulo": "1984",
+      "anioPublicacion": 1949,
+      "genero": "Distopía",
+      "editorial": "Secker & Warburg"
+    }
+  ]
+}
+
+###
+DELETE http://localhost:8080/api/libros/2
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:8080/api/registrar?username=pepe&password=pepe
+
+###
+GET http://localhost:8080/api/login?username=pepe&password=pepe
