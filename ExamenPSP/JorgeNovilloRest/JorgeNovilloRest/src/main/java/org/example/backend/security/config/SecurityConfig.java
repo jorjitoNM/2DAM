@@ -1,6 +1,8 @@
-package org.springrest.security.config;
+package org.example.backend.security.config;
 
 import lombok.RequiredArgsConstructor;
+import org.example.backend.common.Constantes;
+import org.example.backend.security.filter.TokenFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -10,8 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springrest.common.Constantes;
-import org.springrest.filters.TokenFilter;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -20,23 +20,22 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-
     private final AuthenticationProvider authenticationProvider;
-    private final TokenFilter jwtAuthFilter;
+    private final TokenFilter jwtAuthenticationFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers(Constantes.LOGIN_URL,Constantes.SIGNUP_URL,Constantes.CONFIRM_URL)
+                        req
+                                .requestMatchers(Constantes.LOGIN_URL)
                                 .permitAll()
                                 .anyRequest()
-                                .authenticated()
-                )
+                                .authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

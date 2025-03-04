@@ -1,0 +1,60 @@
+###
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "name": "user",
+  "password": "1234"
+}
+
+> {%
+    client.global.set("token", response.body);
+
+%}
+
+<> 2025-03-04T121614.200.txt
+<> 2025-03-04T121332.200.txt
+<> 2025-03-04T121108.200.txt
+<> 2025-03-04T120828.200.txt
+<> 2025-03-04T120655.200.txt
+<> 2025-03-04T094717.200.txt
+<> 2025-03-04T094601.200.txt
+<> 2025-03-04T094344.200.txt
+<> 2025-03-04T094127.200.txt
+<> 2025-03-04T093827.200.txt
+<> 2025-03-04T093633.200.txt
+<> 2025-03-04T093448.200.txt
+<> 2025-03-04T092948.200.txt
+<> 2025-03-04T092741.200.txt
+<> 2025-03-04T092553.200.txt
+
+###
+GET http://localhost:8080/getAll
+Authorization: Bearer {{token}}
+
+<> 2025-03-04T094721.200.json
+
+###
+GET http://localhost:8080/getMisCosas
+Authorization: Bearer {{token}}
+
+###
+PUT http://localhost:8080/add
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "nuevo",
+  "password": "1234",
+  "rol": "user"
+}
+
+###
+POST http://localhost:8080/update
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "",
+  "empleado": {}
+}

@@ -14,15 +14,14 @@
 <div class="contenedor">
     <h1>AHORCADO</h1>
     <div class="ahorcado">Ahorcado</div>
-    <div class="progreso" th:text="${progreso}"></div>
 
     <p>Letras usadas: <span th:text="${letras_usadas}"></span></p>
     <p>Intentos restantes: <span th:text="${5 - intentos}"></span></p>
 
-    <form th:if="${intentos < 6 && win == false}" method="post">
-        <input type="text" name="letra" maxlength="1" size="1" required>
-        <button type="submit">Probar letra</button>
-    </form>
+        <form th:if="${intentos < 6 && win == false}" method="post">
+            <input type="text" name="letra" maxlength="1" size="1" required>
+            <button type="submit">Probar letra</button>
+        </form>
 
     <div>
         <span th:text="${palabra}"></span>
