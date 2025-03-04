@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.example.backend.common.Constantes;
 import org.example.backend.dao.repositories.CosasDatabase;
 import org.example.backend.dao.repositories.UserDatabase;
-import org.example.backend.domain.errors.NoEsTuCosa;
 import org.example.backend.domain.model.Cosa;
 import org.example.backend.domain.model.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,9 +28,12 @@ public class CosasService {
 
     public Cosa update(Cosa cosa, String name) {
         User user = userDatabase.findByName(name);
-        if (user == null) {
-            throw new NoEsTuCosa(Constantes.NO_ES_TU_COSA);
-        }
+        if (user == null)
+            throw new UsernameNotFoundException(Constantes.USER_NOT_FOUND);
         return database.update(cosa,user);
+    }
+
+    public void delete(int id) {
+        database.delete(id);
     }
 }

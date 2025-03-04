@@ -8,9 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController(Constantes.EMPLEADO)
+@RestController
+@RequestMapping(Constantes.EMPLEADOS)
 @RequiredArgsConstructor
 public class EmpleadosRestController {
 
@@ -18,7 +20,7 @@ public class EmpleadosRestController {
 
     @PutMapping(Constantes.ADD_USER_URL)
     @PreAuthorize("hasRole(" + Constantes.ADMIN_ROLE + ")")
-    private ResponseEntity<User> addUser (@RequestBody User user) {
+    public ResponseEntity<User> addUser (@RequestBody User user) {
         return ResponseEntity.ok(empleadosService.addUser(user));
     }
 }

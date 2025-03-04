@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 public class Cosa {
+    private int id;
     private String name;
     private User empleado;
 }

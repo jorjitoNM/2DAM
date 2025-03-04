@@ -7,6 +7,8 @@ import org.example.backend.security.jwt.JWTService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,8 +27,11 @@ public class LoginRestController {
 
     @PostMapping(Constantes.LOGIN_URL)
     public ResponseEntity<String> login(@RequestBody User user) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword()));
+        Authentication auth =
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(user.getName(),user.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(auth);
         return ResponseEntity.ok(tokenService.generateToken(Map.of(
                 Constantes.NAME, user.getName()
         ), userDetailsService.loadUserByUsername(user.getName())));

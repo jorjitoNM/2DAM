@@ -9,7 +9,6 @@ Content-Type: application/json
 
 > {%
     client.global.set("token", response.body);
-
 %}
 
 <> 2025-03-04T121614.200.txt
@@ -29,17 +28,18 @@ Content-Type: application/json
 <> 2025-03-04T092553.200.txt
 
 ###
-GET http://localhost:8080/getAll
+GET http://localhost:8080/cosas/getAll
 Authorization: Bearer {{token}}
+Content-Type: application/json
 
 <> 2025-03-04T094721.200.json
 
 ###
-GET http://localhost:8080/getMisCosas
+GET http://localhost:8080/cosas/getMisCosas
 Authorization: Bearer {{token}}
 
 ###
-PUT http://localhost:8080/add
+PUT http://localhost:8080/empleados/add
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -50,11 +50,17 @@ Authorization: Bearer {{token}}
 }
 
 ###
-POST http://localhost:8080/update
+POST http://localhost:8080/cosas/update
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "",
+  "id":4,
+  "name": "asddsa",
   "empleado": {}
 }
+
+###
+GET http://localhost:8080/cosas/delete/2
+Content-Type: application/json
+Authorization: Bearer {{token}}
